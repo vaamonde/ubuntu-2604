@@ -9,11 +9,11 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 06/07/2026<br>
-Versão: 0.01<br>
+Data de atualização: 13/07/2026<br>
+Versão: 0.03<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
-Release Ubuntu Server 24.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
+Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
@@ -21,16 +21,10 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Conteúdo estudado nessa instalação:<br>
 #01_ Download da ISO do Ubuntu Server 26.04.x LTS<br>
 #02_ Criação da Máquina Virtual no Oracle VirtualBOX<br>
-#03_ Configurações da Máquina Virtual DockerUbuntu<br>
+#03_ Configurações da Máquina Virtual UbuntuOnPremise<br>
 #04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO)<br>
 #05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS<br>
 #06_ Acessando o Ubuntu Server pela primeira vez<br>
-
-**Sites de IA (Inteligência Artificial) indicados para os Desafios**<br>
-OpenAI ChatGPT: https://chatgpt.com<br>
-Microsoft Copilot: https://copilot.microsoft.com<br>
-Google Gemini: https://gemini.google.com<br>
-Anthropic Claude: https://claude.ai<br>
 
 [![Instalação Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Instalação Ubuntu Server")
 
@@ -53,59 +47,67 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 **OBSERVAÇÃO:** Utilizar o Oracle VirtualBOX Gerenciador (versão 7.x ou superior).
 
 ```bash
-01) Ferramentas;	
+01) Ferramentas;
 <Novo>
 
-02) Nome da Máquina Virtual e Sistema Operacional:
+02) Nome e Sistema Operacional:
     Nome: UbuntuOnPremise (altere conforme a sua necessidade)
     Pasta (F): #PATH_PADRÃO\UbuntuOnPremise (altere conforme a sua necessidade)
-    Imagem ISO: <não selecionar>
+    Imagem ISO: <não selecionado>
     Edição: (sem informação)
     Tipo: Linux
+    Subtype: Ubuntu
     Versão: Ubuntu (64-bit)
-<Próximo>
 
-03) Hardware:
-    Memória Base: 4096MB (altere conforme a sua necessidade, mínimo 2048MB)
-    Processadores: 02 CPU (altere conforme a sua necessidade, mínimo 2 CPU)
-    Habilitar EFI (SOs especiais apenas): OFF (Desligado)
-<Próximo>
+03) Instalação Desassistida:
+    Sem configuração
 
-04) Disco Rígido Virtual:
-    Criar um novo disco rígido virtual agora: ON (Selecionar)
-      Tamanho do Disco: 50,00GB (alterar conforme a sua necessidade, mínimo 50GB)
-    Pré-alocar Tamanho Total (F): OFF (Desativado) 
-<Próximo>
+04) Hardware
+    Memória Base: 4096 MB (altere conforme a sua necessidade)
+    Processadores: 2 (VCPUs) (altere conforme sua necessidade)
+    (OFF) Habilitar EFI (SO especiais apneas)
 
-05) Sumário
+05) Disco Rígido
+    (ON) Criar um novo disco rígido virtual agora
+    Localização e Tamanho do Arquivo de Disco Virtual: #PATH_PADRÃO\UbuntuOnPremise (altere conforme a sua necessidade)
+      Tamanho: 100,00 GB (altere conforme a sua necessidade)
+    Tipo e Variante de Arquivo de Disco Virtual
+      VDI (VirtualBox Disk Image)
+      (OFF) Pré-alocar Tamanho Total
+    (OFF) Utilizar um disco rígido virtual existente
+    (OFF) Não acrescentar um Disco Rígido Virtual
 <Finalizar>
 ```
 
-## 03_ Configurações da Máquina Virtual DockerUbuntu no Oracle VirtualBOX
+## 03_ Configurações da Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
 
 ```bash
-01) Selecionar a Máquina Virtual: DockerUbuntu
+01) Selecionar a Máquina Virtual: UbuntuOnPremise
 <Configurações>
+    Expert
 
 02) Sistema
     Placa-Mãe
       Recurso Estendidos
-        Relógio da máquina retorno hora UTC: OFF (Desabilitar)
+        (OFF) Relógio da máquina retorno hora UTC: (Desabilitar)
     Processador
         Recursos Estendidos: Habilitar PAE/NX
                              Habilitar VT-x/AMD-v Aninhado
+        #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITAR O RECURSO DE
+        #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NA LINHA DE
+        #COMANDO (TERMINAL) O COMANDO: VBoxManage modifyvm UbuntuOnPremise --nested-hw-virt on
 
-03) Monitor
+03) Display
     Tela (S)
-      Memória de Vídeo: 128MB
-      Recursos Estendidos: Habilitar Aceleração 3D: ON (Habilitar)
+      Memória de Vídeo: 256 MB
+      Recursos Estendidos: (ON) Habilitar Aceleração 3D: (Habilitar)
 
 04) Áudio
-    Habilitar Áudio: OFF (Desabilitar)
+    (OFF) Habilitar Áudio: (Desabilitar)
 
 05) Rede
     Adaptador 1 (LAN)
-      Habilitar Placa de Rede: ON (Habilitar)
+      (ON) Habilitar Placa de Rede: (Habilitar)
       Conectado a: Placa em modo Bridge
       Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
       #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU EQUIPAMENTO
@@ -114,33 +116,25 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 <OK>
 ```
 
-## 04_ Iniciando a Instalação do Ubuntu Server 24.04.x LTS (localizar a ISO) no Oracle VirtualBOX
+## 04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX
 
 ```bash
-01) Selecionar a Máquina Virtual: DockerUbuntu: 
+01) Selecionar a Máquina Virtual: UbuntuOnPremise: 
 <Iniciar>
 
 02) VirtualBOX VM
-    DVD: <Outro>
-    #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 24.04.x LTS
+    DVD: <Outro...>
+    #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 26.04.x LTS <Abrir>
 <Montar e Tentar Novo Boot>
 ```
 
-## 05_ Instalação e Configuração do Ubuntu Server 24.04.x LTS
+## 05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS
 
 Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.com/server/docs/installation
 
 **OBSERVAÇÃO IMPORTANTE:** O Boot Inicial do Ubuntu Server demora cerca de: __`30 (trinta segundos)`__ para iniciar a instalação padrão caso você não altere as opções de Boot.
 
 **OBSERVAÇÃO:** Para parar o *Boot Inicial do Ubuntu Server* pressione: __`<Seta para Baixo>`__.
-
-**DICA:** Entendendo as opções de inicialização do Ubuntu Server<br>
-
-| Opção de Boot | Descrição |
-| --------------|-----------|
-| **Try or Install Ubuntu Server** | Inicia o instalador padrão do Ubuntu Server. Recomendado para a maioria das instalações. |
-| **Ubuntu Server with the HWE kernel** | Inicia a instalação com o kernel HWE (Hardware Enablement), fornecendo suporte a hardwares mais recentes. Ideal para máquinas modernas ou servidores com hardware novo. |
-| **Test memory** | Executa o Memtest86+ para testar a memória RAM do sistema. Útil para diagnósticos de estabilidade e problemas de hardware. |
 
 ```bash
 01) *Try or Install Ubuntu Server
@@ -157,8 +151,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 <Done>
 
 04) Choose type of install
-    ( ) Ubuntu Server (DEFAULT - Selecionado por padrão)
-    (X) Ubuntu Server (minimized) (SELECIONAR PRESSIONANDO SPACE - BARRA DE ESPAÇO)
+    (X) Ubuntu Server (DEFAULT - Selecionado por padrão)
+    ( ) Ubuntu Server (minimized)
     Additional options
       [ ] Search for third-party drivers
 <Done>
@@ -183,20 +177,48 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 08) Guided storage configuration
     (X) Use an entire disk (Default)
-      [VBOX_HARDISK-XXXX local disk 50.000G]
+      [VBOX_HARDISK-XXXX local disk 100.000G]
         (X) Set up this disk as an LVM group (Default)
-          [] Encrypt the LVM group with LUKS (Default - No (Não))
+          [ ] Encrypt the LVM group with LUKS (Default - No (Não))
+    ( ) Custom storage layout
 <Done>
 
 09) Storage configuration
-    USED DEVICES
-      #SELECIONAR O LV (LOGICAL VOLUME) DA RAIZ (/ = ROOT) DO UBUNTU SERVER PARA EDITAR A PARTIÇÃO
-      ubuntu-lv	new, to be formatted as ext4, mounted at /	24G <Enter>
-        Edit <Enter>
-          Name: ubuntu-lv
-          Size (max 47.996G): 47.996G
+    AVAILABLE DEVICES
+      free space <Enter>
+        #Criando a partição de Memória Virtual Swap do Ubuntu Server
+        Create Logical Volume <Enter>
+          Name: lv-swap
+          Size (max 49.000G): 8.000G (alterar conforme a sua necessidade)
+          Format: swap
+        <Create>
+        #Criando a partição do Perfil dos Usuários Home do Ubuntu Server
+        Create Logical Volume <Enter>
+          Name: lv-home
+          Size (max 41.000G): 5.000G
           Format: ext4
-          Mount: /
+          Mount: /home
+        <Create>
+        #Criando a partição Temporária Temp do Ubuntu Server
+        Create Logical Volume <Enter>
+          Name: lv-tmp
+          Size (max 36.000G): 5.000G
+          Format: ext4
+          Mount: Other
+            /tmp
+        <Create>
+        #Criando a partição Variável Var do Ubuntu Server
+        Create Logical Volume <Enter>
+          Name: lv-tmp
+          Size (max 36.000G): 15.000G
+          Format: ext4
+          Mount: /var
+        <Create>
+    USER DEVICES
+      #Alterando o novo do Volume Lógico da Raiz Root do Ubuntu Server
+      ubuntu-lv <Enter>
+        Edit <Enter>
+          Name: ln-root
         <Save>
 <Done>
   Confirm destructive action
@@ -212,12 +234,13 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 <Done>
 
 11) Upgrade to Ubuntu Pro
+    ( ) Enable Ubuntu Pro
     (X) Skip Ubuntu Pro setup for now
 <Continue>
 
 12) SSH Setup
     [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
-    Import SSH identity: No (Default)
+    [X] Allow password authentication over SSH
 <Done>
 
 13) Featured Server Snaps
