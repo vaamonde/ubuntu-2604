@@ -19,7 +19,15 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
-
+01_ Verificando as Informações do Sistema Operacional do Ubuntu Server<br>
+02_ Atualizando o Sistema Operacional Ubuntu Server<br>
+03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server<br>
+04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal<br>
+05_ Verificando a versão do Ubuntu Advantage Tools no Ubuntu Server<br>
+06_ Ativando a sua Assinatura do Ubuntu Pro no Ubuntu Server<br>
+07_ Verificando os repositórios de origem das atualizações do Ubuntu Pro no Ubuntu Server<br>
+08_ Atualizando o sistema com o suporte do Ubuntu Pro no Ubuntu Server<br>
+09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server<br>
 
 Site Oficial do Ubuntu Pro: https://ubuntu.com/pro<br>
 Site Oficial dos Procedimentos do Ubuntu Pro: https://ubuntu.com/pro/tutorial<br>
