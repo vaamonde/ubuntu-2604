@@ -19,15 +19,15 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
-01_ Verificando as Informações do Sistema Operacional do Ubuntu Server<br>
-02_ Atualizando o Sistema Operacional Ubuntu Server<br>
-03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server<br>
-04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal<br>
-05_ Verificando a versão do Ubuntu Advantage Tools no Ubuntu Server<br>
-06_ Ativando a sua Assinatura do Ubuntu Pro no Ubuntu Server<br>
-07_ Verificando os repositórios de origem das atualizações do Ubuntu Pro no Ubuntu Server<br>
-08_ Atualizando o sistema com o suporte do Ubuntu Pro no Ubuntu Server<br>
-09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server<br>
+#01_ Verificando as Informações do Sistema Operacional do Ubuntu Server<br>
+#02_ Atualizando o Sistema Operacional Ubuntu Server<br>
+#03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server<br>
+#04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal<br>
+#05_ Verificando a versão do Ubuntu Advantage Tools no Ubuntu Server<br>
+#06_ Ativando a sua Assinatura do Ubuntu Pro no Ubuntu Server<br>
+#07_ Verificando os repositórios de origem das atualizações do Ubuntu Pro no Ubuntu Server<br>
+#08_ Atualizando o sistema com o suporte do Ubuntu Pro no Ubuntu Server<br>
+#09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server<br>
 
 Site Oficial do Ubuntu Pro: https://ubuntu.com/pro<br>
 Site Oficial dos Procedimentos do Ubuntu Pro: https://ubuntu.com/pro/tutorial<br>
@@ -41,7 +41,6 @@ Site Oficial do Ubuntu Membership: https://wiki.ubuntu.com/Membership
 | 🔐 **ESM (Extended Security Maintenance)** | Serviço da Canonical que estende as atualizações de segurança para versões **LTS** do Ubuntu após o término do suporte padrão. | Mantém servidores protegidos contra vulnerabilidades críticas por vários anos adicionais, evitando a necessidade de atualização imediata do sistema operacional. O ESM cobre tanto os pacotes do repositório **Main** quanto do **Universe** (dependendo da assinatura Ubuntu Pro). |
 | 📦 **LTS (Long-Term Support)** | Modelo de lançamento do Ubuntu que prioriza estabilidade, compatibilidade e suporte de longo prazo. As versões LTS são publicadas a cada dois anos. | Ideal para servidores e ambientes corporativos, pois recebem **5 anos de suporte padrão**, podendo chegar a **10 anos ou mais** com o Ubuntu Pro e o serviço ESM, reduzindo a necessidade de migrações frequentes. |
 | ⚠️ **CVE (Common Vulnerabilities and Exposures)** | Padrão internacional para identificação e catalogação de vulnerabilidades de segurança conhecidas em softwares, sistemas operacionais e equipamentos. É mantido pela **MITRE Corporation**. | Permite identificar, documentar, rastrear e corrigir vulnerabilidades de forma padronizada. Fabricantes, distribuições Linux, pesquisadores e ferramentas de segurança utilizam os identificadores **CVE** para aplicar patches, gerar alertas e realizar auditorias de segurança. |
-
 
 [![Ubuntu Pro Free](http://img.youtube.com/vi//0.jpg)]( "Ubuntu Pro Free")
 
