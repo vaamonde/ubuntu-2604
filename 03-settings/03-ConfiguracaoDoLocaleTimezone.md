@@ -1,128 +1,132 @@
-#Autor: Robson Vaamonde<br>
-#Procedimentos em TI: http://procedimentosemti.com.br<br>
-#Bora para Prática: http://boraparapratica.com.br<br>
-#Robson Vaamonde: http://vaamonde.com.br<br>
-#Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-#Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-#Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-#YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-#Data de criação: 18/04/2023<br>
-#Data de atualização: 03/01/2026<br>
-#Versão: 0.15<br>
+Autor: Robson Vaamonde<br>
+Procedimentos em TI: http://procedimentosemti.com.br<br>
+Bora para Prática: http://boraparapratica.com.br<br>
+Robson Vaamonde: http://vaamonde.com.br<br>
+Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
+Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
+Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
+YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
+LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+Github Procedimentos em TI: https://github.com/vaamonde<br>
+Data de criação: 06/07/2026<br>
+Data de atualização: 13/07/2026<br>
+Versão: 0.03<br>
+Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
-Release Ubuntu Server 22.04.5: https://fridge.ubuntu.com/2024/09/13/ubuntu-22-04-5-lts-released/<br>
-Release Ubuntu Server 22.04.4: https://fridge.ubuntu.com/2024/02/22/ubuntu-22-04-4-lts-released/<br>
-Release Ubuntu Server 22.04.3: https://fridge.ubuntu.com/2023/08/11/ubuntu-22-04-3-lts-released/<br>
-Release Ubuntu Server 22.04.2: https://fridge.ubuntu.com/2023/02/24/ubuntu-22-04-2-lts-released/<br>
-Release Ubuntu Server 22.04.1: https://fridge.ubuntu.com/2022/08/12/ubuntu-22-04-1-lts-released/<br>
-Release Ubuntu Server 22.04: https://fridge.ubuntu.com/2022/04/01/ubuntu-22-04-jammy-jellyfish-final-beta-released/
-
-Release Notes Ubuntu Server 22.04.x: https://discourse.ubuntu.com/t/jammy-jellyfish-release-notes/24668<br>
-Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
+Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
+Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
-Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases
+Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
-#01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server;<br>
-#02_ Configurando o Locale (Localidade) do Brasil no Sistema Operacional Ubuntu Server;<br>
-#03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server;<br>
-#04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server;<br>
-#05_ Configurando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server;<br>
-#06_ Reinicializar o serviço do Systemd Timesyncd (Sincronismo de Data e Hora) no Ubuntu Server;<br>
-#07_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server;<br>
-#08_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server;<br>
-#09_ Alterando as Configurações do Teclado e Console no Ubuntu Server **(NÃO COMENTADO NO VÍDEO)**.<br>
 
-**O QUE É E PARA QUE SERVER O LOCALE:** O Locale é uma combinação de geografia, idioma e cultura. Para entender Localidade, considere a diferença entre os Estados Unidos e o Reino Unido. Ambos compartilham um idioma comum, mas usam unidades de medida completamente diferentes. Os Estados Unidos usam o idioma inglês, mas usam milhas, graus Fahrenheit e galões, enquanto o Reino Unido usa quilômetros, graus Celsius e litros.
+| **🌍 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
+| :---------------- | :-------------- | :--------------------- |
+| 🌐 **Locale**  | Conjunto de configurações que define **idioma, país/região, formato de datas, horas, números, moedas e unidades de medida** utilizados pelo sistema operacional e pelas aplicações. | Personaliza a forma como informações são exibidas ao usuário, garantindo que datas, horários, moedas e mensagens sejam apresentados de acordo com a localização e o idioma configurados. Exemplo: `pt_BR.UTF-8` ou `en_US.UTF-8`. |
+| 🔤 **UTF-8 (Unicode Transformation Format - 8 bits)** | Padrão de codificação de caracteres baseado no **Unicode**, capaz de representar praticamente todos os idiomas e símbolos existentes. É a codificação padrão na maioria dos sistemas Linux modernos. | Permite armazenar, transmitir e exibir textos corretamente em diferentes idiomas, evitando problemas de caracteres inválidos ou acentuação incorreta (como "ç", "ã", "é", "ü"). |
+| 🕒 **Timezone (Fuso Horário)** | Configuração que determina o fuso horário utilizado pelo sistema operacional, considerando a localização geográfica e, quando aplicável, regras de horário de verão. | Garante que o relógio do sistema apresente a hora local correta, influenciando registros de logs, tarefas agendadas (cron), autenticação, bancos de dados e aplicações distribuídas. Exemplo: `America/Sao_Paulo`. |
+| ⏱️ **NTP (Network Time Protocol)** | Protocolo de sincronização de tempo que utiliza **UDP porta 123** para manter o relógio dos computadores sincronizado com servidores de referência de tempo. | Mantém a data e a hora corretas em servidores e dispositivos de rede, sendo essencial para autenticação (Kerberos), certificados digitais, registros de logs, auditorias, clusters e ambientes distribuídos. |
+| 🇧🇷 **NTP.br** | Projeto mantido pelo **NIC.br** em parceria com o **Observatório Nacional (ON)**, responsável por disponibilizar servidores públicos de sincronização da Hora Legal Brasileira. | Permite que equipamentos localizados no Brasil sincronizem seus relógios com servidores nacionais de alta precisão, reduzindo a latência e garantindo maior confiabilidade na sincronização do horário oficial brasileiro. |
 
-**O QUE É E PARA QUE SERVER O UTF-8:** UTF é uma codificação de caracteres usada para representar texto em computadores. O formato mais comum é o UTF-8, que é um padrão universal para armazenar e trocar texto em diferentes idiomas e sistemas.
+[![Data e Hora Ubuntu Server](http://img.youtube.com/vi//0.jpg)](E "Data e Hora Ubuntu Server")
 
-**O QUE É E PARA QUE SERVER O TIMEZONE:** O Timezone ou fuso horário é uma área que observa um tempo padrão uniforme para propósitos legais, comerciais e sociais. Os fusos horários tendem a seguir os limites entre países e suas subdivisões em vez de seguir estritamente a longitude, porque é conveniente para áreas em comunicação frequente manter o mesmo horário.
-
-**O QUE É E PARA QUE SERVER O NTP:** O NTP é um protocolo para sincronização dos relógios dos computadores baseado no protocolo UDP sob a porta 123. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
-
-**O QUE É E PARA QUE SERVER O NTP.BR:** O NTP.br tem por objetivo oferecer condições para que os servidores da Internet no Brasil estejam sincronizados com a Horal Legal Brasileira. Para isso foi firmado um acordo entre o Observatório Nacional (ON) e o NIC.br. 
-
-[![Data e Hora Ubuntu Server](http://img.youtube.com/vi/Szt6egOsKxE/0.jpg)](https://www.youtube.com/watch?v=Szt6egOsKxE "Data e Hora Ubuntu Server")
-
-Link da vídeo aula: https://www.youtube.com/watch?v=Szt6egOsKxE
+Link da vídeo aula: 
 
 ## 01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server
 ```bash
 #verificando as informações detalhas de localidade no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo localectl
 ```
 
-Entendendo a saída do comando: __`localectl`__ (NÃO COMENTADO NO VÍDEO)<br>
-| Campo | Valor | Descrição |
-| ----- | ----- | --------- |
-| **System Locale** | *LANG=en_US.UTF-8* | Define o idioma e codificação do sistema. Neste caso, está em **inglês (EUA)** com codificação **UTF-8**. Afeta mensagens de sistema, data, hora e ordenação alfabética. |
-| **VC Keymap** | *n/a* | Layout do teclado para consoles virtuais (tty). **n/a** indica que não está configurado ou não se aplica. |
-| **X11 Layout** | *us* | Layout do teclado para ambientes gráficos (X11), neste caso, **layout americano padrão (us)**. Mesmo em servidores sem interface gráfica, esse campo pode ser exibido.   |
-| **X11 Model** | *pc105* | Modelo de teclado reconhecido (105 teclas padrão internacional). Importante em ambientes gráficos ou terminais compatíveis. |
+Entendendo a saída do comando: __`localectl`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🌐 **System Locale** | `LANG=en_US.UTF-8` | Define o idioma, a região e a codificação de caracteres padrão do sistema. Neste caso, utiliza o idioma **Inglês (Estados Unidos)** com codificação **UTF-8**. |
+| ⌨️ **VC Keymap** | `(unset)` | Mapeamento do teclado para o console virtual (TTY). Como está **unset**, o sistema utiliza o mapeamento padrão ou herda a configuração definida durante a inicialização.  |
+| 🖥️ **X11 Layout** | `us` | Layout do teclado utilizado no ambiente gráfico **X11**, configurado para o padrão **US (Estados Unidos)**. |
+| ⌨️ **X11 Model** | `pc105` | Modelo físico do teclado utilizado pelo X11. O modelo **PC105** corresponde ao teclado padrão de **105 teclas**, comum em computadores modernos. |
+| 🌍 **X11 Variant** | `altgr-intl` | Variante do layout **US International**, permitindo digitação de caracteres acentuados e símbolos internacionais utilizando a tecla **AltGr** (ou combinações de teclas). |
+---
 
 ```bash
 #verificando as informações de localidades instaladas no Ubuntu Server 
 #opção do comando locale: -a (all-locales)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/locale.1.html
 sudo locale -a
 ```
 
-Entendendo a saída do comando: __`locale`__ (NÃO COMENTADO NO VÍDEO)<br>
-| Locale | Descrição |
-| ------ | --------- |
-| **C** | Locale padrão minimalista do sistema (equivalente ao `POSIX`). Usa codificação ASCII. |
-| **C.utf8** | Variante do `C` locale com suporte à codificação UTF-8. Leve, rápida, mas sem formatação local. |
-| **en_US.utf8** | Locale para **inglês dos Estados Unidos** com codificação UTF-8. Utilizado por padrão no Ubuntu Server. |
-| **POSIX** | Locale mais básico possível. Idêntico ao `C`. Compatível com padrões UNIX antigos. |
+Entendendo a saída do comando: __`locale`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🌐 **Locale** | `C` | Localidade padrão da linguagem C (ANSI/POSIX). Utiliza ordenação, formatação e mensagens básicas, independentemente da região ou idioma. É frequentemente utilizada para garantir comportamento consistente em scripts e aplicações. |
+| 🔤 **Locale** | `C.utf8` | Variante da localidade `C` com suporte à codificação **UTF-8**, permitindo o uso de caracteres Unicode sem alterar as regras básicas da localidade padrão. |
+| 🇺🇸 **Locale** | `en_US.utf8` | Localidade para **Inglês (Estados Unidos)** utilizando codificação **UTF-8**. Define idioma, ordenação, formatos de data, hora, números e moedas conforme os padrões dos Estados Unidos. |
+| ⚙️ **Locale** | `POSIX` | Localidade compatível com o padrão **POSIX**, funcionalmente equivalente à localidade `C`. É utilizada para garantir portabilidade e comportamento previsível entre diferentes sistemas Unix/Linux. |
+---
 
-## 02_ Configurando o Locale (Localidade) do Brasil no Sistema Operacional Ubuntu Server
+## 02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** O *pt_BR.UTF-8* é uma codificação de caractere que indica o uso da língua portuguesa (pt) como falada no Brasil (BR) com a codificação __`UTF-8`__. UTF-8 (Unicode Transformation Format - 8 bits) é uma codificação de caracteres que pode representar qualquer caractere no conjunto Unicode, o que inclui praticamente todos os caracteres de todas as línguas do mundo.
+**OBSERVAÇÃO IMPORTANTE:** O *pt_BR.UTF-8* é uma codificação de caractere que indica o uso da **Língua Portuguesa (pt) como falada no Brasil (BR)** com a codificação __`UTF-8`__. UTF-8 (Unicode Transformation Format - 8 bits) é uma codificação de caracteres que pode representar qualquer caractere no conjunto Unicode, o que inclui praticamente todos os caracteres de todas as línguas do mundo.
 
 ```bash
 #gerando a localidade do Português do Brasil (pt_BR) no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 sudo locale-gen pt_BR.UTF-8
 
 #configurando a localidade do Português do Brasil no Ubuntu Server
 #opção do comando localectl: set-locale (Set the system locale)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo localectl set-locale LANG=pt_BR.UTF-8
 
 #atualizando as localidades do Português do Brasil e Linguagem no Ubuntu Server
+#opções das variáveis do comando update-locale: LANG (This sets the base locale for your system),
+#LC_ALL (This is the strongest overriding variable), LANGUAGE (his variable controls GNU gettext 
+#message translation fallbacks)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/update-locale.8.html
 sudo update-locale LANG=pt_BR.UTF-8 LC_ALL=pt_BR.UTF-8 LANGUAGE="pt_BR:pt:en"
 
 #recomendado rebootar o sistema para testar as localidades
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/8/reboot
 sudo reboot
 ```
 ```bash
 #verificando as mudanças de localidades do sistema no Ubuntu Server depois do reboot
 #opção do comando locale: -a (all-locales)
-sudo localectl
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo locale -a
+sudo localectl
 ```
 
 ## 03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** no sistema operacional Ubuntu Server temos basicamente **03 (três)** configurações de hora (time) sendo elas: 
+**OBSERVAÇÃO IMPORTANTE:** no __`Sistema Operacional Ubuntu Server`__ temos basicamente: **03 (três)** configurações de hora (time) sendo elas: 
 
-01) Local time (Hora Local do Servidor - Software/OS);<br>
-02) Universal time (Hora Universal - UTC Horário Universal Coordenado);<br>
-03) RTC (Real-time clock) time (Relógio de Tempo Real - BIOS/Hardware).<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :---------| :------------ |
+| 🕒 **Local time** | **Hora Local do Servidor (Sistema Operacional)** | Hora utilizada pelo sistema operacional conforme o **fuso horário (Timezone)** configurado. É a referência para logs, serviços, tarefas agendadas (*cron*), autenticação e aplicações. |
+| 🌍 **Universal time (UTC)** | **Hora Universal Coordenada (UTC)** | Horário de referência mundial, independente de fusos horários e horário de verão. É utilizado para sincronização entre sistemas, registros de eventos, bancos de dados distribuídos e protocolos como **NTP**. |
+| 🔋 **RTC time (Real-Time Clock)** | **Relógio de Tempo Real (Hardware/BIOS/UEFI)** | Relógio mantido pelo hardware da placa-mãe, alimentado pela bateria CMOS. É consultado durante a inicialização do computador e serve como referência para que o sistema operacional ajuste a hora do sistema. |
+---
 
 ```bash
 #verificando as informações de fuso horário do sistema no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl
 ```
 
-Entendendo a saída do comando: __`timedatectl`__ (NÃO COMENTADO NO VÍDEO)<br>
-| Campo | Valor | Descrição |
-| ----- | ----- | --------- |
-| **Local time** | *ter 2025-06-24 20:00:50 UTC`* | Hora local do sistema operacional com base no fuso horário configurado. |
-| **Universal time** | *ter 2025-06-24 20:00:50 UTC* | Hora universal (UTC). Usada para consistência em sistemas distribuídos. |
-| **RTC time** | *ter 2025-06-24 20:00:50* | Hora armazenada no **RTC (Relógio de Tempo Real)** da placa-mãe. |
-| **Time zone** | *Etc/UTC (UTC, +0000)* | Fuso horário atual do sistema. Neste caso, está definido como UTC. |
-| **System clock synchronized** | *yes* | Indica se o relógio do sistema está sincronizado com servidores NTP. |
-| **NTP service** | *active* | Estado do serviço de sincronização automática via NTP. |
-| **RTC in local TZ** | *no* | Define se o relógio de hardware está usando o fuso horário local (`yes`) ou UTC (`no`). Em servidores, é recomendado manter como `no`. |
+Entendendo a saída do comando: __`timedatectl`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🕒 **Local time** | `ter 2026-07-14 20:43:01 UTC` | Hora local utilizada pelo sistema operacional. Como o fuso horário configurado é **UTC**, ela é idêntica à Hora Universal. |
+| 🌍 **Universal time** | `ter 2026-07-14 20:43:01 UTC` | Hora Universal Coordenada (**UTC**), utilizada como referência mundial para sincronização de tempo entre sistemas. |
+| 🔋 **RTC time** | `ter 2026-07-14 20:43:01` | Hora armazenada no **Real-Time Clock (RTC)** da placa-mãe (BIOS/UEFI), utilizada durante a inicialização do sistema. |
+| 🌐 **Time zone** | `Etc/UTC (UTC, +0000)` | Fuso horário configurado no sistema operacional. Neste caso, utiliza **UTC (Coordinated Universal Time)** com deslocamento **+00:00**. |
+| ✅ **System clock synchronized** | `yes` | Indica que o relógio do sistema está sincronizado corretamente com um servidor de tempo (**NTP**). |
+| ⏱️ **NTP service** | `active` | O serviço de sincronização de horário (**NTP**) está ativo e mantendo o relógio do sistema sincronizado automaticamente. |
+| 🔄 **RTC in local TZ** | `no` | O relógio de hardware (**RTC**) está configurado para utilizar **UTC**, e não a hora local. Esta é a configuração recomendada para sistemas Linux. |
+---
 
 ## 04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server
 
@@ -130,20 +134,23 @@ Entendendo a saída do comando: __`timedatectl`__ (NÃO COMENTADO NO VÍDEO)<br>
 
 **OBSERVAÇÃO IMPORTANTE:** Até o momento (25/06/2025), o horário de verão 2025 está em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
 
-**OBSERVAÇÃO IMPORTANTE:** Até a data de 10/11/2025, o horário de verão não está previsto para ocorrer no Brasil em 2026. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
+**OBSERVAÇÃO IMPORTANTE:** Até a data de 14/07/2026, o horário de verão não está previsto para ocorrer no Brasil em 2026. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
 
 **OBSERVAÇÃO:** ALTERAR O LOCALE CONFORME A LOCALIDADE DO SEU SERVIDOR, MAIS INFORMAÇÕES SOBRE TIMEZONE ACESSE: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 ```bash
 #listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (quit))
 #opção do comando timedatectl: list-timezones (List available time zones, one per line)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl list-timezones
 
 #configurando o fuso horário de America São Paulo no Ubuntu Server
 #opção do comando timedatectl: set-timezone (set the system time zone to the specified value)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-timezone "America/Sao_Paulo"
 
 #verificando as mudanças do Timezone no Sistema do Ubuntu Server
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.htm
 sudo timedatectl
 ```
 
@@ -151,26 +158,111 @@ sudo timedatectl
 
 **OBSERVAÇÃO:** O NTP (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
 
-```bash
-#editando o arquivo de configuração timesyncd.conf
-#mais informações veja a documentação oficial em: https://documentation.ubuntu.com/server/how-to/networking/timedatectl-and-timesyncd/
-sudo vim /etc/systemd/timesyncd.conf
-
-#entrando no modo de edição do editor de texto VIM
-INSERT
-```
-
 **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O ntp.br é o serviço oficial de sincronização de horário do Brasil, mantido pelo Observatório Nacional (ON), em parceria com o NIC.br (Núcleo de Informação e Coordenação do Ponto BR).
 
 ```bash
-#descomentar e alterar os valores das variáveis a partir da linha: 14
-[Time]
-NTP=a.st1.ntp.br
-FallbackNTP=a.ntp.br
+#verificando as configuração do serviço do Chrony no Ubuntu Server
+#opção do comando chronyc: tracking (displays parameters about the system’s clock performance)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
+sudo chronyc tracking
 ```
+
+Entendendo a saída do comando: __`chronyc tracking`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🆔 **Reference ID** | `5BBD5B70 (ntp-nts-2.ps6.canonical.com)` | Identificador e nome do servidor NTP de referência com o qual o serviço **Chrony** está sincronizado. |
+| 🏛️ **Stratum** | `3` | Nível hierárquico da fonte de tempo. Um servidor **Stratum 3** obtém seu horário de um servidor **Stratum 2**. Quanto menor o valor, mais próxima é a fonte primária de tempo. |
+| 🕒 **Ref time (UTC)** | `Tue Jul 14 20:55:26 2026` | Data e hora (UTC) da última sincronização bem-sucedida com o servidor NTP de referência. |
+| ⏱️ **System time** | `0.002079217 seconds slow of NTP time` | Diferença entre o relógio local e o horário fornecido pelo servidor NTP. Neste caso, o relógio do sistema está aproximadamente **2,08 ms atrasado**. |
+| 📏 **Last offset** | `+0.000055376 seconds` | Última diferença medida entre o relógio do sistema e o servidor NTP durante a sincronização. |
+| 📊 **RMS offset** | `0.041223809 seconds` | Média estatística (Root Mean Square) dos desvios de sincronização. Quanto menor esse valor, maior a precisão do relógio. |
+| ⚙️ **Frequency** | `8.820 ppm slow` | Correção aplicada à frequência do relógio do sistema, em **ppm (partes por milhão)**, para compensar atrasos naturais do hardware. |
+| 📈 **Residual freq** | `+0.115 ppm` | Pequeno erro residual na frequência do relógio após os ajustes realizados pelo Chrony. |
+| 📉 **Skew** | `3.264 ppm` | Estimativa da margem de erro na frequência do relógio. Valores menores indicam maior estabilidade da sincronização. |
+| 🌐 **Root delay** | `0.184614673 seconds` | Tempo total estimado de ida e volta (latência) entre o sistema e a fonte primária de tempo. |
+| 🎯 **Root dispersion** | `0.004770702 seconds` | Estimativa da precisão acumulada da sincronização em relação à fonte primária de tempo. Quanto menor, melhor a qualidade da sincronização. |
+| 🔄 **Update interval** | `64.7 seconds` | Intervalo entre as sincronizações realizadas pelo Chrony com o servidor NTP. |
+| ✅ **Leap status** | `Normal` | Indica que não há anúncios de **Leap Second** pendentes e que a sincronização está ocorrendo normalmente. |
+---
+
 ```bash
-#salvar e sair do arquivo
-ESC SHIFT : x <Enter>
+#verificando as configuração das origens do NTP do Chrony no Ubuntu Server
+#opção do comando chronyc: sources (displays information about the current time sources that chronyd is accessing)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
+sudo chronyc sources
+```
+
+Entendendo a saída do comando: __`chronyc sources`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🏷️ **Modo (`M`)** | `^` | Indica que a fonte de tempo é um **servidor NTP** (Network Time Protocol). Outros símbolos podem representar relógio local (`#`), relógio de referência (`=`) ou fontes PTP. |
+| 📊 **Status (`S`)** | `*`, `+`, `-` | Estado da fonte de sincronização. `*` = servidor atualmente utilizado; `+` = candidato válido para sincronização; `-` = fonte disponível, porém descartada pelo algoritmo de seleção. |
+| 🌐 **Servidor NTP** | `ntp-nts-2.ps5.canonical.com` | Servidor NTP fornecido pela Canonical, participante da sincronização do relógio do sistema. |
+| 🌐 **Servidor NTP** | `ntp-nts-3.ps5.canonical.com` | Servidor NTP alternativo utilizado como referência secundária. |
+| 🌐 **Servidor NTP** | `ntp-nts-2.ps6.canonical.com` | **Servidor atualmente selecionado** pelo Chrony para sincronizar o relógio do sistema. |
+| 🌐 **Servidor NTP** | `ntp-nts-3.ps6.canonical.com` | Servidor NTP candidato, utilizado para comparação da qualidade da sincronização. |
+| 🌐 **Servidor NTP** | `ntp-nts-1.ps6.canonical.com` | Servidor NTP disponível, porém não selecionado devido aos critérios do algoritmo do Chrony. |
+| 🏛️ **Stratum** | `2` | Todos os servidores pertencem ao **Stratum 2**, recebendo o horário de servidores Stratum 1. |
+| ⏱️ **Poll** | `7` | Intervalo de consulta aos servidores. O valor é expresso em potência de dois (**2⁷ = 128 segundos** entre consultas). |
+| 📡 **Reach** | `277`, `167`, `377`, `355`, `73` | Registro octal das últimas oito tentativas de comunicação. Valores próximos de **377** indicam excelente conectividade com o servidor. |
+| ⏳ **LastRx** | `561`, `1015`, `752`, `819`, `99` | Tempo, em segundos, desde a última resposta recebida do servidor NTP. |
+| 📏 **Last sample** | `+27ms`, `+161ms`, `-10ms`, `-8398us`, `-2294us` | Diferença entre o relógio local e cada servidor NTP. Valores próximos de zero indicam melhor sincronização. Também apresenta a incerteza (`+/-`) da medição. |
+---
+
+```bash
+#verificando as configuração de autenticação NTS do Chrony no Ubuntu Server
+#opção do comando chronyc: authdata ()
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
+sudo chronyc authdata
+```
+
+Entendendo a saída do comando: __`chronyc authdata`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🌐 **Servidor NTP** | `ntp-nts-2.ps5.canonical.com`<br>`ntp-nts-3.ps5.canonical.com`<br>`ntp-nts-2.ps6.canonical.com`<br>`ntp-nts-3.ps6.canonical.com`<br>`ntp-nts-1.ps6.canonical.com` | Servidores NTP configurados e autenticados pelo serviço **Chrony** para sincronização segura do relógio do sistema. |
+| 🔐 **Mode** | `NTS` | Método de autenticação utilizado. **NTS (Network Time Security)** adiciona autenticação e criptografia ao protocolo NTP, protegendo contra ataques como spoofing e adulteração do horário. |
+| 🔑 **KeyID** | `1` | Identificador da chave criptográfica utilizada durante a autenticação NTS. |
+| 🔒 **Type** | `30` | Identificador interno do algoritmo criptográfico utilizado pelo Chrony para autenticação NTS. |
+| 🔑 **KLen** | `128` | Tamanho da chave criptográfica em **bits**. Neste caso, é utilizada uma chave de **128 bits**. |
+| ⏱️ **Last** | `47h` / `35m` | Tempo decorrido desde a última autenticação ou atualização bem-sucedida das credenciais NTS com o servidor. |
+| 🔄 **Atmp** | `0` | Número de tentativas de autenticação desde a última autenticação bem-sucedida. Valor **0** indica que não houve novas tentativas necessárias. |
+| ❌ **NAK** | `0` | Quantidade de respostas negativas (**Negative Acknowledgement**) recebidas durante a autenticação. Valor **0** indica que nenhuma autenticação foi rejeitada. |
+| 🍪 **Cook** | `8` | Quantidade de **cookies NTS** armazenados pelo Chrony para reutilização em futuras conexões seguras com o servidor. |
+| 📦 **CLen** | `64` | Tamanho, em bytes, dos cookies NTS utilizados durante a autenticação. |
+---
+
+```bash
+#fazendo o backup do arquivo de configuração original do Chrony
+#opção do comando cp: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
+sudo cp -v /etc/chrony/chrony.conf /etc/chrony/chrony.conf.old
+
+#fazendo o backup do arquivo de origens original do Chrony
+#opção do comando mv: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mv.1.html
+sudo mv -v /etc/chrony/sources.d/ubuntu-ntp-pools.sources /etc/chrony/sources.d/ubuntu-ntp-pools.sources.old
+
+#download do arquivo de configuração do Chrony
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
+sudo wget -v -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/chrony.conf
+
+#download do arquivo de origens do Chrony
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
+sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/ntp-br-pools.sources
+
+#editando o arquivo de configuração do Chrony
+sudo vim /etc/chrony/chrony.conf
+
+
+
+
+#editando o arquivo de origens do Chrony
+sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
+
+
+openssl s_client -connect a.st1.ntp.br:4460 -servername a.st1.ntp.br
 ```
 
 ## 06_ Reinicializar o serviço do Systemd Timesyncd (Sincronismo de Data e Hora) no Ubuntu Server

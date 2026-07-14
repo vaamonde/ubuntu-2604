@@ -57,6 +57,7 @@ sudo apt policy
 | ⚠️ | **deb-src** | Repositório que fornece apenas o código-fonte dos pacotes (`.dsc` e fontes). Utilizado para compilação, análise e auditoria. | Mesmo suporte do pacote binário | **Desabilitado em servidores** ⭐☆☆☆☆ |
 | ❌ | **PPA (Launchpad)** | Repositórios pessoais hospedados no Launchpad. Permitem instalar versões customizadas ou mais recentes de softwares. Não fazem parte do ciclo oficial de testes do Ubuntu. | Responsabilidade do mantenedor | **Nunca utilizar em produção** 🚫 |
 | ⚠️ | **Repositórios de Terceiros** | Repositórios oficiais de fabricantes (Docker, Microsoft, Grafana, Elastic, Kubernetes, HashiCorp, NVIDIA etc.). | Fabricante | **Somente quando exigido pela solução implantada** ⭐⭐⭐☆☆ |
+---
 
 ## 02_ Removendo os repositórios Multiverse (Multiverso) e Universe (Universo) no Ubuntu Server
 ```bash

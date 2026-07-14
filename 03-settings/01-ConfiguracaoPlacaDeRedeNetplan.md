@@ -19,6 +19,15 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
+#01_ Instalando os principais software de Rede (Network) no Ubuntu Server<br>
+#02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server<br>
+#03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server<br>
+#04_ Alterando as configurações da Placa de Rede do Ubuntu Server<br>
+#05_ Aplicando as configurações do Netplan e verificando as informações de Rede do Ubuntu Server<br>
+#06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server<br>
+#07_ Reinicializar o serviço do Systemd Resolved (Resolução de Nomes) no Ubuntu Server<br>
+#08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server<br>
+#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
 
 | **🌐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -27,6 +36,7 @@ Conteúdo estudado nessa configuração:<br>
 | ⚙️ **Netplan** | Ferramenta de configuração de rede utilizada nas versões modernas do Ubuntu. Utiliza arquivos no formato **YAML** para definir interfaces, endereçamento IP, gateways, DNS, VLANs, Bridges, Bonds e outras configurações. | Simplifica a administração da rede no Linux, gerando automaticamente as configurações para os renderizadores **systemd-networkd** ou **NetworkManager**, reduzindo a complexidade da configuração manual. |
 | 🔐 **DNSSEC (Domain Name System Security Extensions)** | Conjunto de extensões do protocolo DNS que adiciona autenticação criptográfica às respostas das consultas DNS por meio de assinaturas digitais. | Garante a autenticidade e a integridade das respostas DNS, protegendo contra ataques como **DNS Spoofing**, **DNS Cache Poisoning** e falsificação de registros DNS. |
 | 🔒 **DoT (DNS over TLS)** | Protocolo que criptografa consultas e respostas DNS utilizando **TLS (Transport Layer Security)**, o mesmo protocolo empregado pelo HTTPS. | Protege a privacidade das consultas DNS, impedindo que terceiros monitorem ou alterem as requisições durante o tráfego na rede. É amplamente utilizado em ambientes que exigem maior segurança e confidencialidade. |
+---
 
 [![Endereço IPv4/IPv6 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Endereço IPv4/IPv6 Ubuntu Server")
 
@@ -63,7 +73,7 @@ Entendendo a saída do comando: __`lspci`__<br>
 | 🏢 **Fabricante** | `Intel Corporation` | Empresa responsável pelo desenvolvimento e fabricação da controladora de rede. |
 | 💻 **Modelo** | `82540EM Gigabit Ethernet Controller` | Modelo da interface de rede Ethernet. Trata-se de uma controladora Gigabit amplamente utilizada em ambientes virtuais (como VMware e VirtualBox) e também compatível com diversos servidores e sistemas Linux. |
 | 🔄 **Revisão (Revision)** | `rev 02` | Revisão de hardware do dispositivo, utilizada para identificar pequenas alterações ou melhorias implementadas pelo fabricante. |
-|
+---
 
 ```bash
 #verificando os detalhes do hardware de Placa de Rede instalada no Ubuntu Server
@@ -101,7 +111,7 @@ Entendendo a saída do comando: __`lshw`__<br>
 | ⚡ **IRQ** | `19` | Linha de interrupção (Interrupt Request) utilizada pela placa de rede para comunicação com a CPU. |
 | 💾 **Memória** | `f0200000-f021ffff` | Faixa de endereços de memória reservada para o dispositivo PCI. |
 | 🔌 **Porta de E/S (I/O Port)** | `d020 (size=8)` | Intervalo de portas de entrada e saída (I/O) utilizado pela interface de rede para comunicação com o sistema operacional. |
-
+---
 
 ## 03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server
 ```bash
@@ -152,7 +162,7 @@ Entendendo a saída do comando: __`ip address show`__<br>
 | 🔐 **Opções IPv6** | `mngtmpaddr`, `noprefixroute` | Indicam gerenciamento automático de endereços temporários e ausência de rota automática baseada no prefixo. |
 | ⏳ **Validade IPv6** | `72826 s / 83118 s / forever` | Tempo de validade dos diferentes endereços IPv6 configurados. |
 | ⭐ **Tempo Preferencial IPv6** | `58426 s / 83118 s / forever` | Tempo durante o qual os endereços IPv6 são preferenciais para novas conexões. |
-
+---
 
 ```bash
 #verificando as configurações de Gateway (route) no Ubuntu Server
@@ -170,7 +180,7 @@ Entendendo a saída do comando: __`ip route show`__<br>
 | ⚙️ **Protocolo da Rota**  | `dhcp` | A rota foi criada automaticamente pelo cliente DHCP. |
 | 📍 **Endereço de Origem** | `172.16.1.157` | Endereço IP de origem utilizado pelo sistema ao enviar pacotes por essa rota. |
 | 📊 **Métrica** | `100` | Prioridade da rota. Quanto menor o valor, maior a preferência quando existem múltiplas rotas para o mesmo destino. |
-
+---
 
 ```bash
 #verificando as informações de cache dos Servidores DNS (resolução de nomes)
@@ -188,6 +198,7 @@ Entendendo a saída do comando: __`resolvectl`__<br>
 | 🔒 **DNS over TLS (DoT)** | `Desabilitado (-DNSOverTLS)` | As consultas DNS são realizadas em texto puro (porta 53), sem criptografia TLS. |
 | 🛡️ **DNSSEC** | `no/unsupported` | A validação criptográfica do DNSSEC não está habilitada ou não é suportada pelo servidor DNS configurado. |
 | 📄 **Modo do resolv.conf** | `stub` | O arquivo `/etc/resolv.conf` aponta para o resolvedor local (`127.0.0.53`), gerenciado pelo **systemd-resolved**. |
+---
 
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
@@ -201,7 +212,7 @@ Entendendo a saída do comando: __`resolvectl`__<br>
 | 🌍 **Servidor DNS Atual** | `172.16.1.254` | Servidor DNS atualmente utilizado pelo sistema para resolução de nomes. |
 | 📚 **Servidores DNS Configurados** | `172.16.1.254`<br>`2804:14c:90:8697::1` | Lista de servidores DNS configurados para a interface (IPv4 e IPv6). |
 | 🚪 **Rota Padrão** | `yes` | Confirma que esta interface fornece a rota padrão para comunicação externa. |
-
+---
 
 ```bash
 #verificando as informações de Leases (Alugueis) do DHCP Client no Ubuntu Server
@@ -225,7 +236,7 @@ Entendendo a saída do arquivo: __`/run/systemd/netif/leases/*`__<br>
 | 🏢 **DOMAINNAME** | `apto.intra` | Nome do domínio de pesquisa (*Search Domain*) distribuído pelo servidor DHCP. Permite resolver nomes curtos automaticamente, por exemplo `srv01` → `srv01.apto.intra`. |
 | 💻 **HOSTNAME** | `srvvaamonde` | Nome do host informado pelo cliente DHCP ao servidor durante a solicitação do endereço IP. |
 | 🆔 **CLIENTID** | `ffe2343f3e00020000ab11343a06a2a23df89c` | Identificador exclusivo do cliente DHCP (**DHCP Client Identifier**), utilizado pelo servidor para reconhecer o dispositivo e manter reservas ou concessões consistentes. |
-
+---
 
 ```bash
 #verificando as informações de Status do Netplan no Ubuntu Server
@@ -416,6 +427,7 @@ sudo netplan status
 | **Google** | *8.8.8.8 e 8.8.4.4* | *2001:4860:4860::8888 e 2001:4860:4860::8844* |
 | **Quad9** | *9.9.9.9 e 149.112.112.112* | *2620:fe::fe e 2620:fe::9* |
 | **CloudFlare** | *1.1.1.1 e 1.0.0.1* | *2606:4700:4700::1111 e 2606:4700:4700::1001* |
+---
 
 ```bash
 #fazendo o backup do arquivo de configuração original do Resolved

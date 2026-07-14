@@ -19,6 +19,9 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
+#01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server<br>
+#02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server<br>
+#03_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server<br>
 
 | **🖥️ Conceito** | **📖 O que é?** | **🎯 Para que serve?** |
 | :-------------- | :-------------- | :--------------------- |
@@ -34,6 +37,7 @@ Link da vídeo aula:
 ## 01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server
 ```bash
 #editando o arquivo de configuração do Hostname
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man5/hostname.5.html
 sudo vim /etc/hostname
 
 #entrando no modo de edição do editor de texto VIM
@@ -55,6 +59,7 @@ sudo hostname
 ## 02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server
 ```bash
 #editando o arquivo de configuração do Hosts
+#mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
 sudo vim /etc/hosts
 
 #entrando no modo de edição do editor de texto VIM
