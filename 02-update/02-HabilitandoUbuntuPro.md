@@ -187,8 +187,8 @@ sudo pro status --all
 
 **OBSERVAÇÃO IMPORTANTE:** por padrão após habilitar o *Token do Ubuntu Pro* os principais serviços são habilitados, sendo o: **ESM-INFRA**, **ESM-APPS** e o **Livepatch**, caso queira habilitar mais serviços veja a lista abaixo:
 
-| Ícone | Serviço | Descrição |
-| :---: | ------- | --------- |
+| **Serviço** | **Nome** | **Descrição** |
+| :---------: | -------- | ------------- |
 | 📱 | **anbox-cloud** | Plataforma escalável para execução de instâncias Android na nuvem. |
 | 🛡️ | **cc-eal** | Pacotes de provisionamento para conformidade com a certificação **Common Criteria EAL2**. |
 | 🔒 | **cis** | Ferramentas de auditoria e conformidade de segurança baseadas nos benchmarks do **Center for Internet Security (CIS)**. |

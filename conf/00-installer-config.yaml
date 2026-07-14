@@ -1,0 +1,84 @@
+# Autor: Robson Vaamonde
+# Site: www.procedimentosemti.com.br
+# Facebook: facebook.com/ProcedimentosEmTI
+# Facebook: facebook.com/BoraParaPratica
+# YouTube: youtube.com/BoraParaPratica
+# Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
+# Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
+# Data de criação: 14/07/2026
+# Data de atualização: 14/07/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
+# Testado e homologado para a versão do Netplan v1.2.x
+#
+# OBSERVAÇÃO IMPORTANTE: o arquivo de configuração do Netplan e baseado no formato de Serialização
+# de Dados Legíveis YAML (Yet Another Markup Language) utilizado na linguagem de programação Python
+# por exemplo, muito cuidado com o uso de espaços e tabulação e principalmente sua Indentação.
+#
+# Bloco inicial das configurações da Rede no Netplan (BLOCO MELHORADO PARA A NOVA VERSÃO)
+network:
+  #
+  # Início da configuração do Netplan usando a versão 2 (mais atual)
+  version: 2
+  #
+  # Bloco de configuração das Interfaces Ethernet (físicas ou virtuais)
+  ethernets:
+    #
+    # Configuração da Interface Física (Nome Lógico visto no comando: lshw -class network)
+    enp0s3:
+      #
+      # Identificando a Interface de Rede Física pelo Endereço MAC Address 
+      match:
+        macaddress: 08:00:27:45:05:cd
+      #
+      # Definindo o Nome Lógico da Interface de Rede (Útil para várias Placas de Rede)
+      set-name: enp0s3
+      #
+      # Desabilitando o suporte da configuração automática do IPv6 na interface física
+      # OBSERVAÇÃO IMPORTANTE: utilizar essa opção somente se você não está usando
+      # na sua rede o recurso do IPv6, caso contrário fazer a configuração adequada
+      # do Link Local do IPv6 adicionando a opção: ipv6
+      link-local: []
+      #
+      # Desabilitando o suporte ao DHCP Client IPv4 na interface física
+      dhcp4: false
+      #
+      # Desabilitando o suporte ao DHCP Client IPv6 na interface física
+      dhcp6: false
+      #
+      # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
+      # endereço IPv6 Unicast Global e Link Local
+      # OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 e IPv6 separados por Traço
+      addresses:
+        - SEU_ENDEREÇO_IPv4/CIDR
+        - SEU_ENDEREÇO_IPv6_UNICAST_GLOBAL/CIDR
+        - SEU_ENDEREÇO_IPv6_LINK_LOCAL/CIDR
+      #
+      # Configuração do Gateway Padrão (Rota Padrão) para o seu cenário
+      # OBSERVAÇÃO IMPORTANTE: a opção de Gateway4 foi descontinuada, recomendo utilizar 
+      # as opções de Routes (Rotas) do Netplan para configurar o Gateway padrão
+      # gateway4: SEU_ENDEREÇO_IPv4
+      routes:
+        # Configuração da Rota Padrão IPv4 (cuidado com o traço antes da opção: to)
+        - to: default
+          # Configuração do endereço IPv4 do Gateway para o seu cenário
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPv4
+          #
+        # Configuração da Rota Padrão IPv6 (cuidado com o traço antes da opção: to)
+        - to: default
+          # Configuração do endereço IPv6 do Gateway para o seu cenário
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPv6_UNICAST_GLOBAL
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPV6_LINK_LOCAL
+          #
+      # Configuração dos servidores de DNS Server Preferencial e Alternativo
+      nameservers:
+        # Configuração dos Endereços IPv4 e IPv6 de DNS para o seu cenário com nível de
+        # segurança contra Malware e Adult Content CloudFlare utilizando o CloudFlare
+        addresses:
+          - 1.1.1.1
+          - 1.0.0.1
+          - 2606:4700:4700::1111
+          - 2606:4700:4700::1001
+        # Configuração da pesquisa de domínio para o seu cenário
+        # OBSERVAÇÃO: configuração da pesquisa de Domínio dentro de Colchetes
+        search: [seu.domínio]

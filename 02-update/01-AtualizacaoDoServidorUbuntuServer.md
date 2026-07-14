@@ -45,8 +45,8 @@ Link da vídeo aula:
 sudo apt policy
 ```
 
-| Ícone | Repositório | Descrição | Suporte | Recomendação para Hardening |
-| :---: | ----------- | --------- | ------- | :-------------------------: |
+| **Atenção** | **Repositório** | **Descrição** | **Suporte** | **Recomendação para Hardening** |
+| :---------: | --------------- | ------------- | ----------- | :-----------------------------: |
 | ✅ | **Main** | Pacotes oficiais do Ubuntu mantidos pela Canonical. Contém o kernel, systemd, OpenSSH, OpenSSL, APT, Bash, Coreutils, Netplan, AppArmor, UFW e demais componentes essenciais do sistema operacional. | Canonical | **Sempre habilitado** ⭐⭐⭐⭐⭐ |
 | ✅ | **Restricted** | Drivers, firmware e microcódigos proprietários necessários para determinados hardwares (Intel/AMD Microcode, controladoras RAID, NICs, GPUs, etc.). | Canonical  | **Recomendado** ⭐⭐⭐⭐⭐ |
 | ⚠️ | **Universe** | Grande coleção de softwares livres mantidos pela comunidade. Inclui muitas ferramentas administrativas (Ansible, Fail2Ban, BorgBackup, Restic, tmux, jq, tree, etc.). Com Ubuntu Pro, muitos pacotes recebem cobertura adicional de segurança. | Comunidade / Ubuntu Pro | **Habilitar somente quando necessário** ⭐⭐⭐⭐☆ |

@@ -25,6 +25,7 @@ Conteúdo estudado nessa instalação:<br>
 #04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO)<br>
 #05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS<br>
 #06_ Acessando o Ubuntu Server pela primeira vez<br>
+#07_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH<br>
 
 [![Instalação Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Instalação Ubuntu Server")
 
@@ -263,4 +264,28 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
       srvseunome login: seu_usuário <Enter> (altere para o seu usuário)
       Password: sua_senha <Enter> (altere para a sua senha)
     seu_usuário@srvseunome:~$ (primeiro acesso ao Terminal do Ubuntu Server)
+
+02) Verificando o endereço IPv4 do Ubuntu Server
+    seu_usuário@srvseunome:~$ sudo ip address show
+```
+
+## 07_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
+
+**DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
+
+```bash
+#testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
+ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
+
+#acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
+ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
+
+#confirmando a troca das chaves públicas e do fingerprint do SSH (alterar sua senha para o seu cenário)
+The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can't be established.
+ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
+
+seu_usuário@SEU_ENDEREÇO_IPV4's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
+
+seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
