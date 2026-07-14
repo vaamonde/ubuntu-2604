@@ -298,7 +298,7 @@ sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-confi
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config.yaml
 
 #editando o arquivo de configuração do Netplan
-sudo vim 00-installer-config.yaml
+sudo vim /etc/netplan/00-installer-config.yaml
 
 #entrando no modo de edição do editor de texto VIM
 INSERT
@@ -324,10 +324,10 @@ network:
       set-name: enp0s3
       #
       # Desabilitando o suporte da configuração automática do IPv6 na interface física
-      # OBSERVAÇÃO IMPORTANTE: utilizar essa opção somente se você não está usando
-      # na sua rede o recurso do IPv6, caso contrário fazer a configuração adequada
-      # do Link Local do IPv6 adicionando a opção: ipv6
       link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      accept-ra: false
       #
       # Desabilitando o suporte ao DHCP Client IPv4 na interface física
       dhcp4: false
@@ -353,13 +353,12 @@ network:
         # Configuração da Rota Padrão IPv6 (cuidado com o traço antes da opção: to)
         - to: default
           # Configuração do endereço IPv6 do Gateway para o seu cenário
-          via: SEU_ENDEREÇO_DE_GATEWAY_IPv6_UNICAST_GLOBAL
           via: SEU_ENDEREÇO_DE_GATEWAY_IPV6_LINK_LOCAL
           #
       # Configuração dos servidores de DNS Server Preferencial e Alternativo
       nameservers:
         # Configuração dos Endereços IPv4 e IPv6 de DNS para o seu cenário com nível de
-        # segurança contra Malware e Adult Content CloudFlare utilizando o CloudFlare
+        # segurança contra Malware e Adult Content utilizando os DNS da CloudFlare
         addresses:
           - 1.1.1.1
           - 1.0.0.1
@@ -419,6 +418,11 @@ sudo netplan status
 | **CloudFlare** | *1.1.1.1 e 1.0.0.1* | *2606:4700:4700::1111 e 2606:4700:4700::1001* |
 
 ```bash
+#fazendo o backup do arquivo de configuração original do Resolved
+#opção do comando cp: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
+sudo cp -v /etc/systemd/resolved.conf /etc/systemd/resolved.conf.old
+
 #editando o arquivo de configuração do Systemd Resolved no Ubuntu Server (NÃO COMENTADO NO VÍDEO)
 sudo vim /etc/systemd/resolved.conf
 
@@ -426,16 +430,16 @@ sudo vim /etc/systemd/resolved.conf
 INSERT
 ```
 ```bash
-#descomentar e alterar o valor da variável Domains na linha 24 para: Domains=~.
+#descomentar e alterar o valor da variável Domains na linha 32 para: Domains=~.
 Domains=~.
  
-#descomentar e alterar o valor da variável DNSSEC na linha 25 para: DNSSEC=yes
+#descomentar e alterar o valor da variável DNSSEC na linha 33 para: DNSSEC=yes
 DNSSEC=yes
 
-#descomentar e alterar o valor da variável DNSOverTLS na linha 26 para: DNSOverTLS=yes
+#descomentar e alterar o valor da variável DNSOverTLS na linha 34 para: DNSOverTLS=yes
 DNSOverTLS=yes
 
-#descomentar e alterar o valor da variável Cache na linha 29 para: Cache=yes
+#descomentar e alterar o valor da variável Cache na linha 37 para: Cache=yes
 Cache=yes
 ```
 ```bash
@@ -464,9 +468,10 @@ sudo systemctl status systemd-resolved
 sudo ip address show
 
 #verificando as configurações de Gateway (route) IPv4 e IPv6 no Ubuntu Server
-#opções do comando ip: route (Routing table entry)
+#opções do comando ip: -4 (use IPv4), -6 (use IPv6) route (Routing table entry)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
-sudo ip route show
+sudo ip -4 route show
+sudo ip -6 route show
 
 #verificando as informações dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: status (Shows the global and per-link DNS settings currently in effect)
@@ -506,6 +511,23 @@ ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 
 seu_usuário@SEU_ENDEREÇO_IPV4's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
+
+seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
+```
+
+```bash
+#testando a conexão com o Ubuntu Server (alterar o Endereço IPv6 para o seu cenário)
+ping SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
+
+#acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv6 para o seu cenário)
+ssh seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
+
+#confirmando a troca das chaves públicas e do fingerprint do SSH (alterar sua senha para o seu cenário)
+The authenticity of host 'SEU_ENDEREÇO_IPV6_UBUNTU_SERVER' can't be established.
+ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
+
+seu_usuário@SEU_ENDEREÇO_IPV6's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
 
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
