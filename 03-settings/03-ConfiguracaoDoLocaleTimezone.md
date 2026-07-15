@@ -154,11 +154,141 @@ sudo timedatectl set-timezone "America/Sao_Paulo"
 sudo timedatectl
 ```
 
-## 05_ Configurando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server
+## 05_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server
+```bash
+#verificando o serviço do Chrony Server e Client
+#opções do comando systemctl: status (runtime status information), restart (Stop and then start one or
+#more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl status chrony
+sudo systemctl restart chrony
+sudo systemctl stop chrony
+sudo systemctl start chrony
+
+#analisando os Log's e mensagens de erro do serviço do Chrony Server e Client
+#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u chrony
+```
+
+> **OBSERVAÇÃO IMPORTANTE:** Por que sempre é necessário verificar a versão do serviço de rede que você está implementando ou configurando no Servidor Ubuntu Server, devido as famosas falhas de segurança chamadas de: *CVE (Common Vulnerabilities and Exposures)*, com base na versão utilizada podemos pesquisar no site do **Ubuntu Security CVE Reports:** https://ubuntu.com/security/cves as falhas de segurança encontradas e corrigidas da versão do nosso aplicativo, o que ela afeta, se foi corrigida e como aplicar a correção.
+
+```bash
+#verificando as versões do Chrony Server
+#opção do comando sshd e sshd: -v (version)
+sudo chronyd -v
+
+#verificando as versões do Chrony Client
+#opção do comando ssh: -v (version)
+sudo chronyc -v
+```
+
+## 06_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
+
+```bash
+#verificando a porta padrão UDP-323 do Chrony Server
+#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address)
+sudo lsof -nP -iUDP:'323'
+```
+
+## 07_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server
+```bash
+/etc/chrony/                                <-- Diretório de configuração do Chrony Server e Client
+/etc/chrony/chrony.conf                     <-- Arquivo de configuração do Chrony Server e Client
+/etc/chrony/chrony.keys                     <-- Arquivo de configuração das chaves de autenticação do Chrony Server e Client
+/etc/chrony/conf.d/                         <-- Diretório dos arquivos de configuração extras do Chrony Server e Client
+/etc/chrony/sources.d/                      <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
+/etc/chrony/sources.d/ntp-br-pools.sources  <-- Arquivo de configuração dos servidot NTP.br do Chrony Server e Client
+/var/log/chrony/                            <-- Diretório de logs do Chrony Server e Client
+/var/lib/chrony/                            <-- Diretório das configurações de sincronismo Chrony Server e Client
+```
+
+## 08_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
+```bash
+#fazendo o backup do arquivo de configuração original do Chrony Server e Client 
+#opção do comando cp: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
+sudo cp -v /etc/chrony/chrony.conf /etc/chrony/chrony.conf.old
+
+#fazendo o backup do arquivo de servidores NTP original do Chrony Server e Client 
+#opção do comando mv: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mv.1.html
+sudo mv -v /etc/chrony/sources.d/ubuntu-ntp-pools.sources /etc/chrony/sources.d/ubuntu-ntp-pools.sources.old
+
+#download do arquivo de configuração do Chrony Server e Client 
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
+sudo wget -v -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/chrony.conf
+
+#download do arquivo de servidores NTP do Chrony Server e Client 
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
+sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/ntp-br-pools.sources
+```
+
+## 09_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
 
 **OBSERVAÇÃO:** O NTP (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
 
 **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O ntp.br é o serviço oficial de sincronização de horário do Brasil, mantido pelo Observatório Nacional (ON), em parceria com o NIC.br (Núcleo de Informação e Coordenação do Ponto BR).
+
+```bash
+#editando o arquivo de configuração do Chrony Server e Client
+sudo vim /etc/chrony/chrony.conf
+
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+# Exige autenticação NTS das fontes selecionadas na linha: 31
+authselectmode require
+#
+# Utiliza no mínimo duas fontes confiáveis na linha: 34
+minsources 2
+#
+# Descarta fontes com distância excessiva  na linha: 37
+maxdistance 1.0
+#
+# Não registra consultas de clientes na linha: 40
+noclientlog
+#
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+
+#editando o arquivo de origens do Chrony
+sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
+
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+# Bloco inicial das configurações dos Servidores de NTP do NTP.br na linha: 14
+server a.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
+server c.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
+server e.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+
+#verificando o serviço do Chrony Server e Client
+#opções do comando systemctl: status (runtime status information), restart (Stop and then start one or
+#more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl restart chrony
+sudo systemctl status chrony
+
+#analisando os Log's e mensagens de erro do serviço do Chrony Server e Client
+#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u chrony
+```
+
+## 10_ Verificando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server
 
 ```bash
 #verificando as configuração do serviço do Chrony no Ubuntu Server
@@ -170,8 +300,8 @@ sudo chronyc tracking
 Entendendo a saída do comando: __`chronyc tracking`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🆔 **Reference ID** | `5BBD5B70 (ntp-nts-2.ps6.canonical.com)` | Identificador e nome do servidor NTP de referência com o qual o serviço **Chrony** está sincronizado. |
-| 🏛️ **Stratum** | `3` | Nível hierárquico da fonte de tempo. Um servidor **Stratum 3** obtém seu horário de um servidor **Stratum 2**. Quanto menor o valor, mais próxima é a fonte primária de tempo. |
+| 🆔 **Reference ID** | `4C7F238E (a.st1.ntp.br)` | Identificador e nome do servidor NTP de referência com o qual o serviço **Chrony** está sincronizado. |
+| 🏛️ **Stratum** | `2` | Nível hierárquico da fonte de tempo. Um servidor **Stratum 3** obtém seu horário de um servidor **Stratum 2**. Quanto menor o valor, mais próxima é a fonte primária de tempo. |
 | 🕒 **Ref time (UTC)** | `Tue Jul 14 20:55:26 2026` | Data e hora (UTC) da última sincronização bem-sucedida com o servidor NTP de referência. |
 | ⏱️ **System time** | `0.002079217 seconds slow of NTP time` | Diferença entre o relógio local e o horário fornecido pelo servidor NTP. Neste caso, o relógio do sistema está aproximadamente **2,08 ms atrasado**. |
 | 📏 **Last offset** | `+0.000055376 seconds` | Última diferença medida entre o relógio do sistema e o servidor NTP durante a sincronização. |
@@ -197,12 +327,9 @@ Entendendo a saída do comando: __`chronyc sources`__<br>
 | :-------- | :-------- | :------------ |
 | 🏷️ **Modo (`M`)** | `^` | Indica que a fonte de tempo é um **servidor NTP** (Network Time Protocol). Outros símbolos podem representar relógio local (`#`), relógio de referência (`=`) ou fontes PTP. |
 | 📊 **Status (`S`)** | `*`, `+`, `-` | Estado da fonte de sincronização. `*` = servidor atualmente utilizado; `+` = candidato válido para sincronização; `-` = fonte disponível, porém descartada pelo algoritmo de seleção. |
-| 🌐 **Servidor NTP** | `ntp-nts-2.ps5.canonical.com` | Servidor NTP fornecido pela Canonical, participante da sincronização do relógio do sistema. |
-| 🌐 **Servidor NTP** | `ntp-nts-3.ps5.canonical.com` | Servidor NTP alternativo utilizado como referência secundária. |
-| 🌐 **Servidor NTP** | `ntp-nts-2.ps6.canonical.com` | **Servidor atualmente selecionado** pelo Chrony para sincronizar o relógio do sistema. |
-| 🌐 **Servidor NTP** | `ntp-nts-3.ps6.canonical.com` | Servidor NTP candidato, utilizado para comparação da qualidade da sincronização. |
-| 🌐 **Servidor NTP** | `ntp-nts-1.ps6.canonical.com` | Servidor NTP disponível, porém não selecionado devido aos critérios do algoritmo do Chrony. |
-| 🏛️ **Stratum** | `2` | Todos os servidores pertencem ao **Stratum 2**, recebendo o horário de servidores Stratum 1. |
+| 🌐 **Servidor NTP** | `a.st1.ntp.br` | Servidor NTP fornecido pela NTP.br, **Servidor atualmente selecionado** pelo Chrony para sincronizar o relógio do sistema.|
+| 🌐 **Servidor NTP** | `2800:1e0:1080:a::83` | Servidor NTP alternativo utilizado como referência secundária. |
+| 🏛️ **Stratum** | `1` | Todos os servidores pertencem ao **Stratum 2**, recebendo o horário de servidores Stratum 1. |
 | ⏱️ **Poll** | `7` | Intervalo de consulta aos servidores. O valor é expresso em potência de dois (**2⁷ = 128 segundos** entre consultas). |
 | 📡 **Reach** | `277`, `167`, `377`, `355`, `73` | Registro octal das últimas oito tentativas de comunicação. Valores próximos de **377** indicam excelente conectividade com o servidor. |
 | ⏳ **LastRx** | `561`, `1015`, `752`, `819`, `99` | Tempo, em segundos, desde a última resposta recebida do servidor NTP. |
@@ -219,7 +346,7 @@ sudo chronyc authdata
 Entendendo a saída do comando: __`chronyc authdata`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🌐 **Servidor NTP** | `ntp-nts-2.ps5.canonical.com`<br>`ntp-nts-3.ps5.canonical.com`<br>`ntp-nts-2.ps6.canonical.com`<br>`ntp-nts-3.ps6.canonical.com`<br>`ntp-nts-1.ps6.canonical.com` | Servidores NTP configurados e autenticados pelo serviço **Chrony** para sincronização segura do relógio do sistema. |
+| 🌐 **Servidor NTP** | `a.st1.ntp.br`<br>`2800:1e0:1080:a::83` | Servidores NTP configurados e autenticados pelo serviço **Chrony** para sincronização segura do relógio do sistema. |
 | 🔐 **Mode** | `NTS` | Método de autenticação utilizado. **NTS (Network Time Security)** adiciona autenticação e criptografia ao protocolo NTP, protegendo contra ataques como spoofing e adulteração do horário. |
 | 🔑 **KeyID** | `1` | Identificador da chave criptográfica utilizada durante a autenticação NTS. |
 | 🔒 **Type** | `30` | Identificador interno do algoritmo criptográfico utilizado pelo Chrony para autenticação NTS. |
@@ -232,82 +359,54 @@ Entendendo a saída do comando: __`chronyc authdata`__<br>
 ---
 
 ```bash
-#fazendo o backup do arquivo de configuração original do Chrony
-#opção do comando cp: -v (verbose)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/chrony/chrony.conf /etc/chrony/chrony.conf.old
-
-#fazendo o backup do arquivo de origens original do Chrony
-#opção do comando mv: -v (verbose)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mv.1.html
-sudo mv -v /etc/chrony/sources.d/ubuntu-ntp-pools.sources /etc/chrony/sources.d/ubuntu-ntp-pools.sources.old
-
-#download do arquivo de configuração do Chrony
-#opção do comando wget: -v (verbose), -O (output file)
-#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
-sudo wget -v -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/chrony.conf
-
-#download do arquivo de origens do Chrony
-#opção do comando wget: -v (verbose), -O (output file)
-#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
-sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/ntp-br-pools.sources
-
-#editando o arquivo de configuração do Chrony
-sudo vim /etc/chrony/chrony.conf
-
-
-
-
-#editando o arquivo de origens do Chrony
-sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
-
-
-openssl s_client -connect a.st1.ntp.br:4460 -servername a.st1.ntp.br
+#testando a conectividade da porta TCP-4460 do NTP.br utilizada pelo NTS
+#opções do comando nc: -z (Only scan for listening daemons), -v (Produce more verbose output)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nc
+nc -zv a.st1.ntp.br 4460
 ```
 
-## 06_ Reinicializar o serviço do Systemd Timesyncd (Sincronismo de Data e Hora) no Ubuntu Server
+Entendendo a saída do comando: __`nc -zv a.st1.ntp.br 4460`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💻 **Comando** | `nc -zv a.st1.ntp.br 4460` | Utiliza o **Netcat (nc)** para verificar se a porta TCP **4460** do servidor está acessível. A opção `-z` realiza apenas o teste da porta, sem transmitir dados, e `-v` exibe informações detalhadas da conexão. |
+| 🌐 **Servidor** | `a.st1.ntp.br` | Servidor **Stratum 1** do projeto **NTP.br**, utilizado como fonte oficial de sincronização de horário e com suporte ao **NTS (Network Time Security)**. |
+| 🌍 **Endereço IP** | `2001:12ff:0:7::186` | Endereço **IPv6** resolvido para o servidor `a.st1.ntp.br`. O Netcat utilizou IPv6 para estabelecer a conexão. |
+| 🚪 **Porta** | `4460/TCP` | Porta oficial do serviço **NTS-KE (Network Time Security - Key Establishment)**, utilizada para negociar chaves e cookies criptográficos entre o cliente e o servidor NTP. |
+| 🔐 **Serviço** | `tcp/ntske` | Nome oficial do serviço associado à porta TCP 4460, responsável pela etapa de autenticação do protocolo **NTS**, conforme a RFC 8915. |
+| ✅ **Resultado** | `Connection succeeded!` | A conexão foi estabelecida com sucesso, indicando que o servidor está acessível e aceita conexões para negociação do protocolo **NTS**. |
+---
+
 ```bash
-#reiniciar o serviço do Timesyncd
-#opção do comando systemctl: restart (Stop and then start one or more units specified on the command line)
-sudo systemctl restart systemd-timesyncd
-
-#verificar o status do serviço do Timesyncd
-#opção do comando systemctl: status (Show terse runtime status information about one or more units)
-sudo systemctl status systemd-timesyncd
-
-#verificando as informações de data e hora atualizada
-sudo timedatectl
-
-#verificar as informações do sincronismo do Timesyncd (NÃO COMENTADO NO VÍDEO)
-#opção do comando timedatectl: timesync-status
-sudo timedatectl timesync-status
+#testando o certificado de conexão segura da porta TCP-4460 do NTP.br utilizada pelo NTS
+#opções do comando openssl: s_client (This implements a generic SSL/TLS client which can establish
+#a transparent connection to a remote server speaking SSL/TLS ), -connect (This specifies the host
+#and optional port to connect to), -servername (Set the TLS SNI (Server Name Indication) extension
+#in the ClientHello message to the given value)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/s_client
+sudo openssl s_client -connect a.st1.ntp.br:4460 -servername a.st1.ntp.br
 ```
 
-Entendendo a saída do comando: __`timedatectl`__ (NÃO COMENTADO NO VÍDEO)<br>
-| Campo | Valor | Descrição |
-| ----- | ----- | --------- |
-| **Server** | *200.160.7.186 (a.st1.ntp.br)* | Endereço IP e nome do servidor NTP atualmente em uso. |
-| **Poll interval** | *1min 4s (min: 32s; max: 34min 8s)* | Intervalo de verificação da hora. Mostra o tempo atual, mínimo e máximo de polling.|
-| **Leap** | *normal* | Estado de ajuste de segundos (ex: `normal`, `insert second`, `delete second`).|
-| **Version** | *4* | Versão do protocolo NTP utilizado. |
-| **Stratum** | *1* | Nível de proximidade com a fonte de tempo. `1` indica servidor de referência (ex: GPS, relógio atômico). |
-| **Reference** | *ONBR* | Identificador da fonte de tempo utilizada pelo servidor NTP remoto. |
-| **Precision** | *1us (-22)* | Precisão estimada do relógio local. |
-| **Root distance** | *1.022ms (max: 5s)* | Distância total (erro estimado) até a fonte de tempo confiável. |
-| **Offset** | *+5.324ms* | Diferença atual entre o relógio do sistema e o relógio do servidor NTP. |
-| **Delay** | *33.551ms* | Tempo de ida e volta da comunicação com o servidor NTP. |
-| **Jitter** | *0* | Variação de atraso entre pacotes consecutivos — ideal quando está baixo. |
-| **Packet count** | *1* | Número de pacotes trocados desde a última inicialização. |
-| **Frequency** | *-458,403ppm* | Ajuste de frequência aplicado ao relógio do sistema para mantê-lo sincronizado. |
+Entendendo a saída do comando: __`openssl s_client -connect a.st1.ntp.br:4460 -servername a.st1.ntp.br`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💻 **Comando** | `openssl s_client -connect a.st1.ntp.br:4460 -servername a.st1.ntp.br` | Utiliza o **OpenSSL** para estabelecer uma conexão **TLS** com o servidor NTS e exibir informações sobre o certificado digital apresentado durante a negociação. A opção `-servername` habilita o **SNI (Server Name Indication)**. |
+| 🌐 **Servidor** | `a.st1.ntp.br` | Servidor **Stratum 1** do projeto **NTP.br**, com suporte ao **Network Time Security (NTS)**. |
+| 🚪 **Porta** | `4460/TCP` | Porta padrão do serviço **NTS-KE (Network Time Security - Key Establishment)**, utilizada para estabelecer uma sessão TLS e negociar chaves criptográficas. |
+| 🔐 **Protocolo** | `TLS` | Protocolo criptográfico utilizado para autenticar o servidor e negociar os cookies NTS antes da sincronização NTP. |
+| 📜 **Certificado** | `-----END CERTIFICATE-----` | Indica o final da cadeia de certificados X.509 enviada pelo servidor durante a negociação TLS. |
+| 👤 **Subject (CN)** | `CN=a.st1.ntp.br` | **Common Name (CN)** do certificado digital. Deve corresponder ao nome DNS do servidor acessado, confirmando sua identidade. |
+| 🏛️ **Issuer** | `C=US, O=Let's Encrypt, CN=YR2` | Autoridade Certificadora (CA) que emitiu o certificado digital. Neste caso, o certificado foi emitido pela **Let's Encrypt**, cadeia **YR2**. |
+---
 
-## 07_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)
+## 11_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
 **OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de Data e Hora em modo manual caso as configurações de sincronismo automático não funcione de forma adequada, não recomendo a configuração de Data e Hora em modo manual, isso é um alerta de erro de sistema (BIOS/Hardware ou Rede/Internet).
 
 ```bash
 #configuração da data e hora no modo manual no Ubuntu Server
-#opção do comando date: -s (set), %d (day of month), %m (month), %Y (year), %H (hour), 
+#opções do comando date: -s (set), %d (day of month), %m (month), %Y (year), %H (hour), 
 #%M (minute), %S (second)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/date.1.html
 sudo date
 sudo date +%d/%m/%Y
 sudo date -s 20/01/2023
@@ -315,20 +414,21 @@ sudo date +%H:%M:%S
 sudo date -s 13:30:00
 ```
 
-## 08_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)
+## 12_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
 **OBSERVAÇÃO IMPORTANTE:** mesmo cenário da utilização do comando __`date`__, a da Data e Hora da BIOS do Hardware é mantida pela *CMOS e Bateria* que mantém essa hora armazenada, caso a Data e Hora de BIOS esteja errada, recomendo verificar a Bateria pois já é um sinal de falha de Hardware, no GNU/Linux você pode sincronizar a Data e Hora de Software para o Hardware e vice-versa, também, não é recomendo a sua utilização.
 
 ```bash
 #sincronizando a data hora de software e hardware manual no Ubuntu Server
-#opção do comando hwclock: --systohc (system clock to hardware clock), --hctosys (hardware 
+#opções do comando hwclock: --systohc (system clock to hardware clock), --hctosys (hardware 
 #clock to system clock)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --show
 sudo hwclock --systohc
 sudo hwclock --hctosys
 ```
 
-## 09_ Alterando as Configurações do Teclado e Console no Ubuntu Server (NÃO COMENTADO NO VÍDEO)
+## 13_ Alterando as Configurações do Teclado e Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
 ```bash
 #verificando as configurações do Teclado no Ubuntu Server
