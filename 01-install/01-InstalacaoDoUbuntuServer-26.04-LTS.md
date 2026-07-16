@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 13/07/2026<br>
-Versão: 0.03<br>
+Data de atualização: 16/07/2026<br>
+Versão: 0.04<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -45,7 +45,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 02) Vídeo de instalação do VirtualBOX no Linux Mint: https://www.youtube.com/watch?v=yTihvAaaxpU<br>
 03) Atualização do VirtualBOX no Linux Mint: https://www.youtube.com/watch?v=DU47PLFSxpA<br>
 
-**OBSERVAÇÃO:** Utilizar o Oracle VirtualBOX Gerenciador (versão 7.x ou superior).
+> **OBSERVAÇÃO:** Utilizar o Oracle VirtualBOX Gerenciador (versão 7.x ou superior).
 
 ```bash
 01) Ferramentas;
@@ -133,9 +133,9 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 
 Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.com/server/docs/installation
 
-**OBSERVAÇÃO IMPORTANTE:** O Boot Inicial do Ubuntu Server demora cerca de: __`30 (trinta segundos)`__ para iniciar a instalação padrão caso você não altere as opções de Boot.
+> **OBSERVAÇÃO IMPORTANTE:** O Boot Inicial do Ubuntu Server demora cerca de: __`30 (trinta segundos)`__ para iniciar a instalação padrão caso você não altere as opções de Boot.
 
-**OBSERVAÇÃO:** Para parar o *Boot Inicial do Ubuntu Server* pressione: __`<Seta para Baixo>`__.
+> **OBSERVAÇÃO:** Para parar o *Boot Inicial do Ubuntu Server* pressione: __`<Seta para Baixo>`__.
 
 ```bash
 01) *Try or Install Ubuntu Server
@@ -210,7 +210,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
         <Create>
         #Criando a partição Variável Var do Ubuntu Server
         Create Logical Volume <Enter>
-          Name: lv-tmp
+          Name: lv-var
           Size (max 36.000G): 15.000G
           Format: ext4
           Mount: /var
@@ -219,7 +219,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
       #Alterando o novo do Volume Lógico da Raiz Root do Ubuntu Server
       ubuntu-lv <Enter>
         Edit <Enter>
-          Name: ln-root
+          Name: lv-root
         <Save>
 <Done>
   Confirm destructive action
@@ -256,7 +256,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 ## 06_ Acessando o Ubuntu Server pela primeira vez via Terminal
 
-**OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO SSH SERVER, PRESSIONE <ENTER> PARA APARECER A TELA DE LOGIN.
+> **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO SSH SERVER, PRESSIONE <ENTER> PARA APARECER A TELA DE LOGIN.
 
 ```bash
 01) Tela de Login do Ubuntu Server
@@ -271,7 +271,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 ## 07_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
 
-**DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
+> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
 
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)

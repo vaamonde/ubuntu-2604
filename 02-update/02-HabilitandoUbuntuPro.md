@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 13/07/2026<br>
-Versão: 0.03<br>
+Data de atualização: 16/07/2026<br>
+Versão: 0.04<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -105,9 +105,9 @@ Entendendo a saída do comando: __`uname -a`__<br>
 | 🐧 **Sistema Operacional** | `GNU/Linux` | Indica que o sistema utiliza o kernel Linux juntamente com as ferramentas do projeto GNU. |
 
 
-## 02_ Atualizando o Sistema Operacional Ubuntu Server
+## 02_ Forçando uma Atualizando Completa do Sistema Operacional do Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** recomendo fazer um upgrade completo do servidor antes de adicionar a Licença do Ubuntu Pro.
+> **OBSERVAÇÃO IMPORTANTE:** recomendo fazer um upgrade completo do servidor antes de adicionar a *Licença do Ubuntu Pro*.
 
 ```bash
 #Forçando uma atualização completa do servidor antes de habilitar o Ubuntu Pro
@@ -139,7 +139,7 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 <Sim, tenho certeza>
 ```
 
-## 04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal
+## 04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal (Suporte para 5 Servidores)
 
 Link para o Dashboard oficial do Ubuntu Pro: Acesse o site: https://ubuntu.com/pro/dashboard
 
@@ -185,7 +185,7 @@ sudo systemctl status ubuntu-advantage
 sudo pro status --all
 ```
 
-**OBSERVAÇÃO IMPORTANTE:** por padrão após habilitar o *Token do Ubuntu Pro* os principais serviços são habilitados, sendo o: **ESM-INFRA**, **ESM-APPS** e o **Livepatch**, caso queira habilitar mais serviços veja a lista abaixo:
+> **OBSERVAÇÃO IMPORTANTE:** por padrão após habilitar o *Token do Ubuntu Pro* os principais serviços são habilitados, sendo o: **ESM-INFRA**, **ESM-APPS** e o **Livepatch**, caso queira habilitar mais serviços veja a lista abaixo:
 
 | **Serviço** | **Nome** | **Descrição** |
 | :---------: | -------- | ------------- |
@@ -229,9 +229,9 @@ sudo pro fix CVE-2026-54591
 sudo canonical-livepatch status --verbose
 ```
 
-## 08_ Atualizando o sistema com o suporte do Ubuntu Pro no Ubuntu Server
+## 08_ Atualizando o Sistema Operacional com o suporte do Ubuntu Pro no Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** após adicionar a licença do *Ubuntu Pro* é recomendado fazer um upgrade completo do sistema para testar o *Token* e as novas listas do **sources.list** do Ubuntu Pro.
+> **OBSERVAÇÃO IMPORTANTE:** após adicionar a licença do *Ubuntu Pro* é recomendado fazer um __`Upgrade Completo do Sistema`__ para testar o *Token* e as novas listas do **sources.list** do Ubuntu Pro.
 
 ```bash
 #Policy é utilizado para mostra as propriedades e prioridades dos repositórios configurados.
@@ -240,7 +240,7 @@ sudo canonical-livepatch status --verbose
 sudo apt policy
 ```
 ```bash
-#Atualizando o sistema operacional com suporte do Ubuntu Pro
+#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro
 sudo apt clean
 sudo apt update
 sudo apt upgrade

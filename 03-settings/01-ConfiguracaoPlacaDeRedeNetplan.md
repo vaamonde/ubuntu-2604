@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 13/07/2026<br>
-Versão: 0.03<br>
+Data de atualização: 16/07/2026<br>
+Versão: 0.04<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -288,9 +288,9 @@ Entendendo a saída do comando: __`sudo netplan status`__<br>
 
 ## 04_ Alterando as configurações da Placa de Rede do Ubuntu Server
 
-**OBSERVAÇÃO:** o nome do arquivo de configuração da placa de rede pode mudar dependendo da versão do Ubuntu Server. O arquivo: __`/etc/netplan/00-installer-config.yaml`__ e o Padrão do Ubuntu Server 26.04.x LTS, no Ubuntu Server 24.04.x LTS tem o nome: __`/etc/netplan/50-cloud-init.yaml`__, sempre digitar o comando: __`ls -lh /etc/netplan`__ antes de editar o arquivo Netplan.
+> **OBSERVAÇÃO:** o nome do arquivo de configuração da placa de rede pode mudar dependendo da versão do Ubuntu Server. O arquivo: __`/etc/netplan/00-installer-config.yaml`__ e o Padrão do Ubuntu Server 26.04.x LTS, no Ubuntu Server 24.04.x LTS tem o nome: __`/etc/netplan/50-cloud-init.yaml`__, sempre digitar o comando: __`ls -lh /etc/netplan`__ antes de editar o arquivo Netplan.
 
-**OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do Netplan e baseado no formato de *Serialização de Dados Legíveis YAML (Yet Another Markup Language)* utilizado na linguagem de programação Python por exemplo, muito cuidado com o uso de __`Espaços e Tabulação`__ e principalmente sua **Indentação**.
+> **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do Netplan e baseado no formato de *Serialização de Dados Legíveis YAML (Yet Another Markup Language)* utilizado na linguagem de programação Python por exemplo, muito cuidado com o uso de __`Espaços e Tabulação`__ e principalmente sua **Indentação**.
 
 ```bash
 #listando o conteúdo do diretório de configuração do Netplan
@@ -334,17 +334,17 @@ network:
       # Definindo o Nome Lógico da Interface de Rede
       set-name: enp0s3
       #
-      # Desabilitando o suporte da configuração automática do IPv6 na interface física
-      link-local: []
-      #
-      # Desabilitando a configuração automática via Router Advertisement (IPv6)
-      accept-ra: false
-      #
       # Desabilitando o suporte ao DHCP Client IPv4 na interface física
       dhcp4: false
       #
       # Desabilitando o suporte ao DHCP Client IPv6 na interface física
       dhcp6: false
+      #
+      # Desabilitando o suporte da configuração automática do IPv6 na interface física
+      link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      accept-ra: false
       #
       # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
       # endereço IPv6 Unicast Global e Link Local
@@ -392,7 +392,7 @@ ESC SHIFT :x <Enter>
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp
 
 #listando o conteúdo do diretório do Netplan com os novos arquivos
-#opção do comando ls: -l (long listing), -h (human-readable)
+#opções do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.htm
 ls -lh /etc/netplan/
 
@@ -420,7 +420,7 @@ sudo netplan status
 
 ## 06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** CUIDADO!!!!!! Nem todos os servidores Externos tem suporte ao __`DNSSEC ou DoT`__, segue lista dos principais servidores com suporte ao **DNSSEC e DoT** recomentado pelo Ubuntu Server no arquivo: __`/etc/systemd/resolved.conf`__
+> **OBSERVAÇÃO IMPORTANTE:** CUIDADO!!!!!! Nem todos os servidores Externos tem suporte ao __`DNSSEC ou DoT`__, segue lista dos principais servidores com suporte ao **DNSSEC e DoT** recomentado pelo Ubuntu Server no arquivo: __`/etc/systemd/resolved.conf`__
 
 | **Servidor DNS** | **Endereços IPv4** | **Endereços IPv6** |
 |------------------| -------------------| -------------------|
@@ -496,7 +496,7 @@ sudo resolvectl status
 sudo netplan status
 
 #testando a conexão com a Internet e Resolução de nomes de DNS IPv4 e IPv6 no Ubuntu Server
-#opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
+#opções do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ping -4 -c 5 8.8.8.8
 ping -6 -c 5 2001:4860:4860::8888
@@ -506,9 +506,9 @@ ping -6 -c 5 google.com
 
 ## 09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
 
-**OBSERVAÇÃO:** após a configuração da Placa de Rede do Ubuntu Server você já pode acessar remotamente o seu servidor utilizando o __`Protocolo SSH`__ nos clientes Linux ou Microsoft Windows para dá continuidade nas configurações do servidor, ficando mais fácil administrar e configurar os principais serviços de rede de forma remota.
+> **OBSERVAÇÃO:** após a configuração da Placa de Rede do Ubuntu Server você já pode acessar remotamente o seu servidor utilizando o __`Protocolo SSH`__ nos clientes Linux ou Microsoft Windows para dá continuidade nas configurações do servidor, ficando mais fácil administrar e configurar os principais serviços de rede de forma remota.
 
-**DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
+> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
 
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)

@@ -19,14 +19,30 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
+#01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server<br>
+#02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server<br>
+#03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server<br>
+#04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server<br>
+#05_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server<br>
+#06_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server<br>
+#07_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server<br>
+#08_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server<br>
+#09_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server<br>
+#10_ Verificando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server<br>
+#11_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
+#12_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
+#13_ Alterando as Configurações do Teclado e Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
 
 | **🌍 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
-| 🌐 **Locale**  | Conjunto de configurações que define **idioma, país/região, formato de datas, horas, números, moedas e unidades de medida** utilizados pelo sistema operacional e pelas aplicações. | Personaliza a forma como informações são exibidas ao usuário, garantindo que datas, horários, moedas e mensagens sejam apresentados de acordo com a localização e o idioma configurados. Exemplo: `pt_BR.UTF-8` ou `en_US.UTF-8`. |
-| 🔤 **UTF-8 (Unicode Transformation Format - 8 bits)** | Padrão de codificação de caracteres baseado no **Unicode**, capaz de representar praticamente todos os idiomas e símbolos existentes. É a codificação padrão na maioria dos sistemas Linux modernos. | Permite armazenar, transmitir e exibir textos corretamente em diferentes idiomas, evitando problemas de caracteres inválidos ou acentuação incorreta (como "ç", "ã", "é", "ü"). |
-| 🕒 **Timezone (Fuso Horário)** | Configuração que determina o fuso horário utilizado pelo sistema operacional, considerando a localização geográfica e, quando aplicável, regras de horário de verão. | Garante que o relógio do sistema apresente a hora local correta, influenciando registros de logs, tarefas agendadas (cron), autenticação, bancos de dados e aplicações distribuídas. Exemplo: `America/Sao_Paulo`. |
-| ⏱️ **NTP (Network Time Protocol)** | Protocolo de sincronização de tempo que utiliza **UDP porta 123** para manter o relógio dos computadores sincronizado com servidores de referência de tempo. | Mantém a data e a hora corretas em servidores e dispositivos de rede, sendo essencial para autenticação (Kerberos), certificados digitais, registros de logs, auditorias, clusters e ambientes distribuídos. |
-| 🇧🇷 **NTP.br** | Projeto mantido pelo **NIC.br** em parceria com o **Observatório Nacional (ON)**, responsável por disponibilizar servidores públicos de sincronização da Hora Legal Brasileira. | Permite que equipamentos localizados no Brasil sincronizem seus relógios com servidores nacionais de alta precisão, reduzindo a latência e garantindo maior confiabilidade na sincronização do horário oficial brasileiro. |
+| 🌐 **Locale** | Conjunto de configurações que define **idioma, país/região, formato de datas, horas, números, moedas e unidades de medida** utilizados pelo sistema operacional e pelas aplicações. | Personaliza a forma como informações são exibidas pelo sistema, garantindo que datas, horários, números, moedas e mensagens sejam apresentados conforme o idioma e a região configurados. Exemplo: `pt_BR.UTF-8` ou `en_US.UTF-8`. |
+| 🔤 **UTF-8 (Unicode Transformation Format - 8 bits)** | Padrão universal de codificação de caracteres baseado no **Unicode**, capaz de representar praticamente todos os idiomas e símbolos existentes. É a codificação padrão dos sistemas Linux modernos. | Permite armazenar, transmitir e exibir textos corretamente em diferentes idiomas, evitando problemas com caracteres especiais, acentuação e compatibilidade entre sistemas. |
+| 🕒 **Timezone (Fuso Horário)** | Configuração que define o fuso horário utilizado pelo sistema operacional, considerando a localização geográfica e, quando aplicável, regras de horário de verão. | Garante que o relógio do sistema apresente a hora correta para a região configurada, influenciando logs, tarefas agendadas (Cron), autenticação, bancos de dados e aplicações distribuídas. Exemplo: `America/Sao_Paulo` ou `Etc/UTC`. |
+| ⏱️ **NTP (Network Time Protocol)** | Protocolo de sincronização de tempo que utiliza **UDP porta 123** para manter os relógios de computadores e dispositivos sincronizados com servidores de referência de tempo. | Mantém a data e a hora corretas em servidores e equipamentos de rede, sendo essencial para autenticação, certificados digitais, auditorias, registros de logs, bancos de dados, clusters e ambientes distribuídos. |
+| 🇧🇷 **NTP.br** | Projeto mantido pelo **NIC.br** em parceria com o **Observatório Nacional (ON)**, responsável por disponibilizar servidores públicos sincronizados com a Hora Legal Brasileira. Alguns servidores **Stratum 1** oferecem suporte ao **NTS (Network Time Security)**. | Permite que equipamentos localizados no Brasil sincronizem seus relógios com servidores nacionais de alta precisão, reduzindo a latência e aumentando a confiabilidade da sincronização do horário oficial brasileiro. |
+| ⏰ **Chrony** | Implementação moderna do protocolo **NTP**, composta pelo daemon **chronyd** e pela ferramenta administrativa **chronyc**. É o serviço padrão de sincronização de horário do **Ubuntu Server 26.04 LTS**. | Realiza a sincronização inteligente do relógio do sistema, oferecendo maior precisão, inicialização mais rápida, melhor desempenho em máquinas virtuais, notebooks e servidores, além de suportar autenticação **NTS (Network Time Security)**. |
+| 🔐 **NTS (Network Time Security)** | Extensão de segurança do protocolo NTP, padronizada pela **RFC 8915**, que utiliza **TLS (TCP/4460)** para autenticar o servidor NTP e negociar chaves criptográficas antes da sincronização do horário. | Protege a sincronização de horário contra ataques de falsificação (*spoofing*), interceptação (*Man-in-the-Middle*) e adulteração das respostas NTP, garantindo autenticidade, integridade e confiabilidade das informações de tempo. |
+---
 
 [![Data e Hora Ubuntu Server](http://img.youtube.com/vi//0.jpg)](E "Data e Hora Ubuntu Server")
 
@@ -67,7 +83,7 @@ Entendendo a saída do comando: __`locale`__<br>
 
 ## 02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** O *pt_BR.UTF-8* é uma codificação de caractere que indica o uso da **Língua Portuguesa (pt) como falada no Brasil (BR)** com a codificação __`UTF-8`__. UTF-8 (Unicode Transformation Format - 8 bits) é uma codificação de caracteres que pode representar qualquer caractere no conjunto Unicode, o que inclui praticamente todos os caracteres de todas as línguas do mundo.
+> **OBSERVAÇÃO IMPORTANTE:** O *pt_BR.UTF-8* é uma codificação de caractere que indica o uso da **Língua Portuguesa (pt) como falada no Brasil (BR)** com a codificação __`UTF-8`__. UTF-8 (Unicode Transformation Format - 8 bits) é uma codificação de caracteres que pode representar qualquer caractere no conjunto Unicode, o que inclui praticamente todos os caracteres de todas as línguas do mundo.
 
 ```bash
 #gerando a localidade do Português do Brasil (pt_BR) no Ubuntu Server
@@ -87,8 +103,9 @@ sudo localectl set-locale LANG=pt_BR.UTF-8
 sudo update-locale LANG=pt_BR.UTF-8 LC_ALL=pt_BR.UTF-8 LANGUAGE="pt_BR:pt:en"
 
 #recomendado rebootar o sistema para testar as localidades
-#mais informações acesse a documentação oficial em: https://linux.die.net/man/8/reboot
-sudo reboot
+#opção do comando systemctl: reboot (Shut down and reboot the system)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl reboot
 ```
 ```bash
 #verificando as mudanças de localidades do sistema no Ubuntu Server depois do reboot
@@ -101,7 +118,7 @@ sudo localectl
 
 ## 03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** no __`Sistema Operacional Ubuntu Server`__ temos basicamente: **03 (três)** configurações de hora (time) sendo elas: 
+> **OBSERVAÇÃO IMPORTANTE:** no __`Sistema Operacional Ubuntu Server`__ temos basicamente: **03 (três)** configurações de hora (time) sendo elas: 
 
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :---------| :------------ |
@@ -130,13 +147,13 @@ Entendendo a saída do comando: __`timedatectl`__<br>
 
 ## 04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server
 
-**OBSERVAÇÃO IMPORTANTE:** geralmente mudar para o Time Zone de __`America/Sao_Paulo`__ a hora fica errada no sistema, nesse caso podemos mudar para __`America/Fortaleza`__ ou __`America/Bahia`__ esse error é por causa do **Fuso Horário** em relação ao __`Horário de Verão`__ que não existe mais no Brasil (foi criado em 1931 pelo Governo Getúlio Vargas, só começou a ser aplicado no Brasil em 1985 no Governo José Sarney e foi cancelado em 2018 no Governo Bolsonaro).
+> **OBSERVAÇÃO IMPORTANTE:** geralmente mudar para o Time Zone de __`America/Sao_Paulo`__ a hora fica errada no sistema, nesse caso podemos mudar para __`America/Fortaleza`__ ou __`America/Bahia`__ esse error é por causa do **Fuso Horário** em relação ao __`Horário de Verão`__ que não existe mais no Brasil (foi criado em 1931 pelo Governo Getúlio Vargas, só começou a ser aplicado no Brasil em 1985 no Governo José Sarney e foi cancelado em 2018 no Governo Bolsonaro).
 
-**OBSERVAÇÃO IMPORTANTE:** Até o momento (25/06/2025), o horário de verão 2025 está em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
+> **OBSERVAÇÃO IMPORTANTE:** Até o momento (25/06/2025), o horário de verão 2025 está em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
 
-**OBSERVAÇÃO IMPORTANTE:** Até a data de 14/07/2026, o horário de verão não está previsto para ocorrer no Brasil em 2026. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
+> **OBSERVAÇÃO IMPORTANTE:** Até a data de 14/07/2026, o horário de verão não está previsto para ocorrer no Brasil em 2026. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
 
-**OBSERVAÇÃO:** ALTERAR O LOCALE CONFORME A LOCALIDADE DO SEU SERVIDOR, MAIS INFORMAÇÕES SOBRE TIMEZONE ACESSE: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+> **OBSERVAÇÃO:** ALTERAR O LOCALE CONFORME A LOCALIDADE DO SEU SERVIDOR, MAIS INFORMAÇÕES SOBRE TIMEZONE ACESSE: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 ```bash
 #listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (quit))
@@ -187,8 +204,15 @@ sudo chronyc -v
 
 > **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
+| **🔌 Portas** | **🧭 Protocolos** | **📦 Serviços** | **📖 Descrição** |
+| :----------: | :--------------: | :------------- | :--------------- |
+| **123** | UDP | NTP | Porta padrão do protocolo NTP. O **chronyd** envia e recebe pacotes NTP por esta porta para sincronização de horário. |
+| **4460** | TCP | NTS-KE | Porta padrão do **Network Time Security - Key Establishment (NTS-KE)**, utilizada para negociação TLS e troca de chaves criptográficas antes da sincronização NTP. Definida pela **RFC 8915**. |
+| **323** | UDP | Chronyc | Porta utilizada pelo protocolo de monitoramento remoto do **Chrony**. Por padrão, no Ubuntu ela normalmente fica disponível apenas para comunicação local e não deve ser exposta na rede sem necessidade. |
+---
+
 ```bash
-#verificando a porta padrão UDP-323 do Chrony Server
+#verificando a porta padrão UDP-323 do Chrony Server Monitor
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address)
 sudo lsof -nP -iUDP:'323'
 ```
@@ -230,9 +254,9 @@ sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubuse
 
 ## 09_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
 
-**OBSERVAÇÃO:** O NTP (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
+> **OBSERVAÇÃO:** O NTP (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
 
-**OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O ntp.br é o serviço oficial de sincronização de horário do Brasil, mantido pelo Observatório Nacional (ON), em parceria com o NIC.br (Núcleo de Informação e Coordenação do Ponto BR).
+> **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O ntp.br é o serviço oficial de sincronização de horário do Brasil, mantido pelo Observatório Nacional (ON), em parceria com o NIC.br (Núcleo de Informação e Coordenação do Ponto BR).
 
 ```bash
 #editando o arquivo de configuração do Chrony Server e Client
@@ -338,7 +362,7 @@ Entendendo a saída do comando: __`chronyc sources`__<br>
 
 ```bash
 #verificando as configuração de autenticação NTS do Chrony no Ubuntu Server
-#opção do comando chronyc: authdata ()
+#opção do comando chronyc: authdata (displays information specific to authentication of NTP sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
 sudo chronyc authdata
 ```
@@ -400,23 +424,26 @@ Entendendo a saída do comando: __`openssl s_client -connect a.st1.ntp.br:4460 -
 
 ## 11_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
-**OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de Data e Hora em modo manual caso as configurações de sincronismo automático não funcione de forma adequada, não recomendo a configuração de Data e Hora em modo manual, isso é um alerta de erro de sistema (BIOS/Hardware ou Rede/Internet).
+> **OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de __`Data e Hora em Modo Manual`__ caso as configurações de *Sincronismo Automático* não funcione de forma adequada, não é recomendado configurar a Data e Hora em modo manual em servidores, isso é um alerta de **Erro de Sistema (BIOS/Hardware ou Rede/Internet)**.
 
 ```bash
-#configuração da data e hora no modo manual no Ubuntu Server
-#opções do comando date: -s (set), %d (day of month), %m (month), %Y (year), %H (hour), 
-#%M (minute), %S (second)
+#verificando a data hora no Ubuntu Server
+#opções do comando date: %d (day of month), %m (month), %Y (year), %H (hour), %M (minute), %S (second)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/date.1.html
 sudo date
 sudo date +%d/%m/%Y
-sudo date -s 20/01/2023
 sudo date +%H:%M:%S
+
+#configuração da data e hora no modo manual no Ubuntu Server
+#opções do comando date: -s (set)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/date.1.html
+sudo date -s 16/07/2026
 sudo date -s 13:30:00
 ```
 
 ## 12_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
-**OBSERVAÇÃO IMPORTANTE:** mesmo cenário da utilização do comando __`date`__, a da Data e Hora da BIOS do Hardware é mantida pela *CMOS e Bateria* que mantém essa hora armazenada, caso a Data e Hora de BIOS esteja errada, recomendo verificar a Bateria pois já é um sinal de falha de Hardware, no GNU/Linux você pode sincronizar a Data e Hora de Software para o Hardware e vice-versa, também, não é recomendo a sua utilização.
+> **OBSERVAÇÃO IMPORTANTE:** mesmo cenário da utilização do comando __`date`__, a da Data e Hora da BIOS do Hardware é mantida pela *CMOS e Bateria* que mantém essa hora armazenada, caso a Data e Hora de BIOS esteja errada, recomendo verificar a Bateria pois já é um sinal de falha de Hardware, no GNU/Linux você pode sincronizar a Data e Hora de Software para o Hardware e vice-versa, também, não é recomendo a sua utilização.
 
 ```bash
 #sincronizando a data hora de software e hardware manual no Ubuntu Server
@@ -429,16 +456,19 @@ sudo hwclock --hctosys
 ```
 
 ## 13_ Alterando as Configurações do Teclado e Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)
-
 ```bash
 #verificando as configurações do Teclado no Ubuntu Server
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+#mais informações acesse a documentação oficial em: https://manpages.debian.org/testing/keyboard-configuration/keyboard.5.en.html
 sudo cat -n /etc/default/keyboard
   XKBMODEL="pc105"  (Padrão 105 teclas pc105)
   XKBLAYOUT="br"    (Layout de Teclado Português Brasileiro ABNT2)
 ```
 ```bash
 #reconfigurando o Teclado no Ubuntu Server
+#opção do comando dpkg-reconfigure: keyboard-configuration (packet reconfiguration)
+#mais informações acesse a documentação oficial em: https://linuxcommandlibrary.com/man/dpkg-reconfigure
 sudo dpkg-reconfigure keyboard-configuration
   Keyboard model: Generic 105-Key PC (intl <- Internacional) <Enter>;
   Country of origin for the keyboard: Portuguese (Brazil) <Enter>;
@@ -450,11 +480,15 @@ sudo dpkg-reconfigure keyboard-configuration
 ```bash
 #verificando as configurações do UTF-8 (8-bit Unicode Transformation Format) e Console (Bash/Shell)
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+#mais informações acesse a documentação oficial em: https://manpages.debian.org/testing/console-setup/console-setup.5.en.html
 sudo cat -n /etc/default/console-setup
   CHARMAP="UTF-8"
 ```
 ```bash
 #reconfigurando o UTF-8 e Console no Ubuntu Server
+#opção do comando dpkg-reconfigure: keyboard-configuration (packet reconfiguration)
+#mais informações acesse a documentação oficial em: https://linuxcommandlibrary.com/man/dpkg-reconfigure
 sudo dpkg-reconfigure console-setup
   UTF-8 <Enter>;
   Guess optimal character set (Supor o melhor conjunto de caracteres) <Enter>;
@@ -463,5 +497,7 @@ sudo dpkg-reconfigure console-setup
 ```
 ```bash
 #reiniciando o servidor para aplicar as mudanças do Teclado e Console
-sudo reboot
+#opção do comando systemctl: reboot (Shut down and reboot the system)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl reboot
 ```

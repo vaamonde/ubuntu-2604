@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 13/07/2026<br>
-Versão: 0.03<br>
+Data de atualização: 16/07/2026<br>
+Versão: 0.04<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -183,9 +183,10 @@ sudo cat -n /var/log/apt/history.log
 sudo cat -n /var/log/apt/term.log
 ```
 
-## 13_ Reiniciando o sistema operacional do Ubuntu Server para aplicar as mudanças
+## 13_ Reiniciando aplicando as mudanças das atualizações no Ubuntu Server
 ```bash
 #Reiniciar o servidor para testar as atualizações
-#mais informações acesse a documentação oficial em: https://linux.die.net/man/8/reboot
-sudo reboot
+#opção do comando systemctl: reboot (Shut down and reboot the system)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl reboot
 ```
