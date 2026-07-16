@@ -307,7 +307,7 @@ sudo systemctl restart chrony
 sudo systemctl status chrony
 
 #analisando os Log's e mensagens de erro do serviço do Chrony Server e Client
-#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+#opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u chrony
 ```

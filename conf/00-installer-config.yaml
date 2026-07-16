@@ -6,8 +6,8 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 14/07/2026
-# Data de atualização: 14/07/2026
-# Versão: 0.01
+# Data de atualização: 16/07/2026
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
 # Testado e homologado para a versão do Netplan v1.2.x
 #
@@ -34,17 +34,17 @@ network:
       # Definindo o Nome Lógico da Interface de Rede (Útil para várias Placas de Rede)
       set-name: enp0s3
       #
-      # Desabilitando o suporte da configuração automática do IPv6 na interface física6
-      link-local: []
-      #
-      # Desabilitando a configuração automática via Router Advertisement (IPv6)
-      accept-ra: false
-      #
       # Desabilitando o suporte ao DHCP Client IPv4 na interface física
       dhcp4: false
       #
       # Desabilitando o suporte ao DHCP Client IPv6 na interface física
       dhcp6: false
+      #
+      # Desabilitando o suporte da configuração automática do IPv6 na interface física6
+      link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      accept-ra: false
       #
       # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
       # endereço IPv6 Unicast Global e Link Local

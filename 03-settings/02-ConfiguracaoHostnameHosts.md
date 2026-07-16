@@ -121,6 +121,6 @@ nslookup 2804:14c:90:8697::20
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ping -4 -c 5 127.0.0.1
 ping -4 -c 5 172.16.1.20
-ping -6 -c 5 fe80::20%enp0s3
+ping -6 -c 5 fe80::20%enp0s3        #OBSERVAÇÃO: para o ping em IPv6 Link Local funcionar e necessário indicar a interface
 ping -6 -c 5 2804:14c:90:8697::20
 ```

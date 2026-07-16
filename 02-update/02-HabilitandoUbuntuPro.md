@@ -178,6 +178,11 @@ sudo pro attach COPIAR_E_COLAR_O_SEU_TOKEN
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status ubuntu-advantage
 
+#analisando os Log's e mensagens de erro do serviço do Ubuntu Pro
+#opção do comando journalctl: u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u ubuntu-advantage
+
 #verificando o status do Ubuntu Pro
 #opção do comando pro: status (Report current status of Ubuntu Pro services on system)
 #--all (view all information command and verbose mode)
@@ -285,7 +290,8 @@ sudo systemctl restart unattended-upgrades
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status unattended-upgrades
 
-#analisando os Log's e mensagens de erro do serviço de Atualizações Automáticas
-#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
-sudo journalctl -xeu unattended-upgrades
+#analisando os Log's e mensagens de erro das Atualizações Automáticas
+#opção do comando journalctl: u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u unattended-upgrades
 ```

@@ -401,21 +401,42 @@ ls -lh /etc/netplan/
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug get
 
-#aplicando as mudanças do Netplan em modo Debug (detalhado)
-#opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
+#validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado)
+#opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
-sudo netplan --debug apply
+sudo netplan --debug generate
 
-#OBSERVAÇÃO IMPORTANTE: você pode utilizar a opção: try que caso aconteça alguma
-#falha na hora de configurar a placa de rede ele reverte a configuração inicial
+#testando a configuração com possibilidade de reversão o Netplan em modo Debug (detalhado)
+#OBSERVAÇÃO IMPORTANTE: você pode utilizar a opção: try que caso aconteça alguma falha na 
+#hora de configurar a placa de rede ele reverte a configuração inicial
 #opções do comando netplan: --debug (enable debug messages), try (try to apply a new netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug try
+
+#aplicando as mudanças definitivas do Netplan em modo Debug (detalhado)
+#opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
+sudo netplan --debug apply
 
 #verificando o status das configurações do Netplan no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
+
+#verificando o arquivo de configuração do Systemd do Netplan no Ubuntu Server
+#opção do comando cat: -n (number line), * (asterisco) todos os arquivos
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+sudo cat -n /run/systemd/network/*.network
+
+#verificar o status do serviço do Netplan no Ubuntu Server
+#opção do comando systemctl: status (Show terse runtime status information about one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.htm
+sudo systemctl status netplan-configure
+
+#analisando os Log's e mensagens de erro do serviço do Netplan no Ubuntu Server
+#opção do comando journalctl: u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u netplan-configure
 ```
 
 ## 06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server
@@ -443,15 +464,20 @@ INSERT
 ```
 ```bash
 #descomentar e alterar o valor da variável Domains na linha 32 para: Domains=~.
+#configuração domínio raiz (.) como domínio de roteamento ~ (routing domain)
+#~. = Utilize este servidor DNS para resolver qualquer domínio da Internet
 Domains=~.
  
 #descomentar e alterar o valor da variável DNSSEC na linha 33 para: DNSSEC=yes
+#habilita a validação do DNSSEC (Domain Name System Security Extensions)
 DNSSEC=yes
 
 #descomentar e alterar o valor da variável DNSOverTLS na linha 34 para: DNSOverTLS=yes
+#habilita o DNS over TLS (DoT), As consultas DNS passam a ser criptografadas utilizando TLS (porta TCP 853)
 DNSOverTLS=yes
 
 #descomentar e alterar o valor da variável Cache na linha 37 para: Cache=yes
+#habilita o cache local de respostas DNS
 Cache=yes
 ```
 ```bash
@@ -470,6 +496,11 @@ sudo systemctl restart systemd-resolved
 #opção do comando systemctl: status (Show terse runtime status information about one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.htm
 sudo systemctl status systemd-resolved
+
+#analisando os Log's e mensagens de erro do serviço do Ubuntu Pro
+#opção do comando journalctl: u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u systemd-resolved
 ```
 
 ## 08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server

@@ -183,7 +183,7 @@ sudo cat -n /var/log/apt/history.log
 sudo cat -n /var/log/apt/term.log
 ```
 
-## 13_ Reiniciando aplicando as mudanças das atualizações no Ubuntu Server
+## 13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server
 ```bash
 #Reiniciar o servidor para testar as atualizações
 #opção do comando systemctl: reboot (Shut down and reboot the system)
