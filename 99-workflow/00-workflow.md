@@ -1,21 +1,30 @@
-01. Instalação do Ubuntu Server 26.04 no VirtualBox
-02. Atualização do Ubuntu Server 26.04
-03. Configuração do Ubuntu Pro no Ubuntu Server 26.04
+01. Instalação do Ubuntu Server 26.04 no VirtualBox       OK
+02. Atualização do Ubuntu Server 26.04                    OK
+03. Configuração do Ubuntu Pro no Ubuntu Server 26.04     OK
+04. Configuração de Rede no Ubuntu Server 26.04           OK
+05. Configuração do Hostname do Ubuntu Server 26.04       OK
+06. Configuração do Locale e Time do Ubuntu Server 26.04  OK
+------------------------------------------------------------
 
-03. Configuração de Rede no Ubuntu Server 26.04
-05. Configuração do Hard Disk
-06. Configuração do LVM
-07. Configuração do Particionamento
+07. Configuração do Hard Disk
+08. Configuração do LVM
+09. Configuração do Particionamento
+10. Configuração do RAID-1
+------------------------------------------------------------
+
 08. Configuração do Bonding
-09. Configuração do RAID-1
+------------------------------------------------------------
+
 10. Configuração do Backup
 https://relax-and-recover.org/
 https://github.com/marcpope/borgbackupserver
+------------------------------------------------------------
 
 09. Hardening OpenSSH + Certificado + 2FA
 https://github.com/huashengdun/webssh
 https://docs.termius.com/getting-started/download-termius
 https://voltius.app/
+
 10. Hardening TCP Wrappers
 10. Hardening Firewall UFW
 11. Hardening Fail2Ban

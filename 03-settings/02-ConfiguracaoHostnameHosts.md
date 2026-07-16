@@ -116,6 +116,13 @@ nslookup 172.16.1.20
 nslookup fe80::20
 nslookup 2804:14c:90:8697::20
 
+#verificando as resoluções de endereços IPv4 e IPv6 e estatísticas do servidor Ubuntu Server
+#opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+resolvectl query localhost
+resolvectl query srvvaamonde
+resolvectl query srvvaamonde.pti.intra
+
 #testando a conexão com a Internet e Resolução de nomes de DNS
 #opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping

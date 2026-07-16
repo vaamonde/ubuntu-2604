@@ -521,6 +521,21 @@ sudo ip -6 route show
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl status
 
+#verificando as informações de Estatísticas dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
+#opção do comando resolvectl: statistics (Shows general resolver statistics, including information whether DNSSEC)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+sudo resolvectl statistics
+
+#verificando as informações de Cache dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
+#opção do comando resolvectl: show-cache (Show current cache content, per scope)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+sudo resolvectl show-cache
+
+#monitorando as consultas dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
+#opção do comando resolvectl: monitor (Show a continuous stream of local client resolution queries and their responses)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+sudo resolvectl monitor
+
 #verificando o status das configurações do Netplan IPv4 e IPv6 no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
