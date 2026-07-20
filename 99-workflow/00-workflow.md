@@ -6,8 +6,8 @@
 06. Configuração do Locale e Time do Ubuntu Server 26.04  OK
 ------------------------------------------------------------
 
-07. Configuração do Hard Disk
-08. Configuração do RAID-1
+07. Configuração do Hard Disk                             OK
+08. Configuração do RAID-1                                OK
 09. Configuração do LVM
 10. Configuração do Particionamento
 11. Configuração do Backup

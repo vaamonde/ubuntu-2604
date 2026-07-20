@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 13/07/2026<br>
-Versão: 0.01<br>
+Data de atualização: 20/07/2026<br>
+Versão: 0.02<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -78,7 +78,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de hard disk no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install smartmontools hdparm nvme-cli sysstat
+sudo apt install smartmontools hdparm sysstat
 ```
 
 ## 03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server
@@ -279,7 +279,7 @@ Entendendo a saída do comando: __`sudo lsblk -f`__<br>
 | 📁 `ubuntu-vg/lv-tmp` | `ext4` | `fab2e050-7c15-4d14-b7d8-11b592a997d9` | `/tmp` | Diretório de arquivos temporários. |
 | 📂 `ubuntu-vg/lv-var` | `ext4` | `0a2eeb23-a8a5-4552-8246-ed8c7667d8f6` | `/var` | Diretório de logs, cache e dados variáveis do sistema. |
 | 💽 `sdb` | — | — | — | Disco adicional sem particionamento ou sistema de arquivos. |
-| 💽 `sdc` | — | — | Disco adicional sem particionamento ou sistema de arquivos. |
+| 💽 `sdc` | — | — | — | Disco adicional sem particionamento ou sistema de arquivos. |
 | 📀 `sr0` | — | — | — | Unidade óptica virtual sem mídia inserida. |
 ---
 
@@ -364,7 +364,7 @@ Entendendo a saída do comando: __`sudo parted -l`__<br>
 #testando a velocidade de leitura em cache e em disco (bruto)
 #opção do comando hdparm: -t (device readings), -T (cache readings)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
-sudo hdparm -Tt /dev/sdb
+sudo hdparm -Tt /dev/sda
 sudo hdparm -Tt /dev/sdb
 sudo hdparm -Tt /dev/sdc
 ```
@@ -389,11 +389,11 @@ Entendendo a saída do comando: __`sudo hdparm -Tt /dev/sdx`__<br>
 ## 07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server
 ```bash
 #verificando a saúde geral e informações completas do disco
-#opções do comando smartctl: -H (health status), -a (all information), -i (device identify)
+#opções do comando smartctl: -i (device identify)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
 sudo smartctl -i /dev/sda
 sudo smartctl -i /dev/sdb
-sudo smartctl -i /dev/sdb
+sudo smartctl -i /dev/sdc
 ```
 
 Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
@@ -407,6 +407,7 @@ Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 | ⚠️ **Suporte ao SMART** | `Unavailable` | Os discos virtuais do VirtualBox não implementam a tecnologia SMART para monitoramento de saúde do hardware. |
 ---
 
+Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 | **Campo** | **/dev/sda** | **/dev/sdb** | **/dev/sdc** | **Descrição** |
 | :-------- | :----------: | :----------: | :----------: | :------------ |
 | 💽 **Dispositivo** | `/dev/sda` | `/dev/sdb` | `/dev/sdc` | Nome do dispositivo de bloco reconhecido pelo kernel Linux. |
@@ -418,6 +419,26 @@ Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 | 💿 **Versão ATA** | ATA/ATAPI-6 | ATA/ATAPI-6 | ATA/ATAPI-6 | Especificação ATA apresentada pelo dispositivo virtual. |
 | 📚 **Base do smartctl** | Não cadastrado | Não cadastrado | Não cadastrado | O modelo virtual não faz parte do banco de dados do `smartctl`. |
 | ❤️ **Suporte SMART** | ❌ Não disponível | ❌ Não disponível | ❌ Não disponível | O dispositivo virtual não fornece informações SMART. |
+---
+
+```bash
+#verificando se existem setores defeituosos nos discos antes de montar o RAID (opcional, teste demorado)
+#opções do comando badblocks: -s (show progress), -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/badblocks.8.html
+sudo badblocks -sv /dev/sdb
+sudo badblocks -sv /dev/sdc
+```
+
+Entendendo a saída do comando: __`sudo badblocks -sv /dev/sdx`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🛡️ **Modo de Teste** | `Read-Only` | Realiza somente leitura dos blocos, sem modificar ou apagar dados existentes no disco. |
+| 💽 **Dispositivo** | `/dev/sdb` | Disco físico (virtual no VirtualBox) submetido ao teste de integridade. |
+| 🔢 **Blocos Verificados** | `0 a 52.428.799` | Intervalo de blocos lógicos analisados durante a verificação. |
+| 📖 **Tipo de Verificação** | `Checking for bad blocks (read-only test)` | Teste de leitura sequencial para identificar blocos inacessíveis ou com falhas. |
+| ✅ **Resultado** | `Pass completed` | O teste foi concluído com sucesso. |
+| ❤️ **Blocos Defeituosos** | `0 bad blocks found` | Nenhum bloco defeituoso foi encontrado durante a verificação. |
+| ⚠️ **Erros Encontrados** | `0/0/0 errors` | Não foram detectados erros de leitura, gravação ou verificação durante o teste. |
 ---
 
 ## 08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server
