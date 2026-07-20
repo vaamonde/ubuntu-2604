@@ -20,9 +20,18 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
 
-[![RAID Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( RAID Ubuntu Server")
+[![RAID-1 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( RAID-1 Ubuntu Server")
 
 Link da vídeo aula: 
+
+| **RAID** | **Redundância** | **Performance** | **Mínimo de Discos** | **Tolerância** |
+| -------- | --------------- | --------------- | -------------------- | -------------- |
+| **RAID0** | ❌ | ⭐⭐⭐⭐⭐ | 2 | Nenhuma |
+| **RAID1** | ✅ | ⭐⭐⭐ | 2 | 1 disco |
+| **RAID5** | ✅ | ⭐⭐⭐⭐ | 3 | 1 disco |
+| **RAID6** | ✅ | ⭐⭐⭐ | 4 | 2 discos |
+| **RAID10** | ✅ | ⭐⭐⭐⭐⭐ | 4 | até metade dos discos |
+---
 
 ## 01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server
 ```bash
@@ -39,3 +48,4 @@ sudo wipefs -n /dev/sdc
 sudo wipefs -a /dev/sdb
 sudo wipefs -a /dev/sdc
 ```
+
