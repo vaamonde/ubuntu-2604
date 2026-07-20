@@ -19,10 +19,28 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 Conteúdo estudado nessa configuração:<br>
+#01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
+#02_ Instalando os principais software de Hard Disk no Ubuntu Server<br>
+#03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server<br>
+#04_ Verificando as informações de Hard Disk e Partições do Ubuntu Server<br>
+#05_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server<br>
+#06_ Verificando o Desempenho (Performance) dos Discos no Ubuntu Server<br>
+#07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server<br>
+#08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server<br>
 
 [![Hard Disk Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Hard Disk Ubuntu Server")
 
 Link da vídeo aula: 
+
+| **💾 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
+| :---------------- | :-------------- | :--------------------- |
+| 🔌 **SATA (Serial ATA)** | Interface de conexão entre a controladora e os dispositivos de armazenamento. | Permite a comunicação entre o sistema operacional e discos rígidos/SSDs. |
+| ⚙️ **AHCI (Advanced Host Controller Interface)** | Especificação de interface para controladoras SATA. | Habilita recursos como NCQ (Native Command Queuing) e Hot Plug. |
+| 🗂️ **GPT (GUID Partition Table)** | Tabela de partições moderna, sucessora da MBR. | Suporta discos maiores que 2TB e até 128 partições primárias por padrão. |
+| 🆔 **UUID (Universally Unique Identifier)** | Identificador único de 128 bits atribuído a sistemas de arquivos e partições. | Garante montagem correta e persistente das partições, independente da ordem de detecção (/dev/sdX pode mudar, o UUID não). |
+| 📊 **S.M.A.R.T. (Self-Monitoring, Analysis and Reporting Technology)** | Sistema de monitoramento embutido em HDs/SSDs modernos. | Detecta falhas de hardware antes que causem perda de dados. |
+| 🧵 **I/O Scheduler** | Algoritmo do kernel que organiza as operações de leitura/escrita em disco. | Otimiza desempenho conforme o tipo de mídia (HDD ou SSD/NVMe). |
+---
 
 ## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
 
@@ -51,11 +69,24 @@ Link da vídeo aula:
 <Iniciar>
 ```
 
-## 02_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server
+## 02_ Instalando os principais software de Hard Disk no Ubuntu Server
+```bash
+#atualizando as lista do Apt do sources.list no Ubuntu Server
+#opção do comando apt: update (Resynchronize the package index files from their sources)
+sudo apt update
+
+#instalando os pacotes e ferramentas de hard disk no Ubuntu Server
+#opção do comando apt: install (install is followed by one or more package names)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+sudo apt install smartmontools hdparm nvme-cli sysstat
+```
+
+## 03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server
 ```bash
 #verificando os dispositivos PCI de controladora de armazenamento (SATA/SCSI/NVMe)
 #opção do comando lspci: -v (verbose)
-#opção do comando grep: -i (), -A5
+#opção do comando grep: -i (Ignore case distinctions in patterns and input data), -A5 (Print NUM
+#lines of trailing context after matching lines)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
 ```
@@ -107,7 +138,7 @@ Entendendo a saída do comando: __`sudo lshw -class storage`__<br>
 | 🧠 **Memória Mapeada** | `f0806000-f0807fff` | Região de memória utilizada pelo kernel para acessar diretamente os registradores da controladora através de **Memory Mapped I/O (MMIO)**. |
 ---
 
-## 03_ Verificando as informações de Hard Disk e Partições do Ubuntu Server
+## 04_ Verificando as informações de Hard Disk e Partições do Ubuntu Server
 ```bash
 #verificando os detalhes de armazenamento de hard disk
 #opção do comando lshw: -class (Only show the given class of hardware)
@@ -225,7 +256,7 @@ Entendendo a saída do comando: __`ls -lh /sys/block/`__<br>
 | 🎯 **Objetivo** | Gerenciamento de dispositivos | Permite ao kernel e às aplicações consultar informações detalhadas sobre discos, filas de I/O, tamanho, setores, estado e atributos dos dispositivos de armazenamento. |
 ---
 
-## 04_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server
+## 05_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server
 ```bash
 #listando os discos e partições em formato de árvore
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
@@ -326,4 +357,84 @@ Entendendo a saída do comando: __`sudo parted -l`__<br>
 | 📏 **Capacidade (/dev/sdc)** | `53,7 GB` | Capacidade total do disco terciário. |
 | 🗂️ **Tabela de Partições (/dev/sdc)** | `unknown` | O disco ainda não possui tabela de partições criada. |
 | ⚠️ **Status (/dev/sdc)** | `unrecognised disk label` | Mensagem indicando que o disco ainda não foi inicializado. |
+---
+
+## 06_ Verificando o Desempenho (Performance) dos Discos no Ubuntu Server
+```bash
+#testando a velocidade de leitura em cache e em disco (bruto)
+#opção do comando hdparm: -t (device readings), -T (cache readings)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
+sudo hdparm -Tt /dev/sdb
+sudo hdparm -Tt /dev/sdb
+sudo hdparm -Tt /dev/sdc
+```
+
+Entendendo a saída do comando: __`sudo hdparm -Tt /dev/sdx`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Comando** | `hdparm -Tt /dev/sdX` | Realiza um teste simples de desempenho dos dispositivos de armazenamento, medindo a velocidade de leitura da memória cache e do disco. |
+| ⚡ **Opção `-T`** | `Timing cached reads` | Mede a velocidade de leitura da memória **cache do sistema (RAM/Page Cache)**. Não avalia o desempenho físico do disco. |
+| 💿 **Opção `-t`** | `Timing buffered disk reads` | Mede a velocidade de leitura sequencial diretamente do dispositivo de armazenamento, indicando seu desempenho real. |
+| 📦 **Unidade** | `MB/sec` | Taxa de transferência medida em Megabytes por segundo (MB/s). Quanto maior o valor, melhor o desempenho. |
+| ⚠️ **Observação** | Ambiente Virtualizado | Como o Ubuntu está executando em uma máquina virtual (**Oracle VirtualBox**), os resultados refletem também o desempenho do disco do sistema hospedeiro (Host). |
+---
+
+| **Dispositivo** | **Leitura em Cache (`-T`)** | **Leitura do Disco (`-t`)** | **Descrição** |
+| :-------------- | --------------------------: | --------------------------: | :------------ |
+| 💽 `/dev/sda` | **12.955,39 MB/s** | **1.315,43 MB/s** | Disco principal contendo o Ubuntu Server, GPT, LVM e sistema operacional. |
+| 💽 `/dev/sdb` | **14.162,83 MB/s** | **3.664,43 MB/s** | Disco adicional vazio utilizado para futuros laboratórios de armazenamento.  
+| 💽 `/dev/sdc` | **14.428,26 MB/s** | **3.855,92 MB/s** | Disco adicional vazio com o melhor desempenho entre os três discos testados. |
+---
+
+## 07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server
+```bash
+#verificando a saúde geral e informações completas do disco
+#opções do comando smartctl: -H (health status), -a (all information), -i (device identify)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
+sudo smartctl -i /dev/sda
+sudo smartctl -i /dev/sdb
+sudo smartctl -i /dev/sdb
+```
+
+Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Comando** | `smartctl -i /dev/sdX` | Exibe as informações básicas de identificação do dispositivo e verifica se há suporte à tecnologia **S.M.A.R.T.** |
+| 🔍 **Ferramenta** | `smartctl 7.5` | Utilitário do pacote **smartmontools** utilizado para monitoramento da integridade dos dispositivos de armazenamento. |
+| 📦 **Modelo dos Discos** | `VBOX HARDDISK` | Discos virtuais apresentados pelo Oracle VirtualBox. |
+| 💾 **Tipo de Interface** | `ATA/ATAPI-6` | Versão da especificação ATA suportada pelo dispositivo virtual. |
+| 📏 **Tamanho do Setor** | `512 bytes (lógico/físico)` | Tamanho dos setores utilizados pelos discos virtuais. |
+| ⚠️ **Suporte ao SMART** | `Unavailable` | Os discos virtuais do VirtualBox não implementam a tecnologia SMART para monitoramento de saúde do hardware. |
+---
+
+| **Campo** | **/dev/sda** | **/dev/sdb** | **/dev/sdc** | **Descrição** |
+| :-------- | :----------: | :----------: | :----------: | :------------ |
+| 💽 **Dispositivo** | `/dev/sda` | `/dev/sdb` | `/dev/sdc` | Nome do dispositivo de bloco reconhecido pelo kernel Linux. |
+| 📦 **Modelo** | VBOX HARDDISK | VBOX HARDDISK | VBOX HARDDISK | Modelo do disco virtual fornecido pelo Oracle VirtualBox. |
+| 🔢 **Número de Série** | `VB2dc3e2f7-0b8c5ac1` | `VB80443986-ef293c39` | `VB58ac26eb-8805b6b3` | Identificador único atribuído pelo VirtualBox a cada disco virtual. |
+| ⚙️ **Firmware** | `1.0` | `1.0` | `1.0` | Versão do firmware virtual do dispositivo. |
+| 💾 **Capacidade** | **107 GB** | **53,6 GB** | **53,6 GB** | Capacidade total do disco virtual. |
+| 📏 **Setor Lógico/Físico** | 512 / 512 bytes | 512 / 512 bytes | 512 / 512 bytes | Tamanho dos setores utilizados pelo dispositivo. |
+| 💿 **Versão ATA** | ATA/ATAPI-6 | ATA/ATAPI-6 | ATA/ATAPI-6 | Especificação ATA apresentada pelo dispositivo virtual. |
+| 📚 **Base do smartctl** | Não cadastrado | Não cadastrado | Não cadastrado | O modelo virtual não faz parte do banco de dados do `smartctl`. |
+| ❤️ **Suporte SMART** | ❌ Não disponível | ❌ Não disponível | ❌ Não disponível | O dispositivo virtual não fornece informações SMART. |
+---
+
+## 08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server
+```bash
+#verificando o espaço disponível/utilizado por partição montada
+#opção do comando df: -h (human-readable)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
+sudo df -h
+```
+
+Entendendo a saída do comando: __`sudo df -h`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📂 **Sistema de Arquivos** | `/dev/mapper/ubuntu--vg-lv--root` | Volume Lógico (LVM) responsável pelo diretório raiz (`/`). |
+| 📏 **Tamanho** | **48 GB** | Capacidade total do sistema de arquivos raiz. |
+| 💾 **Utilizado** | **2,6 GB** | Espaço atualmente ocupado. |
+| 📦 **Disponível** | **43 GB** | Espaço livre disponível para armazenamento. |
+| 📈 **Uso** | **6%** | Percentual de utilização do sistema de arquivos. |
+| 📍 **Ponto de Montagem** | `/` | Diretório raiz do sistema operacional. |
 ---
