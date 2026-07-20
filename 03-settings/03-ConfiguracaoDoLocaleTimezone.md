@@ -224,7 +224,7 @@ sudo lsof -nP -iUDP:'323'
 /etc/chrony/chrony.keys                     <-- Arquivo de configuração das chaves de autenticação do Chrony Server e Client
 /etc/chrony/conf.d/                         <-- Diretório dos arquivos de configuração extras do Chrony Server e Client
 /etc/chrony/sources.d/                      <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
-/etc/chrony/sources.d/ntp-br-pools.sources  <-- Arquivo de configuração dos servidot NTP.br do Chrony Server e Client
+/etc/chrony/sources.d/ntp-br-pools.sources  <-- Arquivo de configuração dos servidores NTP.br do Chrony Server e Client
 /var/log/chrony/                            <-- Diretório de logs do Chrony Server e Client
 /var/lib/chrony/                            <-- Diretório das configurações de sincronismo Chrony Server e Client
 ```
