@@ -8,7 +8,7 @@
 
 07. Configuração do Hard Disk                             OK
 08. Configuração do RAID-1                                OK
-09. Configuração do LVM
+09. Configuração do LVM                                   OK
 10. Configuração do Particionamento
 11. Configuração do Backup
 https://relax-and-recover.org/
