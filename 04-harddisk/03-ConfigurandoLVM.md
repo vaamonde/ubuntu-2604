@@ -336,7 +336,10 @@ INSERT
 ```bash
 #adicionando a entrada de montagem do Logical Volume no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O UUID PARA O UUID GERADO NO SEU CENÁRIO (comando blkid acima)
-UUID=SEU_UUID_DO_LV_DADOS  /dados  ext4  defaults  0  2
+#Opção default: rw,suid,dev,exec,auto,nouser,async
+#Identificação do LV        Ponto de   Sistema de   Opção de   Dump   FSCK
+#      Dados                Montagem    Arquivos    Montagem
+UUID=SEU_UUID_DO_LV_DADOS   /dados     ext4         defaults    0      2
 ```
 ```bash
 #salvar e sair do arquivo
@@ -387,8 +390,9 @@ Entendendo a saída do comando: __`sudo df -h /dados`__<br>
 ```bash
 /etc/lvm/                <-- Diretório de configuração do LVM
 /etc/lvm/lvm.conf        <-- Arquivo principal de configuração do LVM
-/etc/lvm/backup/         <-- Backup automático dos metadados atuais de cada Volume Group
-/etc/lvm/archive/        <-- Histórico de versões anteriores dos metadados (a cada alteração)
+/etc/lvm/backup/         <-- Diretório de ackup automático dos metadados atuais de cada Volume Group
+/etc/lvm/archive/        <-- Diretório de histórico de versões anteriores dos metadados (a cada alteração)
+/etc/lvm/profile/        <-- Diretório do perfil de configuração do LVM
 /etc/lvm/lvmlocal.conf   <-- Arquivo de configurações locais específicas do host
 ```
 ```bash
@@ -409,18 +413,50 @@ sudo pvdisplay -m /dev/md0
 Entendendo a saída do comando: __`sudo pvdisplay -m /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🧩 **Physical extents** | `0 to 5119` | Faixa de **Physical Extents (PE)** do `/dev/md0` que está alocada ao Logical Volume `lv_dados`. |
-| 🔗 **Logical volume** | `/dev/vg_dados/lv_dados` | Logical Volume ao qual essa faixa de PEs está mapeada. |
-| 🧩 **Logical extents** | `0 to 5119` | Faixa de **Logical Extents (LE)** correspondente dentro do `lv_dados`, mapeada 1 para 1 com os PEs físicos. |
-| 📊 **Relação PE:LE** | `1:1` | No mapeamento **Linear** (padrão do LVM), cada Logical Extent corresponde a exatamente um Physical Extent, sem distribuição (striping) entre múltiplos PVs. |
+| 📀 **PV Name** | `/dev/md0` | Nome do Physical Volume utilizado pelo LVM. |
+| 📦 **VG Name** | `vg_dados` | Volume Group ao qual o Physical Volume pertence. |
+| 💽 **PV Size** | `<49,97 GiB` | Capacidade total disponível do Physical Volume. |
+| 🚫 **Not Usable** | `0` | Espaço reservado pelo LVM para metadados. Neste caso, não existe espaço inutilizável. |
+| ✅ **Allocatable** | `yes` | Indica que o Physical Volume pode receber novas alocações de extents para Logical Volumes. |
+| 📏 **PE Size** | `4,00 MiB` | Tamanho de cada Physical Extent (PE). Todas as alocações do LVM são realizadas em múltiplos desse tamanho. |
+| 🧱 **Total PE** | `12791` | Quantidade total de Physical Extents existentes no PV. |
+| 🟢 **Free PE** | `7671` | Número de Physical Extents ainda disponíveis para criação ou expansão de Logical Volumes. |
+| 📌 **Allocated PE** | `5120` | Número de Physical Extents atualmente utilizados por Logical Volumes. |
+| 🆔 **PV UUID** | `7YIW1H-rEVU-7XUy-k3wx-iwp7-c1qh-5KAdll` | Identificador único do Physical Volume. |
+---
+
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📦 **Physical Extent Inicial** | `0` | Primeiro Physical Extent utilizado pelo Logical Volume. |
+| 📦 **Physical Extent Final** | `5119` | Último Physical Extent atualmente alocado ao Logical Volume. |
+| 💾 **Logical Volume** | `/dev/vg_dados/lv_dados` | Logical Volume que utiliza esses Physical Extents. |
+| 🔢 **Logical Extents (LE)** | `0 a 5119` | Logical Extents correspondentes aos Physical Extents utilizados pelo LV. |
+| 🟢 **PE Livres** | `5120 a 12790` | Faixa de Physical Extents ainda não utilizada e disponível para novas alocações ou expansão do Volume Group. |
+---
+
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📏 **Tamanho de cada PE/LE** | `4 MiB` | Tanto os Physical Extents quanto os Logical Extents possuem o mesmo tamanho definido pelo Volume Group. |
+| 📦 **PE Utilizados** | `5120` | Quantidade de Physical Extents consumidos pelo Logical Volume `lv_dados`. |
+| 💽 **Espaço Utilizado** | `20 GiB` | Resultado da multiplicação de **5120 × 4 MiB**, correspondente ao tamanho do Logical Volume criado. |
+| 🟢 **PE Disponíveis** | `7671` | Espaço livre que pode ser utilizado para criar novos Logical Volumes ou expandir os existentes. |
 ---
 
 ```bash
 #verificando de forma resumida a relação entre PE Total, PE Alocado e PE Livre no Volume Group
 #opções do comando vgs: -o (Select columns for output), +free (adiciona a coluna de espaço livre)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgs.8.html
-sudo vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size
+sudo vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size vg_dados
 ```
+
+Entendendo a saída do comando: __`sudo vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size vg_dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📦 **VG Name** | `vg_dados` | Volume Group criado sobre o dispositivo RAID-1 (`/dev/md0`) destinado ao armazenamento de dados. |
+| 📊 **VG Extent Count (#Ext)** | `12791` | Quantidade total de **Physical Extents (PE)** existentes no Volume Group. |
+| 🟢 **VG Free Count (Free)** | `7671` | Número de Physical Extents ainda disponíveis para expansão do `lv_dados` ou criação de novos Logical Volumes. |
+| 📏 **VG Extent Size (Ext)** | `4,00 MiB` | Tamanho de cada Physical Extent utilizado pelo Volume Group. |
+---
 
 ## 10_ Redimensionando o Volume Group e o Logical Volume no Ubuntu Server
 
