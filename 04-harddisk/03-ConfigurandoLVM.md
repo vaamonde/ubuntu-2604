@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 25/07/2026<br>
-Data de atualização: 25/07/2026<br>
-Versão: 0.01<br>
+Data de atualização: 26/07/2026<br>
+Versão: 0.02<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -73,6 +73,24 @@ sudo wipefs -a /dev/md0
 sudo cat /proc/mdstat
 ```
 
+Entendendo a saída do comando: __`sudo cat /proc/mdstat`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🛡️ **Personalities** | `[raid1]` | Tipo de RAID suportado e atualmente carregado pelo kernel Linux. |
+| 📦 **Array RAID** | `md0` | Nome do dispositivo lógico criado pelo `mdadm`. |
+| ✅ **Status** | `active` | O array RAID está ativo e operacional. |
+| 🛡️ **Nível RAID** | `raid1` | RAID-1 (Espelhamento/Mirroring), onde os dados são gravados simultaneamente em ambos os discos. |
+| 💽 **Disco 1** | `sdb1 [0]` | Primeiro membro do array RAID. |
+| 💽 **Disco 2** | `sdc1 [1]` | Segundo membro do array RAID. |
+| 📦 **Blocos** | `52.392.960` | Quantidade total de blocos disponíveis no array RAID. |
+| 🏷️ **Superbloco** | `super 1.2` | Versão dos metadados RAID armazenados nas partições. |
+| 👥 **Discos Configurados** | `[2/2]` | Dois discos configurados e dois discos ativos no array. |
+| ❤️ **Estado dos Discos** | `[UU]` | Ambos os discos estão íntegros e sincronizados. |
+| 📝 **Bitmap** | `0/1 pages (0 KB)` | Bitmap utilizado para acelerar a sincronização após falhas ou reinicializações. |
+| 📦 **Chunk Bitmap** | `65536 KB` | Tamanho do bloco monitorado pelo bitmap interno do RAID. |
+| 🚫 **Dispositivos Não Utilizados** | `<none>` | Não existem discos RAID detectados e não utilizados pelo sistema. |
+---
+
 ## 02_ Instalando os principais software de LVM no Ubuntu Server
 ```bash
 #atualizando as lista do Apt do sources.list no Ubuntu Server
@@ -113,7 +131,20 @@ sudo pvcreate /dev/md0
 #opção do comando pvs: (List physical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/pvs.8.html
 sudo pvs
+```
 
+Entendendo a saída do comando: __`sudo pvs`__<br>
+| **Campo** | **/dev/md0** | **/dev/sda3** | **Descrição** |
+| :-------- | :----------- | :------------ | :------------ |
+| 💽 **Physical Volume (PV)** | `/dev/md0` | `/dev/sda3` | Dispositivo físico utilizado pelo LVM como Volume Físico. |
+| 🏷️ **Volume Group (VG)** | *(Não atribuído)* | `ubuntu-vg` | Grupo de Volumes ao qual o PV pertence. O `/dev/md0` ainda não foi adicionado a nenhum VG. |
+| 📦 **Formato** | `lvm2` | `lvm2` | Versão do formato de metadados utilizada pelo LVM. |
+| ⚙️ **Atributos** | `---` | `a--` | Estado e atributos do Physical Volume. |
+| 💾 **Capacidade Total (PSize)** | `<49,97 GiB` | `<98,00 GiB` | Capacidade disponível para utilização pelo LVM. |
+| 📂 **Espaço Livre (PFree)** | `<49,97 GiB` | `16,00 GiB` | Espaço ainda não alocado dentro do Volume Group. |
+---
+
+```bash
 #verificando as informações detalhadas do Physical Volume no Ubuntu Server
 #opção do comando pvdisplay: (Display various attributes of physical volume(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/pvdisplay.8.html
@@ -123,11 +154,15 @@ sudo pvdisplay /dev/md0
 Entendendo a saída do comando: __`sudo pvdisplay /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 💽 **PV Name** | `/dev/md0` | Dispositivo (neste caso o Array do RAID-1) inicializado como Physical Volume. |
-| 🗄️ **VG Name** | *(vazio)* | Ainda não associado a nenhum Volume Group, pois o VG será criado na próxima etapa. |
-| 📏 **PV Size** | `49.99 GiB` | Capacidade total do Physical Volume, correspondente ao tamanho útil do Array `/dev/md0`. |
-| ⚙️ **Allocatable** | `NO` | Indica que o PV ainda não pertence a um VG, portanto seu espaço ainda não pode ser alocado em Logical Volumes. |
-| 🆔 **PV UUID** | `k3Qz8p-1v9X-...` | Identificador único de 128 bits atribuído ao Physical Volume pelo LVM. |
+| 💽 **PV Name** | `/dev/md0` | Nome do Physical Volume reconhecido pelo LVM. |
+| 🏷️ **VG Name** | *(vazio)* | O Physical Volume ainda não pertence a nenhum Volume Group. |
+| 💾 **PV Size** | `<49,97 GiB` | Capacidade total disponível para utilização pelo LVM. |
+| ⚙️ **Allocatable** | `NO` | O PV ainda não pode receber alocações de dados, pois não faz parte de um Volume Group. |
+| 📦 **PE Size** | `0` | Tamanho dos **Physical Extents (PE)**. Como o VG ainda não foi criado, os PE ainda não existem. |
+| 🔢 **Total PE** | `0` | Quantidade total de Physical Extents disponíveis no PV. |
+| 📂 **Free PE** | `0` | Quantidade de Physical Extents livres. |
+| 📌 **Allocated PE** | `0` | Quantidade de Physical Extents já utilizados. |
+| 🆔 **PV UUID** | `7YIW1H-rEVU-7XUy-k3wx-iwp7-c1qh-5KAdll` | Identificador único do Physical Volume dentro do LVM. |
 ---
 
 ## 05_ Criando o Volume Group (VG) no Ubuntu Server
@@ -142,7 +177,21 @@ sudo vgcreate vg_dados /dev/md0
 #opção do comando vgs: (List volume groups)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgs.8.html
 sudo vgs
+```
 
+Entendendo a saída do comando: __`sudo vgs`__<br>
+| **Campo** | **ubuntu-vg** | **vg_dados** | **Descrição** |
+| :-------- | :------------ | :----------- | :------------ |
+| 🏷️ **Volume Group (VG)** | `ubuntu-vg` | `vg_dados` | Nome do Grupo de Volumes. |
+| 💽 **#PV** | `1` | `1` | Quantidade de Physical Volumes pertencentes ao VG. |
+| 📂 **#LV** | `5` | `0` | Quantidade de Logical Volumes existentes no VG. |
+| 📸 **#SN** | `0` | `0` | Quantidade de Snapshots LVM existentes no VG. |
+| ⚙️ **Atributos (Attr)** | `wz--n-` | `wz--n-` | Estado e características do Volume Group. |
+| 💾 **Capacidade Total (VSize)** | `<98,00 GiB` | `49,96 GiB`  | Capacidade total disponível no Volume Group. |
+| 📂 **Espaço Livre (VFree)** | `16,00 GiB` | `49,96 GiB`  | Espaço ainda disponível para criação ou expansão de Logical Volumes. |
+---
+
+```bash
 #verificando as informações detalhadas do Volume Group no Ubuntu Server
 #opção do comando vgdisplay: (Display attributes of volume group(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgdisplay.8.html
@@ -152,16 +201,22 @@ sudo vgdisplay vg_dados
 Entendendo a saída do comando: __`sudo vgdisplay vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🗄️ **VG Name** | `vg_dados` | Nome atribuído ao Volume Group no momento da criação. |
-| 🔢 **Format** | `lvm2` | Formato de metadados utilizado pelo LVM, o padrão atual é o **LVM2**. |
-| 🆔 **VG UUID** | `pQ7f3K-...` | Identificador único do Volume Group. |
-| 💽 **PV Count** | `1` | Quantidade de Physical Volumes que compõem o Volume Group (neste cenário, apenas o `/dev/md0`). |
-| 📦 **LV Count** | `0` | Quantidade de Logical Volumes criados até o momento (ainda nenhum). |
-| 📏 **VG Size** | `49.98 GiB` | Capacidade total disponível no Volume Group para a criação de Logical Volumes. |
-| 🧩 **PE Size** | `4.00 MiB` | Tamanho de cada **Physical Extent (PE)**, a menor unidade de alocação do LVM. Valor padrão definido pelo `vgcreate`. |
-| 🔢 **Total PE** | `12796` | Quantidade total de Physical Extents disponíveis no Volume Group (`VG Size` dividido pelo `PE Size`). |
-| ✅ **Alloc PE / Size** | `0 / 0` | Quantidade de PEs já alocados a Logical Volumes (ainda nenhum). |
-| 🆓 **Free PE / Size** | `12796 / 49.98 GiB` | Quantidade de PEs ainda livres para a criação de novos Logical Volumes. |
+| 🏷️ **VG Name** | `vg_dados` | Nome do Volume Group. |
+| 🆔 **System ID** | *(vazio)* | Identificador do sistema. Normalmente permanece vazio em ambientes locais (não clusterizados). |
+| 📦 **Format** | `lvm2` | Formato de metadados utilizado pelo LVM. |
+| 🗂️ **Metadata Areas** | `1` | Quantidade de áreas de metadados armazenadas no Volume Group. |
+| 🔢 **Metadata Sequence No** | `1` | Número da versão dos metadados. É incrementado sempre que ocorre alguma alteração no VG. |
+| ✍️ **VG Access** | `read/write` | O Volume Group permite operações de leitura e gravação. |
+| 🔄 **VG Status** | `resizable` | O Volume Group pode ser expandido adicionando novos Physical Volumes. |
+| 📂 **MAX LV** | `0` | Quantidade máxima de Logical Volumes permitida. Valor **0** significa ilimitado. |
+| 💽 **Cur LV** | `0` | Quantidade atual de Logical Volumes existentes no VG. |
+| 🔓 **Open LV** | `0` | Número de Logical Volumes atualmente abertos (montados ou em uso). |
+| 💾 **Max PV** | `0` | Quantidade máxima de Physical Volumes permitida. Valor **0** significa ilimitado. |
+| 📀 **Cur PV** | `1` | Quantidade atual de Physical Volumes pertencentes ao VG. |
+| ✅ **Act PV** | `1` | Quantidade de Physical Volumes ativos no Volume Group. |
+| 💽 **VG Size** | `49,96 GiB` | Capacidade total do Volume Group. |
+| 📦 **PE Size** | `4,00 MiB` | Tamanho de cada **Physical Extent (PE)**. Este é o bloco básico de alocação do LVM. |
+| 🔢 **Total PE** | `12791` | Quantidade total de Physical E |
 ---
 
 ## 06_ Criando o Logical Volume (LV) no Ubuntu Server
@@ -176,7 +231,26 @@ sudo lvcreate -L 20G -n lv_dados vg_dados
 #opção do comando lvs: (List logical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.html
 sudo lvs
+```
 
+Entendendo a saída do comando: __`sudo lvs`__<br>
+| **Campo** | **lv-root** | **lv-swap** | **lv-home** | **lv-tmp** | **lv-var** | **lv_dados** | **Descrição** |
+| :-------- | :---------- | :---------- | :---------- | :--------- | :--------- | :----------- | :------------ |
+| 📂 **Logical Volume (LV)** | `lv-root` | `lv-swap` | `lv-home` | `lv-tmp` | `lv-var` | `lv_dados` | Nome do Logical Volume. |
+| 🏷️ **Volume Group (VG)** | `ubuntu-vg` | `ubuntu-vg` | `ubuntu-vg` | `ubuntu-vg` | `ubuntu-vg` | `vg_dados` | Volume Group ao qual o LV pertence. |
+| ⚙️ **Atributos (Attr)** | `-wi-ao----` | `-wi-ao----` | `-wi-ao----` | `-wi-ao----` | `-wi-ao----` | `-wi-a-----` | Estado operacional do Logical Volume. |
+| 💾 **Tamanho (LSize)** | `<49,00 GiB` | `8,00 GiB` | `5,00 GiB` | `5,00 GiB` | `15,00 GiB` | `20,00 GiB` | Capacidade do Logical Volume. |
+| 🏊 **Pool** | — | — | — | —  | — | — | Thin Pool associado (não utilizado). |
+| 📀 **Origin** | — | — | — | — | — | — | Volume de origem de Snapshot (não utilizado). |
+| 📊 **Data%** | — | — | — | — | — | — | Percentual de utilização de Thin Provisioning (não utilizado). |
+| 🗂️ **Meta%** | — | — | — | — | — | — | Utilização dos metadados do Thin Pool (não utilizado). |
+| 🔄 **Move** | — | — | — | — | — | — | Indica movimentação de dados entre discos (não utilizada). |
+| 📝 **Log** | — | — | — | — | — | — | Log de espelhamento (Mirror Log), não utilizado. |
+| 🔁 **Cpy%Sync** | — | — | — | — | — | — | Percentual de sincronização de cópias (Mirror/RAID), não utilizado. |
+| 🔧 **Convert** | — | — | — | — | — | — | Conversão de tipo de LV em andamento (não utilizada). |
+---
+
+```bash
 #verificando as informações detalhadas do Logical Volume no Ubuntu Server
 #opção do comando lvdisplay: (Display attributes of logical volume(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvdisplay.8.html
@@ -186,13 +260,22 @@ sudo lvdisplay /dev/vg_dados/lv_dados
 Entendendo a saída do comando: __`sudo lvdisplay /dev/vg_dados/lv_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 📦 **LV Path** | `/dev/vg_dados/lv_dados` | Caminho lógico do Logical Volume, criado automaticamente pelo Device Mapper. |
-| 🏷️ **LV Name** | `lv_dados` | Nome atribuído ao Logical Volume no momento da criação. |
-| 🗄️ **VG Name** | `vg_dados` | Volume Group ao qual o Logical Volume pertence. |
-| 🆔 **LV UUID** | `9mQ1zR-...` | Identificador único do Logical Volume. |
-| 📏 **LV Size** | `20.00 GiB` | Capacidade total alocada para o Logical Volume. |
-| 🧩 **Current LE** | `5120` | Quantidade de **Logical Extents** que compõem o Logical Volume (`LV Size` dividido pelo `PE Size` do VG). |
-| 🔗 **Block device** | `252:2` | Identificador Major/Minor do dispositivo de bloco virtual criado pelo Device Mapper. |
+| 📁 **LV Path** | `/dev/vg_dados/lv_dados` | Caminho completo do dispositivo lógico utilizado pelo sistema operacional. |
+| 🏷️ **LV Name** | `lv_dados` | Nome do Logical Volume. |
+| 📦 **VG Name** | `vg_dados` | Volume Group ao qual o Logical Volume pertence. |
+| 🆔 **LV UUID** | `4XOVmh-hQLN-UxHe-osV3-VN1G-ggLz-n2NpP5` | Identificador único do Logical Volume dentro do LVM. |
+| ✍️ **LV Write Access** | `read/write` | Permite operações de leitura e gravação no Logical Volume. |
+| 🖥️ **LV Creation Host** | `srvvaamonde.pti.intra` | Host onde o Logical Volume foi criado. |
+| 🕒 **LV Creation Time** | `2026-07-26 15:31:06 -0300` | Data e hora da criação do Logical Volume. |
+| ✅ **LV Status** | `available` | Indica que o Logical Volume está ativo e disponível para utilização. |
+| 🔓 **# open** | `0` | Quantidade de processos utilizando o Logical Volume. Valor **0** indica que ele ainda não está montado nem em uso. |
+| 💾 **LV Size** | `20,00 GiB` | Capacidade total do Logical Volume. |
+| 📦 **Current LE** | `5120` | Quantidade de **Logical Extents (LE)** alocados ao Logical Volume. |
+| 🧩 **Segments** | `1` | Número de segmentos físicos que compõem o Logical Volume. |
+| 📍 **Allocation** | `inherit` | Método de alocação herdado das configurações do Volume Group. |
+| 🚀 **Read Ahead Sectors** | `auto` | Ajuste automático da leitura antecipada (Read Ahead) para melhorar o desempenho de acesso sequencial. |
+| ⚙️ **Currently Set To** | `16384` | Valor atual de setores configurados para Read Ahead. |
+| 🔢 **Block Device** | `252:5` | Número **Major:Minor** do dispositivo de bloco gerenciado pelo kernel Linux. |
 ---
 
 ## 07_ Formatando e Montando o Logical Volume no Ubuntu Server
@@ -201,16 +284,44 @@ Entendendo a saída do comando: __`sudo lvdisplay /dev/vg_dados/lv_dados`__<br>
 #opção do comando mkfs.ext4: (cria um sistema de arquivos ext4 no dispositivo informado)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/mkfs.ext4.8.html
 sudo mkfs.ext4 /dev/vg_dados/lv_dados
+```
 
+Entendendo a saída do comando: __`sudo mkfs.ext4 /dev/vg_dados/lv_dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📦 **Filesystem Blocks** | `5242880` | Quantidade total de blocos de dados criados no sistema de arquivos. |
+| 📏 **Block Size** | `4 KiB (4096 bytes)` | Tamanho de cada bloco utilizado para armazenamento dos dados. |
+| 📄 **Inodes** | `1310720` | Quantidade total de inodes disponíveis para armazenar metadados de arquivos e diretórios. |
+| 🆔 **Filesystem UUID** | `ddad3a66-9a2b-41aa-aff1-06e32a50fcd0` | Identificador único do sistema de arquivos, normalmente utilizado no arquivo `/etc/fstab`. |
+| 💾 **Superblock Backups** | `32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 4096000` | Blocos onde foram gravadas cópias de segurança do Superbloco para recuperação em caso de corrupção. |
+| 📑 **Group Tables** | `done` | Estruturas que organizam os grupos de blocos foram criadas com sucesso. |
+| 📂 **Inode Tables** | `done` | Tabelas de inodes criadas corretamente. |
+| 📓 **Journal** | `32768 blocks` | Área de journaling criada para registrar operações antes de gravá-las definitivamente no disco, aumentando a integridade dos dados. |
+| ✅ **Filesystem Creation** | `done` | Sistema de arquivos criado com sucesso e pronto para utilização. |
+| 🧾 **Filesystem Accounting** | `done` | Informações administrativas e estatísticas do sistema de arquivos gravadas corretamente. |
+---
+
+```bash
 #criando o diretório de ponto de montagem do Logical Volume no Ubuntu Server
-#opção do comando mkdir: -p (cria diretórios pais conforme necessário)
+#opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
-sudo mkdir -p /dados
+sudo mkdir -pv /dados
 
 #verificando o UUID do sistema de arquivos criado no Logical Volume
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid /dev/vg_dados/lv_dados
+```
 
+Entendendo a saída do comando: __`sudo blkid /dev/vg_dados/lv_dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📁 **Dispositivo** | `/dev/vg_dados/lv_dados` | Caminho do Logical Volume onde o sistema de arquivos está armazenado. |
+| 🆔 **UUID** | `ddad3a66-9a2b-41aa-aff1-06e32a50fcd0` | Identificador único do sistema de arquivos. É recomendado utilizá-lo no arquivo `/etc/fstab` para montagem automática, pois permanece o mesmo mesmo que o nome do dispositivo seja alterado. |
+| 📏 **BLOCK_SIZE** | `4096` bytes (4 KiB) | Tamanho do bloco lógico utilizado pelo sistema de arquivos EXT4 para armazenar dados. |
+| 📂 **TYPE** | `ext4` | Tipo de sistema de arquivos criado sobre o Logical Volume. |
+---
+
+```bash
 #fazendo o backup do arquivo de configuração original do Fstab
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
@@ -231,24 +342,54 @@ UUID=SEU_UUID_DO_LV_DADOS  /dados  ext4  defaults  0  2
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 
-#montando todos os sistemas de arquivos listados no Fstab no Ubuntu Server
-#opção do comando mount: -a (Mount all filesystems mentioned in fstab)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/mount.8.html
-sudo mount -a
+#reinicializando as configurações do SystemD com as mudanças do Fstab
+#opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
+#mais informações acesse a documentação oficial em
+sudo systemctl daemon-reload
 
+#montando todos os sistemas de arquivos listados no Fstab no Ubuntu Server
+#opção do comando mount: -v (Enables verbose mode), -a (Mount all filesystems mentioned in fstab)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/mount.8.html
+sudo mount -va
+```
+
+Entendendo a saída do comando: __`sudo mount -va`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🚫 **none** | `ignored` | Entrada especial do `/etc/fstab` que não representa um sistema de arquivos físico. Foi ignorada durante o processamento. |
+| 📁 **/** | `ignored` | A partição raiz (`/`) já estava montada pelo sistema durante o boot, não sendo necessário montá-la novamente. |
+| 🚀 **/boot** | `already mounted` | A partição `/boot` já se encontrava montada. |
+| 🏠 **/home** | `already mounted` | O sistema de arquivos `/home` já estava montado. |
+| 📂 **/tmp** | `already mounted` | O sistema de arquivos `/tmp` já estava montado. |
+| 📦 **/var** | `already mounted` | O sistema de arquivos `/var` já estava montado. |
+| 💾 **/dados** | `successfully mounted` | O novo sistema de arquivos foi montado com sucesso conforme definido no `/etc/fstab`. |
+---
+
+```bash
 #verificando o espaço em disco e o ponto de montagem do Logical Volume no Ubuntu Server
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /dados
 ```
 
+Entendendo a saída do comando: __`sudo df -h /dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Logical Volume criado no Volume Group `vg_dados`, formatado com o sistema de arquivos EXT4 e montado em `/dados`. |
+| 📦 **Size** | `20G` | Capacidade total disponível do sistema de arquivos. |
+| 📁 **Used** | `2,1M` | Espaço atualmente utilizado pelos metadados e estruturas iniciais do sistema de arquivos EXT4. |
+| 📂 **Avail** | `19G` | Espaço livre disponível para armazenamento de dados. |
+| 📈 **Use%** | `1%` | Percentual de utilização do sistema de arquivos. |
+| 📌 **Mounted on** | `/dados` | Diretório onde o Logical Volume está montado e acessível aos usuários e aplicações. |
+---
+
 ## 08_ Localização dos Arquivos de Configuração do LVM no Ubuntu Server
 ```bash
-/etc/lvm/                    <-- Diretório de configuração do LVM
-/etc/lvm/lvm.conf            <-- Arquivo principal de configuração do LVM
-/etc/lvm/backup/             <-- Backup automático dos metadados atuais de cada Volume Group
-/etc/lvm/archive/            <-- Histórico de versões anteriores dos metadados (a cada alteração)
-/etc/lvm/lvmlocal.conf        <-- Arquivo de configurações locais específicas do host
+/etc/lvm/                <-- Diretório de configuração do LVM
+/etc/lvm/lvm.conf        <-- Arquivo principal de configuração do LVM
+/etc/lvm/backup/         <-- Backup automático dos metadados atuais de cada Volume Group
+/etc/lvm/archive/        <-- Histórico de versões anteriores dos metadados (a cada alteração)
+/etc/lvm/lvmlocal.conf   <-- Arquivo de configurações locais específicas do host
 ```
 ```bash
 #verificando o conteúdo do backup de metadados do Volume Group no Ubuntu Server
