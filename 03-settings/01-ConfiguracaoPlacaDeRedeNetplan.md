@@ -137,7 +137,6 @@ Entendendo a saída do comando: __`ip address show`__<br>
 | ⏳ **Tempo de Validade** | `forever` | Os endereços IP nunca expiram. |
 ---
 
-Entendendo a saída do comando: __`ip address show`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🔗 **Interface** | `enp0s3` | Nome da interface de rede seguindo o padrão **Predictable Network Interface Names**.  |

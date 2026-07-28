@@ -1,0 +1,133 @@
+# Autor: Robson Vaamonde
+# Site: www.procedimentosemti.com.br
+# Facebook: facebook.com/ProcedimentosEmTI
+# Facebook: facebook.com/BoraParaPratica
+# YouTube: youtube.com/BoraParaPratica
+# Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
+# Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
+# Data de criação: 28/07/2026
+# Data de atualização: 28/07/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
+# Testado e homologado para a versão do Netplan v1.2.x
+# Testado e homologado para a versão do Oracle VirtualBOX 7.x (Adaptador em modo Bridge)
+#
+# OBSERVAÇÃO IMPORTANTE: o arquivo de configuração do Netplan e baseado no formato de Serialização
+# de Dados Legíveis YAML (Yet Another Markup Language) utilizado na linguagem de programação Python
+# por exemplo, muito cuidado com o uso de espaços e tabulação e principalmente sua Indentação.
+#
+# OBSERVAÇÃO IMPORTANTE: no Oracle VirtualBOX, o modo Bridge NÃO possui um Switch Físico realizando
+# a negociação do protocolo LACP (802.3ad) entre as placas de rede, por isso o modo de Bonding
+# recomendado para Laboratório e Testes e o: active-backup (mode 1), que NÃO depende de nenhuma
+# negociação externa com o Switch/Rede.
+#
+# Bloco inicial das configurações da Rede no Netplan (BLOCO COM BONDING PARA O VIRTUALBOX)
+network:
+  #
+  # Início da configuração do Netplan usando a versão 2 (mais atual)
+  version: 2
+  #
+  # Bloco de configuração das Interfaces Ethernet Físicas (Escravas do Bonding)
+  # OBSERVAÇÃO IMPORTANTE: as interfaces escravas (slaves) do Bonding NÃO recebem Endereço IP,
+  # Gateway ou DNS, esses parâmetros ficam configurados somente na interface: bond0
+  ethernets:
+    #
+    # Configuração da Primeira Interface Física (Adaptador 1 do VirtualBOX em modo Bridge)
+    enp0s3:
+      #
+      # Identificando a Interface de Rede Física pelo Endereço MAC Address
+      match:
+        macaddress: 08:00:27:45:05:cd
+      #
+      # Definindo o Nome Lógico da Interface de Rede
+      set-name: enp0s3
+      #
+      # Desabilitando o suporte ao DHCP Client IPv4 na interface física (Escrava do Bonding)
+      dhcp4: false
+      #
+      # Desabilitando o suporte ao DHCP Client IPv6 na interface física (Escrava do Bonding)
+      dhcp6: false
+      #
+    # Configuração da Segunda Interface Física (Adaptador 2 do VirtualBOX em modo Bridge)
+    enp0s8:
+      #
+      # Identificando a Interface de Rede Física pelo Endereço MAC Address
+      # OBSERVAÇÃO IMPORTANTE: ALTERAR O MAC ADDRESS PARA O ENDEREÇO DO SEU ADAPTADOR 2
+      match:
+        macaddress: 08:00:27:AA:BB:CC
+      #
+      # Definindo o Nome Lógico da Interface de Rede
+      set-name: enp0s8
+      #
+      # Desabilitando o suporte ao DHCP Client IPv4 na interface física (Escrava do Bonding)
+      dhcp4: false
+      #
+      # Desabilitando o suporte ao DHCP Client IPv6 na interface física (Escrava do Bonding)
+      dhcp6: false
+      #
+  # Bloco de configuração do Bonding (Agregação/Redundância de Placas de Rede)
+  bonds:
+    #
+    # Configuração da Interface Lógica do Bonding
+    bond0:
+      #
+      # Definindo quais Interfaces Físicas fazem parte do Bonding (Escravas)
+      interfaces:
+        - enp0s3
+        - enp0s8
+      #
+      # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
+      # endereço IPv6 Unicast Global e Link Local
+      # OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 e IPv6 separados por Traço
+      addresses:
+        - SEU_ENDEREÇO_IPv4/CIDR
+        - SEU_ENDEREÇO_IPv6_UNICAST_GLOBAL/CIDR
+        - SEU_ENDEREÇO_IPv6_LINK_LOCAL/CIDR
+      #
+      # Configuração do Gateway Padrão IPv4/IPv6 (Rota Padrão) para o seu cenário
+      routes:
+        # Configuração da Rota Padrão IPv4 (cuidado com o traço antes da opção: to)
+        - to: default
+          # Configuração do endereço IPv4 do Gateway para o seu cenário
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPv4
+          #
+        # Configuração da Rota Padrão IPv6 (cuidado com o traço antes da opção: to)
+        - to: default
+          # Configuração do endereço IPv6 do Gateway para o seu cenário
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPV6_LINK_LOCAL
+          #
+      # Configuração dos servidores de DNS Server Preferencial e Alternativo
+      nameservers:
+        # Configuração dos Endereços IPv4 e IPv6 de DNS para o seu cenário com nível de
+        # segurança contra Malware e Adult Content utilizando os DNS da CloudFlare
+        addresses:
+          - 1.1.1.1
+          - 1.0.0.1
+          - 2606:4700:4700::1111
+          - 2606:4700:4700::1001
+        # Configuração da pesquisa de domínio para o seu cenário
+        # OBSERVAÇÃO: configuração da pesquisa de Domínio dentro de Colchetes
+        search: [seu.domínio]
+      #
+      # Bloco de Parâmetros específicos do Driver de Bonding do Kernel Linux
+      # OBSERVAÇÃO IMPORTANTE: modo recomendado para o Oracle VirtualBOX (Bridge): active-backup
+      parameters:
+        #
+        # Modo de Operação do Bonding (RECOMENDADO PARA VIRTUALBOX: active-backup)
+        mode: active-backup
+        #
+        # Definindo a Interface Física Primária (Preferencial) do Bonding
+        primary: enp0s3
+        #
+        # Intervalo (em milissegundos) de verificação do Link (MII Monitoring)
+        mii-monitor-interval: 100
+        #
+        # Tempo (em milissegundos) de espera antes de considerar o Link ativo novamente
+        up-delay: 200
+        #
+        # Tempo (em milissegundos) de espera antes de considerar o Link inativo
+        down-delay: 200
+        #
+        # Política de Failover do MAC Address (IMPORTANTE para o modo active-backup)
+        # active = altera o MAC Address da interface ativa para o MAC da interface Primária
+        fail-over-mac-policy: active

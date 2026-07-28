@@ -555,14 +555,13 @@ Entendendo a saída do comando: __`sudo journalctl -k | grep -i md0`__<br>
 
 ```bash
 #analisando os Log's do Sistema referente ao Array do RAID-1 no Ubuntu Server
-#opção do comando cat: (concatena e exibe o conteúdo do arquivo de Log)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
-#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
-sudo cat /var/log/syslog | grep -i raid
+sudo journalctl | grep -i raid
 ```
 
-Entendendo a saída do comando: __`sudo cat /var/log/syslog | grep -i raid`__<br>
+Entendendo a saída do comando: __`sudo journalctl | grep -i raid`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📄 **Arquivo** | `/var/log/syslog` | Arquivo de Log padrão do sistema operacional, responsável por registrar mensagens de diversos serviços, incluindo o **mdadm** e o **Kernel**. |
