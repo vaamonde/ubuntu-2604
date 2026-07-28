@@ -462,32 +462,85 @@ Entendendo a saída do comando: __`sudo vgs -o vg_name,vg_extent_count,vg_free_c
 
 > **OBSERVAÇÃO IMPORTANTE:** essa é a principal vantagem do LVM sobre o particionamento tradicional: é possível **adicionar um novo Physical Volume ao Volume Group** e **expandir o Logical Volume e o sistema de arquivos**, tudo isso **sem desligar o servidor** (Hot Resize).
 
-```bash
-#OBSERVAÇÃO: exemplo de expansão do Volume Group adicionando um novo Physical Volume (ex: /dev/sdd
-#já preparado como PV), caso exista um disco adicional disponível no cenário
-#opção do comando pvcreate: (Initialize physical volume(s) for use by LVM)
-#opção do comando vgextend: (Add physical volumes to a volume group)
-#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgextend.8.html
-sudo pvcreate /dev/sdd
-sudo vgextend vg_dados /dev/sdd
+> **OBSERVAÇÃO IMPORTANTE:** a opção `-r` do `lvextend` já executa o `resize2fs` automaticamente para sistemas de arquivos **ext4**. Caso prefira executar manualmente (ou em sistemas de arquivos onde o `-r` não é suportado), utilize: __`sudo resize2fs /dev/vg_dados/lv_dados`__ logo após o `lvextend`.
 
+```bash
 #expandindo o Logical Volume utilizando mais 10 GiB do espaço livre do Volume Group
 #opções do comando lvextend: -L (Specify the size directly), +10G (adiciona 10 GiB ao tamanho atual)
 #-r (Resize the underlying filesystem together with the logical volume using fsadm)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvextend.8.html
 sudo lvextend -L +10G -r /dev/vg_dados/lv_dados
-  Size of logical volume vg_dados/lv_dados changed from 20.00 GiB to 30.00 GiB
-  Filesystem at /dev/vg_dados/lv_dados is mounted on /dados; resizing
-  The filesystem on /dev/vg_dados/lv_dados is now 30.00 GiB
+```
 
+Entendendo a saída do comando: __`sudo lvextend -L +10G -r /dev/vg_dados/lv_dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📂 **Sistema de Arquivos Detectado** | `ext4` | O LVM identificou que o Logical Volume utiliza o sistema de arquivos EXT4. |
+| 📌 **Ponto de Montagem** | `/dados` | O volume estava montado durante a expansão, permitindo o redimensionamento **online** (sem desmontar o sistema de arquivos). |
+| 📦 **Tamanho Anterior** | `20,00 GiB (5120 extents)` | Capacidade original do Logical Volume antes da expansão. |
+| 📈 **Novo Tamanho** | `30,00 GiB (7680 extents)` | Nova capacidade do Logical Volume após a expansão. |
+| ➕ **Extents Adicionados** | `2560` | Quantidade de Logical Extents adicionados ao volume (7680 − 5120). |
+| 📏 **Tamanho do Extent** | `4 MiB` | Cada Logical Extent possui 4 MiB, conforme configuração do Volume Group. |
+---
+
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🛠️ **Ferramenta Utilizada** | `resize2fs` | Utilitário responsável por expandir sistemas de arquivos EXT4. |
+| 📂 **Dispositivo** | `/dev/vg_dados/lv_dados` | Logical Volume redimensionado. |
+| 🔄 **Modo de Expansão** | `On-line` | O sistema de arquivos foi expandido enquanto permanecia montado e em uso. |
+| 📊 **Blocos Anteriores** | `old_desc_blocks = 3` | Quantidade de blocos de descritores antes da expansão. |
+| 📊 **Blocos Atuais** | `new_desc_blocks = 4` | Quantidade de blocos de descritores após a expansão do sistema de arquivos. |
+| 📦 **Total de Blocos** | `7.864.320 (4 KiB)` | Novo total de blocos do sistema de arquivos EXT4 após a expansão. |
+| ✅ **Resultado** | `resize2fs done` | O redimensionamento do sistema de arquivos foi concluído com sucesso. |
+---
+
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💾 **Logical Volume** | `Successfully resized` | O Logical Volume foi expandido com sucesso. |
+| 📂 **Sistema de Arquivos** | `Extended successfully` | O sistema de arquivos EXT4 foi expandido automaticamente, utilizando toda a nova capacidade do Logical Volume. |
+---
+
+```bash
 #verificando o novo tamanho do Logical Volume e do sistema de arquivos no Ubuntu Server
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /dados
-sudo lvs
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** a opção `-r` do `lvextend` já executa o `resize2fs` automaticamente para sistemas de arquivos **ext4**. Caso prefira executar manualmente (ou em sistemas de arquivos onde o `-r` não é suportado), utilize: __`sudo resize2fs /dev/vg_dados/lv_dados`__ logo após o `lvextend`.
+Entendendo a saída do comando: __`sudo df -h /dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Logical Volume criado no Volume Group `vg_dados`, formatado com o sistema de arquivos EXT4 e montado em `/dados`. |
+| 📦 **Size** | `30G` | Nova capacidade total disponível do sistema de arquivos. |
+| 📁 **Used** | `2,1M` | Espaço atualmente utilizado pelos metadados e estruturas iniciais do sistema de arquivos EXT4. |
+| 📂 **Avail** | `28G` | Novo espaço livre disponível para armazenamento de dados. |
+| 📈 **Use%** | `1%` | Percentual de utilização do sistema de arquivos. |
+| 📌 **Mounted on** | `/dados` | Diretório onde o Logical Volume está montado e acessível aos usuários e aplicações. |
+---
+
+```bash
+#verificando as informações resumidas do Logical Volume no Ubuntu Server
+#opção do comando lvs: (List logical volumes)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.ht
+sudo lvs vg_dados
+```
+
+Entendendo a saída do comando: __`sudo lvs vg_dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 📦 **LV (Logical Volume)** | `lv_dados` | Nome do Logical Volume criado para armazenamento de dados. |
+| 🗂️ **VG (Volume Group)** | `vg_dados` | Volume Group ao qual o Logical Volume pertence. |
+| ⚙️ **Attr (Atributos)** | `-wi-ao----` | Conjunto de atributos que descrevem o estado e as características do Logical Volume. |
+| 📏 **LSize (Logical Size)** | `30,00 GiB` | Capacidade atual do Logical Volume após a expansão.  |
+| 🏊 **Pool** | — | Não utiliza Thin Pool (Thin Provisioning). |
+| 📚 **Origin** | — | Não é um Snapshot nem possui volume de origem. |
+| 📊 **Data%** | — | Não aplicável, pois não utiliza Thin Provisioning. |
+| 📈 **Meta%** | — | Não aplicável, pois não utiliza metadados de Thin Pool. |
+| 🚚 **Move** | — | Nenhuma operação de movimentação de dados em andamento. |
+| 📝 **Log** | — | Não utiliza log de espelhamento (Mirror Log). |
+| 🔄 **Cpy%Sync** | — | Não aplicável, pois não é um volume espelhado pelo LVM. |
+| 🔁 **Convert** | — | Nenhuma conversão de tipo de Logical Volume em execução. |
+---
 
 ## 11_ Criando um Snapshot do Logical Volume no Ubuntu Server
 ```bash
@@ -500,10 +553,10 @@ sudo lvcreate -s -L 5G -n lv_dados_snap /dev/vg_dados/lv_dados
 #verificando as informações resumidas dos Logical Volumes, incluindo o Snapshot, no Ubuntu Server
 #opção do comando lvs: (List logical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.html
-sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent
+sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent vg_dados
 ```
 
-Entendendo a saída do comando: __`sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent`__<br>
+Entendendo a saída do comando: __`sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🏷️ **LV** | `lv_dados_snap` | Nome do Logical Volume de Snapshot criado. |
@@ -519,6 +572,7 @@ Entendendo a saída do comando: __`sudo lvs -o lv_name,vg_name,lv_size,origin,da
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvremove.8.html
 sudo lvremove /dev/vg_dados/lv_dados_snap
   Do you really want to remove active logical volume vg_dados/lv_dados_snap? [y/n]: y <Enter>
+  Logical volume "lv_dados_snap" successfully removed.
 ```
 
 ## 12_ Analisando os Logs do LVM no Ubuntu Server
