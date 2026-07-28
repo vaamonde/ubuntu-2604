@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 25/07/2026<br>
-Data de atualização: 26/07/2026<br>
-Versão: 0.02<br>
+Data de atualização: 28/07/2026<br>
+Versão: 0.03<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -95,6 +95,7 @@ Entendendo a saída do comando: __`sudo cat /proc/mdstat`__<br>
 ```bash
 #atualizando as lista do Apt do sources.list no Ubuntu Server
 #opção do comando apt: update (Resynchronize the package index files from their sources)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
 
 #instalando os pacotes e ferramentas de LVM no Ubuntu Server
@@ -216,7 +217,7 @@ Entendendo a saída do comando: __`sudo vgdisplay vg_dados`__<br>
 | ✅ **Act PV** | `1` | Quantidade de Physical Volumes ativos no Volume Group. |
 | 💽 **VG Size** | `49,96 GiB` | Capacidade total do Volume Group. |
 | 📦 **PE Size** | `4,00 MiB` | Tamanho de cada **Physical Extent (PE)**. Este é o bloco básico de alocação do LVM. |
-| 🔢 **Total PE** | `12791` | Quantidade total de Physical E |
+| 🔢 **Total PE** | `12791` | Quantidade total de Physical Extents disponíveis no Volume Group.|
 ---
 
 ## 06_ Criando o Logical Volume (LV) no Ubuntu Server
@@ -347,7 +348,7 @@ ESC SHIFT :x <Enter>
 
 #reinicializando as configurações do SystemD com as mudanças do Fstab
 #opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
-#mais informações acesse a documentação oficial em
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl daemon-reload
 
 #montando todos os sistemas de arquivos listados no Fstab no Ubuntu Server
@@ -390,7 +391,7 @@ Entendendo a saída do comando: __`sudo df -h /dados`__<br>
 ```bash
 /etc/lvm/                <-- Diretório de configuração do LVM
 /etc/lvm/lvm.conf        <-- Arquivo principal de configuração do LVM
-/etc/lvm/backup/         <-- Diretório de ackup automático dos metadados atuais de cada Volume Group
+/etc/lvm/backup/         <-- Diretório de backup automático dos metadados atuais de cada Volume Group
 /etc/lvm/archive/        <-- Diretório de histórico de versões anteriores dos metadados (a cada alteração)
 /etc/lvm/profile/        <-- Diretório do perfil de configuração do LVM
 /etc/lvm/lvmlocal.conf   <-- Arquivo de configurações locais específicas do host
@@ -521,7 +522,7 @@ Entendendo a saída do comando: __`sudo df -h /dados`__<br>
 ```bash
 #verificando as informações resumidas do Logical Volume no Ubuntu Server
 #opção do comando lvs: (List logical volumes)
-#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.ht
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.html
 sudo lvs vg_dados
 ```
 
@@ -595,14 +596,13 @@ Entendendo a saída do comando: __`sudo journalctl -k | grep -i 'device-mapper\|
 
 ```bash
 #analisando os Log's do Sistema referente ao LVM no Ubuntu Server
-#opção do comando cat: (concatena e exibe o conteúdo do arquivo de Log)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
-#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
-sudo cat /var/log/syslog | grep -i lvm
+sudo journalctl | grep -i lvm
 ```
 
-Entendendo a saída do comando: __`sudo cat /var/log/syslog | grep -i lvm`__<br>
+Entendendo a saída do comando: __`sudo journalctl | grep -i lvm`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📄 **Arquivo** | `/var/log/syslog` | Arquivo de Log padrão do sistema operacional, responsável por registrar mensagens de diversos serviços, incluindo o **lvm2-monitor**. |

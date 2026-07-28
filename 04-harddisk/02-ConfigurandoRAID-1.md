@@ -35,25 +35,41 @@ Conteúdo estudado nessa configuração:<br>
 
 Link da vídeo aula: 
 
-| **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
-| :---------------- | :-------------- | :--------------------- |
-| 🗄️ **RAID (Redundant Array of Independent Disks)** | Tecnologia que combina dois ou mais discos físicos em uma única unidade lógica, distribuindo ou espelhando os dados entre eles. | Aumenta a **disponibilidade**, **desempenho** e/ou **redundância** dos dados, dependendo do nível de RAID escolhido. |
-| 🪞 **RAID 1 (Mirroring/Espelhamento)** | Nível de RAID que grava os **mesmos dados simultaneamente em dois ou mais discos**, criando uma cópia idêntica (espelho) entre eles. | Garante **redundância total dos dados**: caso um disco falhe, o sistema continua funcionando normalmente com o disco restante, sem perda de informação. |
-| ⚙️ **mdadm (Multiple Disk Administration)** | Ferramenta padrão do GNU/Linux para criar, gerenciar e monitorar **Software RAID** através do subsistema **md (Multiple Devices)** do kernel. | Permite criar, montar, monitorar, recuperar e remover Arrays de RAID diretamente via linha de comando, sem depender de controladora RAID física (Hardware RAID). |
-| 🔢 **Array** | Conjunto lógico de discos físicos agrupados pelo mdadm para formar um único dispositivo RAID (ex: `/dev/md0`). | Representa a unidade de armazenamento resultante da combinação dos discos físicos conforme o nível de RAID configurado. |
-| 🧩 **Superblock** | Estrutura de metadados gravada em cada disco membro do Array, contendo informações sobre o RAID (nível, UUID, discos membros, estado de sincronismo). | Permite que o kernel identifique e remonte automaticamente o Array de RAID durante a inicialização do sistema. |
-| 🔄 **Sincronismo (Resync)** | Processo em que o mdadm copia os dados de um disco para o(s) outro(s) até que fiquem idênticos (espelhados). | Garante a consistência dos dados entre todos os discos membros do RAID 1, sendo executado na criação do Array e após a substituição de um disco. |
-| 🚨 **Estado Degradado (Degraded)** | Condição do Array de RAID quando um ou mais discos membros falham ou são removidos, mas o Array continua funcional com os discos restantes. | Indica que o RAID está operando sem redundância total, sendo necessário substituir o disco com falha o mais rápido possível para restaurar a proteção total dos dados. |
-| 🆘 **Hot Spare** | Disco reserva configurado no Array, que permanece inativo até que um dos discos membros falhe. | Quando ocorre uma falha, o mdadm inicia automaticamente a reconstrução (rebuild) do RAID utilizando o disco Hot Spare, reduzindo o tempo em estado degradado. |
+| **🛡️ Tecnologia** | **⚙️ RAID por Hardware** | **💻 RAID por Software (mdadm)** |
+| :---------------- | :----------------------- | :------------------------------- |
+| **📖 Implementação** | Utiliza uma **controladora RAID dedicada**, responsável por todo o processamento do Array. | Utiliza o **kernel Linux** e o utilitário **mdadm**, dispensando controladora dedicada. |
+| **🧠 Processamento** | Executado pela controladora RAID, reduzindo o uso da CPU do servidor. | Executado pela CPU do sistema operacional, com baixo impacto nos processadores modernos. |
+| **💾 Metadados** | Armazenados na controladora RAID ou em formato proprietário. | Armazenados no **Superblock** de cada disco membro do Array. |
+| **🔄 Portabilidade** | Geralmente depende do mesmo fabricante ou modelo da controladora para recuperar o Array. | Alta portabilidade. Os discos podem ser movidos para outro servidor Linux e remontados utilizando o **mdadm**. |
+| **⚡ Desempenho** | Geralmente superior em ambientes com muitas operações de I/O ou uso de cache da controladora. | Excelente desempenho para a maioria dos servidores modernos, principalmente em RAID 1 e RAID 10. |
+| **🔋 Cache de Escrita** | Pode possuir memória Cache protegida por bateria (BBU/CacheVault). | Utiliza o cache do sistema operacional e do próprio dispositivo de armazenamento. |
+| **🛠️ Gerenciamento** | Realizado pela BIOS/UEFI da controladora e ferramentas específicas do fabricante. | Gerenciado pelos comandos `mdadm`, `/proc/mdstat` e arquivos em `/sys`. |
+| **💰 Custo** | Requer aquisição de uma controladora RAID dedicada. | Não possui custo adicional, pois faz parte do kernel Linux. |
+| **🔍 Monitoramento** | Utiliza ferramentas do fabricante (Dell PERC, HPE Smart Array, MegaRAID, etc.). | Utiliza `mdadm`, `systemd`, `journalctl`, `/proc/mdstat` e outras ferramentas do Linux. |
+| **🎯 Cenário Recomendado** | Servidores corporativos de alto desempenho, SANs e Datacenters. | Servidores Linux, máquinas virtuais, laboratórios, cloud e pequenas/médias empresas. |
 ---
 
-| **RAID** | **Redundância** | **Performance** | **Mínimo de Discos** | **Tolerância** |
-| -------- | --------------- | --------------- | -------------------- | -------------- |
-| **RAID0** | ❌ | ⭐⭐⭐⭐⭐ | 2 | Nenhuma |
-| **RAID1** | ✅ | ⭐⭐⭐ | 2 | 1 disco |
-| **RAID5** | ✅ | ⭐⭐⭐⭐ | 3 | 1 disco |
-| **RAID6** | ✅ | ⭐⭐⭐ | 4 | 2 discos |
-| **RAID10** | ✅ | ⭐⭐⭐⭐⭐ | 4 | até metade dos discos |
+| **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
+| :---------------- | :-------------- | :--------------------- |
+| 🗄️ **RAID (Redundant Array of Independent Disks)** | Tecnologia que combina dois ou mais discos físicos em um único dispositivo lógico, distribuindo ou espelhando dados conforme o nível de RAID configurado. | Aumenta a disponibilidade, desempenho e tolerância a falhas do armazenamento. |
+| 🪞 **RAID 1 (Mirroring)** | Mantém uma cópia idêntica dos dados em todos os discos do Array.                                                                                          | Garante alta disponibilidade dos dados caso um dos discos apresente falha. |
+| ⚙️ **mdadm** | Ferramenta padrão do Linux para criação e administração de Software RAID.                                                                                 | Cria, monitora, recupera e administra Arrays RAID utilizando o subsistema **md** do kernel Linux. |
+| 🔢 **Array** | Dispositivo lógico formado pela união de dois ou mais discos físicos.                                                                                     | Representa o dispositivo RAID apresentado ao sistema operacional (ex.: `/dev/md0`). |
+| 🧩 **Superblock** | Área de metadados gravada em cada disco participante do RAID.                                                                                             | Armazena informações do Array (UUID, nível, estado, discos membros, sincronização etc.). |
+| 🔄 **Resync (Sincronização)** | Processo de sincronização dos dados entre os discos do Array.                                                                                             | Mantém todos os discos com exatamente o mesmo conteúdo após criação, recuperação ou substituição de discos. |
+| 🔧 **Rebuild (Reconstrução)** | Processo de reconstrução do Array após substituição de um disco com falha.                                                                                | Recupera automaticamente a redundância do RAID copiando os dados para o novo disco. |
+| 🚨 **Estado Degradado (Degraded)** | Situação em que um ou mais discos falharam, porém o Array permanece operacional.                                                                          | Permite continuidade do serviço até que o disco defeituoso seja substituído. |
+| 🆘 **Hot Spare** | Disco de reserva previamente configurado no Array.                                                                                                        | Assume automaticamente o lugar de um disco com falha, iniciando imediatamente o processo de reconstrução. |
+| 🔍 **Bitmap** | Área utilizada para registrar quais blocos sofreram alterações durante o funcionamento do Array.                                                          | Acelera a sincronização e reduz o tempo de reconstrução após falhas ou desligamentos inesperados. |
+---
+
+| **🗄️ RAID** | **📖 Funcionamento** | **💾 Redundância** | **⚡ Performance** | **📀 Mínimo de Discos** | **🛡️ Tolerância a Falhas** | **🎯 Uso Recomendado** |
+| :---------- | :------------------- | :----------------: | :---------------: | :---------------------: | :------------------------: | :--------------------- |
+| **RAID 0** | Striping (Distribuição de blocos) | ❌ | ⭐⭐⭐⭐⭐ | 2 | Nenhuma | Alto desempenho sem proteção de dados. |
+| **RAID 1** | Mirroring (Espelhamento) | ✅ | ⭐⭐⭐⭐ | 2 | 1 disco por espelho | Sistemas operacionais, bancos de dados e servidores críticos. |
+| **RAID 5** | Striping com Paridade Distribuída | ✅ | ⭐⭐⭐⭐ | 3 | 1 disco | Servidores de arquivos e armazenamento geral. |
+| **RAID 6** | Striping com Dupla Paridade | ✅ | ⭐⭐⭐ | 4 | 2 discos | Grandes volumes de armazenamento com alta disponibilidade. |
+| **RAID 10 (1+0)** | Espelhamento + Striping | ✅ | ⭐⭐⭐⭐⭐ | 4 | Até um disco por espelho (dependendo da distribuição das falhas) | Bancos de dados, virtualização e aplicações críticas de alto desempenho. |
 ---
 
 ## 01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server
