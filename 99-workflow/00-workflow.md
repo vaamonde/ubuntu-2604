@@ -9,13 +9,13 @@
 07. Configuração do Hard Disk                             OK
 08. Configuração do RAID-1                                OK
 09. Configuração do LVM                                   OK
-10. Configuração do Particionamento
-11. Configuração do Backup
+10. Configuração do Particionamento                       OK
+11. Configuração do Backup                                OK
 https://relax-and-recover.org/
 https://github.com/marcpope/borgbackupserver
 ------------------------------------------------------------
 
-12. Configuração do Bonding
+12. Configuração do Bonding                               OK
 ------------------------------------------------------------
 
 13. Hardening OpenSSH + Certificado + 2FA
