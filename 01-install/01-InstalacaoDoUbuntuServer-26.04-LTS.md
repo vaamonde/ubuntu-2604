@@ -45,7 +45,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 02) Vídeo de instalação do VirtualBOX no Linux Mint: https://www.youtube.com/watch?v=yTihvAaaxpU<br>
 03) Atualização do VirtualBOX no Linux Mint: https://www.youtube.com/watch?v=DU47PLFSxpA<br>
 
-> **OBSERVAÇÃO:** Utilizar o Oracle VirtualBOX Gerenciador (versão 7.x ou superior).
+> **OBSERVAÇÃO:** Utilizar o Virtualizador Oracle VirtualBOX versão 7.x ou superior.
 
 ```bash
 01) Ferramentas;
@@ -94,9 +94,9 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
     Processador
         Recursos Estendidos: Habilitar PAE/NX
                              Habilitar VT-x/AMD-v Aninhado
-        #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITAR O RECURSO DE
-        #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NA LINHA DE
-        #COMANDO (TERMINAL) O COMANDO: VBoxManage modifyvm UbuntuOnPremise --nested-hw-virt on
+        #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITA O RECURSO DE:
+        #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL
+        #O COMANDO: VBoxManage modifyvm UbuntuOnPremise --nested-hw-virt on
 
 03) Display
     Tela (S)
@@ -111,7 +111,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
       (ON) Habilitar Placa de Rede: (Habilitar)
       Conectado a: Placa em modo Bridge
       Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
-      #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU EQUIPAMENTO
+      #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR
       #QUE ESTÁ CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA
       #DE REDE SEM-FIO (RECOMENDO SEMPRE PLACA DE REDE CABEADA, MELHOR DESEMPENHO).
 <OK>
@@ -161,8 +161,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 05) Network connections
     enp0s3 eth - (o nome lógico da placa de rede muda de equipamento para equipamento)
     DHCPv4 172.16.1.XXX/24 (altere conforme a sua necessidade)
-    #OBSERVAÇÃO IMPORTANTE: VERIFICAR O ENDEREÇO IPv4 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
-    #INTERNA PARA ADAPTAR NO SEU CENÁRIO.
+    #OBSERVAÇÃO IMPORTANTE: VERIFIQUE O ENDEREÇO IPv4 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
+    #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO.
 <Done>
 
 06) Configure proxy
@@ -172,7 +172,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 07) Configure Ubuntu archive mirror
     Mirror: http://archive.ubuntu.com/ubuntu
     #OBSERVAÇÃO IMPORTANTE: CASO QUEIRA TROCAR O MIRROR DO UBUNTU DO BRASIL PARA O
-    #OFICIAL NO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
+    #OFICIAL DO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
     #URL: http://us.archive.ubuntu.com/ubuntu
 <Done>
 
@@ -183,7 +183,18 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           [ ] Encrypt the LVM group with LUKS (Default - No (Não))
     ( ) Custom storage layout
 <Done>
+```
 
+| **📂 Partição** | **📝 Descrição** |
+| :-------------- | :--------------- |
+| **🖥️ `/` (Root)** | Contém o sistema operacional, bibliotecas, executáveis, configurações e diretórios essenciais para o funcionamento do Ubuntu Server. Separar a partição raiz facilita o gerenciamento do espaço em disco e evita que outros diretórios consumam todo o armazenamento disponível. |
+| **💾 `swap`** | Área utilizada como memória virtual quando a memória RAM é insuficiente. Também é utilizada para operações como hibernação (quando suportada) e auxilia o kernel no gerenciamento da memória, reduzindo a possibilidade de encerramento inesperado de processos por falta de RAM (*Out Of Memory - OOM*). |
+| **👤 `/home`** | Armazena os diretórios pessoais dos usuários, incluindo arquivos, configurações e perfis individuais. Mantê-la separada facilita reinstalações do sistema operacional, preserva os dados dos usuários e melhora a organização do servidor. |
+| **📁 `/tmp`** | Diretório destinado ao armazenamento de arquivos temporários criados pelo sistema e pelas aplicações durante sua execução. Sua separação aumenta a segurança, facilita a limpeza automática e evita que arquivos temporários ocupem espaço da partição principal do sistema. |
+| **📊 `/var`** | Contém arquivos de crescimento dinâmico, como logs do sistema, filas de impressão, cache, bancos de dados, arquivos de e-mail e informações de aplicações. Mantê-la em uma partição dedicada impede que o crescimento desses arquivos comprometa o funcionamento da partição raiz (`/`). |
+---
+
+```bash
 09) Storage configuration
     AVAILABLE DEVICES
       free space <Enter>

@@ -41,6 +41,7 @@ Site Oficial do Ubuntu Membership: https://wiki.ubuntu.com/Membership
 | 🔐 **ESM (Extended Security Maintenance)** | Serviço da Canonical que estende as atualizações de segurança para versões **LTS** do Ubuntu após o término do suporte padrão. | Mantém servidores protegidos contra vulnerabilidades críticas por vários anos adicionais, evitando a necessidade de atualização imediata do sistema operacional. O ESM cobre tanto os pacotes do repositório **Main** quanto do **Universe** (dependendo da assinatura Ubuntu Pro). |
 | 📦 **LTS (Long-Term Support)** | Modelo de lançamento do Ubuntu que prioriza estabilidade, compatibilidade e suporte de longo prazo. As versões LTS são publicadas a cada dois anos. | Ideal para servidores e ambientes corporativos, pois recebem **5 anos de suporte padrão**, podendo chegar a **10 anos ou mais** com o Ubuntu Pro e o serviço ESM, reduzindo a necessidade de migrações frequentes. |
 | ⚠️ **CVE (Common Vulnerabilities and Exposures)** | Padrão internacional para identificação e catalogação de vulnerabilidades de segurança conhecidas em softwares, sistemas operacionais e equipamentos. É mantido pela **MITRE Corporation**. | Permite identificar, documentar, rastrear e corrigir vulnerabilidades de forma padronizada. Fabricantes, distribuições Linux, pesquisadores e ferramentas de segurança utilizam os identificadores **CVE** para aplicar patches, gerar alertas e realizar auditorias de segurança. |
+---
 
 [![Ubuntu Pro Free](http://img.youtube.com/vi//0.jpg)]( "Ubuntu Pro Free")
 
@@ -70,6 +71,7 @@ Entendendo a saída do arquivo: __`os-release`__<br>
 | 🔒 **PRIVACY_POLICY_URL** | `https://www.ubuntu.com/legal/terms-and-policies/privacy-policy` | Página da política oficial de privacidade da Ubuntu. |
 | 🦝 **UBUNTU_CODENAME** | `resolute` | Codinome específico da versão do Ubuntu, utilizado internamente pela distribuição. |
 | 🎨 **LOGO** | `ubuntu-logo` | Identificador do logotipo padrão da distribuição, utilizado por interfaces gráficas e aplicações compatíveis. |
+---
 
 ```bash
 #verificando as informações específicas do Sistema Operacional
@@ -85,6 +87,7 @@ Entendendo a saída do arquivo: __`lsb-release`__<br>
 | 🔢 **DISTRIB_RELEASE** | `26.04` | Versão da distribuição Ubuntu instalada. O formato `AA.MM` representa **Ano.Mês** de lançamento. |
 | 🏷️ **DISTRIB_CODENAME** | `resolute` | Codinome oficial da versão do Ubuntu, utilizado em repositórios, documentação e gerenciamento de pacotes. |
 | 📖 **DISTRIB_DESCRIPTION** | `Ubuntu 26.04 LTS` | Descrição completa da distribuição, indicando que se trata de uma versão **LTS (Long Term Support)**, com suporte estendido e maior estabilidade para servidores e ambientes corporativos. |
+---
 
 ```bash
 #verificando as informações de Kernel do Sistema Operacional
@@ -103,7 +106,7 @@ Entendendo a saída do comando: __`uname -a`__<br>
 | 📅 **Data da Compilação** | `Thu Jun 18 19:13:49 UTC 2026` | Data e hora em que o kernel foi compilado pela equipe da Ubuntu (fuso horário UTC). |
 | 💻 **Arquitetura** | `x86_64` | Arquitetura de 64 bits compatível com processadores AMD64 e Intel 64. |
 | 🐧 **Sistema Operacional** | `GNU/Linux` | Indica que o sistema utiliza o kernel Linux juntamente com as ferramentas do projeto GNU. |
-
+---
 
 ## 02_ Forçando uma Atualizando Completa do Sistema Operacional do Ubuntu Server
 
@@ -207,6 +210,7 @@ sudo pro status --all
 | ⏱️ | **realtime-kernel** | Kernel Ubuntu com patches **PREEMPT_RT**, destinado a aplicações de tempo real (Real-Time). |
 | 🤖 | **ros** | Atualizações de segurança para o **Robot Operating System (ROS)**. |
 | 🔄 | **ros-updates** | Todas as atualizações disponíveis para o **Robot Operating System (ROS)**, incluindo novos recursos e correções. |
+---
 
 ```bash
 #verificando os status dos pacotes de segurança do Ubuntu Pro
@@ -246,6 +250,16 @@ sudo apt policy
 ```
 ```bash
 #Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro
+#opções do comando apt: update (Resynchronize the package index files from their sources)
+#upgrade (Install the newest versions of all packages currently installed on the system 
+#from the sources enumerated in /etc/apt/sources.list.), dist-upgrade (dist-upgrade in 
+#addition to performing the function of upgrade, also intelligently handles changing 
+#dependencies with new versions of packages), full-upgrade (Perform the function of upgrade 
+#but may also remove installed packages if that is required in order to resolve a package
+#conflict), autoremove (Autoremove is used to remove packages that were automatically
+#installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
+#repository of retrieved package files), clean (clean clears out the local repository of 
+#retrieved package files)
 sudo apt clean
 sudo apt update
 sudo apt upgrade
