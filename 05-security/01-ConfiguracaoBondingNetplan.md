@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 28/07/2026<br>
-Data de atualização: 28/07/2026<br>
-Versão: 0.01<br>
+Data de atualização: 29/07/2026<br>
+Versão: 0.02<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
 Testado e homologado no Oracle VirtualBOX 7.x
 
@@ -158,7 +158,7 @@ ls -lh /etc/netplan/
 #fazendo o backup do arquivo de configuração original do Netplan
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.old
+sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp00
 
 #download do arquivo de configuração do Netplan com Bonding
 #opção do comando wget: -v (verbose), -O (output file)
@@ -232,7 +232,7 @@ ESC SHIFT :x <Enter>
 #fazendo o backup do arquivo de configuração modificado do Netplan
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp
+sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
 
 #validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado)
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)

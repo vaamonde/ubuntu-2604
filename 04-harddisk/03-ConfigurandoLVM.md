@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 25/07/2026<br>
-Data de atualização: 28/07/2026<br>
-Versão: 0.03<br>
+Data de atualização: 29/07/2026<br>
+Versão: 0.05<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -115,9 +115,18 @@ sudo apt install lvm2 thin-provisioning-tools
 sudo lvm version
 
 #verificando o status do serviço do LVM no Ubuntu Server
-#opção do comando systemctl: status (runtime status information)
+#opções do comando systemctl: status (runtime status information), restart (Stop and then start one or 
+#more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status lvm2-monitor
+sudo systemctl restart lvm2-monitor
+sudo systemctl stop lvm2-monitor
+sudo systemctl start lvm2-monitor
+
+#analisando os Log's e mensagens do LVM no Ubuntu Server
+#opção do comando journalctl: -u (unit)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u lvm2-monitor
 ```
 
 ## 04_ Criando o Physical Volume (PV) sobre o Array do RAID-1 no Ubuntu Server
@@ -388,14 +397,17 @@ Entendendo a saída do comando: __`sudo df -h /dados`__<br>
 ---
 
 ## 08_ Localização dos Arquivos de Configuração do LVM no Ubuntu Server
-```bash
-/etc/lvm/                <-- Diretório de configuração do LVM
-/etc/lvm/lvm.conf        <-- Arquivo principal de configuração do LVM
-/etc/lvm/backup/         <-- Diretório de backup automático dos metadados atuais de cada Volume Group
-/etc/lvm/archive/        <-- Diretório de histórico de versões anteriores dos metadados (a cada alteração)
-/etc/lvm/profile/        <-- Diretório do perfil de configuração do LVM
-/etc/lvm/lvmlocal.conf   <-- Arquivo de configurações locais específicas do host
-```
+
+| **📂 Caminho** | **📝 Descrição** |
+| :------------- | :--------------- |
+| **`/etc/lvm/`** | Diretório principal de configuração do **LVM (Logical Volume Manager)**. Contém arquivos de configuração, perfis, backups e históricos dos metadados dos **Physical Volumes (PV)**, **Volume Groups (VG)** e **Logical Volumes (LV)**. |
+| **`/etc/lvm/lvm.conf`** | Arquivo principal de configuração do LVM. Define parâmetros globais, como descoberta de dispositivos (*device scanning*), filtros de discos, políticas de ativação de volumes, cache, logs e comportamento geral do gerenciador de volumes. |
+| **`/etc/lvm/backup/`** | Diretório onde o LVM armazena automaticamente uma cópia atualizada dos metadados de cada **Volume Group (VG)** após alterações. Esses arquivos podem ser utilizados para restaurar a configuração do LVM em caso de falhas ou corrupção dos metadados. |
+| **`/etc/lvm/archive/`** | Diretório que mantém um histórico das versões anteriores dos metadados dos **Volume Groups**. A cada modificação (criação, remoção, expansão ou redução de PV, VG ou LV), uma nova versão é arquivada, permitindo restaurar estados anteriores do armazenamento. |
+| **`/etc/lvm/profile/`** | Diretório destinado aos perfis de configuração do LVM. Permite criar conjuntos de parâmetros específicos para **Logical Volumes (LV)** ou **Volume Groups (VG)**, possibilitando otimizações para diferentes cargas de trabalho, como bancos de dados, snapshots e Thin Provisioning. |
+| **`/etc/lvm/lvmlocal.conf`** | Arquivo destinado às configurações locais do host. Permite sobrescrever parâmetros definidos em `lvm.conf` sem alterar o arquivo principal, facilitando personalizações específicas para determinado servidor e preservando a configuração padrão durante atualizações do sistema. |
+---
+
 ```bash
 #verificando o conteúdo do backup de metadados do Volume Group no Ubuntu Server
 #opção do comando cat: -n (number line)
