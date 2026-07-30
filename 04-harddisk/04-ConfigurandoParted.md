@@ -78,6 +78,21 @@ Link da vídeo aula:
 ## 02_ Verificando os Discos Reconhecidos no Ubuntu Server
 
 ```bash
+#listando todos os discos e partições em formato de árvore no Ubuntu Server
+#opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
+sudo lsblk -f
+```
+
+Entendendo a saída do comando: __`sudo lsblk -f`__ (Disco Novo)<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Disco** | `/dev/sdd` | Quarto disco físico (virtual) reconhecido pelo Ubuntu Server, ainda sem particionamento. |
+| 🗂️ **Sistema de Arquivos** | *(vazio)* | Confirma que o disco está limpo, sem sistema de arquivos, RAID ou LVM configurado. |
+| 🆔 **UUID** | *(vazio)* | Não existe UUID, pois ainda não há sistema de arquivos criado no disco. |
+---
+
+```bash
 #verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM no disco novo
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
@@ -92,23 +107,22 @@ sudo wipefs -n /dev/sdd
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -a /dev/sdd
 
-#listando os discos e partições em formato de árvore no Ubuntu Server
-#opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
-sudo lsblk -f
-
 #listando as tabelas de partição de todos os discos reconhecidos
 #opção do comando fdisk: -l (List the partition tables for the specified devices and then exit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/fdisk.8.html
 sudo fdisk -l /dev/sdd
 ```
 
-Entendendo a saída do comando: __`sudo lsblk -f`__ (Disco Novo)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 💽 **Disco** | `/dev/sdd` | Quarto disco físico (virtual) reconhecido pelo Ubuntu Server, ainda sem particionamento. |
-| 🗂️ **Sistema de Arquivos** | *(vazio)* | Confirma que o disco está limpo, sem sistema de arquivos, RAID ou LVM configurado. |
-| 🆔 **UUID** | *(vazio)* | Não existe UUID, pois ainda não há sistema de arquivos criado no disco. |
+| 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional Linux. |
+| 📦 **Capacidade** | `50 GiB (53.687.091.200 bytes)` | Capacidade total disponível no disco físico. |
+| 🔢 **Total de Setores** | `104.857.600` | Quantidade total de setores endereçáveis no disco. |
+| 🏷️ **Modelo** | `VBOX HARDDISK` | Disco virtual fornecido pelo Oracle VirtualBox para utilização na máquina virtual. |
+| 📐 **Unidade de Medida** | `1 setor = 512 bytes` | Cada setor lógico possui 512 bytes, utilizado como unidade básica para particionamento e armazenamento de dados. |
+| 📏 **Tamanho do Setor (Lógico/Físico)** | `512 bytes / 512 bytes` | O tamanho do setor lógico e físico é de 512 bytes, não havendo diferença entre eles. |
+| ⚡ **Tamanho de I/O (Mínimo/Ótimo)** | `512 bytes / 512 bytes` | Tamanho mínimo e recomendado para operações de leitura e gravação no dispositivo. |
+| 🗂️ **Tabela de Partições** | **Não encontrada** | O disco ainda não possui uma tabela de partições (MBR ou GPT), indicando que está vazio e pronto para inicialização e particionamento. |
 ---
 
 ## 03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server
@@ -146,7 +160,9 @@ sudo gdisk /dev/sdd
 ```bash
 #listando a partição criada no Disco /dev/sdd do Ubuntu Server
 #opção do comando cat: -n (number line)
+#opção do comando grep: -i (Ignore case distinctions in patterns and input data)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /proc/partitions | grep -i sdd
 
 #verificando a nova tabela de partição GPT criada no Disco /dev/sdd
@@ -233,9 +249,9 @@ INSERT
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O UUID PARA O UUID GERADO NO SEU CENÁRIO (comando blkid acima)
 #Opção default: rw,suid,dev,exec,auto,nouser,async
 #Opção nofail: evita que o Boot trave/pare caso o disco de Backup esteja indisponível
-#Identificação da Partição   Ponto de   Sistema de   Opção de           Dump   FSCK
-#      Backup                Montagem    Arquivos    Montagem
-UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup   ext4   defaults,nofail    0      2
+#Identificação da Partição       Ponto de   Sistema de   Opção de           Dump   FSCK
+#      Backup                    Montagem    Arquivos    Montagem
+UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup       ext4      defaults,nofail     0      2
 ```
 ```bash
 #salvar e sair do arquivo
@@ -261,11 +277,6 @@ sudo mount -va
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /backup
-
-#listando os discos e partições em formato de árvore, incluindo o disco de Backup montado
-#opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
-sudo lsblk -f
 ```
 
 Entendendo a saída do comando: __`sudo df -h /backup`__<br>
@@ -277,6 +288,26 @@ Entendendo a saída do comando: __`sudo df -h /backup`__<br>
 | 📂 **Avail** | `47G` | Espaço livre disponível para armazenamento dos Snapshots do BorgBackupServer. |
 | 📈 **Use%** | `1%` | Percentual de utilização do sistema de arquivos. |
 | 📌 **Mounted on** | `/backup` | Diretório onde a partição de Backup está montada e acessível pelo BorgBackupServer. |
+---
+
+```bash
+#listando os discos e partições em formato de árvore, incluindo o disco de Backup montado
+#opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
+sudo lsblk -f /dev/sdd
+```
+
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional. |
+| 📂 **Partição** | `/dev/sdd1` | Primeira partição criada no disco `/dev/sdd`. |
+| 🗃️ **Sistema de Arquivos (FSTYPE)** | `ext4` | Sistema de arquivos utilizado na partição, padrão recomendado para servidores Linux devido à estabilidade, desempenho e suporte a journaling. |
+| 📋 **Versão do Sistema de Arquivos (FSVER)** | `1.0` | Versão do sistema de arquivos EXT4 utilizada na partição. |
+| 🏷️ **Rótulo (LABEL)** | `backup01` | Nome amigável atribuído à partição para facilitar sua identificação e administração. |
+| 🆔 **UUID** | `39f5a6f6-fc99-4e2e-b6f9-13f68127e758` | Identificador único universal da partição. É recomendado utilizar o UUID em arquivos como `/etc/fstab`, pois permanece constante mesmo que o nome do dispositivo (`/dev/sdd1`) seja alterado. |
+| 💿 **Espaço Disponível (FSAVAIL)** | `46,4 GiB` | Quantidade de espaço livre disponível para armazenamento de dados. |
+| 📊 **Utilização (FSUSE%)** | `0%` | Percentual de utilização do sistema de arquivos. A partição está praticamente vazia. |
+| 📍 **Ponto de Montagem (MOUNTPOINTS)** | `/backup` | Diretório onde a partição está montada e acessível pelo sistema operacional. |
 ---
 
 ## 09_ Preparando Permissões e Estrutura de Diretórios para o BorgBackupServer
@@ -295,13 +326,13 @@ sudo mkdir -pv /backup/repository/lv-dados
 sudo groupadd backupadm
 
 #ajustando o proprietário (Owner) e grupo (Group) do diretório de Backup no Ubuntu Server
-#opção do comando chown: -R (recursive), -v (verbose)
+#opção do comando chown: -R (recursive), -v (verbose), root (owner), backupadm (group)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chown.1.html
 sudo chown -Rv root:backupadm /backup
 
 #ajustando as permissões do diretório de Backup no Ubuntu Server
-#opção do comando chmod: -R (recursive), -v (verbose)
-#770 = Leitura/Escrita/Execução para Owner e Group, Sem acesso para Others
+#opção do comando chmod: -R (recursive), -v (verbose), 770 = Leitura/Escrita/Execução para Owner e Group, 
+#Sem acesso para Others
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 770 /backup
 
