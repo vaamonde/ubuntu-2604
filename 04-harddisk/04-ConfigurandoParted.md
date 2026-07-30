@@ -18,8 +18,6 @@ Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.0
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
-Relax-and-Recover: https://relax-and-recover.org/<br>
-Borg Backup Server (Referência do próximo procedimento): https://github.com/marcpope/borgbackupserver
 
 Conteúdo estudado nessa configuração:<br>
 #01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
@@ -113,6 +111,7 @@ sudo wipefs -a /dev/sdd
 sudo fdisk -l /dev/sdd
 ```
 
+Entendendo a saída do comando: __`sudo fdisk -l /dev/sdd`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional Linux. |
@@ -297,6 +296,7 @@ Entendendo a saída do comando: __`sudo df -h /backup`__<br>
 sudo lsblk -f /dev/sdd
 ```
 
+Entendendo a saída do comando: __`sudo lsblk -f /dev/sdd`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional. |

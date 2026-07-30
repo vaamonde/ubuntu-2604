@@ -11,8 +11,6 @@
 09. Configuração do LVM                                   OK
 10. Configuração do Particionamento                       OK
 11. Configuração do Backup                                OK
-https://relax-and-recover.org/
-https://github.com/marcpope/borgbackupserver
 ------------------------------------------------------------
 
 12. Configuração do Bonding                               OK
@@ -43,4 +41,5 @@ https://vestacp.com/install
 https://www.ispconfig.org/
 https://www.aapanel.com/
 https://openpanel.com/
-
+https://relax-and-recover.org/
+https://github.com/marcpope/borgbackupserver

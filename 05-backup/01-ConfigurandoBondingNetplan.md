@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 28/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.02<br>
+Data de atualização: 30/07/2026<br>
+Versão: 0.03<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
 Testado e homologado no Oracle VirtualBOX 7.x
 
@@ -54,7 +54,7 @@ Link da vídeo aula:
 | **broadcast** | mode 3 | ⚠️ Parcial (somente Testes) | Envia o mesmo quadro pelas duas interfaces, gera tráfego duplicado desnecessário. |
 | **802.3ad (LACP)** | mode 4 | ❌ **Não funciona** | Exige negociação **LACPDU** com um Switch físico gerenciável, recurso que o VirtualBOX Bridge não simula. |
 | **balance-tlb** | mode 5 | ❌ Não recomendado | Depende do driver da placa de rede física do Host suportar o recurso, resultado inconsistente em ambiente virtualizado. |
-| **balance-alb** | mode 6 | ❌ Não recomendado | Utiliza ARP Negotiation para balancear o tráfego de entrada, o que gera instabilidade em redes Bridged do VirtualBOX. |
+| **balance-alb** | mode 6 | ❌ Não recomendado | Utiliza **ARP Negotiation** para balancear o tráfego de entrada, o que gera instabilidade em redes Bridged do VirtualBOX. |
 ---
 
 > **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de Produção On-Premises com Switches físicos gerenciáveis, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
@@ -113,6 +113,8 @@ VBoxManage showvminfo "UbuntuOnPremise" | grep -i "NIC\|Promisc"
 
 ## 04_ Verificando as duas Interfaces de Rede reconhecidas no Ubuntu Server
 
+> **OBSERVAÇÃO IMPORTANTE:** anote o Endereço **MAC Address** das duas interfaces (exemplo: `enp0s3` e `enp0s8`), esses valores serão utilizados no bloco: __`match: macaddress:`__ do arquivo de configuração do Netplan.
+
 ```bash
 #verificando os dispositivos PCI de Placa de Rede instalados no Ubuntu Server
 #opções do comando lspci: -v (verbose)
@@ -130,8 +132,6 @@ sudo lshw -class network
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
 ```
-
-> **OBSERVAÇÃO IMPORTANTE:** anote o Endereço **MAC Address** das duas interfaces (exemplo: `enp0s3` e `enp0s8`), esses valores serão utilizados no bloco: __`match: macaddress:`__ do arquivo de configuração do Netplan.
 
 ## 05_ Instalando o módulo do Kernel de Bonding no Ubuntu Server
 
@@ -152,7 +152,7 @@ sudo modprobe bonding
 echo "bonding" | sudo tee -a /etc/modules-load.d/bonding.conf
 ```
 
-## 06_ Atualizando o arquivo de configuração do Netplan com Bonding
+## 06_ Atualizando o arquivo de configuração do Netplan com Bonding no Ubuntu Server
 
 ```bash
 #listando o conteúdo do diretório de configuração do Netplan
@@ -291,6 +291,9 @@ Entendendo a saída do arquivo: __`/proc/net/bonding/bond0`__<br>
 
 > **OBSERVAÇÃO IMPORTANTE:** para simular a falha de um Link físico no Oracle VirtualBOX, você pode Desabilitar o Adaptador de Rede diretamente na tela: __`Dispositivos > Rede > Desconectar Cabo de Rede`__ da Máquina Virtual em execução, ou utilizar o comando abaixo diretamente no Host.
 
+> **OBSERVAÇÃO IMPORTANTE:** durante o teste de Failover, o campo __`Currently Active Slave`__ do arquivo `/proc/net/bonding/bond0` deve mudar automaticamente de `enp0s3` para `enp0s8`, confirmando que a Redundância do Bonding está funcionando corretamente, mesmo em ambiente virtualizado no Oracle VirtualBOX.
+
+
 ```bash
 #simulando a falha de um Link de Rede desconectando o Cabo Virtual do Adaptador (executar no Host)
 #opção do comando VBoxManage: controlvm setlinkstateN (Sets the link state)
@@ -298,7 +301,13 @@ Entendendo a saída do arquivo: __`/proc/net/bonding/bond0`__<br>
 VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 off
 
 #verificando dentro do Ubuntu Server se o Bonding assumiu a interface escrava (enp0s8)
-sudo cat -n /proc/net/bonding/bond0
+#opção do comando watch: -n (Specify  update  interval), 1 (second)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/watch
+sudo watch -n 1 /proc/net/bonding/bond0
+
+#verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas
+#opções do comando ip: address (Protocol (IP or IPv6) address on a device)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show bond0
 
 #reconectando o Cabo Virtual do Adaptador para restaurar a interface Primária (executar no Host)
@@ -311,5 +320,3 @@ VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 on
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u systemd-networkd
 ```
-
-> **OBSERVAÇÃO IMPORTANTE:** durante o teste de Failover, o campo __`Currently Active Slave`__ do arquivo `/proc/net/bonding/bond0` deve mudar automaticamente de `enp0s3` para `enp0s8`, confirmando que a Redundância do Bonding está funcionando corretamente, mesmo em ambiente virtualizado no Oracle VirtualBOX.
