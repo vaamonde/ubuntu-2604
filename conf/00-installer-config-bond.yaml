@@ -6,8 +6,8 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 28/07/2026
-# Data de atualização: 28/07/2026
-# Versão: 0.01
+# Data de atualização: 30/07/2026
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
 # Testado e homologado para a versão do Netplan v1.2.x
 # Testado e homologado para a versão do Oracle VirtualBOX 7.x (Adaptador em modo Bridge)
@@ -37,7 +37,7 @@ network:
       #
       # Identificando a Interface de Rede Física pelo Endereço MAC Address
       match:
-        macaddress: 08:00:27:45:05:cd
+        macaddress: SEU_MAC_ADDRESS_ENP0S3
       #
       # Definindo o Nome Lógico da Interface de Rede
       set-name: enp0s3
@@ -48,13 +48,19 @@ network:
       # Desabilitando o suporte ao DHCP Client IPv6 na interface física (Escrava do Bonding)
       dhcp6: false
       #
+      # Desabilitando o suporte da configuração automática do IPv6 na interface física6
+      link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      accept-ra: false
+      #
     # Configuração da Segunda Interface Física (Adaptador 2 do VirtualBOX em modo Bridge)
     enp0s8:
       #
       # Identificando a Interface de Rede Física pelo Endereço MAC Address
       # OBSERVAÇÃO IMPORTANTE: ALTERAR O MAC ADDRESS PARA O ENDEREÇO DO SEU ADAPTADOR 2
       match:
-        macaddress: 08:00:27:90:50:12
+        macaddress: SEU_MAC_ADDRESS_ENP0S8
       #
       # Definindo o Nome Lógico da Interface de Rede
       set-name: enp0s8
@@ -64,6 +70,12 @@ network:
       #
       # Desabilitando o suporte ao DHCP Client IPv6 na interface física (Escrava do Bonding)
       dhcp6: false
+      #
+      # Desabilitando o suporte da configuração automática do IPv6 na interface física6
+      link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      accept-ra: false
       #
   # Bloco de configuração do Bonding (Agregação/Redundância de Placas de Rede)
   bonds:
@@ -76,25 +88,37 @@ network:
         - enp0s3
         - enp0s8
       #
+      # Desabilitando o suporte ao DHCP Client IPv4 na Interface Lógica do Bonding
+      dhcp4: false
+      #
+      # Desabilitando o suporte ao DHCP Client IPv6 na Interface Lógica do Bonding
+      dhcp6: false
+      #
+      # Desabilitando o suporte da configuração automática do IPv6 na Interface Lógica do Bonding
+      link-local: []
+      #
+      # Desabilitando a configuração automática via Router Advertisement (IPv6) na Interface Lógica do Bonding
+      accept-ra: false
+      #
       # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
       # endereço IPv6 Unicast Global e Link Local
       # OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 e IPv6 separados por Traço
       addresses:
-        - 172.16.1.20/24
-        - 2804:14c:90:8697::20/64
-        - fe80::20/64
+        - SEU_ENDEREÇO_IPv4/CIDR
+        - SEU_ENDEREÇO_IPv6_UNICAST_GLOBAL/CIDR
+        - SEU_ENDEREÇO_IPv6_LINK_LOCAL/CIDR
       #
       # Configuração do Gateway Padrão IPv4/IPv6 (Rota Padrão) para o seu cenário
       routes:
         # Configuração da Rota Padrão IPv4 (cuidado com o traço antes da opção: to)
         - to: default
           # Configuração do endereço IPv4 do Gateway para o seu cenário
-          via: 172.16.1.254
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPv4
           #
         # Configuração da Rota Padrão IPv6 (cuidado com o traço antes da opção: to)
         - to: default
           # Configuração do endereço IPv6 do Gateway para o seu cenário
-          via: fe80::e638:83ff:fe36:c58e
+          via: SEU_ENDEREÇO_DE_GATEWAY_IPV6_LINK_LOCAL
           #
       # Configuração dos servidores de DNS Server Preferencial e Alternativo
       nameservers:
@@ -107,7 +131,7 @@ network:
           - 2606:4700:4700::1001
         # Configuração da pesquisa de domínio para o seu cenário
         # OBSERVAÇÃO: configuração da pesquisa de Domínio dentro de Colchetes
-        search: [pti.intra]
+        search: [seu.domínio]
       #
       # Bloco de Parâmetros específicos do Driver de Bonding do Kernel Linux
       # OBSERVAÇÃO IMPORTANTE: modo recomendado para o Oracle VirtualBOX (Bridge): active-backup

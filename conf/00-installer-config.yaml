@@ -29,7 +29,7 @@ network:
       #
       # Identificando a Interface de Rede Física pelo Endereço MAC Address 
       match:
-        macaddress: 08:00:27:45:05:cd
+        macaddress: SEU_MAC_ADDRESS_ENP0S3
       #
       # Definindo o Nome Lógico da Interface de Rede (Útil para várias Placas de Rede)
       set-name: enp0s3

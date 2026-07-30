@@ -71,6 +71,11 @@ Link da vídeo aula:
       (ON) Habilitar Placa de Rede: (Habilitar)
       Conectado a: Placa em modo Bridge
       Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
+      #OBSERVAÇÃO IMPORTANTE: RECOMENDA-SE UTILIZAR A MESMA PLACA DE REDE FÍSICA DO HOST
+      #NOS DOIS ADAPTADORES, SIMULANDO ASSIM DUAS CONEXÕES INDEPENDENTES NA MESMA REDE.
+      Avançado
+        Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
+        Modo Promíscuo: Permitir Tudo (Allow All)
 
     Adaptador 2 (LAN)
       (ON) Habilitar Placa de Rede: (Habilitar)
@@ -233,6 +238,11 @@ ESC SHIFT :x <Enter>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
+
+#verificando as configurações do arquivo do Netplan no Ubuntu Server
+#opções do comando netplan: --debug (enable debug messages), get (get a settings config netplan)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
+sudo netplan --debug get
 
 #validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado)
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
