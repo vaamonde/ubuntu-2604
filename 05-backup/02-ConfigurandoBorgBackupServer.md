@@ -65,11 +65,6 @@ sudo df -h /dados
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /backup
-
-#verificando a resolução de nome (Hostname/FQDN) configurada no procedimento de Settings
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/hostname.5.html
-sudo hostname
-sudo hostname -A
 ```
 
 Entendendo os Pré-requisitos deste procedimento:<br>
@@ -99,11 +94,6 @@ Entendendo os Pré-requisitos deste procedimento:<br>
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
-#verificando o espaço livre disponível na partição raiz antes da instalação do BBS
-#opção do comando df: -h (human-readable)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
-sudo df -h /
 ```
 
 ## 03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server
@@ -115,11 +105,6 @@ sudo df -h /
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bbs-install
-
-#verificando o conteúdo do script antes de executar (boa prática de segurança)
-#opção do comando less: (visualizador de texto com paginação)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/less.1.html
-less bbs-install
 
 #executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO
