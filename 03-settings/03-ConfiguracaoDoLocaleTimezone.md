@@ -129,8 +129,9 @@ sudo localectl
 
 ```bash
 #verificando as informações de fuso horário do sistema no Ubuntu Server
+#opção do comando timedatectl: status (Show current settings of the system clock and RTC)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
-sudo timedatectl
+sudo timedatectl status
 ```
 
 Entendendo a saída do comando: __`timedatectl`__<br>
@@ -167,8 +168,9 @@ sudo timedatectl list-timezones
 sudo timedatectl set-timezone "America/Sao_Paulo"
 
 #verificando as mudanças do Timezone no Sistema do Ubuntu Server
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.htm
-sudo timedatectl
+#opção do comando timedatectl: status (Show current settings of the system clock and RTC)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl status
 ```
 
 ## 05_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server
@@ -427,18 +429,66 @@ Entendendo a saída do comando: __`openssl s_client -connect a.st1.ntp.br:4460 -
 > **OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de __`Data e Hora em Modo Manual`__ caso as configurações de *Sincronismo Automático* não funcione de forma adequada, não é recomendado configurar a Data e Hora em modo manual em servidores, isso é um alerta de **Erro de Sistema (BIOS/Hardware ou Rede/Internet)**.
 
 ```bash
-#verificando a data hora no Ubuntu Server
-#opções do comando date: %d (day of month), %m (month), %Y (year), %H (hour), %M (minute), %S (second)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/date.1.html
-sudo date
-sudo date +%d/%m/%Y
-sudo date +%H:%M:%S
+#verificando o status atual de Data, Hora, Timezone e Sincronismo NTP antes de qualquer alteração manual
+#opção do comando timedatectl: status (Show current time settings)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl status
 
-#configuração da data e hora no modo manual no Ubuntu Server
-#opções do comando date: -s (set)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/date.1.html
-sudo date -s 16/07/2026
-sudo date -s 13:30:00
+#definindo que o relógio de hardware (RTC) utiliza UTC e não Hora Local (0 = desabilita RTC em Hora Local)
+#opção do comando timedatectl: set-local-rtc (Takes a boolean argument)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl set-local-rtc 0
+
+#desabilitando temporariamente a sincronização automática via NTP/Chrony no Ubuntu Server
+#opção do comando timedatectl: set-ntp (Controls whether NTP based network time synchronization is active)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl set-ntp false
+
+#configurando o Timezone de São Paulo no Ubuntu Server
+#opção do comando timedatectl: set-timezone (Set the system time zone to the specified value)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl set-timezone America/Sao_Paulo
+
+#configurando manualmente a Data e Hora do sistema no Ubuntu Server
+#OBSERVAÇÃO IMPORTANTE: ALTERAR O VALOR "YYYY-MM-DD HH:MM:SS" PARA A DATA/HORA CORRETA DO SEU CENÁRIO
+#opção do comando timedatectl: set-time (Set the system clock to the specified date and time)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl set-time "YYYY-MM-DD HH:MM:SS"
+
+#reabilitando a sincronização automática via NTP/Chrony após o ajuste manual
+#opção do comando timedatectl: set-ntp (Controls whether NTP based network time synchronization is active)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl set-ntp true
+
+#verificando o status final de Data, Hora, Timezone e Sincronismo NTP no Ubuntu Server
+#opção do comando timedatectl: status (Show current time settings)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
+sudo timedatectl status
+
+#reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br
+#opção do comando systemctl: restart (Stop and then start one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl restart chrony.service
+
+#reiniciando o serviço do Systemd Resolved para limpar o cache de respostas DNS/DNSSEC inválidas
+#opção do comando systemctl: restart (Stop and then start one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl restart systemd-resolved
+
+#analisando os Log's e mensagens de erro mais recentes do serviço do Chrony no Ubuntu Server
+#opção do comando journalctl: -e (jump to the end of the journal), -u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -eu chrony
+
+#analisando os Log's e mensagens de erro mais recentes do serviço do Systemd Resolved no Ubuntu Server
+#opção do comando journalctl: -e (jump to the end of the journal), -u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -eu systemd-resolved
+
+#testando a resolução de nomes e a validação do DNSSEC após o ajuste manual de Data e Hora
+#opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+sudo resolvectl query cloudflare.com
 ```
 
 ## 12_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)
