@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 02/08/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -534,6 +534,11 @@ sudo resolvectl show-cache
 #opção do comando resolvectl: monitor (Show a continuous stream of local client resolution queries and their responses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl monitor
+
+#testando a resolução de nomes e a validação do DNSSEC IPv4 e IPv6 no Ubuntu Server
+#opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
+sudo resolvectl query google.com
 
 #verificando o status das configurações do Netplan IPv4 e IPv6 no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)

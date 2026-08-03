@@ -90,10 +90,29 @@ Entendendo os Pré-requisitos deste procedimento:<br>
 ---
 
 ```bash
+#Habilitando os repositórios Multiverso e Universo do Ubuntu Server (dependências para a instalação).
+#opção do comando add-apt-repository: --remove (Remove the specified repository)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
+#Habilitando o repositório Multiverso
+sudo add-apt-repository --enable-source multiverse
+  Removing component(s) 'multiverse' from all repositories.
+  Press [ENTER] to continue or Ctrl-c to cancel.
+#Habilitando o repositório Universo
+sudo add-apt-repository --enable-source universe
+  Removing component(s) 'multiverse' from all repositories.
+  Press [ENTER] to continue or Ctrl-c to cancel.
+
 #atualizando as listas do Apt do sources.list no Ubuntu Server (garantindo pacotes atualizados)
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
+
+#atualizando todos os software instalado no Ubuntu Server (garantindo versões atualizadas)
+#opção do comando apt: upgrade (Install the newest versions of all packages currently installed
+#on the system from the sources enumerated in /etc/apt/sources.list.)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+sudo apt upgrade
+  Continue? [Y/n] y <Enter>
 ```
 
 ## 03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server
@@ -101,6 +120,11 @@ sudo apt update
 > **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único Script Bash, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache, MySQL, Certificado SSL e o serviço de Cron.
 
 ```bash
+#instalando as dependências do BorgBackupServer antes de instalar via Script do Github
+#opção do comando apt: install (install is followed by one or more package names)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+sudo apt install apprise
+
 #efetuando o download do script oficial de instalação do BorgBackupServer no Ubuntu Server
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
@@ -108,7 +132,10 @@ curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bb
 
 #executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO
-sudo bash bbs-install --hostname srvvaamonde.pti.intra
+sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
+
+MySQL setup: BBS needs a database.
+  Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
 
 Entendendo o comando: __`sudo bash bbs-install --hostname srvvaamonde.pti.intra`__<br>
