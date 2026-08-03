@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 29/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.01<br>
+Data de atualização: 03/08/2026<br>
+Versão: 0.03<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
 Testado e homologado no Oracle VirtualBOX 7.x
 
@@ -19,7 +19,6 @@ BorgBackup (Software Base): https://www.borgbackup.org/<br>
 BorgBackup Server / BBS (Projeto): https://github.com/marcpope/borgbackupserver<br>
 BorgBackup Server / BBS (Documentação Oficial - Wiki): https://github.com/marcpope/borgbackupserver/wiki<br>
 BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
-Relax-and-Recover: https://relax-and-recover.org/
 
 Conteúdo estudado nessa configuração:<br>
 #01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer<br>
@@ -53,27 +52,41 @@ Link da vídeo aula:
 
 ## 01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer
 
-> **OBSERVAÇÃO IMPORTANTE:** este procedimento é a **continuação direta** dos capítulos anteriores do Workflow. Antes de prosseguir, confirme que os itens abaixo já estão configurados no Ubuntu Server.
-
 ```bash
 #verificando se a partição de Dados (LVM) está montada e disponível no Ubuntu Server
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /dados
+```
 
+Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Sistema de arquivos armazenado no **Logical Volume `lv_dados`**, pertencente ao **Volume Group `vg_dados`**, gerenciado pelo **LVM (Logical Volume Manager)**. |
+| 📦 **Capacidade Total (Size)** | `30 GiB` | Capacidade total disponível no sistema de arquivos após a expansão do Logical Volume. |
+| 📂 **Espaço Utilizado (Used)** | `2,1 MiB` | Espaço atualmente ocupado por arquivos e estruturas do sistema de arquivos EXT4. |
+| 💿 **Espaço Disponível (Avail)** | `28 GiB` | Espaço livre disponível para armazenamento de novos arquivos. |
+| 📊 **Utilização (Use%)** | `1%` | Percentual do sistema de arquivos atualmente utilizado. |
+| 📍 **Ponto de Montagem (Mounted on)** | `/dados` | Diretório onde o sistema de arquivos está montado e acessível aos usuários e aplicações. |
+---
+
+```bash
 #verificando se a partição de Backup (Particionamento Tradicional) está montada e disponível
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h /backup
 ```
 
-Entendendo os Pré-requisitos deste procedimento:<br>
-| **Item** | **Origem (Procedimento Anterior)** | **Descrição** |
-| :------- | :---------------------------------- | :------------ |
-| 📂 **`/dados`** | `04-harddisk/03-ConfigurandoLVM.md` | Volume Lógico (LVM) sobre o Array **RAID-1**, contendo os dados de produção que serão protegidos pelo Backup. |
-| 💾 **`/backup`** | `04-harddisk/04-ConfigurandoParticionamento.md` | Partição dedicada (Particionamento Tradicional, EXT4), destino do Repositório Borg, com o subdiretório `/backup/repository/lv-dados` já preparado. |
-| 🌐 **FQDN** | `03-settings/02-ConfiguracaoHostnameHosts.md` | Nome de domínio totalmente qualificado do servidor, necessário para a emissão do certificado **SSL/TLS** durante a instalação do BBS. |
-| 🔥 **Firewall/UFW** | `05-security` *(procedimento de Hardening, ainda a ser aplicado)* | Caso o UFW já esteja habilitado, é necessário liberar as portas **80/TCP** e **443/TCP** (Painel Web) antes da instalação. |
+Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💾 **Comando** | `sudo df -h /backup` | Exibe informações sobre a utilização do sistema de arquivos montado no diretório `/backup`, apresentando os valores em formato legível (*Human Readable*). |
+| 💽 **Filesystem** | `/dev/sdd1` | Primeira partição do disco `/dev/sdd`, utilizada como volume dedicado para armazenamento de backups. |
+| 📦 **Capacidade Total (Size)** | `49 GiB` | Capacidade total disponível no sistema de arquivos da partição `/dev/sdd1`. |
+| 📂 **Espaço Utilizado (Used)** | `2,1 MiB` | Espaço atualmente utilizado pelo sistema de arquivos EXT4 e seus metadados. |
+| 💿 **Espaço Disponível (Avail)** | `47 GiB` | Espaço livre disponível para armazenamento de backups e outros arquivos. |
+| 📊 **Utilização (Use%)** | `1%` | Percentual de utilização do sistema de arquivos. O volume está praticamente vazio. |
+| 📍 **Ponto de Montagem (Mounted on)** | `/backup` | Diretório onde a partição `/dev/sdd1` está montada e disponível para uso pelo sistema e aplicações de backup. |
 ---
 
 ## 02_ Verificando os Requisitos de Sistema (Software Base) do BBS no Ubuntu Server
@@ -131,6 +144,9 @@ sudo apt install apprise
 curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bbs-install
 
 #executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings
+#opções do script bbs-install: --hostname (Sets the server's Fully Qualified Domain Name (FQDN) 
+#used by BorgBackupServer during installation.), --no-ssl (Disables HTTPS/SSL configuration, allowing 
+#the installation to use HTTP only)
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO
 sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
 
@@ -171,10 +187,11 @@ sudo systemctl status cron
 #mais informações acesse a documentação oficial em: https://borgbackup.readthedocs.io/
 sudo borg --version
 
-#verificando se a Porta 443/TCP (HTTPS) do Painel Web está em escuta no Ubuntu Server
-#opção do comando ss: -tuln (tcp, udp, listening, numeric)
-#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ss.8.html
-sudo ss -tuln | grep -i '443\|80'
+#verificando se as Portas 80/TCP (HTTP) e 443/TCP (HTTPS) do Painel Web está em escuta no Ubuntu Server
+#verificando a porta padrão TCP-22 do OpenSSH Server
+#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsof.8.html
+sudo lsof -nP -iTCP:'80,443' -sTCP:LISTEN
 ```
 
 ## 05_ Assistente de Configuração Inicial (Setup Wizard) do BBS
@@ -183,37 +200,138 @@ sudo ss -tuln | grep -i '443\|80'
 
 ```bash
 01) Abrir o navegador e acessar o Painel Web do BBS
-    URL: https://srvvaamonde.pti.intra (ou https://SEU_ENDEREÇO_IPv4)
+    URL: https://srvvaamonde.pti.intra (ou https://SEU_ENDEREÇO_IPv4 ou https://SEU_ENDEREÇO_IPv6)
     #OBSERVAÇÃO: como o certificado SSL é autoassinado ou emitido localmente, o navegador
     #pode exibir um aviso de segurança, sendo necessário aceitar/prosseguir manualmente.
 
-02) Assistente de Configuração Inicial (Setup Wizard)
-    Criar Conta de Administrador
-      Nome: Seu Nome Completo
-      E-mail: seu_email@seu.domínio
-      Usuário: admin
-      Senha: sua_senha_forte
-      Confirmar Senha: sua_senha_forte
-    <Concluir Configuração>
+02) Step 1 of 5 - Welcome
+  Welcome
+    System Requirements
+    PHP >= 8.1                  8.5.4
+    PDO MySQL extension         Installed
+    Mbstring extensions         Installed
+    OpenSSL extensions          Installed
+    Config directory writable   Writable
+<Begin Setup>
 
-03) Login no Painel do BBS
-    Usuário: admin
-    Senha: sua_senha_forte
-<Entrar>
+03) Step 2 of 5 - Database
+  Database
+    Database Host: localhost
+    Database Name: bbs
+    Database User: bbs
+    Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFA DO SCRIPT DE INSTALAÇÃO>
+<Test Connections & Continue>
+
+04) Step 3 of 5 - Admin Account
+  Admin Account
+    Email: seu_usuário@seu_domínio.local
+    Username: seu_usuário
+    Password: sua_senha
+    Confirm Password: repetir_sua_senha
+<Continue>
+
+05) Step 4 of 5 - Storage & Server
+  Storage & Server
+    Storage: Default storage: /var/bbs/home
+    Server Hostname / IP: seu_endereço_ipv4 ou nome_servidor
+    (OFF) Enable SSL (HTTPS) - Disable
+<Continue>
+
+06) Step 5 of 5 - Install
+  Review & Install
+    Database Host: localhost
+    Database Name: bbs
+    Database User: bbs
+    Admin Username: admin
+    Admin Email: seu_usuário@seu_domínio.local
+    Storage Path: /var/bbs/home
+    Server Host: seu_endereço_ipv4 ou nome_servidor
+    SSH Helper: Installed
+<Install>
+
+07) Setup Complete
+<Go to Dashboard>
 ```
 
 > **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a Senha da Conta de Administrador do BBS deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** (abordado na seção #11 deste procedimento) deve ser habilitado assim que possível.
 
-## 06_ Instalando e Registrando o Agente Local (Linux Agent) no Ubuntu Server
+
+## 06_ Aplicando as Correções de Erros (Fix) da Falha do BBS Helper no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server 26.04.x LTS, o pacote `apache2` já vem com um `apache2.service` (systemd) fortemente sandboxado por padrão — o que não acontece na maioria das distribuições usadas para testar o instalador do BBS. Esse sandboxing colide diretamente com o modelo de provisionamento do BorgBackupServer (que depende do PHP conseguir chamar `sudo` de verdade, criar usuários do sistema e aplicar `chmod` com setgid). O sintoma inicial (`Cannot create client — SSH provisioning failed`) é, na verdade, a soma de **duas causas independentes**: um bug real no BBS v2.65.0 e uma incompatibilidade do hardening padrão do Apache no 26.04 com o modelo de provisionamento do BBS.
+
+```bash
+#editando e corrigindo o arquivo de sudoers já gravado do BBS no Ubuntu Server
+#opção do comado visudo: -f (Specify an alternate sudoers file location, see below)
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man8/visudo.8.html
+sudo visudo -f /etc/sudoers.d/bbs-borg
+
+#alterar a opção dentro de ALL=(bbs-*) para ALL=(ALL)
+www-data ALL=(ALL) NOPASSWD: /usr/bin/borg, /usr/local/bin/borg, /usr/bin/rclone, /usr/bin/env
+
+#salvar e sair do editor de texto Nano padrão do comando visudo no Ubuntu Server
+Ctrl + X    #sair e salvar
+Y <Enter>   #salvar o arquivo
+
+#corrigindo a origem do problema nos scripts que regravam esse arquivo do BBS Backup no Ubuntu Server
+#opção do comando sed: -i (edit files in place)
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man1/sed.1.html
+sudo sed -i 's/ALL=(bbs-\*)/ALL=(ALL)/' \
+  /var/www/bbs/bin/bbs-install \
+  /var/www/bbs/bin/bbs-restore \
+  /var/www/bbs/bin/bbs-update-run \
+  /var/www/bbs/Dockerfile
+
+#validando todas as sintaxes dos arquivos do sudoers no Ubuntu Server
+#opção do comando visudo: -c (Enable check-only mode)
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man8/visudo.8.html
+sudo visudo -c
+```
+
+> **OBSERVAÇÃO IMPORTANTE:** Mesmo com o `sudoers` corrigido, o provisionamento continuava falhando, agora em três etapas sucessivas, pois o `apache2.service` isola o processo em um Namespace de Montagem privado do `systemd`, com três diretivas que bloqueiam etapas distintas do `bbs-ssh-helper`: **Correção aplicada** — override do `systemd` dedicado ao `apache2.service`, relaxando apenas essas três diretivas e preservando o restante do hardening padrão do pacote (`ProtectHome`, `ProtectKernelModules`, `MemoryDenyWriteExecute`, `PrivateDevices` etc. continuam ativos):
+
+```bash
+#criando o diretório de configuração de sobreposição das configurações do Apache2 Server no Ubuntu Server
+#opções do comando mkdir: -p (no error if existing, make parent directories as needed), -v (print a message
+#for each created directory)
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html 
+sudo mkdir -pv /etc/systemd/system/apache2.service.d/
+
+#criando o arquivo de sobreposição do Apache2 no Ubuntu Server
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man1/sed.1.html
+sudo tee /etc/systemd/system/apache2.service.d/override.conf > /dev/null <<'EOF'
+[Service]
+ProtectSystem=false
+RestrictSUIDSGID=no
+InaccessiblePaths=
+InaccessiblePaths=/boot
+InaccessiblePaths=/root
+InaccessiblePaths=-/etc/ssh
+InaccessiblePaths=-/etc/apt
+InaccessiblePaths=-/etc/.git
+InaccessiblePaths=-/etc/.svn
+EOF
+
+#parando todo o serviço do Apache2 Server e confirmando as mudanças de sobreposição no Ubuntu Server
+#opções do comando systemctl: stop (Stop (deactivate) one or more units specified on the command line.) 
+#daemon-reload (Reload the systemd manager configuration), start (Start (activate) one or more units 
+#specified on the command line.)
+#mais informações acesse o site oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl stop apache2
+sudo systemctl daemon-reload
+sudo systemctl start apache2
+```
+
+## 07_ Instalando e Registrando o Agente Local (Linux Agent) no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** mesmo no Cenário de Servidor Único (Painel e Cliente na mesma VM), o BBS exige a instalação do **Agente**, pois toda a comunicação de tarefas (Jobs) entre o Painel e a execução real do `borg` acontece através dele, inclusive em modo Localhost.
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
-    Clientes (Managing Clients) <Adicionar Cliente>
-      Nome do Cliente: srvvaamonde
-      Sistema Operacional: Linux
-    <Gerar Comando de Instalação do Agente>
+    Clients (Managing Clients) <Add Client>
+      Client Name: seu_hostname
+      Assign User : admin
+    <Create Client>
       #o Painel exibe um comando único de instalação, já contendo o Token de Registro
       #do Cliente, semelhante ao modelo abaixo:
 ```
@@ -241,7 +359,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 | 📦 **Plano de Dados (Data Plane)** | SSH (`borg serve`) | Quando uma tarefa é disparada, a transferência real dos dados do Backup ocorre via SSH, utilizando o modo **Append-Only** do BorgBackup no Repositório. |
 ---
 
-## 07_ Criando o Repositório Borg apontando para a Partição de Backup no BBS
+## 08_ Criando o Repositório Borg apontando para a Partição de Backup no BBS
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
@@ -271,7 +389,7 @@ sudo ls -lh /backup/repository/lv-dados
 sudo du -sh /backup/repository/lv-dados
 ```
 
-## 08_ Criando o Plano de Backup (Backup Plan) da Partição de Dados LVM
+## 09_ Criando o Plano de Backup (Backup Plan) da Partição de Dados LVM
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
@@ -302,7 +420,7 @@ Entendendo a Política de Retenção configurada:<br>
 | 🦫 **Prune Automático** | *(executado pelo BBS)* | Após cada novo Backup bem-sucedido, o BBS aciona automaticamente o `borg prune`, removendo Snapshots antigos fora da Política de Retenção, controlando o crescimento do Repositório. |
 ---
 
-## 09_ Executando e Monitorando o Primeiro Backup no BBS
+## 10_ Executando e Monitorando o Primeiro Backup no BBS
 
 ```bash
 01) No Painel Web do BBS, acessar o Plano de Backup criado: backup-lv-dados
@@ -335,7 +453,7 @@ sudo iostat -x 2
     Tamanho Original x Tamanho Deduplicado (economia de espaço)
 ```
 
-## 10_ Testando a Restauração (Restore) de Arquivos no BBS
+## 11_ Testando a Restauração (Restore) de Arquivos no BBS
 
 > **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup confiável sem antes validar o processo completo de Restauração (Restore).
 
@@ -361,7 +479,7 @@ sudo iostat -x 2
 sha256sum /dados/arquivo_de_teste.txt
 ```
 
-## 11_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) no BBS
+## 12_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) no BBS
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
@@ -380,7 +498,7 @@ sha256sum /dados/arquivo_de_teste.txt
 
 > **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FA no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
 
-## 12_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server
+## 13_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server
 
 | **📂 Caminho** | **📝 Descrição** |
 | :------------- | :--------------- |
