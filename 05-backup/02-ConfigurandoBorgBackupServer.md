@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 29/07/2026<br>
-Data de atualização: 03/08/2026<br>
-Versão: 0.03<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.04<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
 Testado e homologado no Oracle VirtualBOX 7.x
 
@@ -83,16 +83,16 @@ Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
 
 | **Camada** | **Tecnologia Utilizada pelo BBS** | **Descrição** |
 | :--------- | :--------------------------------- | :------------ |
-| 🖥️ **Backend** | PHP 8.1 (ou superior) | Linguagem responsável pela lógica da Aplicação Web e pela comunicação com os Agentes. |
-| 🗄️ **Banco de Dados** | MySQL 8.0 | Armazena metadados de Clientes, Planos de Backup, Histórico de Jobs e Usuários do Painel. |
-| 🌐 **Servidor Web** | Apache HTTP Server + SSL | Serve a Interface Web do BBS, com certificado TLS emitido automaticamente pelo instalador. |
-| ⏱️ **Agendador** | Cron | Dispara a fila de tarefas (Jobs) conforme os Planos de Backup configurados. |
-| 🦫 **Motor de Backup** | BorgBackup | Instalado como dependência, é o software que efetivamente executa o Backup/Restore no Repositório. |
+| 🖥️ **Backend** | `PHP 8.1 (ou superior)` | Linguagem responsável pela lógica da Aplicação Web e pela comunicação com os Agentes. |
+| 🗄️ **Banco de Dados** | `MySQL 8.0 Server` | Armazena metadados de Clientes, Planos de Backup, Histórico de Jobs e Usuários do Painel. |
+| 🌐 **Servidor Web** | `Apache2 HTTP Server + SSL` | Serve a Interface Web do BBS, com certificado TLS emitido automaticamente pelo instalador. |
+| ⏱️ **Agendador** | `Cron` | Dispara a fila de tarefas (Jobs) conforme os Planos de Backup configurados. |
+| 🦫 **Motor de Backup** | `BorgBackup` | Instalado como dependência, é o software que efetivamente executa o Backup/Restore no Repositório. |
 ---
 
 ```bash
 #Habilitando os repositórios Multiverso e Universo do Ubuntu Server (dependências para a instalação).
-#opção do comando add-apt-repository: --remove (Remove the specified repository)
+#opção do comando add-apt-repository: --enable-source (Enable the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
 #Habilitando o repositório Multiverso
 sudo add-apt-repository --enable-source multiverse
@@ -118,7 +118,7 @@ sudo apt upgrade
 
 ## 03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único Script Bash, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache, MySQL, Certificado SSL e o serviço de Cron.
+> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único Script Bash, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache2 Server, MySQL Server, Certificado SSL e o serviço de Cron.
 
 ```bash
 #efetuando o download do script oficial de instalação do BorgBackupServer no Ubuntu Server
@@ -130,9 +130,11 @@ curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bb
 #opções do script bbs-install: --hostname (Sets the server's Fully Qualified Domain Name (FQDN) 
 #used by BorgBackupServer during installation.), --no-ssl (Disables HTTPS/SSL configuration, allowing 
 #the installation to use HTTP only)
-#OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO
+#OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO NESSE CENÁRIO NÃO SERÁ INSTALADO
+#O CERTIFICADO DIGITAL COM A OPÇÃO: --no-ssl
 sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
 
+#confirmando a criação da Base de Dados do BBS no MySQL Server
 MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
@@ -253,14 +255,14 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 ```bash
 #efetuando o download e a instalação do Agente Linux do BBS no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: SUBSTITUIR A URL E O TOKEN PELOS VALORES GERADOS NO SEU PAINEL
-curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s -- --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
+curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
 
 #verificando o status do serviço do Agente do BBS no Ubuntu Server
 #opções do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status bbs-agent
 
-#analisando os Log's e mensagens de erro do serviço do Agente do BBS
+#analisando os Log's e mensagens de erro do serviço do Agente do BBS no Ubuntu Server
 #opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u bbs-agent
@@ -278,8 +280,8 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 ```bash
 01) No Painel Web do BBS, acessar o menu:
     Storage (Armazenamento) <Add Location>
-      Label: repo-dados-onpremise
-      Patch: /backup/repository/lv-dados
+      Label (Rótulo): repo-dados-on-premises
+      Patch (Caminho): /backup/repository/lv-dados
       (ON) Default (Enable)
 <Create>
 ```
@@ -291,20 +293,20 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
     Settings (Configurações)
       Templates (Modelos)
         Add Template
-          Name: backup-dados
-          Description: Model de Backup da Partição Dados
-          Directories: /dados
-          Excludes: lost+found/, *.tmp, *.log
+          Name (Nome): backup-dados
+          Description (Descrição): Model de Backup da Partição Dados
+          Directories (Diretório): /dados
+          Excludes (Exclusões): lost+found/, *.tmp, *.log
           Borg Options
-            (ON) Compression
-            (ON) Exclude caches
+            (ON) Compression (Compressão)
+            (ON) Exclude caches (Excluir arquivos em cache)
             (OFF) One file system
             (ON) No atime
             (OFF) Numeric IDs
             (OFF) Skip xattrs
             (OFF) SkipACLs
-          Compression spec: lz4
-          Custom options: --compression lz4 --exclude-caches --noatime
+          Compression spec (Especificar a Compressão): lz4
+          Custom options (Opções Customizadas): --compression lz4 --exclude-caches --noatime
 <Add Template>
 ```
 
@@ -352,7 +354,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 <Create Backup Plan>
 ```
 
-## 11_ Executando e Monitorando o Primeiro Backup no BBS
+## 11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server
 
 ```bash
 01) No Painel Web do BBS, acessar o Plano de Backup criado: backup-lv-dados
@@ -366,7 +368,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 ```
 
 ```bash
-#acompanhando o processo do Borg em execução diretamente no Ubuntu Server (validação cruzada)
+#acompanhando o processo do BBS em execução diretamente no Ubuntu Server (validação cruzada)
 #opção do comando ps: aux (mostra todos os processos em execução no sistema)
 #opção do comando grep: -i (ignore-case)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ps.1.html
@@ -385,7 +387,7 @@ sudo iostat -x 2
     Tamanho Original x Tamanho Deduplicado (economia de espaço)
 ```
 
-## 12_ Testando a Restauração (Restore) de Arquivos no BBS
+## 12_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup confiável sem antes validar o processo completo de Restauração (Restore).
 
@@ -411,7 +413,7 @@ sudo iostat -x 2
 sha256sum /dados/arquivo_de_teste.txt
 ```
 
-## 13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) no BBS
+## 13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
@@ -428,7 +430,7 @@ sha256sum /dados/arquivo_de_teste.txt
 <Ativar 2FA>
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FA no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
+> **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FAS Auth (https://2fas.com/) no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
 
 ## 14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server
 
@@ -439,6 +441,8 @@ sha256sum /dados/arquivo_de_teste.txt
 | **`/etc/cron.d/`** ou **crontab do usuário do BBS** | Local onde o instalador registra a tarefa agendada responsável por processar a fila de Jobs (Backups, Restores, Prunes). |
 | **`/var/log/apache2/`** | Logs de acesso e erro do Painel Web (Apache), úteis para diagnosticar problemas de acesso via navegador. |
 | **`/var/log/mysql/`** | Logs do Banco de Dados MySQL utilizado pelo BBS para armazenar Clientes, Planos de Backup e Histórico de Jobs. |
+| **`/var/www/bbs`** | Localização dos arquivos de configuração, binários e site principal do Borg |
+| **`/etc/bbs`** | Localização do diretório e arquivos de configuração do Borg Agent |
 | **Painel Web → Fila e Jobs (Queue and Jobs)** | Histórico detalhado e Logs de cada execução de Backup/Restore, disponível diretamente na Interface Web do BBS. |
 ---
 
