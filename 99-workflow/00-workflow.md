@@ -10,19 +10,20 @@
 08. Configuração do RAID-1                                OK
 09. Configuração do LVM                                   OK
 10. Configuração do Particionamento                       OK
-11. Configuração do Backup                                OK
+11. Configuração do Bonding                               OK
+12. Configuração do Backup                                OK
 ------------------------------------------------------------
 
-12. Configuração do Bonding                               OK
+13. Hardening Firewall UFW
 ------------------------------------------------------------
 
-13. Hardening OpenSSH + Certificado + 2FA
+14. Hardening OpenSSH + Certificado + 2FAS
 https://github.com/huashengdun/webssh
 https://docs.termius.com/getting-started/download-termius
 https://voltius.app/
+------------------------------------------------------------
 
-14. Hardening TCP Wrappers
-15. Hardening Firewall UFW
+15. Hardening TCP Wrappers
 16. Hardening Fail2Ban
 17. Hardening AppAmor
 18. Hardening Syslog
@@ -35,7 +36,7 @@ https://voltius.app/
 25. Hardening Grub2
 26. Hardening Cloud-Init
 27. Hardening Snap
-
+------------------------------------------------------------
 
 https://vestacp.com/install
 https://www.ispconfig.org/

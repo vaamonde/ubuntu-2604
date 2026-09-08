@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 02/08/2026<br>
-Versão: 0.06<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.07<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -27,7 +27,7 @@ Conteúdo estudado nessa configuração:<br>
 #06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server<br>
 #07_ Reinicializar o serviço do Systemd Resolved (Resolução de Nomes) no Ubuntu Server<br>
 #08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server<br>
-#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
+#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH utilizando IPv4 e IPv6<br>
 
 | **🌐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -46,6 +46,7 @@ Link da vídeo aula:
 ```bash
 #atualizando as lista do Apt do sources.list no Ubuntu Server
 #opção do comando apt: update (Resynchronize the package index files from their sources)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
 
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
@@ -62,6 +63,8 @@ sudo apt install bridge-utils net-tools
 #opção do comando cat: -n (number line)
 #opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1p.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo lspci -v | grep -i ethernet | cat -n
 ```
 
@@ -116,7 +119,7 @@ Entendendo a saída do comando: __`lshw`__<br>
 ## 03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server
 ```bash
 #verificando as configurações de endereçamento IP da Placa de Rede instalada
-#opções do comando ip: address (Protocol (IP or IPv6) address on a device)
+#opções do comando ip: address (Protocol (IP or IPv6) address on a device), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
 ```
@@ -165,7 +168,7 @@ Entendendo a saída do comando: __`ip address show`__<br>
 
 ```bash
 #verificando as configurações de Gateway (route) no Ubuntu Server
-#opções do comando ip: route (Routing table entry)
+#opções do comando ip: route (Routing table entry), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip route show
 ```
@@ -302,13 +305,16 @@ ls -lh /etc/netplan/
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.old
 
-#download do arquivo de configuração do Netplan
+#download do arquivo de configuração do Netplan personalizado para o cenário
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config.yaml
 
-#editando o arquivo de configuração do Netplan
+#editando o arquivo de configuração personalizado do Netplan
 sudo vim /etc/netplan/00-installer-config.yaml
+
+#habilitando o número de linhas do arquivo 00-installer-config.yaml
+ESC SHIFT :set number <Enter>
 
 #entrando no modo de edição do editor de texto VIM
 INSERT
@@ -320,7 +326,7 @@ network:
   # Início da configuração do Netplan usando a versão 2 (mais atual)
   version: 2
   #
-  # Bloco de configuração das Interfaces Ethernet (físicas ou virtuais)
+  # Bloco de configuração das Interfaces/Protocolo Ethernet (físicas ou virtuais)
   ethernets:
     #
     # Configuração da Interface Física (Nome Lógico visto no comando: lshw -class network)
@@ -328,25 +334,25 @@ network:
       #
       # Identificando a Interface de Rede Física pelo Endereço MAC Address 
       match:
-        macaddress: 08:00:27:45:05:cd
+        macaddress: SEU_ENDEREÇO_MAC_ADDRESS
       #
       # Definindo o Nome Lógico da Interface de Rede
       set-name: enp0s3
       #
-      # Desabilitando o suporte ao DHCP Client IPv4 na interface física
+      # Desabilitando o suporte ao DHCP Client IPv4 (DHCPv4) na Interface Física
       dhcp4: false
       #
-      # Desabilitando o suporte ao DHCP Client IPv6 na interface física
+      # Desabilitando o suporte ao DHCP Client IPv6 (DHCPv6) na Interface Física
       dhcp6: false
       #
-      # Desabilitando o suporte da configuração automática do IPv6 na interface física
+      # Desabilitando o suporte da configuração automática do IPv6 Local (FE80::) na Interface Física
       link-local: []
       #
-      # Desabilitando a configuração automática via Router Advertisement (IPv6)
+      # Desabilitando a configuração automática via Router Advertisement (RA) na Interface Física
       accept-ra: false
       #
       # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
-      # endereço IPv6 Unicast Global e Link Local
+      # endereços IPv6 Unicast Global e Link Local
       # OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 e IPv6 separados por Traço
       addresses:
         - SEU_ENDEREÇO_IPv4/CIDR
@@ -367,11 +373,13 @@ network:
           #
       # Configuração dos servidores de DNS Server Preferencial e Alternativo
       nameservers:
-        # Configuração dos Endereços IPv4 e IPv6 de DNS para o seu cenário com nível de
-        # segurança contra Malware e Adult Content utilizando os DNS da CloudFlare
+        # Configuração dos Endereços IPv4 e IPv6 de DNS para o seu cenário com nível de segurança contra 
+        # Malware (Software Malicioso) e Adult Content (Conteúdo Adulto) utilizando os DNS da CloudFlare
         addresses:
+          # Bloco de configuração dos Endereços de DNS IPv4 da CloudFlare
           - 1.1.1.1
           - 1.0.0.1
+          # Bloco de configuração dos Endereços de DNS IPv6 da CloudFlare
           - 2606:4700:4700::1111
           - 2606:4700:4700::1001
         # Configuração da pesquisa de domínio para o seu cenário
@@ -440,7 +448,7 @@ sudo journalctl -u netplan-configure
 
 ## 06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** CUIDADO!!!!!! Nem todos os servidores Externos tem suporte ao __`DNSSEC ou DoT`__, segue lista dos principais servidores com suporte ao **DNSSEC e DoT** recomentado pelo Ubuntu Server no arquivo: __`/etc/systemd/resolved.conf`__
+> **OBSERVAÇÃO IMPORTANTE:** CUIDADO!!!!!! Nem todos os servidores Externos tem suporte ao __`DNSSEC ou DoT`__, segue lista dos principais servidores com suporte ao **DNSSEC e DoT** recomendado pelo Ubuntu Server no arquivo: __`/etc/systemd/resolved.conf`__
 
 | **Servidor DNS** | **Endereços IPv4** | **Endereços IPv6** |
 |------------------| -------------------| -------------------|
@@ -458,12 +466,15 @@ sudo cp -v /etc/systemd/resolved.conf /etc/systemd/resolved.conf.old
 #editando o arquivo de configuração do Systemd Resolved no Ubuntu Server (NÃO COMENTADO NO VÍDEO)
 sudo vim /etc/systemd/resolved.conf
 
+#habilitando o número de linhas do arquivo 00-installer-config.yaml
+ESC SHIFT :set number <Enter>
+
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
 ```bash
 #descomentar e alterar o valor da variável Domains na linha 32 para: Domains=~.
-#configuração domínio raiz (.) como domínio de roteamento ~ (routing domain)
+#configuração do domínio raiz (.) como domínio de roteamento ~ (routing domain)
 #~. = Utilize este servidor DNS para resolver qualquer domínio da Internet
 Domains=~.
  
@@ -476,7 +487,7 @@ DNSSEC=yes
 DNSOverTLS=yes
 
 #descomentar e alterar o valor da variável Cache na linha 37 para: Cache=yes
-#habilita o cache local de respostas DNS
+#habilita o cache local de respostas DNS para acelerar as consultas
 Cache=yes
 ```
 ```bash
@@ -496,7 +507,7 @@ sudo systemctl restart systemd-resolved
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.htm
 sudo systemctl status systemd-resolved
 
-#analisando os Log's e mensagens de erro do serviço do Ubuntu Pro
+#analisando os Log's e mensagens de erro do serviço do Resolved no Ubuntu Server
 #opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u systemd-resolved
@@ -505,12 +516,12 @@ sudo journalctl -u systemd-resolved
 ## 08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server
 ```bash
 #verificando o endereço IPv4 e IPv6 da Interface de Rede
-#opções do comando ip: address (Protocol (IP or IPv6) address on a device)
+#opções do comando ip: address (Protocol (IP or IPv6) address on a device), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
 
 #verificando as configurações de Gateway (route) IPv4 e IPv6 no Ubuntu Server
-#opções do comando ip: -4 (use IPv4), -6 (use IPv6) route (Routing table entry)
+#opções do comando ip: -4 (use IPv4), -6 (use IPv6) route (Routing table entry), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip -4 route show
 sudo ip -6 route show
@@ -554,11 +565,11 @@ ping -4 -c 5 google.com
 ping -6 -c 5 google.com
 ```
 
-## 09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
+## 09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH utilizando o IPv4 e IPv6
 
 > **OBSERVAÇÃO:** após a configuração da Placa de Rede do Ubuntu Server você já pode acessar remotamente o seu servidor utilizando o __`Protocolo SSH`__ nos clientes Linux ou Microsoft Windows para dá continuidade nas configurações do servidor, ficando mais fácil administrar e configurar os principais serviços de rede de forma remota.
 
-> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
+> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Zsh`__ (MacOS), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
 
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
@@ -567,13 +578,15 @@ ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 
-#confirmando a troca das chaves públicas e do fingerprint do SSH (alterar sua senha para o seu cenário)
-The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can't be established.
+#confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
+The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 
-seu_usuário@SEU_ENDEREÇO_IPV4's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
+#digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
+seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
 
+#acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
 
@@ -584,12 +597,14 @@ ping SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv6 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
 
-#confirmando a troca das chaves públicas e do fingerprint do SSH (alterar sua senha para o seu cenário)
-The authenticity of host 'SEU_ENDEREÇO_IPV6_UBUNTU_SERVER' can't be established.
+#confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
+The authenticity of host 'SEU_ENDEREÇO_IPV6_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 
-seu_usuário@SEU_ENDEREÇO_IPV6's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
+#digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
+seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER password: sua_senha <Enter>
 
+#acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```

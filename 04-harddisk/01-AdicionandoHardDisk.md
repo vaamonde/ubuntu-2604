@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -88,6 +88,7 @@ sudo apt install smartmontools hdparm sysstat
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data), -A5 (Print NUM
 #lines of trailing context after matching lines)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1p.html
 sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
 ```
 
@@ -173,7 +174,7 @@ Entendendo a saída do comando: __`sudo lshw -class disk`__<br>
 ---
 
 ```bash
-#verificando o UUID e o tipo de sistema de arquivos de cada dispositivo
+#verificando o UUID (Universally Unique Identifier) e o tipo de sistema de arquivos de cada dispositivo
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid
 ```
@@ -217,7 +218,7 @@ Entendendo a saída do comando: __`sudo blkid`__<br>
 ```bash
 #verificando as informações do kernel sobre as partições reconhecidas
 #opção do comando cat: -n (number lines)
-#mais informações acesse a documentação oficial em: 
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/proc_partitions.5.html
 sudo cat -n /proc/partitions
 ```
 

@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -25,7 +25,7 @@ Conteúdo estudado nessa configuração:<br>
 
 | **🖥️ Conceito** | **📖 O que é?** | **🎯 Para que serve?** |
 | :-------------- | :-------------- | :--------------------- |
-| 🌐 **FQDN (Fully Qualified Domain Name)** | É o **Nome de Domínio Totalmente Qualificado**, que identifica de forma única um host na hierarquia do **DNS (Domain Name System)**. Um FQDN é composto pelo **hostname** e pelo **nome do domínio**, por exemplo: `srvvaamonde.apto.intra`. | Permite identificar de forma única um equipamento na rede, sendo utilizado por serviços como DNS, servidores Web, SSH, e-mail, certificados TLS/SSL e Active Directory. |
+| 🌐 **FQDN (Fully Qualified Domain Name)** | É o **Nome de Domínio Totalmente Qualificado**, que identifica de forma única um host na hierarquia do **DNS (Domain Name System)**. Um FQDN é composto pelo **hostname** e pelo **nome do domínio**, por exemplo: `srvvaamonde.pti.intra`. | Permite identificar de forma única um equipamento na rede, sendo utilizado por serviços como DNS, servidores Web, SSH, e-mail, certificados TLS/SSL e Active Directory. |
 | 💻 **Hostname** | É o nome atribuído a um computador ou servidor dentro de uma rede. No Ubuntu, esse nome é armazenado no arquivo **`/etc/hostname`** e representa a identidade local da máquina. | Facilita a identificação do equipamento, sendo utilizado pelo sistema operacional, serviços de rede, logs, monitoramento e administração remota. Quando combinado com um domínio, forma o **FQDN**. |
 | 📄 **Arquivo `/etc/hosts`** | Arquivo de resolução local de nomes que associa **nomes de hosts** a **endereços IP**, sem depender de um servidor DNS. O sistema consulta esse arquivo antes (ou conforme a configuração do `nsswitch.conf`) de realizar consultas a servidores DNS. | Permite criar resoluções locais de nomes, testar serviços, definir apelidos (*aliases*) para hosts e garantir a resolução de nomes mesmo quando não existe ou não está disponível um servidor DNS. |
 ---
@@ -101,7 +101,7 @@ sudo hostname -d
 sudo hostname -i
 ```
 
-## 03_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server
+## 03_ Verificando as informações de Resolução de Nomes Locais depois de alterada no Ubuntu Server
 ```bash
 #verificando as resoluções de nomes DNS do servidor Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
@@ -111,17 +111,17 @@ nslookup srvvaamonde.pti.intra
 
 #verificando as resoluções de endereços IPv4 e IPv6 do servidor Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
-nslookup 127.0.0.1
-nslookup 172.16.1.20
-nslookup fe80::20
-nslookup 2804:14c:90:8697::20
+nslookup 127.0.0.1              #OBSERVAÇÃO: endereço de Loopback padrão é sempre 127.0.0.1
+nslookup 172.16.1.20            #OBSERVAÇÃO: alterar o endereço IPv4 do seu servidor
+nslookup fe80::20               #OBSERVAÇÃO: alterar o endereço IPv6 de Link Local do seu servidor
+nslookup 2804:14c:90:8697::20   #OBSERVAÇÃO: alterar o endereço IPv6 de Unicast Global do seu servidor
 
 #verificando as resoluções de endereços IPv4 e IPv6 e estatísticas do servidor Ubuntu Server
 #opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
-resolvectl query localhost
-resolvectl query srvvaamonde
-resolvectl query srvvaamonde.pti.intra
+resolvectl query localhost               #OBSERVAÇÃO: nome do Localhost padrão que faz referência ao Loopback
+resolvectl query srvvaamonde             #OBSERVAÇÃO: alterar o hostname do seu servidor
+resolvectl query srvvaamonde.pti.intra   #OBSERVAÇÃO: alterar o nome FQDN do seu servidor
 
 #testando a conexão com a Internet e Resolução de nomes de DNS
 #opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)

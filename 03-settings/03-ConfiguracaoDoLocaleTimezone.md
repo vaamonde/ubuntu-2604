@@ -91,7 +91,7 @@ Entendendo a saída do comando: __`locale`__<br>
 sudo locale-gen pt_BR.UTF-8
 
 #configurando a localidade do Português do Brasil no Ubuntu Server
-#opção do comando localectl: set-locale (Set the system locale)
+#opção do comando localectl: set-locale (Set the system locale), LANG (This sets the base locale for your system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo localectl set-locale LANG=pt_BR.UTF-8
 
@@ -102,7 +102,7 @@ sudo localectl set-locale LANG=pt_BR.UTF-8
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/update-locale.8.html
 sudo update-locale LANG=pt_BR.UTF-8 LC_ALL=pt_BR.UTF-8 LANGUAGE="pt_BR:pt:en"
 
-#recomendado rebootar o sistema para testar as localidades
+#recomendado rebootar o sistema para testar as localidades no Ubuntu Server
 #opção do comando systemctl: reboot (Shut down and reboot the system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl reboot
@@ -150,14 +150,14 @@ Entendendo a saída do comando: __`timedatectl`__<br>
 
 > **OBSERVAÇÃO IMPORTANTE:** geralmente mudar para o Time Zone de __`America/Sao_Paulo`__ a hora fica errada no sistema, nesse caso podemos mudar para __`America/Fortaleza`__ ou __`America/Bahia`__ esse error é por causa do **Fuso Horário** em relação ao __`Horário de Verão`__ que não existe mais no Brasil (foi criado em 1931 pelo Governo Getúlio Vargas, só começou a ser aplicado no Brasil em 1985 no Governo José Sarney e foi cancelado em 2018 no Governo Bolsonaro).
 
-> **OBSERVAÇÃO IMPORTANTE:** Até o momento (25/06/2025), o horário de verão 2025 está em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
+> **OBSERVAÇÃO IMPORTANTE:** Em 2025 o horário de verão estava em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
 
-> **OBSERVAÇÃO IMPORTANTE:** Até a data de 14/07/2026, o horário de verão não está previsto para ocorrer no Brasil em 2026. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
+> **OBSERVAÇÃO IMPORTANTE:** Em 2026 o horário de verão não está previsto para ocorrer no Brasil. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
 
 > **OBSERVAÇÃO:** ALTERAR O LOCALE CONFORME A LOCALIDADE DO SEU SERVIDOR, MAIS INFORMAÇÕES SOBRE TIMEZONE ACESSE: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 ```bash
-#listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (quit))
+#listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (de quit))
 #opção do comando timedatectl: list-timezones (List available time zones, one per line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl list-timezones
@@ -193,12 +193,14 @@ sudo journalctl -u chrony
 > **OBSERVAÇÃO IMPORTANTE:** Por que sempre é necessário verificar a versão do serviço de rede que você está implementando ou configurando no Servidor Ubuntu Server, devido as famosas falhas de segurança chamadas de: *CVE (Common Vulnerabilities and Exposures)*, com base na versão utilizada podemos pesquisar no site do **Ubuntu Security CVE Reports:** https://ubuntu.com/security/cves as falhas de segurança encontradas e corrigidas da versão do nosso aplicativo, o que ela afeta, se foi corrigida e como aplicar a correção.
 
 ```bash
-#verificando as versões do Chrony Server
+#verificando a versão do Chrony Server no Ubuntu Server
 #opção do comando sshd e sshd: -v (version)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/8/chronyd
 sudo chronyd -v
 
-#verificando as versões do Chrony Client
+#verificando a versão do Chrony Client no Ubuntu Server
 #opção do comando ssh: -v (version)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/chronyc
 sudo chronyc -v
 ```
 
@@ -208,9 +210,9 @@ sudo chronyc -v
 
 | **🔌 Portas** | **🧭 Protocolos** | **📦 Serviços** | **📖 Descrição** |
 | :----------: | :--------------: | :------------- | :--------------- |
-| **123** | UDP | NTP | Porta padrão do protocolo NTP. O **chronyd** envia e recebe pacotes NTP por esta porta para sincronização de horário. |
-| **4460** | TCP | NTS-KE | Porta padrão do **Network Time Security - Key Establishment (NTS-KE)**, utilizada para negociação TLS e troca de chaves criptográficas antes da sincronização NTP. Definida pela **RFC 8915**. |
-| **323** | UDP | Chronyc | Porta utilizada pelo protocolo de monitoramento remoto do **Chrony**. Por padrão, no Ubuntu ela normalmente fica disponível apenas para comunicação local e não deve ser exposta na rede sem necessidade. |
+| **123** | `UDP` | *NTP* | Porta padrão do protocolo NTP. O **chronyd** envia e recebe pacotes NTP por esta porta para sincronização de horário. |
+| **4460** | `TCP` | *NTS-KE* | Porta padrão do **Network Time Security - Key Establishment (NTS-KE)**, utilizada para negociação TLS e troca de chaves criptográficas antes da sincronização NTP. Definida pela **RFC 8915**. |
+| **323** | `UDP` | *Chronyc* | Porta utilizada pelo protocolo de monitoramento remoto do **Chrony**. Por padrão, no Ubuntu ela normalmente fica disponível apenas para comunicação local e não deve ser exposta na rede sem necessidade. |
 ---
 
 ```bash
@@ -243,12 +245,12 @@ sudo cp -v /etc/chrony/chrony.conf /etc/chrony/chrony.conf.old
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mv.1.html
 sudo mv -v /etc/chrony/sources.d/ubuntu-ntp-pools.sources /etc/chrony/sources.d/ubuntu-ntp-pools.sources.old
 
-#download do arquivo de configuração do Chrony Server e Client 
+#download do arquivo de configuração personalizado do Chrony Server e Client 
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/chrony.conf
 
-#download do arquivo de servidores NTP do Chrony Server e Client 
+#download do arquivo de servidores NTP personalizados do Chrony Server e Client 
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/ntp-br-pools.sources
@@ -256,9 +258,9 @@ sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubuse
 
 ## 09_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
 
-> **OBSERVAÇÃO:** O NTP (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
+> **OBSERVAÇÃO:** O `NTP` (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
 
-> **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O ntp.br é o serviço oficial de sincronização de horário do Brasil, mantido pelo Observatório Nacional (ON), em parceria com o NIC.br (Núcleo de Informação e Coordenação do Ponto BR).
+> **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O `ntp.br` é o serviço oficial de sincronização de horário do Brasil, mantido pelo **Observatório Nacional (ON)**, em parceria com o **NIC.br** (Núcleo de Informação e Coordenação do Ponto BR).
 
 ```bash
 #editando o arquivo de configuração do Chrony Server e Client
@@ -268,16 +270,16 @@ sudo vim /etc/chrony/chrony.conf
 INSERT
 ```
 ```bash
-# Exige autenticação NTS das fontes selecionadas na linha: 31
+# Exigindo autenticação NTS (Network Time Security) das fontes selecionadas na linha: 31
 authselectmode require
 #
-# Utiliza no mínimo duas fontes confiáveis na linha: 34
+# Utilizar no mínimo duas fontes confiáveis na linha: 34
 minsources 2
 #
-# Descarta fontes com distância excessiva  na linha: 37
+# Descartar fontes com distância excessiva na linha: 37
 maxdistance 1.0
 #
-# Não registra consultas de clientes na linha: 40
+# Não registrar consultas de clientes na linha: 40
 noclientlog
 #
 ```
@@ -285,7 +287,7 @@ noclientlog
 #salvar e sair do arquivo
 ESC SHIFT : x <Enter>
 
-#editando o arquivo de origens do Chrony
+#editando o arquivo de origens dos NTP do Chrony Server
 sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
 
 #entrando no modo de edição do editor de texto VIM
@@ -363,7 +365,7 @@ Entendendo a saída do comando: __`chronyc sources`__<br>
 ---
 
 ```bash
-#verificando as configuração de autenticação NTS do Chrony no Ubuntu Server
+#verificando as configuração de autenticação NTS (Network Time Security) do Chrony no Ubuntu Server
 #opção do comando chronyc: authdata (displays information specific to authentication of NTP sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
 sudo chronyc authdata
@@ -385,7 +387,7 @@ Entendendo a saída do comando: __`chronyc authdata`__<br>
 ---
 
 ```bash
-#testando a conectividade da porta TCP-4460 do NTP.br utilizada pelo NTS
+#testando a conectividade da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security)
 #opções do comando nc: -z (Only scan for listening daemons), -v (Produce more verbose output)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nc
 nc -zv a.st1.ntp.br 4460
@@ -403,7 +405,7 @@ Entendendo a saída do comando: __`nc -zv a.st1.ntp.br 4460`__<br>
 ---
 
 ```bash
-#testando o certificado de conexão segura da porta TCP-4460 do NTP.br utilizada pelo NTS
+#testando o certificado de conexão segura da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security)
 #opções do comando openssl: s_client (This implements a generic SSL/TLS client which can establish
 #a transparent connection to a remote server speaking SSL/TLS ), -connect (This specifies the host
 #and optional port to connect to), -servername (Set the TLS SNI (Server Name Indication) extension
@@ -493,12 +495,12 @@ sudo resolvectl query cloudflare.com
 
 ## 12_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
-> **OBSERVAÇÃO IMPORTANTE:** mesmo cenário da utilização do comando __`date`__, a da Data e Hora da BIOS do Hardware é mantida pela *CMOS e Bateria* que mantém essa hora armazenada, caso a Data e Hora de BIOS esteja errada, recomendo verificar a Bateria pois já é um sinal de falha de Hardware, no GNU/Linux você pode sincronizar a Data e Hora de Software para o Hardware e vice-versa, também, não é recomendo a sua utilização.
+> **OBSERVAÇÃO IMPORTANTE:** mesmo cenário da utilização do comando __`timedatectl`__, a da Data e Hora da BIOS do Hardware é mantida pela *CMOS e Bateria* que mantém essa hora armazenada, caso a Data e Hora de BIOS esteja errada, recomendo verificar a Bateria pois já é um sinal de falha de Hardware, no GNU/Linux você pode sincronizar a Data e Hora de Software para o Hardware e vice-versa, também, não é recomendo a sua utilização.
 
 ```bash
 #sincronizando a data hora de software e hardware manual no Ubuntu Server
-#opções do comando hwclock: --systohc (system clock to hardware clock), --hctosys (hardware 
-#clock to system clock)
+#opções do comando hwclock: --show (show hardware clock) --systohc (system clock to hardware clock), 
+#--hctosys (hardware clock to system clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --show
 sudo hwclock --systohc
@@ -537,7 +539,7 @@ sudo cat -n /etc/default/console-setup
 ```
 ```bash
 #reconfigurando o UTF-8 e Console no Ubuntu Server
-#opção do comando dpkg-reconfigure: keyboard-configuration (packet reconfiguration)
+#opção do comando dpkg-reconfigure: console-setup (packet reconfiguration)
 #mais informações acesse a documentação oficial em: https://linuxcommandlibrary.com/man/dpkg-reconfigure
 sudo dpkg-reconfigure console-setup
   UTF-8 <Enter>;

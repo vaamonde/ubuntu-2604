@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -52,6 +52,7 @@ Link da vídeo aula:
 #verificando as informações de identificação do Sistema Operacional
 #opção do comando cat: -n (number all output lines)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/os-release.5.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/os-release
 ```
 
@@ -77,6 +78,7 @@ Entendendo a saída do arquivo: __`os-release`__<br>
 #verificando as informações específicas do Sistema Operacional
 #opção do comando cat: -n (number all output lines)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/lsb_release
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/lsb-release
 ```
 
@@ -92,7 +94,7 @@ Entendendo a saída do arquivo: __`lsb-release`__<br>
 ```bash
 #verificando as informações de Kernel do Sistema Operacional
 #opção do comando uname: -a (Behave as though all of the options)
-#mais informações acesse a documentação oficial:
+#mais informações acesse a documentação oficial: https://man7.org/linux/man-pages/man1/uname.1.html
 sudo uname -a
 ```
 
@@ -113,7 +115,16 @@ Entendendo a saída do comando: __`uname -a`__<br>
 > **OBSERVAÇÃO IMPORTANTE:** recomendo fazer um upgrade completo do servidor antes de adicionar a *Licença do Ubuntu Pro*.
 
 ```bash
-#Forçando uma atualização completa do servidor antes de habilitar o Ubuntu Pro
+#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro
+#opções do comando apt: update (Resynchronize the package index files from their sources)
+#upgrade (Install the newest versions of all packages currently installed on the system 
+#from the sources enumerated in /etc/apt/sources.list.), dist-upgrade (dist-upgrade in 
+#addition to performing the function of upgrade, also intelligently handles changing 
+#dependencies with new versions of packages), full-upgrade (Perform the function of upgrade 
+#but may also remove installed packages if that is required in order to resolve a package
+#conflict), autoremove (Autoremove is used to remove packages that were automatically
+#installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
+#repository of retrieved package files)
 sudo apt update
 sudo apt upgrade
 sudo apt full-upgrade
@@ -129,12 +140,12 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 ```bash
 01) Clique em: I don’t have an Ubuntu One account
     Preencha os campos:
-      Please type your email: (DIGITE_SEU_EMAIL)
+      Please type your email: (DIGITE SEU EMAIL)
       Full name: (DIGITE SEU NOME COMPLETO)
       Username: (DIGITE O NOME DO SEU USUÁRIO)
       Choose password: (DIGITE SUA SENHA)
       Re-type password: (CONFIRME SUA SENHA)
-      Marque a opção: I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
+      Marque a opção: (ON) I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
       Clique em: <Create account>
 
 02) Finalize os procedimentos acessando seu email para ativar a sua conta no Ubuntu One.
@@ -225,8 +236,7 @@ sudo pro security-status
 sudo pro security-status --esm-apps
 
 #verificando as informações de Fix (correções) dos CVE (Common Vulnerabilities and Exposures)
-#opção do comando pro: fix (Fix a CVE or USN on the  system  by  upgrading  the  appropriate
-#package(s))
+#opção do comando pro: fix (Fix a CVE or USN on the system by upgrading the appropriate package(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 #Site dos CVEs do Ubuntu: https://ubuntu.com/security/cves
 sudo pro fix CVE-2026-54591
@@ -258,8 +268,7 @@ sudo apt policy
 #but may also remove installed packages if that is required in order to resolve a package
 #conflict), autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
-#repository of retrieved package files), clean (clean clears out the local repository of 
-#retrieved package files)
+#repository of retrieved package files)
 sudo apt clean
 sudo apt update
 sudo apt upgrade
@@ -279,13 +288,14 @@ sudo systemctl status unattended-upgrades
 #editando o arquivo de configuração de atualizações automáticas do Ubuntu Server
 sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
 
-#mostrando o número de linha do arquivo 50unattended-upgrades
+#habilitando o número de linhas do arquivo 50unattended-upgrades
 ESC SHIFT :set number <Enter>
 
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
 ```bash
+#desabilitando o recurso de reinicialização automática das atualizações do Ubuntu Server
 #descomentar a opção da linha: 94 (Unattended-Upgrade::Automatic-Reboot "false";)
 Unattended-Upgrade::Automatic-Reboot "false";
 ```
@@ -294,17 +304,17 @@ Unattended-Upgrade::Automatic-Reboot "false";
 ESC SHIFT :x <Enter>
 ```
 ```bash
-#reiniciando o serviço das Atualizações Automáticas
+#reiniciando o serviço das Atualizações Automáticas do Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units specified on the command line)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl restart unattended-upgrades
 
-#verificando o status de serviço das Atualizações Automáticas
+#verificando o status do serviço das Atualizações Automáticas do Ubuntu Server
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status unattended-upgrades
 
-#analisando os Log's e mensagens de erro das Atualizações Automáticas
+#analisando os Log's e mensagens de erro das Atualizações Automáticas do Ubuntu Server
 #opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u unattended-upgrades

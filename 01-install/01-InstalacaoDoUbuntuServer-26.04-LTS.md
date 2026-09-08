@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -52,8 +52,8 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 <Novo>
 
 02) Nome e Sistema Operacional:
-    Nome: UbuntuOnPremise (altere conforme a sua necessidade)
-    Pasta (F): #PATH_PADRÃO\UbuntuOnPremise (altere conforme a sua necessidade)
+    Nome: UbuntuOnPremises (altere conforme a sua necessidade)
+    Pasta (F): #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
     Imagem ISO: <não selecionado>
     Edição: (sem informação)
     Tipo: Linux
@@ -70,7 +70,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 
 05) Disco Rígido
     (ON) Criar um novo disco rígido virtual agora
-    Localização e Tamanho do Arquivo de Disco Virtual: #PATH_PADRÃO\UbuntuOnPremise (altere conforme a sua necessidade)
+    Localização e Tamanho do Arquivo de Disco Virtual: #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
       Tamanho: 100,00 GB (altere conforme a sua necessidade)
     Tipo e Variante de Arquivo de Disco Virtual
       VDI (VirtualBox Disk Image)
@@ -80,10 +80,10 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 <Finalizar>
 ```
 
-## 03_ Configurações da Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
+## 03_ Configurações da Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX
 
 ```bash
-01) Selecionar a Máquina Virtual: UbuntuOnPremise
+01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
 
@@ -96,7 +96,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
                              Habilitar VT-x/AMD-v Aninhado
         #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITA O RECURSO DE:
         #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL
-        #O COMANDO: VBoxManage modifyvm UbuntuOnPremise --nested-hw-virt on
+        #O COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
 
 03) Display
     Tela (S)
@@ -111,9 +111,9 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
       (ON) Habilitar Placa de Rede: (Habilitar)
       Conectado a: Placa em modo Bridge
       Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
-      #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR
-      #QUE ESTÁ CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA
-      #DE REDE SEM-FIO (RECOMENDO SEMPRE PLACA DE REDE CABEADA, MELHOR DESEMPENHO).
+      #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR QUE ESTÁ 
+      #CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA DE REDE SEM-FIO 
+      #RECOMENDADO SEMPRE UTILIZAR PLACA DE REDE CABEADA, MELHOR DESEMPENHO E MAIS CONFIÁVEL.
 <OK>
 ```
 
@@ -160,9 +160,10 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 05) Network connections
     enp0s3 eth - (o nome lógico da placa de rede muda de equipamento para equipamento)
-    DHCPv4 172.16.1.XXX/24 (altere conforme a sua necessidade)
+    DHCPv4 172.16.1.XXX/24 (verifique se obteve o endereço da sua rede corretamente)
     #OBSERVAÇÃO IMPORTANTE: VERIFIQUE O ENDEREÇO IPv4 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
-    #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO.
+    #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO, A CONFIGURAÇÃO DA PLACA DE REDE SERÁ
+    #FEITA MANUALMENTE.
 <Done>
 
 06) Configure proxy
@@ -170,7 +171,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 <Done>
 
 07) Configure Ubuntu archive mirror
-    Mirror: http://archive.ubuntu.com/ubuntu
+    Mirror: http://archive.ubuntu.com/ubuntu (padrão da distribuição)
     #OBSERVAÇÃO IMPORTANTE: CASO QUEIRA TROCAR O MIRROR DO UBUNTU DO BRASIL PARA O
     #OFICIAL DO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
     #URL: http://us.archive.ubuntu.com/ubuntu
@@ -204,14 +205,14 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Size (max 49.000G): 8.000G (alterar conforme a sua necessidade)
           Format: swap
         <Create>
-        #Criando a partição do Perfil dos Usuários Home do Ubuntu Server
+        #Criando a partição do Perfil dos Usuários (/home) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-home
           Size (max 41.000G): 5.000G
           Format: ext4
           Mount: /home
         <Create>
-        #Criando a partição Temporária Temp do Ubuntu Server
+        #Criando a partição Temporária (/tmp) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-tmp
           Size (max 36.000G): 5.000G
@@ -219,7 +220,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Mount: Other
             /tmp
         <Create>
-        #Criando a partição Variável Var do Ubuntu Server
+        #Criando a partição Variável (/var) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-var
           Size (max 36.000G): 15.000G
@@ -227,7 +228,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Mount: /var
         <Create>
     USER DEVICES
-      #Alterando o novo do Volume Lógico da Raiz Root do Ubuntu Server
+      #Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
       ubuntu-lv <Enter>
         Edit <Enter>
           Name: lv-root
@@ -242,7 +243,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     Your servers name: srvseunome <Tab>
     Pick a username: seu_usuário <Tab>
     Choose a passwords: sua_senha <Tab>
-    Confirm your passwords: sua_senha
+    Confirm your passwords: confirma_sua_senha
 <Done>
 
 11) Upgrade to Ubuntu Pro
@@ -252,7 +253,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 12) SSH Setup
     [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
-    [X] Allow password authentication over SSH
+    [X] Allow password authentication over SSH: ON (Habilitar)
 <Done>
 
 13) Featured Server Snaps
@@ -265,14 +266,14 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 <Enter>
 ```
 
-## 06_ Acessando o Ubuntu Server pela primeira vez via Terminal
+## 06_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)
 
 > **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO SSH SERVER, PRESSIONE <ENTER> PARA APARECER A TELA DE LOGIN.
 
 ```bash
 01) Tela de Login do Ubuntu Server
     Ubuntu 26.04 LTS srvseunome tty1
-      srvseunome login: seu_usuário <Enter> (altere para o seu usuário)
+      srvseunome login: seu_usuário <Enter> (altere para o nome do seu usuário)
       Password: sua_senha <Enter> (altere para a sua senha)
     seu_usuário@srvseunome:~$ (primeiro acesso ao Terminal do Ubuntu Server)
 
@@ -282,7 +283,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 ## 07_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH
 
-> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
+> **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Zsh`__ (MacOS), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
 
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
@@ -291,12 +292,14 @@ ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 
-#confirmando a troca das chaves públicas e do fingerprint do SSH (alterar sua senha para o seu cenário)
-The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can't be established.
+#confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
+The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 
-seu_usuário@SEU_ENDEREÇO_IPV4's password: sua_senha <Enter> (Por motivo de segurança a senha não aparece no Terminal)
+#digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
+seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
 
+#acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```

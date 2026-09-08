@@ -9,8 +9,8 @@ YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
 LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
 Github Procedimentos em TI: https://github.com/vaamonde<br>
 Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
+Data de atualização: 07/09/2026<br>
+Versão: 0.06<br>
 Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
@@ -181,6 +181,14 @@ sudo cat -n /var/log/apt/history.log
 #Verificando o Log de finalização da atualização de pacotes no Ubuntu Server
 #opção do comando cat: -n (number line)
 sudo cat -n /var/log/apt/term.log
+
+#Verificando a necessidade de reinicialização do Ubuntu Server
+#opção do comando cat: -n (number line)
+sudo cat -n /var/run/reboot-required
+
+#Verificando os pacotes que necessita ser reinicializado do Ubuntu Server
+#opção do comando cat: -n (number line)
+sudo cat -n /var/run/reboot-required.pkgs
 ```
 
 ## 13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server
