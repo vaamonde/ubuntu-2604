@@ -14,7 +14,10 @@
 12. Configuração do Backup                                OK
 ------------------------------------------------------------
 
-13. Hardening Firewall UFW
+13. Configuração do Firewall UFW                          OK
+Portas UDP: 53 (DNS), 323 (Chrony), 123 (NTP), 
+Portas TCP: 22 (OpenSSH), 4460 (NTS), 80/443 (Apache2), 3306 (MySQL)
+
 ------------------------------------------------------------
 
 14. Hardening OpenSSH + Certificado + 2FAS
