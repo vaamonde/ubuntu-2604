@@ -369,5 +369,3 @@ Entendendo a saída do comando: __`sudo ls -lh /backup`__<br>
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl -k | grep -i sdd
 ```
-
-> **PRÓXIMO PASSO DO WORKFLOW:** com a partição de Backup __`/dev/sdd1`__ criada, formatada em __`ext4`__ e montada de forma persistente em __`/backup`__, o ambiente está pronto para o procedimento __`11. Configuração do Backup`__, onde será instalado e configurado o **BorgBackupServer**, responsável por gerar Backups incrementais, deduplicados e criptografados da partição de Dados (__`/dados`__) para o repositório: __`/backup/repository/lv-dados`__.

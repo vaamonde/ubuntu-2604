@@ -355,7 +355,7 @@ UUID=SEU_UUID_DO_LV_DADOS   /dados     ext4         defaults    0      2
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 
-#reinicializando as configurações do SystemD com as mudanças do Fstab
+#reinicializando as configurações do Systemd com as mudanças do Fstab no Ubuntu Server
 #opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl daemon-reload

@@ -218,6 +218,7 @@ Entendendo a saída do comando: __`sudo blkid`__<br>
 ```bash
 #verificando as informações do kernel sobre as partições reconhecidas
 #opção do comando cat: -n (number lines)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/proc_partitions.5.html
 sudo cat -n /proc/partitions
 ```

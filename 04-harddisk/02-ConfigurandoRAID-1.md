@@ -52,15 +52,15 @@ Link da vídeo aula:
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
 | 🗄️ **RAID (Redundant Array of Independent Disks)** | Tecnologia que combina dois ou mais discos físicos em um único dispositivo lógico, distribuindo ou espelhando dados conforme o nível de RAID configurado. | Aumenta a disponibilidade, desempenho e tolerância a falhas do armazenamento. |
-| 🪞 **RAID 1 (Mirroring)** | Mantém uma cópia idêntica dos dados em todos os discos do Array.                                                                                          | Garante alta disponibilidade dos dados caso um dos discos apresente falha. |
-| ⚙️ **mdadm** | Ferramenta padrão do Linux para criação e administração de Software RAID.                                                                                 | Cria, monitora, recupera e administra Arrays RAID utilizando o subsistema **md** do kernel Linux. |
-| 🔢 **Array** | Dispositivo lógico formado pela união de dois ou mais discos físicos.                                                                                     | Representa o dispositivo RAID apresentado ao sistema operacional (ex.: `/dev/md0`). |
-| 🧩 **Superblock** | Área de metadados gravada em cada disco participante do RAID.                                                                                             | Armazena informações do Array (UUID, nível, estado, discos membros, sincronização etc.). |
-| 🔄 **Resync (Sincronização)** | Processo de sincronização dos dados entre os discos do Array.                                                                                             | Mantém todos os discos com exatamente o mesmo conteúdo após criação, recuperação ou substituição de discos. |
-| 🔧 **Rebuild (Reconstrução)** | Processo de reconstrução do Array após substituição de um disco com falha.                                                                                | Recupera automaticamente a redundância do RAID copiando os dados para o novo disco. |
-| 🚨 **Estado Degradado (Degraded)** | Situação em que um ou mais discos falharam, porém o Array permanece operacional.                                                                          | Permite continuidade do serviço até que o disco defeituoso seja substituído. |
-| 🆘 **Hot Spare** | Disco de reserva previamente configurado no Array.                                                                                                        | Assume automaticamente o lugar de um disco com falha, iniciando imediatamente o processo de reconstrução. |
-| 🔍 **Bitmap** | Área utilizada para registrar quais blocos sofreram alterações durante o funcionamento do Array.                                                          | Acelera a sincronização e reduz o tempo de reconstrução após falhas ou desligamentos inesperados. |
+| 🪞 **RAID 1 (Mirroring)** | Mantém uma cópia idêntica dos dados em todos os discos do Array. | Garante alta disponibilidade dos dados caso um dos discos apresente falha. |
+| ⚙️ **mdadm** | Ferramenta padrão do Linux para criação e administração de Software RAID. | Cria, monitora, recupera e administra Arrays RAID utilizando o subsistema **md** do kernel Linux. |
+| 🔢 **Array** | Dispositivo lógico formado pela união de dois ou mais discos físicos. | Representa o dispositivo RAID apresentado ao sistema operacional (ex.: `/dev/md0`). |
+| 🧩 **Superblock** | Área de metadados gravada em cada disco participante do RAID. | Armazena informações do Array (UUID, nível, estado, discos membros, sincronização etc.). |
+| 🔄 **Resync (Sincronização)** | Processo de sincronização dos dados entre os discos do Array. | Mantém todos os discos com exatamente o mesmo conteúdo após criação, recuperação ou substituição de discos. |
+| 🔧 **Rebuild (Reconstrução)** | Processo de reconstrução do Array após substituição de um disco com falha. | Recupera automaticamente a redundância do RAID copiando os dados para o novo disco. |
+| 🚨 **Estado Degradado (Degraded)** | Situação em que um ou mais discos falharam, porém o Array permanece operacional. | Permite continuidade do serviço até que o disco defeituoso seja substituído. |
+| 🆘 **Hot Spare** | Disco de reserva previamente configurado no Array. | Assume automaticamente o lugar de um disco com falha, iniciando imediatamente o processo de reconstrução. |
+| 🔍 **Bitmap** | Área utilizada para registrar quais blocos sofreram alterações durante o funcionamento do Array. | Acelera a sincronização e reduz o tempo de reconstrução após falhas ou desligamentos inesperados. |
 ---
 
 | **🗄️ RAID** | **📖 Funcionamento** | **💾 Redundância** | **⚡ Performance** | **📀 Mínimo de Discos** | **🛡️ Tolerância a Falhas** | **🎯 Uso Recomendado** |
