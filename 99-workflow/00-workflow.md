@@ -12,6 +12,7 @@
 10. Configuração do Particionamento                       OK
 11. Configuração do Bonding                               OK
 12. Configuração do Backup                                OK
+13. Configuração do Monitoramento
 ------------------------------------------------------------
 
 13. Configuração do Firewall UFW                          OK

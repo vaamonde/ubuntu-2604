@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 07/09/2026<br>
-Versão: 0.06<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE HABILITAR O UBUNTU PRO A SEGUINTE FRASE: *Habilitação e Configuração do Ubuntu Pro On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #pro #ubuntupro #ubuntupro2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/03-ubuntupro.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Verificando as Informações do Sistema Operacional do Ubuntu Server<br>
 #02_ Atualizando o Sistema Operacional Ubuntu Server<br>
 #03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server<br>
@@ -33,7 +47,7 @@ Site Oficial do Ubuntu Pro: https://ubuntu.com/pro<br>
 Site Oficial dos Procedimentos do Ubuntu Pro: https://ubuntu.com/pro/tutorial<br>
 Site Oficial do Ubuntu One: https://login.ubuntu.com/<br>
 Site Oficial do Ubuntu CVE: https://ubuntu.com/security/cves<br>
-Site Oficial do Ubuntu Membership: https://wiki.ubuntu.com/Membership
+Site Oficial do Ubuntu Membership: https://wiki.ubuntu.com/Membership<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -49,14 +63,14 @@ Link da vídeo aula:
 
 ## 01_ Verificando as Informações do Sistema Operacional do Ubuntu Server
 ```bash
-#verificando as informações de identificação do Sistema Operacional
+#verificando as informações de identificação do Sistema Operacional do Ubuntu Server
 #opção do comando cat: -n (number all output lines)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/os-release.5.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/os-release
 ```
 
-Entendendo a saída do arquivo: __`os-release`__<br>
+Entendendo a saída do arquivo: __`/etc/os-release`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🖥️ **PRETTY_NAME** | `Ubuntu 26.04 LTS` | Nome completo e amigável da distribuição, utilizado para identificação do sistema. |
@@ -75,14 +89,14 @@ Entendendo a saída do arquivo: __`os-release`__<br>
 ---
 
 ```bash
-#verificando as informações específicas do Sistema Operacional
+#verificando as informações específicas do Sistema Operacional do Ubuntu Server
 #opção do comando cat: -n (number all output lines)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/lsb_release
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/lsb-release
 ```
 
-Entendendo a saída do arquivo: __`lsb-release`__<br>
+Entendendo a saída do arquivo: __`/etc/lsb-release`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🐧 **DISTRIB_ID** | `Ubuntu` | Nome da distribuição GNU/Linux instalada no sistema. |
@@ -92,7 +106,7 @@ Entendendo a saída do arquivo: __`lsb-release`__<br>
 ---
 
 ```bash
-#verificando as informações de Kernel do Sistema Operacional
+#verificando as informações de Kernel do Sistema Operacional do Ubuntu Server
 #opção do comando uname: -a (Behave as though all of the options)
 #mais informações acesse a documentação oficial: https://man7.org/linux/man-pages/man1/uname.1.html
 sudo uname -a
@@ -115,7 +129,7 @@ Entendendo a saída do comando: __`uname -a`__<br>
 > **OBSERVAÇÃO IMPORTANTE:** recomendo fazer um upgrade completo do servidor antes de adicionar a *Licença do Ubuntu Pro*.
 
 ```bash
-#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro
+#Forçando uma atualizando completa do sistema operacional antes de habilitar o Ubuntu Pro
 #opções do comando apt: update (Resynchronize the package index files from their sources)
 #upgrade (Install the newest versions of all packages currently installed on the system 
 #from the sources enumerated in /etc/apt/sources.list.), dist-upgrade (dist-upgrade in 
@@ -138,6 +152,7 @@ sudo apt autoclean
 Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 
 ```bash
+#Criando a sua conta pessoal ou empresarial no Ubuntu One
 01) Clique em: I don’t have an Ubuntu One account
     Preencha os campos:
       Please type your email: (DIGITE SEU EMAIL)
@@ -148,6 +163,7 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
       Marque a opção: (ON) I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
       Clique em: <Create account>
 
+#Finalizar o cadastro ativando a sua conta no link enviado por email
 02) Finalize os procedimentos acessando seu email para ativar a sua conta no Ubuntu One.
     Are you sure you want to confirm and validate this email address?
 <Sim, tenho certeza>
@@ -169,9 +185,9 @@ Link para o Dashboard oficial do Ubuntu Pro: Acesse o site: https://ubuntu.com/p
     Machines (Licenças Disponíveis), Created (Data de Criação) e Expires (Data de Expiração)
 ```
 
-## 05_ Verificando a versão do Ubuntu Advantage Tools no Ubuntu Server
+## 05_ Verificando a versão do Ubuntu Advantage Tools (Ubuntu Pro) no Ubuntu Server
 ```bash
-#verificando a versão do cliente do Ubuntu Pro Client
+#verificando a versão do cliente do Ubuntu Pro Client do Ubuntu Server
 #opção do comado pro: --version ou version (Show version of the Ubuntu Pro package)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro --version
@@ -179,7 +195,7 @@ sudo pro --version
 
 ## 06_ Ativando a sua Assinatura do Ubuntu Pro no Ubuntu Server
 ```bash
-#adicionando o Token da licença do Ubuntu Pro
+#adicionando o Token da licença do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: attach (Connect an Ubuntu Pro support contract to this machine)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro attach COPIAR_E_COLAR_O_SEU_TOKEN
@@ -187,17 +203,17 @@ sudo pro attach COPIAR_E_COLAR_O_SEU_TOKEN
 
 ## 07_ Verificando os repositórios de origem das atualizações do Ubuntu Pro no Ubuntu Server
 ```bash
-#verificando o status de serviço do Ubuntu Pro
+#verificando o status de serviço do Ubuntu Pro no Ubuntu Server
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status ubuntu-advantage
 
-#analisando os Log's e mensagens de erro do serviço do Ubuntu Pro
-#opção do comando journalctl: u (unit)
+#analisando os Log's e mensagens de erro do serviço do Ubuntu Pro no Ubuntu Server
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u ubuntu-advantage
 
-#verificando o status do Ubuntu Pro
+#verificando o status do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: status (Report current status of Ubuntu Pro services on system)
 #--all (view all information command and verbose mode)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
@@ -224,24 +240,24 @@ sudo pro status --all
 ---
 
 ```bash
-#verificando os status dos pacotes de segurança do Ubuntu Pro
+#verificando os status dos pacotes de segurança do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: security-status (Show security updates for packages in the system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro security-status
 
-#verificando os status dos pacotes de segurança ESM (Enterprise Service Manager) do Ubuntu Pro
+#verificando os status dos pacotes de segurança ESM (Enterprise Service Manager) do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: security-status (Show security updates for packages in the system), 
 #--esm-apps (flag will only  show  information  about esm-apps packages)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro security-status --esm-apps
 
-#verificando as informações de Fix (correções) dos CVE (Common Vulnerabilities and Exposures)
+#verificando as informações de Fix (correções) dos CVE (Common Vulnerabilities and Exposures) no Ubuntu Server
 #opção do comando pro: fix (Fix a CVE or USN on the system by upgrading the appropriate package(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 #Site dos CVEs do Ubuntu: https://ubuntu.com/security/cves
 sudo pro fix CVE-2026-54591
 
-#verificando os status do Canonical Livepatch do Ubuntu Pro
+#verificando os status do Canonical Livepatch do Ubuntu Pro no Ubuntu Server
 #opção do comando canonical-livepatch: status (To show the current state of the client)
 #--verbose (shows extended details such as client version, architecture, boot time, and applied CVEs.)
 #mais informações acesse a documentação oficial em: https://ubuntu.com/security/livepatch/docs/livepatch/how-to/status
@@ -259,7 +275,7 @@ sudo canonical-livepatch status --verbose
 sudo apt policy
 ```
 ```bash
-#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro
+#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro no Ubuntu Server
 #opções do comando apt: update (Resynchronize the package index files from their sources)
 #upgrade (Install the newest versions of all packages currently installed on the system 
 #from the sources enumerated in /etc/apt/sources.list.), dist-upgrade (dist-upgrade in 
@@ -280,7 +296,7 @@ sudo apt autoclean
 
 ## 09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server
 ```bash
-#verificando o status de serviço das Atualizações Automáticas
+#verificando o status de serviço das Atualizações Automáticas do Ubuntu Server
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status unattended-upgrades
@@ -315,7 +331,19 @@ sudo systemctl restart unattended-upgrades
 sudo systemctl status unattended-upgrades
 
 #analisando os Log's e mensagens de erro das Atualizações Automáticas do Ubuntu Server
-#opção do comando journalctl: u (unit)
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u unattended-upgrades
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE HABILITAR O UBUNTU PRO A SEGUINTE FRASE: *Habilitação e Configuração do Ubuntu Pro On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #pro #ubuntupro #ubuntupro2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/03-ubuntupro.png
+
+---

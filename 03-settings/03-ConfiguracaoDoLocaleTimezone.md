@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 08/09/2026<br>
-Versão: 0.07<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO LOCALE E TIMEZONE A SEGUINTE FRASE: *Configuração do Locale e Timezone On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #timezone #timezoneeubuntu #timezonebuntuserver #timezoneubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/06-timezone.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server<br>
 #02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server<br>
 #03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server<br>
@@ -59,7 +73,7 @@ Entendendo a saída do comando: __`localectl`__<br>
 sudo locale -a
 ```
 
-Entendendo a saída do comando: __`locale`__<br>
+Entendendo a saída do comando: __`locale -a`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌐 **Locale** | `C` | Localidade padrão da linguagem C (ANSI/POSIX). Utiliza ordenação, formatação e mensagens básicas, independentemente da região ou idioma. É frequentemente utilizada para garantir comportamento consistente em scripts e aplicações. |
@@ -77,12 +91,12 @@ Entendendo a saída do comando: __`locale`__<br>
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 sudo locale-gen pt_BR.UTF-8
 
-#configurando a localidade do Português do Brasil no Ubuntu Server
+#configurando a localidade do Português do Brasil (pt_BR) no Ubuntu Server
 #opção do comando localectl: set-locale (Set the system locale), LANG (This sets the base locale for your system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo localectl set-locale LANG=pt_BR.UTF-8
 
-#atualizando as localidades do Português do Brasil e Linguagem no Ubuntu Server
+#atualizando as localidades do Português do Brasil (pt_BR) e os Linguagens no Ubuntu Server
 #opções das variáveis do comando update-locale: LANG (This sets the base locale for your system),
 #LC_ALL (This is the strongest overriding variable), LANGUAGE (his variable controls GNU gettext 
 #message translation fallbacks)
@@ -95,7 +109,7 @@ sudo update-locale LANG=pt_BR.UTF-8 LC_ALL=pt_BR.UTF-8 LANGUAGE="pt_BR:pt:en"
 sudo systemctl reboot
 ```
 ```bash
-#verificando as mudanças de localidades do sistema no Ubuntu Server depois do reboot
+#verificando as mudanças de localidades do sistema no Ubuntu Server depois do rebootar
 #opção do comando locale: -a (all-locales)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
@@ -121,7 +135,7 @@ sudo localectl
 sudo timedatectl status
 ```
 
-Entendendo a saída do comando: __`timedatectl`__<br>
+Entendendo a saída do comando: __`timedatectl status`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🕒 **Local time** | `ter 2026-07-14 20:43:01 UTC` | Hora local utilizada pelo sistema operacional. Como o fuso horário configurado é **UTC**, ela é idêntica à Hora Universal. |
@@ -135,21 +149,22 @@ Entendendo a saída do comando: __`timedatectl`__<br>
 
 ## 04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** geralmente mudar para o Time Zone de __`America/Sao_Paulo`__ a hora fica errada no sistema, nesse caso podemos mudar para __`America/Fortaleza`__ ou __`America/Bahia`__ esse error é por causa do **Fuso Horário** em relação ao __`Horário de Verão`__ que não existe mais no Brasil (foi criado em 1931 pelo Governo Getúlio Vargas, só começou a ser aplicado no Brasil em 1985 no Governo José Sarney e foi cancelado em 2018 no Governo Bolsonaro).
-
-> **OBSERVAÇÃO IMPORTANTE:** Em 2025 o horário de verão estava em __`Processo de Avaliação`__ pelo Governo Federal. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *situação hídrica e na segurança energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
-
-> **OBSERVAÇÃO IMPORTANTE:** Em 2026 o horário de verão não está previsto para ocorrer no Brasil. A medida foi suspensa por decreto em 2019 (decreto número: 9.772, de 25 de abril de 2019) e, até o momento, o governo federal decidiu por não retomá-la, nem para o período de 2025/2026.
-
+> **OBSERVAÇÃO IMPORTANTE:** geralmente mudar o Time Zone para: __`America/Sao_Paulo`__ a hora fica errada no sistema, nesse caso podemos mudar para __`America/Fortaleza`__ ou __`America/Bahia`__ esse error é por causa do **Fuso Horário** em relação ao __`Horário de Verão`__ que não existe mais no Brasil (foi criado em **1931** pelo `Governo Getúlio Vargas`, só começou a ser aplicado no Brasil em **1985** no `Governo José Sarney` e foi cancelado em **2018** no `Governo Jair Messias Bolsonaro`).
+>
+> **OBSERVAÇÃO IMPORTANTE:** Em **2025** o horário de verão estava em __`Processo de Avaliação`__ pelo `Governo Federal: Luiz Inácio Lula da Silva`. De acordo com o ministro de Minas e Energia, **Alexandre Silveira**, a volta da medida será analisada com base na *Situação Hídrica e na Segurança Energética*. "Nós temos a segurança energética assegurada, há o início de um processo de restabelecimento ainda muito modesto da nossa condição hídrica. Temos condições de chegar depois do verão em condição de avaliar, sim, a volta dessa política em 2025"
+>
+> **OBSERVAÇÃO IMPORTANTE:** Em **2026** o horário de verão não está previsto para ocorrer no Brasil. A medida foi suspensa por decreto em `2019 (decreto número: 9.772, de 25 de abril de 2019)` e, até o momento, o Governo Federal decidiu por não retomá-la, nem para o período de **2025/2026**.
+>
 > **OBSERVAÇÃO:** ALTERAR O LOCALE CONFORME A LOCALIDADE DO SEU SERVIDOR, MAIS INFORMAÇÕES SOBRE TIMEZONE ACESSE: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
+
 ```bash
-#listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (de quit))
+#listando os Timezones disponíveis do comando timedatectl (PARA SAIR PRESSIONE Q (de quit)) no Ubuntu Server
 #opção do comando timedatectl: list-timezones (List available time zones, one per line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl list-timezones
 
-#configurando o fuso horário de America São Paulo no Ubuntu Server
+#configurando o fuso horário da America São Paulo no Ubuntu Server
 #opção do comando timedatectl: set-timezone (set the system time zone to the specified value)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-timezone "America/Sao_Paulo"
@@ -159,3 +174,15 @@ sudo timedatectl set-timezone "America/Sao_Paulo"
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO LOCALE E TIMEZONE A SEGUINTE FRASE: *Configuração do Locale e Timezone On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #timezone #timezoneeubuntu #timezonebuntuserver #timezoneubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/06-timezone.png
+
+---

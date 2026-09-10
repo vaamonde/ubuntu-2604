@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 07/09/2026<br>
-Versão: 0.07<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO NETPLAN A SEGUINTE FRASE: *Configuração do Netplan On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #netplan #netplanubuntu #netplanbuntuserver #netplanubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/04-netplan.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Instalando os principais software de Rede (Network) no Ubuntu Server<br>
 #02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server<br>
 #03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server<br>
@@ -38,7 +52,7 @@ Conteúdo estudado nessa configuração:<br>
 | 🔒 **DoT (DNS over TLS)** | Protocolo que criptografa consultas e respostas DNS utilizando **TLS (Transport Layer Security)**, o mesmo protocolo empregado pelo HTTPS. | Protege a privacidade das consultas DNS, impedindo que terceiros monitorem ou alterem as requisições durante o tráfego na rede. É amplamente utilizado em ambientes que exigem maior segurança e confidencialidade. |
 ---
 
-[![Endereço IPv4/IPv6 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Endereço IPv4/IPv6 Ubuntu Server")
+[![Netplan IPv4/IPv6 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Netplan IPv4/IPv6 Ubuntu Server")
 
 Link da vídeo aula: 
 
@@ -52,7 +66,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install bridge-utils net-tools
+sudo apt install bridge-utils net-tools traceroute 
 ```
 
 ## 02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server
@@ -185,7 +199,7 @@ Entendendo a saída do comando: __`ip route show`__<br>
 ---
 
 ```bash
-#verificando as informações de cache dos Servidores DNS (resolução de nomes)
+#verificando as informações de cache dos Servidores DNS (resolução de nomes) no Ubuntu Server
 #opção do comando resolvectl: status (Shows the global and per-link DNS settings currently in effect)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl status
@@ -241,7 +255,7 @@ Entendendo a saída do arquivo: __`/run/systemd/netif/leases/*`__<br>
 ---
 
 ```bash
-#verificando as informações de Status do Netplan no Ubuntu Server
+#verificando as informações do Status do Netplan no Ubuntu Server
 #opção do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
@@ -290,22 +304,22 @@ Entendendo a saída do comando: __`sudo netplan status`__<br>
 
 ## 04_ Alterando as configurações da Placa de Rede do Ubuntu Server
 
-> **OBSERVAÇÃO:** o nome do arquivo de configuração da placa de rede pode mudar dependendo da versão do Ubuntu Server. O arquivo: __`/etc/netplan/00-installer-config.yaml`__ e o Padrão do Ubuntu Server 26.04.x LTS, no Ubuntu Server 24.04.x LTS tem o nome: __`/etc/netplan/50-cloud-init.yaml`__, sempre digitar o comando: __`ls -lh /etc/netplan`__ antes de editar o arquivo Netplan.
-
+> **OBSERVAÇÃO:** o nome do arquivo de configuração da placa de rede pode mudar dependendo da versão do Ubuntu Server. O arquivo: __`/etc/netplan/00-installer-config.yaml`__ e o Padrão do Ubuntu Server 26.04.x LTS, no Ubuntu Server 24.04.x LTS tem o nome: __`/etc/netplan/50-cloud-init.yaml`__, sempre digitar o comando: __`ls -lh /etc/netplan`__ antes de editar o arquivo do Netplan.
+>
 > **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do Netplan e baseado no formato de *Serialização de Dados Legíveis YAML (Yet Another Markup Language)* utilizado na linguagem de programação Python por exemplo, muito cuidado com o uso de __`Espaços e Tabulação`__ e principalmente sua **Indentação**.
 
 ```bash
-#listando o conteúdo do diretório de configuração do Netplan
+#listando o conteúdo do diretório de configuração do Netplan no Ubuntu Server
 #opção do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh /etc/netplan/
 
-#fazendo o backup do arquivo de configuração original do Netplan
+#fazendo o backup do arquivo de configuração original do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.old
 
-#download do arquivo de configuração do Netplan personalizado para o cenário
+#download do arquivo de configuração do Netplan personalizado para o cenário do Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config.yaml
@@ -332,11 +346,11 @@ network:
     # Configuração da Interface Física (Nome Lógico visto no comando: lshw -class network)
     enp0s3:
       #
-      # Identificando a Interface de Rede Física pelo Endereço MAC Address 
+      # Identificando a Interface de Rede Física pelo Endereço MAC Address (Visto no comando ip address show)
       match:
         macaddress: SEU_ENDEREÇO_MAC_ADDRESS
       #
-      # Definindo o Nome Lógico da Interface de Rede
+      # Definindo o Nome Lógico da Interface de Rede (seguindo o padrão do comando lshw -class network)
       set-name: enp0s3
       #
       # Desabilitando o suporte ao DHCP Client IPv4 (DHCPv4) na Interface Física
@@ -352,7 +366,7 @@ network:
       accept-ra: false
       #
       # Configuração do Endereço IPv4/CIDR e IPv6/CIDR para o seu cenário utilizando
-      # endereços IPv6 Unicast Global e Link Local
+      # endereços IPv6 Unicast Global e IPV6 Link Local
       # OBSERVAÇÃO IMPORTANTE: configuração do Endereço IPv4 e IPv6 separados por Traço
       addresses:
         - SEU_ENDEREÇO_IPv4/CIDR
@@ -393,12 +407,12 @@ ESC SHIFT :x <Enter>
 
 ## 05_ Aplicando as configurações do Netplan e verificando as informações de Rede do Ubuntu Server
 ```bash
-#fazendo o backup do arquivo de configuração modificado do Netplan 
+#fazendo o backup do arquivo de configuração modificado do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp
 
-#listando o conteúdo do diretório do Netplan com os novos arquivos
+#listando o conteúdo do diretório do Netplan com os novos arquivos no Ubuntu Server
 #opções do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.htm
 ls -lh /etc/netplan/
@@ -408,19 +422,19 @@ ls -lh /etc/netplan/
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug get
 
-#validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado)
+#validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug generate
 
-#testando a configuração com possibilidade de reversão o Netplan em modo Debug (detalhado)
+#testando a configuração com possibilidade de reversão o Netplan em modo Debug (detalhado) no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: você pode utilizar a opção: try que caso aconteça alguma falha na 
-#hora de configurar a placa de rede ele reverte a configuração inicial
+#hora de configurar a placa de rede ele reverte a configuração inicial depois de um período
 #opções do comando netplan: --debug (enable debug messages), try (try to apply a new netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug try
 
-#aplicando as mudanças definitivas do Netplan em modo Debug (detalhado)
+#aplicando as mudanças definitivas do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug apply
@@ -441,7 +455,7 @@ sudo cat -n /run/systemd/network/*.network
 sudo systemctl status netplan-configure
 
 #analisando os Log's e mensagens de erro do serviço do Netplan no Ubuntu Server
-#opção do comando journalctl: u (unit)
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u netplan-configure
 ```
@@ -458,15 +472,15 @@ sudo journalctl -u netplan-configure
 ---
 
 ```bash
-#fazendo o backup do arquivo de configuração original do Resolved
+#fazendo o backup do arquivo de configuração original do Resolved no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/systemd/resolved.conf /etc/systemd/resolved.conf.old
 
-#editando o arquivo de configuração do Systemd Resolved no Ubuntu Server (NÃO COMENTADO NO VÍDEO)
+#editando o arquivo de configuração do Systemd Resolved no Ubuntu Server
 sudo vim /etc/systemd/resolved.conf
 
-#habilitando o número de linhas do arquivo 00-installer-config.yaml
+#habilitando o número de linhas do arquivo resolved.conf
 ESC SHIFT :set number <Enter>
 
 #entrando no modo de edição do editor de texto VIM
@@ -508,14 +522,14 @@ sudo systemctl restart systemd-resolved
 sudo systemctl status systemd-resolved
 
 #analisando os Log's e mensagens de erro do serviço do Resolved no Ubuntu Server
-#opção do comando journalctl: u (unit)
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u systemd-resolved
 ```
 
 ## 08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server
 ```bash
-#verificando o endereço IPv4 e IPv6 da Interface de Rede
+#verificando o endereço IPv4 e IPv6 da Interface de Rede no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
@@ -568,11 +582,11 @@ ping -6 -c 5 google.com
 ## 09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH utilizando o IPv4 e IPv6
 
 > **OBSERVAÇÃO:** após a configuração da Placa de Rede do Ubuntu Server você já pode acessar remotamente o seu servidor utilizando o __`Protocolo SSH`__ nos clientes Linux ou Microsoft Windows para dá continuidade nas configurações do servidor, ficando mais fácil administrar e configurar os principais serviços de rede de forma remota.
-
+>
 > **DICA:** Você pode usar os softwares: __`Bash/Shell`__ (GNU/Linux), __`Zsh`__ (MacOS), __`Powershell`__ (Microsoft Windows), __`PuTTY`__ (GNU/Linux ou Microsoft Windows) e __`Git Bash`__ (Microsoft Windows - RECOMENDADO SE ESTIVER USANDO O WINDOWS).
 
 ```bash
-#testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
+#testando a conexão remota no Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
 ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
@@ -591,7 +605,7 @@ seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
 
 ```bash
-#testando a conexão com o Ubuntu Server (alterar o Endereço IPv6 para o seu cenário)
+#testando a conexão remota no Ubuntu Server (alterar o Endereço IPv6 para o seu cenário)
 ping SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
 
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv6 para o seu cenário)
@@ -608,3 +622,15 @@ seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER password: sua_senha <Enter>
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO NETPLAN A SEGUINTE FRASE: *Configuração do Netplan On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #netplan #netplanubuntu #netplanbuntuserver #netplanubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/04-netplan.png
+
+---

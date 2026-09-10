@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 07/09/2026<br>
-Versão: 0.06<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE ATUALIZAÇÃO DO UBUNTU SERVER 26.04 A SEGUINTE FRASE: *Atualização do Ubuntu Server 26.04.x LTS On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #update #updateubuntu #updateubuntuserver #updateubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/02-update.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa atualização:<br>
+**Conteúdo estudado nessa atualização:**<br>
 #01_ Verificando as políticas dos repositórios locais no Ubuntu Server<br>
 #02_ Removendo os repositórios Multiverse (Multiverso) e Universe (Universo) no Ubuntu Server<br>
 #03_ Atualizando as Listas (sources.list) do Apt no Ubuntu Server<br>
@@ -31,7 +45,7 @@ Conteúdo estudado nessa atualização:<br>
 #10_ Limpando o cache local do (sources.list) no Ubuntu Server<br>
 #11_ Verificando todas as versões de software atualizados no Ubuntu Server<br>
 #12_ Verificando os Logs de atualização de software no Ubuntu Server<br>
-#13_ Reiniciando o sistema operacional do Ubuntu Server para aplicar as mudanças<br>
+#13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server<br>
 
 [![Atualização Ubuntu Server](http://img.youtube.com/vi//0.jpg)]("Atualização Ubuntu Server")
 
@@ -64,11 +78,11 @@ sudo apt policy
 #Add-Apt-Repository é utilizado para adicionar, gerenciar ou remover repositórios.
 #opção do comando add-apt-repository: --remove (Remove the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
-#Removendo o repositório Multiverso
+#Removendo o repositório Multiverso do Ubuntu Server
 sudo add-apt-repository --remove multiverse
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
-#Removendo o repositório Universo
+#Removendo o repositório Universo do Ubuntu Server
 sudo add-apt-repository --remove universe
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
@@ -90,6 +104,7 @@ sudo apt update
 #opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo apt list --upgradable | cat -n
 ```
 
@@ -144,9 +159,8 @@ sudo apt autoremove
 
 ## 09_ Fazendo a limpeza dos repositórios locais e pacotes desnecessários no Ubuntu Server
 ```bash
-#Autoclean como Clean, o autoclean limpa o repositório local de arquivos de pacotes 
-#recuperados. A diferença é que ele remove apenas arquivos de pacotes que não podem 
-#mais ser baixados e são inúteis.
+#Autoclean limpa o repositório local de arquivos de pacotes recuperados. A diferença é que 
+#ele remove apenas arquivos de pacotes que não podem mais ser baixados e são inúteis.
 #opção do comando apt: autoclean (Like clean, autoclean clears out the local repository of 
 #retrieved package files)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
@@ -155,7 +169,7 @@ sudo apt autoclean
 
 ## 10_ Limpando o cache local do (sources.list) no Ubuntu Server
 ```bash
-#Clean limpa o repositório local de arquivos de pacotes recuperados
+#Clean limpa o repositório local de arquivos de pacotes recuperados do comando apt
 #opção do comando apt: clean (clean clears out the local repository of retrieved package files)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt clean
@@ -163,12 +177,13 @@ sudo apt clean
 
 ## 11_ Verificando todas as versões de software atualizados no Ubuntu Server
 ```bash
-#List é utilizado para listar todos os software que serão atualizados no sistema.
+#List é utilizado para listar todos os software que serão atualizados ou instalados no sistema.
 #opção do comando apt: list (list is used to display a list of packages), --installed (shows
 #a list of packages names as well as options to list installed)
 #opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo apt list --installed | cat -n
 ```
 
@@ -176,25 +191,55 @@ sudo apt list --installed | cat -n
 ```bash
 #Verificando o Log de instalação e atualização de pacotes no Ubuntu Server
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/history.log
 
 #Verificando o Log de finalização da atualização de pacotes no Ubuntu Server
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/term.log
 
 #Verificando a necessidade de reinicialização do Ubuntu Server
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
+sudo needrestart
+
+#Verificando o arquivo de reinicialização requerida do Ubuntu Server
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/run/reboot-required
 
-#Verificando os pacotes que necessita ser reinicializado do Ubuntu Server
+#Verificando os pacotes que precisam ser reinicializados do Ubuntu Server
 #opção do comando cat: -n (number line)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/run/reboot-required.pkgs
 ```
 
 ## 13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server
 ```bash
-#Reiniciar o servidor para testar as atualizações
+#Reiniciar o servidor para testar as atualizações do Ubuntu Server
 #opção do comando systemctl: reboot (Shut down and reboot the system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl reboot
+
+#Verificando os Logs de reinicialização do Ubuntu Server
+#opções do comando journalctl: -u (Show messages for the specified systemd unit), --since (Start showing 
+#entries on or newer than the specified date)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1p.html
+sudo journalctl -u systemd-logind.service --since "yesterday" | grep reboot
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE ATUALIZAÇÃO DO UBUNTU SERVER 26.04 A SEGUINTE FRASE: *Atualização do Ubuntu Server 26.04.x LTS On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #update #updateubuntu #updateubuntuserver #updateubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/02-update.png
+
+---
