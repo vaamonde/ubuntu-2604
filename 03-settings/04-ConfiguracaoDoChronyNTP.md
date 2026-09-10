@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 08/09/2026<br>
-Versão: 0.07<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO CHRONY NTP A SEGUINTE FRASE: *Configuração do Chrony NTP On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #chrony #chronyeubuntu #chronybuntuserver #chronyubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/07-chrony.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server<br>
 #02_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server<br>
 #03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server<br>
@@ -52,7 +66,7 @@ sudo systemctl stop chrony
 sudo systemctl start chrony
 
 #analisando os Log's e mensagens de erro do serviço do Chrony Server e Client no Ubuntu Server
-#opção do comando journalctl: x (catalog), e (pager-end), u (unit)
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u chrony
 ```
@@ -73,13 +87,13 @@ sudo chronyc -v
 
 ## 02_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
+> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP/UDP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
 | **🔌 Portas** | **🧭 Protocolos** | **📦 Serviços** | **📖 Descrição** |
 | :----------: | :--------------: | :------------- | :--------------- |
 | **123** | `UDP` | *NTP* | Porta padrão do protocolo NTP. O **chronyd** envia e recebe pacotes NTP por esta porta para sincronização de horário. |
-| **4460** | `TCP` | *NTS-KE* | Porta padrão do **Network Time Security - Key Establishment (NTS-KE)**, utilizada para negociação TLS e troca de chaves criptográficas antes da sincronização NTP. Definida pela **RFC 8915**. |
 | **323** | `UDP` | *Chronyc* | Porta utilizada pelo protocolo de monitoramento remoto do **Chrony**. Por padrão, no Ubuntu ela normalmente fica disponível apenas para comunicação local e não deve ser exposta na rede sem necessidade. |
+| **4460** | `TCP` | *NTS-KE* | Porta padrão do **Network Time Security - Key Establishment (NTS-KE)**, utilizada para negociação TLS e troca de chaves criptográficas antes da sincronização NTP. Definida pela **RFC 8915**. |
 ---
 
 ```bash
@@ -90,14 +104,14 @@ sudo lsof -nP -iUDP:'323'
 
 ## 03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server
 ```bash
-/etc/chrony/                                <-- Diretório de configuração do Chrony Server e Client
-/etc/chrony/chrony.conf                     <-- Arquivo de configuração do Chrony Server e Client
-/etc/chrony/chrony.keys                     <-- Arquivo de configuração das chaves de autenticação do Chrony Server e Client
-/etc/chrony/conf.d/                         <-- Diretório dos arquivos de configuração extras do Chrony Server e Client
-/etc/chrony/sources.d/                      <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
-/etc/chrony/sources.d/ntp-br-pools.sources  <-- Arquivo de configuração dos servidores NTP.br do Chrony Server e Client
-/var/log/chrony/                            <-- Diretório de logs do Chrony Server e Client
-/var/lib/chrony/                            <-- Diretório das configurações de sincronismo Chrony Server e Client
+/etc/chrony/                                 <-- Diretório de configuração do Chrony Server e Client
+/etc/chrony/chrony.conf                      <-- Arquivo de configuração do Chrony Server e Client
+/etc/chrony/chrony.keys                      <-- Arquivo de configuração das chaves de autenticação do Chrony Server e Client
+/etc/chrony/conf.d/                          <-- Diretório dos arquivos de configuração extras do Chrony Server e Client
+/etc/chrony/sources.d/                       <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
+/etc/chrony/sources.d/ntp-br-pools.sources   <-- Arquivo de configuração dos servidores NTP.br do Chrony Server e Client
+/var/log/chrony/                             <-- Diretório de logs do Chrony Server e Client
+/var/lib/chrony/                             <-- Diretório das configurações de sincronismo Chrony Server e Client
 ```
 
 ## 04_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
@@ -126,11 +140,11 @@ sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubuse
 ## 05_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
 
 > **OBSERVAÇÃO:** O `NTP` (Network Time Protocol) é um protocolo para sincronização dos relógios dos computadores baseado no protocolo __`UDP`__ sob a porta __`123`__. É utilizado para sincronização do relógio de um conjunto de computadores e dispositivos em redes de dados com latência variável.
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** no Brasil sempre utilizar o site: https://ntp.br/ para o sincronismo de Data e Hora de forma correta nos servidores. O `ntp.br` é o serviço oficial de sincronização de horário do Brasil, mantido pelo **Observatório Nacional (ON)** (Site Oficial: https://www.gov.br/observatorio/pt-br/assuntos/areas-de-atuacao/tempo-e-frequencia), em parceria com o **NIC.br** (Núcleo de Informação e Coordenação do Ponto BR) - Site Oficial: https://nic.br/.
 
 ```bash
-#editando o arquivo de configuração do Chrony Server e Client
+#editando o arquivo de configuração do Chrony Server e Client no Ubuntu Server
 sudo vim /etc/chrony/chrony.conf
 
 #habilitando o número de linhas do arquivo chrony.conf
@@ -185,7 +199,7 @@ sudo systemctl restart chrony
 sudo systemctl status chrony
 
 #analisando os Log's e mensagens de erro do serviço do Chrony Server e Client no Ubuntu Server
-#opção do comando journalctl: u (unit)
+#opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u chrony
 ```
@@ -193,7 +207,7 @@ sudo journalctl -u chrony
 ## 06_ Verificando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server
 
 ```bash
-#verificando as configuração do serviço do Chrony no Ubuntu Server
+#verificando as configuração do serviço e correção do tempo do Chrony no Ubuntu Server
 #opção do comando chronyc: tracking (displays parameters about the system’s clock performance)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/chronyc.1.html
 sudo chronyc tracking
@@ -261,7 +275,7 @@ Entendendo a saída do comando: __`chronyc authdata`__<br>
 ---
 
 ```bash
-#testando a conectividade da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security)
+#testando a conectividade da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security) no Ubuntu Server
 #opções do comando nc: -z (Only scan for listening daemons), -v (Produce more verbose output)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nc
 nc -zv a.st1.ntp.br 4460
@@ -279,7 +293,7 @@ Entendendo a saída do comando: __`nc -zv a.st1.ntp.br 4460`__<br>
 ---
 
 ```bash
-#testando o certificado de conexão segura da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security)
+#testando o certificado de conexão segura da porta TCP-4460 do NTP.br utilizada pelo NTS (Network Time Security) no Ubuntu Server
 #opções do comando openssl: s_client (This implements a generic SSL/TLS client which can establish
 #a transparent connection to a remote server speaking SSL/TLS ), -connect (This specifies the host
 #and optional port to connect to), -servername (Set the TLS SNI (Server Name Indication) extension
@@ -302,15 +316,15 @@ Entendendo a saída do comando: __`openssl s_client -connect a.st1.ntp.br:4460 -
 
 ## 07_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)
 
-> **OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de __`Data e Hora em Modo Manual`__ caso as configurações de *Sincronismo Automático* não funcione de forma adequada, não é recomendado configurar a Data e Hora em modo manual em servidores, isso é um alerta de **Erro de Sistema (BIOS/Hardware ou Rede/Internet)**.
+> **OBSERVAÇÃO IMPORTANTE:** só utilizar as configurações de __`Data e Hora em Modo Manual`__ caso as configurações de *Sincronismo Automático* não funcionar de forma adequada, não é recomendado configurar a Data e Hora em modo manual em servidores, isso é um alerta de **Erro de Sistema (BIOS/Hardware ou Rede/Internet)**.
 
 ```bash
-#verificando o status atual de Data, Hora, Timezone e Sincronismo NTP antes de qualquer alteração manual
+#verificando o status atual de Data, Hora, Timezone e Sincronismo NTP antes de qualquer alteração manual no Ubuntu Server
 #opção do comando timedatectl: status (Show current time settings)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
 
-#definindo que o relógio de hardware (RTC) utiliza UTC e não Hora Local (0 = desabilita RTC em Hora Local)
+#definindo que o relógio de hardware (RTC) utiliza UTC e não Hora Local (0 = desabilita RTC em Hora Local) no Ubuntu Server
 #opção do comando timedatectl: set-local-rtc (Takes a boolean argument)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-local-rtc 0
@@ -331,7 +345,7 @@ sudo timedatectl set-timezone America/Sao_Paulo
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-time "YYYY-MM-DD HH:MM:SS"
 
-#reabilitando a sincronização automática via NTP/Chrony após o ajuste manual
+#reabilitando a sincronização automática via NTP/Chrony após o ajuste manual no Ubuntu Server
 #opção do comando timedatectl: set-ntp (Controls whether NTP based network time synchronization is active)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-ntp true
@@ -341,27 +355,27 @@ sudo timedatectl set-ntp true
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
 
-#reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br
+#reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br no Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl restart chrony.service
 
-#reiniciando o serviço do Systemd Resolved para limpar o cache de respostas DNS/DNSSEC inválidas
+#reiniciando o serviço do Systemd Resolved para limpar o cache de respostas DNS/DNSSEC inválidas no Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl restart systemd-resolved
 
 #analisando os Log's e mensagens de erro mais recentes do serviço do Chrony no Ubuntu Server
-#opção do comando journalctl: -e (jump to the end of the journal), -u (unit)
+#opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -eu chrony
 
 #analisando os Log's e mensagens de erro mais recentes do serviço do Systemd Resolved no Ubuntu Server
-#opção do comando journalctl: -e (jump to the end of the journal), -u (unit)
+#opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -eu systemd-resolved
 
-#testando a resolução de nomes e a validação do DNSSEC após o ajuste manual de Data e Hora
+#testando a resolução de nomes e a validação do DNSSEC após o ajuste manual de Data e Hora no Ubuntu Server
 #opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl query cloudflare.com
@@ -377,13 +391,25 @@ sudo resolvectl query cloudflare.com
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --show
 
-#sincronizando a data hora de software para o hardware de forma manual no Ubuntu Server
+#sincronizando a data e hora de software para o hardware de forma manual no Ubuntu Server
 #opções do comando hwclock: --systohc (system clock to hardware clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --systohc
 
-#sincronizando a data hora de hardware para o software de forma manual no Ubuntu Server
+#sincronizando a data e hora de hardware para o software de forma manual no Ubuntu Server
 #opções do comando hwclock: --hctosys (hardware clock to system clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --hctosys
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO CHRONY NTP A SEGUINTE FRASE: *Configuração do Chrony NTP On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #chrony #chronyeubuntu #chronybuntuserver #chronyubuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/07-chrony.png
+
+---

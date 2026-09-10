@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 07/09/2026<br>
-Versão: 0.06<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO HARD DISK A SEGUINTE FRASE: *Configuração do Hard Disk On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #hardisk #hardiskubuntu #hardiskuntuserver #hardiskuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/09-hardisk.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
 #02_ Instalando os principais software de Hard Disk no Ubuntu Server<br>
 #03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server<br>
@@ -45,10 +59,12 @@ Link da vídeo aula:
 ## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
 
 ```bash
+#Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremise
 <Configurações>
     Expert
 
+#Adicionando um Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
     Dispositivos
       Controladora: SATA
@@ -73,6 +89,7 @@ Link da vídeo aula:
 ```bash
 #atualizando as lista do Apt do sources.list no Ubuntu Server
 #opção do comando apt: update (Resynchronize the package index files from their sources)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
 
 #instalando os pacotes e ferramentas de hard disk no Ubuntu Server
@@ -87,6 +104,7 @@ sudo apt install smartmontools hdparm sysstat
 #opção do comando lspci: -v (verbose)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data), -A5 (Print NUM
 #lines of trailing context after matching lines)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1p.html
 sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
@@ -110,7 +128,7 @@ Entendendo a saída do comando: __`sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
 ---
 
 ```bash
-#verificando os detalhes de controladora de hard disk
+#verificando os detalhes de controladora de hard disk no Ubuntu Server
 #opção do comando lshw: -class (Only show the given class of hardware)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/lshw.1.html
 sudo lshw -class storage
@@ -141,7 +159,7 @@ Entendendo a saída do comando: __`sudo lshw -class storage`__<br>
 
 ## 04_ Verificando as informações de Hard Disk e Partições do Ubuntu Server
 ```bash
-#verificando os detalhes de armazenamento de hard disk
+#verificando os detalhes de armazenamento de hard disk no Ubuntu Server
 #opção do comando lshw: -class (Only show the given class of hardware)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/lshw.1.html
 sudo lshw -class disk
@@ -174,7 +192,7 @@ Entendendo a saída do comando: __`sudo lshw -class disk`__<br>
 ---
 
 ```bash
-#verificando o UUID (Universally Unique Identifier) e o tipo de sistema de arquivos de cada dispositivo
+#verificando o UUID (Universally Unique Identifier) e o tipo de sistema de arquivos de cada dispositivo no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid
 ```
@@ -216,7 +234,7 @@ Entendendo a saída do comando: __`sudo blkid`__<br>
 ---
 
 ```bash
-#verificando as informações do kernel sobre as partições reconhecidas
+#verificando as informações do kernel sobre as partições reconhecidas no Ubuntu Server
 #opção do comando cat: -n (number lines)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man5/proc_partitions.5.html
@@ -237,7 +255,7 @@ Entendendo a saída do comando: __`sudo cat -n /proc/partitions`__<br>
 ---
 
 ```bash
-#verificando os dispositivos de bloco reconhecidos pelo sysfs (link físico/lógico)
+#verificando os dispositivos de bloco reconhecidos pelo sysfs (link físico/lógico) no Ubuntu Server
 #opção do comando ls: -l (Display detailed information), -h (Print human readable file sizes)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh /sys/block/
@@ -260,7 +278,7 @@ Entendendo a saída do comando: __`ls -lh /sys/block/`__<br>
 
 ## 05_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server
 ```bash
-#listando os discos e partições em formato de árvore
+#listando todos os discos e partições em formato de árvore no Ubuntu Server
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
 sudo lsblk -f
@@ -286,7 +304,7 @@ Entendendo a saída do comando: __`sudo lsblk -f`__<br>
 ---
 
 ```bash
-#listando as tabelas de partição de todos os discos
+#listando as tabelas de partição de todos os discos no Ubuntu Server
 #opção do comando fdisk: -l (List the partition tables for the specified devices and then exit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/fdisk.8.html
 sudo fdisk -l
@@ -326,7 +344,7 @@ Entendendo a saída do comando: __`sudo fdisk -l`__<br>
 ---
 
 ```bash
-#listando as tabelas de partição detalhadas de setor/alinhamento
+#listando as tabelas de partição detalhadas de setor/alinhamento no Ubuntu Server
 #opção do comando parted: -l (lists partition layout on all block devices)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/parted.8.html
 sudo parted -l
@@ -363,7 +381,7 @@ Entendendo a saída do comando: __`sudo parted -l`__<br>
 
 ## 06_ Verificando o Desempenho (Performance) dos Discos no Ubuntu Server
 ```bash
-#testando a velocidade de leitura em cache e em disco (bruto)
+#testando a velocidade de leitura em cache e em disco (bruto) no Ubuntu Server
 #opção do comando hdparm: -t (device readings), -T (cache readings)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
 sudo hdparm -Tt /dev/sda
@@ -390,7 +408,7 @@ Entendendo a saída do comando: __`sudo hdparm -Tt /dev/sdx`__<br>
 
 ## 07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server
 ```bash
-#verificando a saúde geral e informações completas do disco
+#verificando a saúde geral e informações completas dos discos no Ubuntu Server
 #opções do comando smartctl: -i (device identify)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
 sudo smartctl -i /dev/sda
@@ -424,7 +442,7 @@ Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 ---
 
 ```bash
-#verificando se existem setores defeituosos nos discos antes de montar o RAID (opcional, teste demorado)
+#verificando se existem setores defeituosos nos discos antes de montar o RAID (opcional, teste demorado) no Ubuntu Server
 #opções do comando badblocks: -s (show progress), -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/badblocks.8.html
 sudo badblocks -sv /dev/sdb
@@ -445,7 +463,7 @@ Entendendo a saída do comando: __`sudo badblocks -sv /dev/sdx`__<br>
 
 ## 08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server
 ```bash
-#verificando o espaço disponível/utilizado por partição montada
+#verificando o espaço disponível/utilizado por partição montada no Ubuntu Server
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
 sudo df -h
@@ -460,4 +478,16 @@ Entendendo a saída do comando: __`sudo df -h`__<br>
 | 📦 **Disponível** | **43 GB** | Espaço livre disponível para armazenamento. |
 | 📈 **Uso** | **6%** | Percentual de utilização do sistema de arquivos. |
 | 📍 **Ponto de Montagem** | `/` | Diretório raiz do sistema operacional. |
+---
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO HARD DISK A SEGUINTE FRASE: *Configuração do Hard Disk On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #hardisk #hardiskubuntu #hardiskuntuserver #hardiskuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/09-hardisk.png
+
 ---

@@ -6,13 +6,13 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 14/07/2026
-# Data de atualização: 14/07/2026
-# Versão: 0.01
+# Data de atualização: 10/09/2026
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
 # Testado e homologado para a versão do Chrony v4.8.x
 #
 # Bloco inicial das configurações dos Servidores de NTP do NTP.br
-#
+# Servidores de NTP | Sincronismo | Fonte de Hora | Habilitar NTS | Porta do NTS | Preferencia
 server a.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 server c.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 server e.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
