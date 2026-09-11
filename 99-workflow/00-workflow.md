@@ -13,7 +13,7 @@
 11. Configuração do Bonding                               OK
 12. Configuração do Backup                                OK
     https://github.com/marcpope/borgbackupserver
-13. Configuração do Monitoramento
+13. Configuração da Observabilidade
 ------------------------------------------------------------
 
 14. Configuração do Firewall UFW                          OK
