@@ -23,7 +23,7 @@
 >
 > #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #firewall #firewallubuntu #firewalluntuserver #firewalluntuserver2604
 >
-> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/15-firewall.png
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/18-firewall.png
 
 ---
 
@@ -570,6 +570,6 @@ sudo ufw status numbered
 >
 > #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #firewall #firewallubuntu #firewalluntuserver #firewalluntuserver2604
 >
-> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/15-firewall.png
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/18-firewall.png
 
 ---
