@@ -1,25 +1,41 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 28/07/2026<br>
-Data de atualização: 30/07/2026<br>
-Versão: 0.03<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
-Testado e homologado no Oracle VirtualBOX 7.x
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO BONDING A SEGUINTE FRASE: *Configuração do Bonding On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #bonding #bondingubuntu #bondinguntuserver #bondinguntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/13-bonding.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
+Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
+Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
+Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Netplan Bonding (Documentação Oficial): https://netplan.readthedocs.io/en/stable/netplan-yaml/#properties-for-device-type-bonds<br>
 Linux Bonding Driver (Kernel.org): https://www.kernel.org/doc/Documentation/networking/bonding.txt<br>
 Oracle VirtualBOX Networking (Documentação Oficial): https://www.virtualbox.org/manual/ch06.html
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Entendendo as limitações do Oracle VirtualBOX para o Bonding<br>
 #02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise<br>
 #03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage<br>
@@ -48,13 +64,13 @@ Link da vídeo aula:
 
 | **🎚️ Modo do Bonding** | **🔢 Número** | **✅ Funciona no VirtualBOX Bridge?** | **📖 Motivo** |
 | :---------------------- | :-----------: | :------------------------------------: | :------------- |
-| **active-backup** | mode 1 | ✅ **Recomendado** | Não depende de negociação externa, apenas monitora o Link (MII) das interfaces. |
-| **balance-rr** | mode 0 | ⚠️ Parcial (somente Testes) | Pode gerar reordenação de pacotes (*out-of-order*), pois o VirtualBOX não distribui os quadros como um Switch real faria. |
-| **balance-xor** | mode 2 | ❌ Não recomendado | Depende de um Switch com suporte a Balanceamento por Hash (Etherchannel estático), inexistente no VirtualBOX. |
-| **broadcast** | mode 3 | ⚠️ Parcial (somente Testes) | Envia o mesmo quadro pelas duas interfaces, gera tráfego duplicado desnecessário. |
-| **802.3ad (LACP)** | mode 4 | ❌ **Não funciona** | Exige negociação **LACPDU** com um Switch físico gerenciável, recurso que o VirtualBOX Bridge não simula. |
-| **balance-tlb** | mode 5 | ❌ Não recomendado | Depende do driver da placa de rede física do Host suportar o recurso, resultado inconsistente em ambiente virtualizado. |
-| **balance-alb** | mode 6 | ❌ Não recomendado | Utiliza **ARP Negotiation** para balancear o tráfego de entrada, o que gera instabilidade em redes Bridged do VirtualBOX. |
+| **active-backup** | `mode 1` | ✅ **Recomendado** | Não depende de negociação externa, apenas monitora o Link (MII) das interfaces. |
+| **balance-rr** | `mode 0` | ⚠️ Parcial (somente Testes) | Pode gerar reordenação de pacotes (*out-of-order*), pois o VirtualBOX não distribui os quadros como um Switch real faria. |
+| **balance-xor** | `mode 2` | ❌ Não recomendado | Depende de um Switch com suporte a Balanceamento por Hash (Etherchannel estático), inexistente no VirtualBOX. |
+| **broadcast** | `mode 3` | ⚠️ Parcial (somente Testes) | Envia o mesmo quadro pelas duas interfaces, gera tráfego duplicado desnecessário. |
+| **802.3ad (LACP)** | `mode 4` | ❌ **Não funciona** | Exige negociação **LACPDU** com um Switch físico gerenciável, recurso que o VirtualBOX Bridge não simula. |
+| **balance-tlb** | `mode 5` | ❌ Não recomendado | Depende do driver da placa de rede física do Host suportar o recurso, resultado inconsistente em ambiente virtualizado. |
+| **balance-alb** | `mode 6` | ❌ Não recomendado | Utiliza **ARP Negotiation** para balancear o tráfego de entrada, o que gera instabilidade em redes Bridged do VirtualBOX. |
 ---
 
 > **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de Produção On-Premises com Switches físicos gerenciáveis, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
@@ -62,10 +78,12 @@ Link da vídeo aula:
 ## 02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise
 
 ```bash
+#Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremise
 <Configurações>
     Expert
 
+#Adicionado mais uma Placa de Rede na Máquina Virtual do Ubuntu Server
 02) Rede
     Adaptador 1 (LAN)
       (ON) Habilitar Placa de Rede: (Habilitar)
@@ -86,7 +104,11 @@ Link da vídeo aula:
       Avançado
         Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
         Modo Promíscuo: Permitir Tudo (Allow All)
-<OK>
+    <OK>
+
+#Iniciando a Máquina Virtual do Ubuntu Server
+03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
+<Iniciar>
 ```
 
 ## 03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage
@@ -94,7 +116,7 @@ Link da vídeo aula:
 > **OBSERVAÇÃO IMPORTANTE:** o Modo Promíscuo também pode ser habilitado via linha de comando no Host (fora da Máquina Virtual), sendo útil para automação e Scripts de criação de Laboratório.
 
 ```bash
-#listando as Máquinas Virtuais cadastradas no Oracle VirtualBOX (executar no Host)
+#listando as Máquinas Virtuais cadastradas no Oracle VirtualBOX (executar no Host Hospedeiro)
 #opção do comando VBoxManage: list vms (List all registered virtual machines)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
 VBoxManage list vms
@@ -122,12 +144,12 @@ VBoxManage showvminfo "UbuntuOnPremise" | grep -i "NIC\|Promisc"
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 sudo lspci -v | grep -i ethernet
 
-#verificando os detalhes das duas Placas de Rede (Nome Lógico e Endereço MAC)
+#verificando os detalhes das duas Placas de Rede (Nome Lógico e Endereço MAC) no Ubuntu Server
 #opção do comando lshw: -class (Only show the given class of hardware)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/lshw.1.html
 sudo lshw -class network
 
-#verificando o Nome Lógico e o Endereço MAC de cada Interface de Rede
+#verificando o Nome Lógico e o Endereço MAC de cada Interface de Rede no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
@@ -155,17 +177,17 @@ echo "bonding" | sudo tee -a /etc/modules-load.d/bonding.conf
 ## 06_ Atualizando o arquivo de configuração do Netplan com Bonding no Ubuntu Server
 
 ```bash
-#listando o conteúdo do diretório de configuração do Netplan
+#listando o conteúdo do diretório de configuração do Netplan no Ubuntu Server
 #opção do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh /etc/netplan/
 
-#fazendo o backup do arquivo de configuração original do Netplan
+#fazendo o backup do arquivo de configuração original do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp00
 
-#download do arquivo de configuração do Netplan com Bonding
+#download do arquivo de configuração do Netplan com Bonding no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config-bond.yaml
@@ -231,10 +253,10 @@ network:
 ESC SHIFT :x <Enter>
 ```
 
-## 07_ Aplicando as configurações do Netplan e verificando a Interface bond0
+## 07_ Aplicando as configurações do Netplan e verificando a Interface bond0 no Ubuntu Server
 
 ```bash
-#fazendo o backup do arquivo de configuração modificado do Netplan
+#fazendo o backup do arquivo de configuração modificado do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
@@ -244,18 +266,18 @@ sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-confi
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug get
 
-#validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado)
+#validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug generate
 
-#testando a configuração com possibilidade de reversão do Netplan em modo Debug (detalhado)
+#testando a configuração com possibilidade de reversão do Netplan em modo Debug (detalhado) no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: a opção try reverte automaticamente a configuração caso ocorra falha
 #opções do comando netplan: --debug (enable debug messages), try (try to apply a new netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug try
 
-#aplicando as mudanças definitivas do Netplan em modo Debug (detalhado)
+#aplicando as mudanças definitivas do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug apply
@@ -265,12 +287,12 @@ sudo netplan --debug apply
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
 
-#verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas
+#verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
 
-#verificando o status detalhado do Bonding (Interface Ativa, Escravas e Modo de Operação)
+#verificando o status detalhado do Bonding (Interface Ativa, Escravas e Modo de Operação) no Ubuntu Server
 #opção do comando cat: /proc/net/bonding/bond0 (arquivo virtual do Kernel com o status do Bonding)
 #mais informações acesse a documentação oficial em: https://www.kernel.org/doc/Documentation/networking/bonding.txt
 sudo cat -n /proc/net/bonding/bond0
@@ -290,27 +312,27 @@ Entendendo a saída do arquivo: __`/proc/net/bonding/bond0`__<br>
 ## 08_ Testando a Redundância (Failover) do Bonding no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** para simular a falha de um Link físico no Oracle VirtualBOX, você pode Desabilitar o Adaptador de Rede diretamente na tela: __`Dispositivos > Rede > Desconectar Cabo de Rede`__ da Máquina Virtual em execução, ou utilizar o comando abaixo diretamente no Host.
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** durante o teste de Failover, o campo __`Currently Active Slave`__ do arquivo `/proc/net/bonding/bond0` deve mudar automaticamente de `enp0s3` para `enp0s8`, confirmando que a Redundância do Bonding está funcionando corretamente, mesmo em ambiente virtualizado no Oracle VirtualBOX.
 
 
 ```bash
-#simulando a falha de um Link de Rede desconectando o Cabo Virtual do Adaptador (executar no Host)
+#simulando a falha de um Link de Rede desconectando o Cabo Virtual do Adaptador (executar no Host Hospedeiro)
 #opção do comando VBoxManage: controlvm setlinkstateN (Sets the link state)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
 VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 off
 
-#verificando dentro do Ubuntu Server se o Bonding assumiu a interface escrava (enp0s8)
+#verificando dentro do Ubuntu Server se o Bonding assumiu a interface escrava (enp0s8) no Ubuntu Server
 #opção do comando watch: -n (Specify  update  interval), 1 (second)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/watch
 sudo watch -n 1 /proc/net/bonding/bond0
 
-#verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas
+#verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show bond0
 
-#reconectando o Cabo Virtual do Adaptador para restaurar a interface Primária (executar no Host)
+#reconectando o Cabo Virtual do Adaptador para restaurar a interface Primária (executar no Host Hospedeiro)
 #opção do comando VBoxManage: controlvm setlinkstateN (Sets the link state)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
 VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 on
@@ -320,3 +342,15 @@ VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 on
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u systemd-networkd
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO BONDING A SEGUINTE FRASE: *Configuração do Bonding On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #bonding #bondingubuntu #bondinguntuserver #bondinguntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/12-bonding.png
+
+---

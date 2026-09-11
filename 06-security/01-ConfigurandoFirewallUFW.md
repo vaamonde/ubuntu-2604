@@ -1,27 +1,63 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 30/07/2026<br>
-Data de atualização: 08/09/2026<br>
-Versão: 0.02<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
-Testado e homologado no Oracle VirtualBOX 7.x
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO FIREWALL UFW A SEGUINTE FRASE: *Configuração do Firewall UFW On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #firewall #firewallubuntu #firewalluntuserver #firewalluntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/15-firewall.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
+Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
+Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
+Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Site Oficial Wiki do Ubuntu UFW: https://help.ubuntu.com/community/UFW<br>
 Site Oficial do Descomplicando o Ubuntu UFW: https://wiki.ubuntu.com/UncomplicatedFirewall<br>
 Site Oficial do Debian UFW: https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29<br>
 Site Oficial do IPTables: http://git.netfilter.org/iptables/<br>
 Site Oficial do NFTables: https://wiki.nftables.org/
 
-Conteúdo estudado nessa implementação:<br>
+**Conteúdo estudado nessa configuração:**<br>
+#01_ Verificando qual o Sistema de Firewall padrão do Ubuntu Server<br>
+#02_ Verificando a Versão e Status do Firewall UFW no Ubuntu Server<br>
+#03_ Habilitando (ENABLE) o Firewall UFW no Ubuntu Server<br>
+#04_ Verificando o Serviço do UFW no Ubuntu Server<br>
+#05_ Localização dos Arquivos e Diretório de Configuração do UFW no Ubuntu Server<br>
+#06_ Verificando as Regras (RULES) de Entrada (INCOMING) e Saída (OUTGOING) padrão do UFW no Ubuntu Server<br>
+#07_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Entrada (INCOMING) do UFW no Ubuntu Server<br>
+#08_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Saída (OUTGOING) do UFW no Ubuntu Server<br>
+#09_ Configurando o Nível de Log (LOGGING) do UFW no Ubuntu Server<br>
+#10_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server<br>
+#11_ Liberando (ALLOW) a Entrada (INCOMING) e Saída (OUTGOING) da Interface de Loopback do UFW no Ubuntu Server<br>
+#12_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server<br>
+#13_ Liberando (ALLOW) a Saída (OUTGOING) do Protocolo ICMP (IPv4/IPv6) do UFW no Ubuntu Server<br>
+#14_ Liberando (ALLOW) a Entrada (INCOMING) Básica (SSH) do UFW no Ubuntu Server<br>
+#15_ Removendo (DELETE) Regras (RULES) de firewall do UFW no Ubuntu Server<br>
+#16_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server<br>
+#17_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server<br>
+#18_ Limitando (LIMIT) uma Conexão de Entrada (INCOMING) do UFW no Ubuntu Server (Proteção Anti Brute-Force)<br>
+#19_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server<br>
+#20_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -260,9 +296,9 @@ ping6 ::1
 ## 12_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** ao utilizar a opção: `comment` (comentário) do UFW é recomendado não utilizar acentuação e sempre dentro de Aspas Simples (não crase).
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** o UFW segue a ordem: Primeira Regra Correspondente (de cima para baixo) → Ação da Regra (allow, deny, reject) → Regras Subsequentes (continua se não encontrar) → Regra Padrão (default). A prioridade de processamento é: Regras de Porta Específica (maior) → Regras de Protocolo e Porta → Regras de Aplicação de Serviço → Regras de Sub-rede → Regras de Interface → Regras de App Profile (menor).
 
 ```bash
@@ -342,9 +378,9 @@ ping google.com
 ## 14_ Liberando (ALLOW) a Entrada (INCOMING) Básica (SSH) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** mesmo com o Log do UFW habilitado (item #09), nem todos os eventos são registrados em `/var/log/ufw.log` por padrão, adicione a opção: `log` (LOGAR) ou `log-all` (LOGAR TUDO) nas regras críticas, como o SSH, para ter rastreabilidade completa das tentativas de acesso.
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** essa é a regra **mais crítica** da Blindagem Full: sem ela, você perde o acesso remoto ao servidor. Nunca aplique o `deny incoming` (item #07) sem antes garantir essa liberação, de preferência via `ufw insert` (item #23) na primeira posição.
 
 ```bash
@@ -366,7 +402,7 @@ nc -v 172.16.1.20 22
 ssh vaamonde@172.16.1.20
 ```
 
-## 16_ Removendo (DELETE) Regras (RULES) de firewall do UFW no Ubuntu Server
+## 15_ Removendo (DELETE) Regras (RULES) de firewall do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** você pode remover as regras do UFW de duas formas: pela sintaxe completa da regra criada, exemplo: `sudo ufw delete out 53/udp`, ou utilizando o número da regra, que é mais simples (ver item #06 e #23 para localizar o número).
 
@@ -386,7 +422,7 @@ sudo ufw delete 9
 sudo ufw status numbered
 ```
 
-## 17_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
+## 16_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
 ```bash
 #reiniciando as regras de firewall do UFW
 #opção do comando ufw: reload (reloads firewall rules)
@@ -397,7 +433,7 @@ sudo ufw reload
 sudo ufw status verbose
 ```
 
-## 18_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
+## 17_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
 ```bash
 #listando o conteúdo do arquivo de Log do UFW
 #opção do comando cat: -n (number line)
@@ -432,7 +468,7 @@ Entendendo os campos do Log do UFW:<br>
 sudo tail -f /var/log/ufw.log
 ```
 
-## 21_ Limitando (LIMIT) uma Conexão de Entrada (INCOMING) do UFW no Ubuntu Server (Proteção Anti Brute-Force)
+## 18_ Limitando (LIMIT) uma Conexão de Entrada (INCOMING) do UFW no Ubuntu Server (Proteção Anti Brute-Force)
 
 > **OBSERVAÇÃO IMPORTANTE:** com essa opção, o UFW passa a Negar conexões de um Endereço IPv4/IPv6 que tentar iniciar **6 (seis) ou mais** conexões simultâneas nos últimos **30 (trinta) segundos**. É muito útil para o serviço do OpenSSH, protegendo o servidor contra ataques de Força Bruta (Brute Force), como uma **primeira camada** de defesa antes da implementação do **Fail2Ban** (próximo capítulo do curso). Para alterar os limites internos do UFW é necessário editar os arquivos: `/etc/ufw/user.rules` ou `/etc/ufw/user6.rules`, e depois digitar o comando: `sudo ufw reload`.
 
@@ -478,7 +514,7 @@ sudo cat -n /var/log/ufw.log | grep -i dpt=22
 ```
 
 
-## 24_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
+## 19_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
 ```bash
 #relatório detalhado em RAW (Raw Data)
 sudo ufw show raw
@@ -505,7 +541,7 @@ sudo ufw show listening
 sudo ufw show added
 ```
 
-## 25_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server
+## 20_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** se você desabilitar o firewall UFW, as regras já criadas **NÃO** são perdidas, apenas deixam de ser aplicadas.
 
@@ -526,3 +562,14 @@ sudo ufw enable
 sudo ufw status numbered
 ```
 
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO FIREWALL UFW A SEGUINTE FRASE: *Configuração do Firewall UFW On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #firewall #firewallubuntu #firewalluntuserver #firewalluntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/15-firewall.png
+
+---

@@ -64,7 +64,7 @@ Link da vídeo aula:
 <Configurações>
     Expert
 
-#Adicionando um Hard Disk na Máquina Virtual do Ubuntu Server
+#Adicionando dois Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
     Dispositivos
       Controladora: SATA
@@ -81,6 +81,8 @@ Link da vídeo aula:
         raid-01.vdi <Escolher>
         raid-02.vdi <Escolher>
     <OK>
+
+#Iniciando a Máquina Virtual do Ubuntu Server
 03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
 <Iniciar>
 ```
@@ -165,7 +167,7 @@ Entendendo a saída do comando: __`sudo lshw -class storage`__<br>
 sudo lshw -class disk
 ```
 
-Entendendo a saída do comando: __`sudo lshw -class disk`__<br>
+Entendendo a saída do comando: __`lshw -class disk`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💾 **Quantidade de Discos** | `3` | O sistema possui três discos rígidos virtuais reconhecidos pelo kernel Linux. |
@@ -197,7 +199,7 @@ Entendendo a saída do comando: __`sudo lshw -class disk`__<br>
 sudo blkid
 ```
 
-Entendendo a saída do comando: __`sudo blkid`__<br>
+Entendendo a saída do comando: __`blkid`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Dispositivo** | `/dev/sda1` | Primeira partição do disco principal. Normalmente utilizada para a partição de **BIOS Boot** em sistemas com tabela GPT e inicialização em modo Legacy BIOS. Possui apenas **PARTUUID**, pois não contém sistema de arquivos. |
@@ -241,7 +243,7 @@ Entendendo a saída do comando: __`sudo blkid`__<br>
 sudo cat -n /proc/partitions
 ```
 
-Entendendo a saída do comando: __`sudo cat -n /proc/partitions`__<br>
+Entendendo a saída do comando: __`/proc/partitions`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📄 **Arquivo** | `/proc/partitions` | Arquivo virtual do sistema **procfs** que exibe todos os dispositivos de bloco (Block Devices) reconhecidos pelo kernel Linux, incluindo discos, partições, dispositivos LVM, CD/DVD e dispositivos Loop. |
@@ -261,7 +263,7 @@ Entendendo a saída do comando: __`sudo cat -n /proc/partitions`__<br>
 ls -lh /sys/block/
 ```
 
-Entendendo a saída do comando: __`ls -lh /sys/block/`__<br>
+Entendendo a saída do comando: __`/sys/block/`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📂 **Diretório** | `/sys/block/` | Diretório do **SysFS** que contém os dispositivos de bloco reconhecidos pelo kernel Linux. Cada item é um link simbólico para o dispositivo correspondente na árvore de hardware do sistema. |
@@ -284,7 +286,7 @@ Entendendo a saída do comando: __`ls -lh /sys/block/`__<br>
 sudo lsblk -f
 ```
 
-Entendendo a saída do comando: __`sudo lsblk -f`__<br>
+Entendendo a saída do comando: __`lsblk -f`__<br>
 | **Dispositivo** | **Sistema de Arquivos** | **UUID** | **Montagem** | **Descrição** |
 | :-------------- | :---------------------- | :------- | :----------- | :------------ |
 | 🔄 `loop0` | `squashfs 4.0` | — | `/snap/canonical-livepatch/406` | Pacote Snap do **Canonical Livepatch** montado em modo somente leitura. |
@@ -310,7 +312,7 @@ Entendendo a saída do comando: __`sudo lsblk -f`__<br>
 sudo fdisk -l
 ```
 
-Entendendo a saída do comando: __`sudo fdisk -l`__<br>
+Entendendo a saída do comando: __`fdisk -l`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco Principal** | `/dev/sda` | Disco principal onde está instalado o Ubuntu Server 26.04 LTS. |
@@ -350,7 +352,7 @@ Entendendo a saída do comando: __`sudo fdisk -l`__<br>
 sudo parted -l
 ```
 
-Entendendo a saída do comando: __`sudo parted -l`__<br>
+Entendendo a saída do comando: __`parted -l`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco Principal** | `/dev/sda` | Disco principal onde está instalado o Ubuntu Server 26.04 LTS. |
@@ -384,12 +386,18 @@ Entendendo a saída do comando: __`sudo parted -l`__<br>
 #testando a velocidade de leitura em cache e em disco (bruto) no Ubuntu Server
 #opção do comando hdparm: -t (device readings), -T (cache readings)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
+
+#verificando o desempenho do Hard Disk SDA (Instalação do Ubuntu Server)
 sudo hdparm -Tt /dev/sda
+
+#verificando o desempenho do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo hdparm -Tt /dev/sdb
+
+#verificando o desempenho do Hard Disk SDC (segundo Disco do RAID-1)
 sudo hdparm -Tt /dev/sdc
 ```
 
-Entendendo a saída do comando: __`sudo hdparm -Tt /dev/sdx`__<br>
+Entendendo a saída do comando: __`hdparm -Tt /dev/sdx`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Comando** | `hdparm -Tt /dev/sdX` | Realiza um teste simples de desempenho dos dispositivos de armazenamento, medindo a velocidade de leitura da memória cache e do disco. |
@@ -411,12 +419,18 @@ Entendendo a saída do comando: __`sudo hdparm -Tt /dev/sdx`__<br>
 #verificando a saúde geral e informações completas dos discos no Ubuntu Server
 #opções do comando smartctl: -i (device identify)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
+
+#verificando a saúde do Hard Disk SDA (Instalação do Ubuntu Server)
 sudo smartctl -i /dev/sda
+
+#verificando o saúde do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo smartctl -i /dev/sdb
+
+#verificando o saúde do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo smartctl -i /dev/sdc
 ```
 
-Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
+Entendendo a saída do comando: __`smartctl -i /dev/sdx`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Comando** | `smartctl -i /dev/sdX` | Exibe as informações básicas de identificação do dispositivo e verifica se há suporte à tecnologia **S.M.A.R.T.** |
@@ -427,7 +441,7 @@ Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 | ⚠️ **Suporte ao SMART** | `Unavailable` | Os discos virtuais do VirtualBox não implementam a tecnologia SMART para monitoramento de saúde do hardware. |
 ---
 
-Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
+Entendendo a saída do comando: __`smartctl -i /dev/sdx`__<br>
 | **Campo** | **/dev/sda** | **/dev/sdb** | **/dev/sdc** | **Descrição** |
 | :-------- | :----------: | :----------: | :----------: | :------------ |
 | 💽 **Dispositivo** | `/dev/sda` | `/dev/sdb` | `/dev/sdc` | Nome do dispositivo de bloco reconhecido pelo kernel Linux. |
@@ -445,11 +459,15 @@ Entendendo a saída do comando: __`sudo smartctl -i /dev/sdx`__<br>
 #verificando se existem setores defeituosos nos discos antes de montar o RAID (opcional, teste demorado) no Ubuntu Server
 #opções do comando badblocks: -s (show progress), -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/badblocks.8.html
+
+#verificando setores defeituosos do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo badblocks -sv /dev/sdb
+
+#verificando setores defeituosos do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo badblocks -sv /dev/sdc
 ```
 
-Entendendo a saída do comando: __`sudo badblocks -sv /dev/sdx`__<br>
+Entendendo a saída do comando: __`badblocks -sv /dev/sdx`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🛡️ **Modo de Teste** | `Read-Only` | Realiza somente leitura dos blocos, sem modificar ou apagar dados existentes no disco. |

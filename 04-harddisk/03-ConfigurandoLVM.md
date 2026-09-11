@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 25/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO LVM A SEGUINTE FRASE: *Configuração do LVM On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #lvm #lvmubuntu #lvmuntuserver #lvm1untuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/11-lvm.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server<br>
 #02_ Instalando os principais software de LVM no Ubuntu Server<br>
 #03_ Verificando a versão do Sistema de LVM do Ubuntu Server<br>
@@ -57,23 +71,22 @@ Link da vídeo aula:
 
 ## 01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server
 ```bash
-#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM no Array do RAID-1
+#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM no Array do RAID-1 no Ubuntu Server
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -n /dev/md0
-```
-```bash
-#removendo todas as assinaturas de sistema de arquivos, RAID ou LVM no Array do RAID-1
+
+#removendo todas as assinaturas de sistema de arquivos, RAID ou LVM no Array do RAID-1 no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -a /dev/md0
 
-#verificando o estado atual do Array do RAID-1 antes de iniciar a configuração do LVM
+#verificando o estado atual do Array do RAID-1 antes de iniciar a configuração do LVM no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat /proc/mdstat
 ```
 
-Entendendo a saída do comando: __`sudo cat /proc/mdstat`__<br>
+Entendendo a saída do comando: __`/proc/mdstat`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🛡️ **Personalities** | `[raid1]` | Tipo de RAID suportado e atualmente carregado pelo kernel Linux. |
@@ -143,7 +156,7 @@ sudo pvcreate /dev/md0
 sudo pvs
 ```
 
-Entendendo a saída do comando: __`sudo pvs`__<br>
+Entendendo a saída do comando: __`pvs`__<br>
 | **Campo** | **/dev/md0** | **/dev/sda3** | **Descrição** |
 | :-------- | :----------- | :------------ | :------------ |
 | 💽 **Physical Volume (PV)** | `/dev/md0` | `/dev/sda3` | Dispositivo físico utilizado pelo LVM como Volume Físico. |
@@ -161,7 +174,7 @@ Entendendo a saída do comando: __`sudo pvs`__<br>
 sudo pvdisplay /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo pvdisplay /dev/md0`__<br>
+Entendendo a saída do comando: __`pvdisplay /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **PV Name** | `/dev/md0` | Nome do Physical Volume reconhecido pelo LVM. |
@@ -189,7 +202,7 @@ sudo vgcreate vg_dados /dev/md0
 sudo vgs
 ```
 
-Entendendo a saída do comando: __`sudo vgs`__<br>
+Entendendo a saída do comando: __`vgs`__<br>
 | **Campo** | **ubuntu-vg** | **vg_dados** | **Descrição** |
 | :-------- | :------------ | :----------- | :------------ |
 | 🏷️ **Volume Group (VG)** | `ubuntu-vg` | `vg_dados` | Nome do Grupo de Volumes. |
@@ -208,7 +221,7 @@ Entendendo a saída do comando: __`sudo vgs`__<br>
 sudo vgdisplay vg_dados
 ```
 
-Entendendo a saída do comando: __`sudo vgdisplay vg_dados`__<br>
+Entendendo a saída do comando: __`vgdisplay vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🏷️ **VG Name** | `vg_dados` | Nome do Volume Group. |
@@ -231,7 +244,7 @@ Entendendo a saída do comando: __`sudo vgdisplay vg_dados`__<br>
 
 ## 06_ Criando o Logical Volume (LV) no Ubuntu Server
 ```bash
-#criando o Logical Volume (LV) com tamanho fixo de 20 GiB dentro do Volume Group vg_dados
+#criando o Logical Volume (LV) com tamanho fixo de 20 GiB dentro do Volume Group vg_dados no Ubuntu Server
 #opções do comando lvcreate: -L (Specify the size directly), -n (Set the name)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvcreate.8.html
 sudo lvcreate -L 20G -n lv_dados vg_dados
@@ -243,7 +256,7 @@ sudo lvcreate -L 20G -n lv_dados vg_dados
 sudo lvs
 ```
 
-Entendendo a saída do comando: __`sudo lvs`__<br>
+Entendendo a saída do comando: __`lvs`__<br>
 | **Campo** | **lv-root** | **lv-swap** | **lv-home** | **lv-tmp** | **lv-var** | **lv_dados** | **Descrição** |
 | :-------- | :---------- | :---------- | :---------- | :--------- | :--------- | :----------- | :------------ |
 | 📂 **Logical Volume (LV)** | `lv-root` | `lv-swap` | `lv-home` | `lv-tmp` | `lv-var` | `lv_dados` | Nome do Logical Volume. |
@@ -267,7 +280,7 @@ Entendendo a saída do comando: __`sudo lvs`__<br>
 sudo lvdisplay /dev/vg_dados/lv_dados
 ```
 
-Entendendo a saída do comando: __`sudo lvdisplay /dev/vg_dados/lv_dados`__<br>
+Entendendo a saída do comando: __`lvdisplay /dev/vg_dados/lv_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📁 **LV Path** | `/dev/vg_dados/lv_dados` | Caminho completo do dispositivo lógico utilizado pelo sistema operacional. |
@@ -296,7 +309,7 @@ Entendendo a saída do comando: __`sudo lvdisplay /dev/vg_dados/lv_dados`__<br>
 sudo mkfs.ext4 /dev/vg_dados/lv_dados
 ```
 
-Entendendo a saída do comando: __`sudo mkfs.ext4 /dev/vg_dados/lv_dados`__<br>
+Entendendo a saída do comando: __`mkfs.ext4 /dev/vg_dados/lv_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📦 **Filesystem Blocks** | `5242880` | Quantidade total de blocos de dados criados no sistema de arquivos. |
@@ -317,12 +330,12 @@ Entendendo a saída do comando: __`sudo mkfs.ext4 /dev/vg_dados/lv_dados`__<br>
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 sudo mkdir -pv /dados
 
-#verificando o UUID do sistema de arquivos criado no Logical Volume
+#verificando o UUID do sistema de arquivos criado no Logical Volume no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid /dev/vg_dados/lv_dados
 ```
 
-Entendendo a saída do comando: __`sudo blkid /dev/vg_dados/lv_dados`__<br>
+Entendendo a saída do comando: __`blkid /dev/vg_dados/lv_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📁 **Dispositivo** | `/dev/vg_dados/lv_dados` | Caminho do Logical Volume onde o sistema de arquivos está armazenado. |
@@ -332,7 +345,7 @@ Entendendo a saída do comando: __`sudo blkid /dev/vg_dados/lv_dados`__<br>
 ---
 
 ```bash
-#fazendo o backup do arquivo de configuração original do Fstab
+#fazendo o backup do arquivo de configuração original do Fstab no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/fstab /etc/fstab.old
@@ -366,7 +379,7 @@ sudo systemctl daemon-reload
 sudo mount -va
 ```
 
-Entendendo a saída do comando: __`sudo mount -va`__<br>
+Entendendo a saída do comando: __`mount -va`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🚫 **none** | `ignored` | Entrada especial do `/etc/fstab` que não representa um sistema de arquivos físico. Foi ignorada durante o processamento. |
@@ -385,7 +398,7 @@ Entendendo a saída do comando: __`sudo mount -va`__<br>
 sudo df -h /dados
 ```
 
-Entendendo a saída do comando: __`sudo df -h /dados`__<br>
+Entendendo a saída do comando: __`df -h /dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Logical Volume criado no Volume Group `vg_dados`, formatado com o sistema de arquivos EXT4 e montado em `/dados`. |
@@ -423,7 +436,7 @@ sudo cat -n /etc/lvm/backup/vg_dados
 sudo pvdisplay -m /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo pvdisplay -m /dev/md0`__<br>
+Entendendo a saída do comando: __`pvdisplay -m /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📀 **PV Name** | `/dev/md0` | Nome do Physical Volume utilizado pelo LVM. |
@@ -456,13 +469,13 @@ Entendendo a saída do comando: __`sudo pvdisplay -m /dev/md0`__<br>
 ---
 
 ```bash
-#verificando de forma resumida a relação entre PE Total, PE Alocado e PE Livre no Volume Group
+#verificando de forma resumida a relação entre PE Total, PE Alocado e PE Livre no Volume Group no Ubuntu Server
 #opções do comando vgs: -o (Select columns for output), +free (adiciona a coluna de espaço livre)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgs.8.html
 sudo vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size vg_dados
 ```
 
-Entendendo a saída do comando: __`sudo vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size vg_dados`__<br>
+Entendendo a saída do comando: __`vgs -o vg_name,vg_extent_count,vg_free_count,vg_extent_size vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📦 **VG Name** | `vg_dados` | Volume Group criado sobre o dispositivo RAID-1 (`/dev/md0`) destinado ao armazenamento de dados. |
@@ -474,18 +487,18 @@ Entendendo a saída do comando: __`sudo vgs -o vg_name,vg_extent_count,vg_free_c
 ## 10_ Redimensionando o Volume Group e o Logical Volume no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** essa é a principal vantagem do LVM sobre o particionamento tradicional: é possível **adicionar um novo Physical Volume ao Volume Group** e **expandir o Logical Volume e o sistema de arquivos**, tudo isso **sem desligar o servidor** (Hot Resize).
-
+>
 > **OBSERVAÇÃO IMPORTANTE:** a opção `-r` do `lvextend` já executa o `resize2fs` automaticamente para sistemas de arquivos **ext4**. Caso prefira executar manualmente (ou em sistemas de arquivos onde o `-r` não é suportado), utilize: __`sudo resize2fs /dev/vg_dados/lv_dados`__ logo após o `lvextend`.
 
 ```bash
-#expandindo o Logical Volume utilizando mais 10 GiB do espaço livre do Volume Group
+#expandindo o Logical Volume utilizando mais 10 GiB do espaço livre do Volume Group no Ubuntu Server
 #opções do comando lvextend: -L (Specify the size directly), +10G (adiciona 10 GiB ao tamanho atual)
 #-r (Resize the underlying filesystem together with the logical volume using fsadm)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvextend.8.html
 sudo lvextend -L +10G -r /dev/vg_dados/lv_dados
 ```
 
-Entendendo a saída do comando: __`sudo lvextend -L +10G -r /dev/vg_dados/lv_dados`__<br>
+Entendendo a saída do comando: __`lvextend -L +10G -r /dev/vg_dados/lv_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📂 **Sistema de Arquivos Detectado** | `ext4` | O LVM identificou que o Logical Volume utiliza o sistema de arquivos EXT4. |
@@ -520,7 +533,7 @@ Entendendo a saída do comando: __`sudo lvextend -L +10G -r /dev/vg_dados/lv_dad
 sudo df -h /dados
 ```
 
-Entendendo a saída do comando: __`sudo df -h /dados`__<br>
+Entendendo a saída do comando: __`df -h /dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Logical Volume criado no Volume Group `vg_dados`, formatado com o sistema de arquivos EXT4 e montado em `/dados`. |
@@ -538,7 +551,7 @@ Entendendo a saída do comando: __`sudo df -h /dados`__<br>
 sudo lvs vg_dados
 ```
 
-Entendendo a saída do comando: __`sudo lvs vg_dados`__<br>
+Entendendo a saída do comando: __`lvs vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📦 **LV (Logical Volume)** | `lv_dados` | Nome do Logical Volume criado para armazenamento de dados. |
@@ -569,7 +582,7 @@ sudo lvcreate -s -L 5G -n lv_dados_snap /dev/vg_dados/lv_dados
 sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent vg_dados
 ```
 
-Entendendo a saída do comando: __`sudo lvs -o lv_name,vg_name,lv_size,origin,data_percent vg_dados`__<br>
+Entendendo a saída do comando: __`lvs -o lv_name,vg_name,lv_size,origin,data_percent vg_dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🏷️ **LV** | `lv_dados_snap` | Nome do Logical Volume de Snapshot criado. |
@@ -598,7 +611,7 @@ sudo lvremove /dev/vg_dados/lv_dados_snap
 sudo journalctl -k | grep -i 'device-mapper\|lvm'
 ```
 
-Entendendo a saída do comando: __`sudo journalctl -k | grep -i 'device-mapper\|lvm'`__<br>
+Entendendo a saída do comando: __`journalctl -k | grep -i 'device-mapper\|lvm'`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🖥️ **Origem** | `kernel` | Mensagens geradas diretamente pelo **Kernel Linux**, responsável pelo subsistema **Device Mapper**, base de funcionamento do LVM. |
@@ -614,7 +627,7 @@ Entendendo a saída do comando: __`sudo journalctl -k | grep -i 'device-mapper\|
 sudo journalctl | grep -i lvm
 ```
 
-Entendendo a saída do comando: __`sudo journalctl | grep -i lvm`__<br>
+Entendendo a saída do comando: __`journalctl | grep -i lvm`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📄 **Arquivo** | `/var/log/syslog` | Arquivo de Log padrão do sistema operacional, responsável por registrar mensagens de diversos serviços, incluindo o **lvm2-monitor**. |
@@ -622,4 +635,16 @@ Entendendo a saída do comando: __`sudo journalctl | grep -i lvm`__<br>
 | 🏷️ **Serviço (Origem)** | `lvm[PID]:` | Identifica que a mensagem foi gerada pelo daemon de monitoramento do **LVM** (`lvm2-monitor`). |
 | ✅ **Alerta de Criação** | `vg_dados/lv_dados created` | Confirma no Log a criação de um novo Logical Volume dentro do Volume Group. |
 | ⚠️ **Alerta de Snapshot** | `Snapshot vg_dados/lv_dados_snap is nn% full` | Alerta gerado quando um Snapshot se aproxima do limite de espaço reservado (Copy-on-Write), podendo ser invalidado se atingir 100%. |
+---
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO LVM A SEGUINTE FRASE: *Configuração do LVM On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #lvm #lvmubuntu #lvmuntuserver #lvm1untuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/11-lvm.png
+
 ---

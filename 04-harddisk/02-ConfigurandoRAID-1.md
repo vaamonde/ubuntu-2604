@@ -1,24 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 06/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.05<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO RAID-1 A SEGUINTE FRASE: *Configuração do RAID-1 On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #raid1 #raid1ubuntu #raid1untuserver #raid1untuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/10-raid1.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server<br>
 #02_ Verificando a versão do Sistema de RAID-1 do Ubuntu Server<br>
 #03_ Criando a Tabela e Partição GPT dos Discos para a Configuração do RAID-1 no Ubuntu Server<br>
@@ -74,20 +88,28 @@ Link da vídeo aula:
 
 ## 01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server
 ```bash
-#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM nos discos novos
+#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
+
+#verificando as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo wipefs -n /dev/sdb
+
+#verificando as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo wipefs -n /dev/sdc
 ```
 
 > **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no VirtualBOX normalmente não retornam nada, só execute o comando abaixo se o dry-run acima detectar alguma assinatura residual
 
 ```bash
-#removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos
+#removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
+
+#removendo as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo wipefs -a /dev/sdb
+
+#removendo as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo wipefs -a /dev/sdc
 ```
 
@@ -96,17 +118,21 @@ sudo wipefs -a /dev/sdc
 > **OBSERVAÇÃO IMPORTANTE:** Por que sempre é necessário verificar a versão do serviço de rede que você está implementando ou configurando no Servidor Ubuntu Server, devido as famosas falhas de segurança chamadas de: *CVE (Common Vulnerabilities and Exposures)*, com base na versão utilizada podemos pesquisar no site do **Ubuntu Security CVE Reports:** https://ubuntu.com/security/cves as falhas de segurança encontradas e corrigidas da versão do nosso aplicativo, o que ela afeta, se foi corrigida e como aplicar a correção.
 
 ```bash
-#verificando a versão do sistema de gerenciamento de dispositivos RAID
+#verificando a versão do sistema de gerenciamento de dispositivos RAID-1 no Ubuntu Server
 #opção do comando mdadm: --version (Print version information for mdadm)
 sudo mdadm --version
 ```
 
 ## 03_ Criando a Tabela e Partição GPT dos Discos para a Configuração do RAID-1 no Ubuntu Server
 ```bash
-#verificando as tabelas de partições GPT dos Discos do RAID-1
+#verificando as tabelas de partições GPT dos Discos do RAID-1 no Ubuntu Server
 #opção do comando gdisk: -l (list known partition types)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
+
+#verificado as tabelas GPT do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo gdisk -l /dev/sdb
+
+#verificado as tabelas GPT do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo gdisk -l /dev/sdc
 ```
 ```bash
@@ -194,7 +220,7 @@ sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev
 sudo blkid | grep -i 'sdb\|sdc'
 ```
 
-Entendendo a saída do comando: __`sudo blkid | grep -i 'sdb\|sdc'`__<br>
+Entendendo a saída do comando: __`blkid | grep -i 'sdb\|sdc'`__<br>
 | **Campo** | **/dev/sdb1** | **/dev/sdc1** | **Descrição** |
 | :-------- | :------------ | :------------ | :------------ |
 | 💽 **Dispositivo** | `/dev/sdb1` | `/dev/sdc1` | Partições utilizadas como membros do RAID-1. |
@@ -215,7 +241,7 @@ Entendendo a saída do comando: __`sudo blkid | grep -i 'sdb\|sdc'`__<br>
 sudo lsblk -f | grep -i 'sdb\|sdc\|md'
 ```
 
-Entendendo a saída do comando: __`sudo lsblk -f | grep -i 'sdb\|sdc\|md'`__<br>
+Entendendo a saída do comando: __`lsblk -f | grep -i 'sdb\|sdc\|md'`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco Físico 2** | `/dev/sdb e /dev/sdc` | Primeiro e Segundo discos físicos participantes do RAID-1. |
@@ -234,7 +260,7 @@ Entendendo a saída do comando: __`sudo lsblk -f | grep -i 'sdb\|sdc\|md'`__<br>
 sudo cat /proc/mdstat
 ```
 
-Entendendo a saída do comando: __`sudo cat /proc/mdstat`__<br>
+Entendendo a saída do comando: __`/proc/mdstat`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🛡️ **Personalities** | `[raid1]` | Tipo de RAID suportado e atualmente carregado pelo kernel Linux. |
@@ -260,7 +286,7 @@ Entendendo a saída do comando: __`sudo cat /proc/mdstat`__<br>
 sudo mdadm --detail /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__<br>
+Entendendo a saída do comando: __`mdadm --detail /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🛡️ **Dispositivo RAID** | `/dev/md0` | Dispositivo lógico criado pelo `mdadm` que representa o array RAID-1. |
@@ -291,11 +317,15 @@ Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__<br>
 #examinando os discos do Array do RAID-1 no Ubuntu Server
 #opções do comando mdadm: --examine (Print contents of the metadata stored on the named device(s))
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
+
+#examinando o disco do Array do RAID-1 do Disco SDB
 sudo mdadm --examine /dev/sdb1
+
+#examinando o disco do Array do RAID-1 do Disco SDC
 sudo mdadm --examine /dev/sdc1
 ```
 
-Entendendo a saída do comando: __`sudo mdadm --examine /dev/sdb1`__<br>
+Entendendo a saída do comando: __`mdadm --examine /dev/sdb_x`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🔐 **Magic** | `a92b4efc` | Assinatura hexadecimal que identifica a presença de um superbloco RAID válido. |
@@ -344,24 +374,24 @@ Entendendo a saída do comando: __`sudo mdadm --examine /dev/sdb1`__<br>
 
 ## 08_ Configurando o Serviço do RAID-1 no Ubuntu Server
 ```bash
-#fazendo o backup do arquivo de configuração original do mdadm
+#fazendo o backup do arquivo de configuração original do mdadm no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/mdadm/mdadm.conf /etc/mdadm/mdadm.conf.old
 
-#adicionando as informações do Array de RAID 1 no arquivo de configuração do mdadm
+#adicionando as informações do Array de RAID 1 no arquivo de configuração do mdadm no Ubuntu Server
 #opção do comando mdadm: --detail (Print detail of a device), --scan (scan config file or
 #/proc/mdstat for missing information)
 #opção do redirecionador >> (append): adiciona a saída no final do arquivo, sem sobrescrever
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/mdadm.8.html
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 
-#verificando o conteúdo do arquivo de configuração do mdadm
+#verificando o conteúdo do arquivo de configuração do mdadm no Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/mdadm/mdadm.conf
 
-#atualizando o Initramfs com as novas informações do RAID (necessário para o boot reconhecer o Array)
+#atualizando o Initramfs com as novas informações do RAID (necessário para o boot reconhecer o Array) no Ubuntu Server
 #opção do comando update-initramfs: -u (update an existing initramfs)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/update-initramfs.8.html
 sudo update-initramfs -u
@@ -369,7 +399,7 @@ sudo update-initramfs -u
 
 ## 09_ Verificando o Serviço do RAID Monitor no Ubuntu Server
 ```bash
-#verificando o serviço do RAID Monitor
+#verificando o serviço do RAID Monitor no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or 
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
@@ -378,7 +408,7 @@ sudo systemctl restart mdmonitor
 sudo systemctl stop mdmonitor
 sudo systemctl start mdmonitor
 
-#analisando os Log's e mensagens de erro do RAID Monitor
+#analisando os Log's e mensagens de erro do RAID Monitor no Ubuntu Server
 #opção do comando journalctl: -u (unit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u mdmonitor
@@ -392,7 +422,7 @@ sudo journalctl -u mdmonitor
 sudo mdadm --detail /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__ (Estado Saudável)<br>
+Entendendo a saída do comando: __`mdadm --detail /dev/md0`__ (Estado Saudável)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | ✅ **State** | `clean` | O Array está íntegro, sincronizado e sem inconsistências entre os discos membros. |
@@ -418,7 +448,7 @@ sudo mdadm /dev/md0 --fail /dev/sdb1
 sudo mdadm --detail /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__ (Estado Degradado)<br>
+Entendendo a saída do comando: __`mdadm --detail /dev/md0`__ (Estado Degradado)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🚨 **State** | `clean, degraded` | O Array continua íntegro e funcional, porém **sem redundância total**, operando com apenas um disco saudável. |
@@ -437,7 +467,7 @@ Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__ (Estado Degra
 sudo cat /proc/mdstat
 ```
 
-Entendendo a saída do comando: __`sudo cat /proc/mdstat`__ (Estado Degradado)<br>
+Entendendo a saída do comando: __`/proc/mdstat`__ (Estado Degradado)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🚩 **Marcador de Falha** | `sdb1[0](F)` | A letra **(F)** ao lado do disco indica explicitamente que ele está marcado como **Faulty (Falho)** pelo subsistema `md` do Kernel. |
@@ -452,7 +482,17 @@ Entendendo a saída do comando: __`sudo cat /proc/mdstat`__ (Estado Degradado)<b
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm /dev/md0 --remove /dev/sdb1
   mdadm: hot removed /dev/sdb1 from /dev/md0
+```
 
+Entendendo a saída do comando: __`mdadm /dev/md0 --remove /dev/sdb1`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| ✅ **Confirmação** | `mdadm: hot removed /dev/sdb1 from /dev/md0` | Confirma que o disco falho foi removido **a quente (Hot Remove)**, sem necessidade de desligar o servidor ou desmontar o Array. |
+| 🔄 **Efeito no `--detail`** | `Failed Devices : 0` | Após a remoção, o disco falho deixa de aparecer na lista de membros do Array, e o contador de `Failed Devices` volta a `0` (o disco não está mais "presente" para ser contado como falho). |
+| ⚠️ **Efeito no `/proc/mdstat`** | `[2/1] [_U]` | O Array continua **degradado**, pois ainda falta um disco membro; a diferença é que o `sdb1(F)` não aparece mais na linha do Array, já que foi removido fisicamente do conjunto. |
+---
+
+```bash
 #verificando as informações do Array do RAID-1 no Ubuntu Server (após remoção)
 #opções do comando mdadm: --detail (Print details of one or more md devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
@@ -463,14 +503,6 @@ sudo mdadm --detail /dev/md0
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
 sudo cat /proc/mdstat
 ```
-
-Entendendo a saída do comando: __`sudo mdadm /dev/md0 --remove /dev/sdb1`__<br>
-| **Campo** | **Valor** | **Descrição** |
-| :-------- | :-------- | :------------ |
-| ✅ **Confirmação** | `mdadm: hot removed /dev/sdb1 from /dev/md0` | Confirma que o disco falho foi removido **a quente (Hot Remove)**, sem necessidade de desligar o servidor ou desmontar o Array. |
-| 🔄 **Efeito no `--detail`** | `Failed Devices : 0` | Após a remoção, o disco falho deixa de aparecer na lista de membros do Array, e o contador de `Failed Devices` volta a `0` (o disco não está mais "presente" para ser contado como falho). |
-| ⚠️ **Efeito no `/proc/mdstat`** | `[2/1] [_U]` | O Array continua **degradado**, pois ainda falta um disco membro; a diferença é que o `sdb1(F)` não aparece mais na linha do Array, já que foi removido fisicamente do conjunto. |
----
 
 ```bash
 #adicionando o novo disco (substituto) no Array do RAID-1 no Ubuntu Server
@@ -489,7 +521,7 @@ sudo mdadm --detail /dev/md0
 sudo cat /proc/mdstat
 ```
 
-Entendendo a saída do comando: __`sudo cat /proc/mdstat`__ (Reconstrução/Rebuild)<br>
+Entendendo a saída do comando: __`/proc/mdstat`__ (Reconstrução/Rebuild)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🔢 **Novo Índice** | `sdb1[2]` | O disco readicionado recebe um **novo índice interno** (`[2]`), diferente do índice original (`[0]`), pois é tratado como um novo membro do Array. |
@@ -501,13 +533,13 @@ Entendendo a saída do comando: __`sudo cat /proc/mdstat`__ (Reconstrução/Rebu
 ---
 
 ```bash
-#confirmando que o Array voltou ao estado saudável após a conclusão da reconstrução
+#confirmando que o Array voltou ao estado saudável após a conclusão da reconstrução do Ubuntu Server
 #opções do comando mdadm: --detail (Print details of one or more md devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm --detail /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__ (Após o Rebuild)<br>
+Entendendo a saída do comando: __`mdadm --detail /dev/md0`__ (Após o Rebuild)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | ✅ **State** | `clean` | Confirma que o Array retornou ao estado íntegro, sem pendências de sincronização. |
@@ -523,7 +555,7 @@ Entendendo a saída do comando: __`sudo mdadm --detail /dev/md0`__ (Após o Rebu
 sudo hdparm -Tt /dev/md0
 ```
 
-Entendendo a saída do comando: __`sudo hdparm -Tt /dev/md0`__<br>
+Entendendo a saída do comando: __`hdparm -Tt /dev/md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | ⚡ **Timing cached reads** | `MB/sec` | Velocidade de leitura da memória **cache do sistema (RAM/Page Cache)**, não reflete o desempenho físico do Array. |
@@ -541,7 +573,7 @@ Entendendo a saída do comando: __`sudo hdparm -Tt /dev/md0`__<br>
 sudo journalctl -k | grep -i md0
 ```
 
-Entendendo a saída do comando: __`sudo journalctl -k | grep -i md0`__<br>
+Entendendo a saída do comando: __`journalctl -k | grep -i md0`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🖥️ **Origem** | `kernel` | Mensagens geradas diretamente pelo **Kernel Linux**, responsável por gerenciar o subsistema **md (Multiple Devices)** em tempo real. |
@@ -570,4 +602,16 @@ Entendendo a saída do comando: __`sudo journalctl | grep -i raid`__<br>
 | 🚨 **Alerta de Falha** | `Fail event detected on md device /dev/md0` | Mensagem de alerta gerada pelo `mdadm` no momento em que identifica um disco marcado como falho no Array. |
 | ⚠️ **Alerta Degradado** | `DegradedArray event detected on md device /dev/md0` | Informa que o Array está operando em **estado degradado**, sem redundância total, alertando sobre a necessidade de substituição do disco com falha. |
 | ✅ **Alerta de Recuperação** | `RebuildFinished event detected on md device /dev/md0` | Confirma que o processo de reconstrução (**Rebuild**) do Array foi concluído com sucesso, retornando ao estado `clean`. |
+---
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO RAID-1 A SEGUINTE FRASE: *Configuração do RAID-1 On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #raid1 #raid1ubuntu #raid1untuserver #raid1untuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/10-raid1.png
+
 ---

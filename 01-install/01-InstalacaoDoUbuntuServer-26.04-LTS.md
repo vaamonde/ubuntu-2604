@@ -78,17 +78,21 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
     Subtype: Ubuntu
     Versão: Ubuntu (64-bit)
 
+#Desabilitando o recursos de Instalação Desassistida (Automática)
 03) Instalação Desassistida:
     Sem configuração
 
+#Configuração da Memória RAM Virtual e dos Processadores
 04) Hardware
     Memória Base: 4096 MB (altere conforme a sua necessidade)
     Processadores: 2 (VCPUs) (altere conforme sua necessidade)
     (OFF) Habilitar EFI (SO especiais apneas)
 
+#Criando o Hard Disk Virtual para a instalação do Ubuntu Server
 05) Disco Rígido
     (ON) Criar um novo disco rígido virtual agora
-    Localização e Tamanho do Arquivo de Disco Virtual: #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
+    Localização e Tamanho do Arquivo de Disco Virtual: 
+      #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
       Tamanho: 100,00 GB (altere conforme a sua necessidade)
     Tipo e Variante de Arquivo de Disco Virtual
       VDI (VirtualBox Disk Image)
@@ -106,6 +110,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 <Configurações>
     Expert
 
+#Configurando o Processador, Memória e Recursos de Virtualização
 02) Sistema
     Placa-Mãe
       Recurso Estendidos
@@ -117,14 +122,17 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
         #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL
         #O COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
 
+#Configuração da Placa de Vídeo e Resolução
 03) Display
     Tela (S)
       Memória de Vídeo: 256 MB
       Recursos Estendidos: (ON) Habilitar Aceleração 3D: (Habilitar)
 
+#Desabilitando os Recursos de Audio do Servidor
 04) Áudio
     (OFF) Habilitar Áudio: (Desabilitar)
 
+#Configuração da Placa de Rede em Modo Bridge (Ponte)
 05) Rede
     Adaptador 1 (LAN)
       (ON) Habilitar Placa de Rede: (Habilitar)
@@ -143,6 +151,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 01) Selecionar a Máquina Virtual: UbuntuOnPremise: 
 <Iniciar>
 
+#Locando a ISO da instalação do Ubuntu Server
 02) VirtualBOX VM
     DVD: <Outro...>
     #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 26.04.x LTS <Abrir>
@@ -154,7 +163,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.com/server/docs/installation
 
 > **OBSERVAÇÃO IMPORTANTE:** O Boot Inicial do Ubuntu Server demora cerca de: __`30 (trinta segundos)`__ para iniciar a instalação padrão caso você não altere as opções de Boot.
-
+>
 > **OBSERVAÇÃO:** Para parar o *Boot Inicial do Ubuntu Server* pressione: __`<Seta para Baixo>`__.
 
 ```bash
@@ -188,7 +197,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     DHCPv4 172.16.1.XXX/24 (verifique se obteve o endereço da sua rede corretamente)
     #OBSERVAÇÃO IMPORTANTE: VERIFIQUE O ENDEREÇO IPv4 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
     #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO, A CONFIGURAÇÃO DA PLACA DE REDE SERÁ
-    #FEITA MANUALMENTE.
+    #FEITA MANUALMENTE NAS PRÓXIMAS AULAS (NETPLAN E BONDING).
 <Done>
 
 #Configuração do Proxy Server do Ubuntu Server
@@ -233,7 +242,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
         #Criando a partição de Memória Virtual Swap do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-swap
-          Size (max 49.000G): 8.000G (alterar conforme a sua necessidade)
+          Size (max 49.000G): 8.000G #Alterar conforme a sua necessidade
           Format: swap
         <Create>
         #Criando a partição do Perfil dos Usuários (/home) do Ubuntu Server
@@ -279,7 +288,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     Your servers name: srvseunome <Tab>
     Pick a username: seu_usuário <Tab>
     Choose a passwords: sua_senha <Tab>
-    Confirm your passwords: confirma_sua_senha
+    Confirm your passwords: confirmar_sua_senha
 <Done>
 
 #Configuração do suporte ao Ubuntu Pro do Ubuntu Server
@@ -309,7 +318,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 ## 08_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)
 
-> **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO SSH SERVER, PRESSIONE <ENTER> PARA APARECER A TELA DE LOGIN.
+> **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO OPENSSH SERVER, PRESSIONE `<ENTER>` PARA APARECER A TELA DE LOGIN.
 
 ```bash
 #Primeiro acesso via terminal do Ubuntu Server

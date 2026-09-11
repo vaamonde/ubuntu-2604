@@ -1,26 +1,56 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 29/07/2026<br>
-Data de atualização: 07/09/2026<br>
-Versão: 0.04<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
-Testado e homologado no Oracle VirtualBOX 7.x
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO BORG BACKUP SERVER A SEGUINTE FRASE: *Configuração do Borg Backup Server On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #bbs #bbsubuntu #bbsuntuserver #bbsuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/14-borgbackup.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
+Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
+Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
+Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 BorgBackup (Software Base): https://www.borgbackup.org/<br>
 BorgBackup Server / BBS (Projeto): https://github.com/marcpope/borgbackupserver<br>
 BorgBackup Server / BBS (Documentação Oficial - Wiki): https://github.com/marcpope/borgbackupserver/wiki<br>
 BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
+#01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server<br>
+#02_ Verificando os Requisitos de Sistema (Software Base) do BBS no Ubuntu Server<br>
+#03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server<br>
+#04_ Verificando os Serviços Instalados pelo BBS no Ubuntu Server<br>
+#05_ Assistente de Configuração Inicial (Setup Wizard) do BBS no Ubuntu Server<br>
+#06_ Instalando e Registrando o Agente Local (Linux Agent Client) no Ubuntu Server<br>
+#07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server<br>
+#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server<br>
+#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server<br>
+#10_ Criando o Plano de Backup dp BBS no Ubuntu Server<br>
+#11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server<br>
+#12_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server<br>
+#13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server<br>
+#14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
 
@@ -47,7 +77,7 @@ Link da vídeo aula:
 sudo df -h /dados
 ```
 
-Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
+Entendendo a saída do arquivo: __`df -h /dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Sistema de arquivos armazenado no **Logical Volume `lv_dados`**, pertencente ao **Volume Group `vg_dados`**, gerenciado pelo **LVM (Logical Volume Manager)**. |
@@ -65,7 +95,7 @@ Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
 sudo df -h /backup
 ```
 
-Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
+Entendendo a saída do arquivo: __`df -h /dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💾 **Comando** | `sudo df -h /backup` | Exibe informações sobre a utilização do sistema de arquivos montado no diretório `/backup`, apresentando os valores em formato legível (*Human Readable*). |
@@ -94,11 +124,13 @@ Entendendo a saída do arquivo: __`sudo df -h /dados`__<br>
 #Habilitando os repositórios Multiverso e Universo do Ubuntu Server (dependências para a instalação).
 #opção do comando add-apt-repository: --enable-source (Enable the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
-#Habilitando o repositório Multiverso
+
+#Habilitando o repositório Multiverso (Recomendado para instalar as dependências)
 sudo add-apt-repository --enable-source multiverse
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
-#Habilitando o repositório Universo
+
+#Habilitando o repositório Universo (Recomendado para instalar as dependências)
 sudo add-apt-repository --enable-source universe
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
@@ -126,11 +158,11 @@ sudo apt upgrade
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bbs-install
 
-#executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings
+#executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings no Ubuntu Server
 #opções do script bbs-install: --hostname (Sets the server's Fully Qualified Domain Name (FQDN) 
 #used by BorgBackupServer during installation.), --no-ssl (Disables HTTPS/SSL configuration, allowing 
 #the installation to use HTTP only)
-#OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO NESSE CENÁRIO NÃO SERÁ INSTALADO
+#OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO, NESSE CENÁRIO NÃO SERÁ INSTALADO
 #O CERTIFICADO DIGITAL COM A OPÇÃO: --no-ssl
 sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
 
@@ -167,7 +199,7 @@ sudo systemctl status mysql
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status cron
 
-#verificando a versão do BorgBackup instalada como dependência do BBS no Ubuntu Server
+#verificando a versão do Borg Backup instalada como dependência do BBS no Ubuntu Server
 #opção do comando borg: --version (Print version and exit)
 #mais informações acesse a documentação oficial em: https://borgbackup.readthedocs.io/
 sudo borg --version
@@ -181,6 +213,8 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 ## 05_ Assistente de Configuração Inicial (Setup Wizard) do BBS no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** a partir desta etapa, a configuração ocorre pela **Interface Web** do BBS, acessada de um navegador na mesma rede do Ubuntu Server. Utilize o Endereço IPv4 ou o FQDN configurado no procedimento de Settings.
+>
+> **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a Senha da Conta de Administrador do BBS deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** (abordado na seção #11 deste procedimento) deve ser habilitado assim que possível.
 
 ```bash
 01) Abrir o navegador e acessar o Painel Web do BBS
@@ -237,9 +271,14 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 <Go to Dashboard>
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a Senha da Conta de Administrador do BBS deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** (abordado na seção #11 deste procedimento) deve ser habilitado assim que possível.
-
 ## 06_ Instalando e Registrando o Agente Local (Linux Agent Client) no Ubuntu Server
+
+Entendendo a Arquitetura de Comunicação do Agente:<br>
+| **Camada** | **Protocolo** | **Descrição** |
+| :--------- | :------------ | :------------ |
+| 🎛️ **Plano de Controle (Control Plane)** | HTTPS | O Agente consulta periodicamente (Polling) o Painel do BBS em busca de novas tarefas, progresso e status; **nenhuma Porta de Entrada precisa ser aberta no Cliente**. |
+| 📦 **Plano de Dados (Data Plane)** | SSH (`borg serve`) | Quando uma tarefa é disparada, a transferência real dos dados do Backup ocorre via SSH, utilizando o modo **Append-Only** do BorgBackup no Repositório. |
+---
 
 > **OBSERVAÇÃO IMPORTANTE:** mesmo no Cenário de Servidor Único (Painel e Cliente na mesma VM), o BBS exige a instalação do **Agente**, pois toda a comunicação de tarefas (Jobs) entre o Painel e a execução real do `borg` acontece através dele, inclusive em modo Localhost.
 
@@ -267,13 +306,6 @@ sudo systemctl status bbs-agent
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u bbs-agent
 ```
-
-Entendendo a Arquitetura de Comunicação do Agente:<br>
-| **Camada** | **Protocolo** | **Descrição** |
-| :--------- | :------------ | :------------ |
-| 🎛️ **Plano de Controle (Control Plane)** | HTTPS | O Agente consulta periodicamente (Polling) o Painel do BBS em busca de novas tarefas, progresso e status; **nenhuma Porta de Entrada precisa ser aberta no Cliente**. |
-| 📦 **Plano de Dados (Data Plane)** | SSH (`borg serve`) | Quando uma tarefa é disparada, a transferência real dos dados do Backup ocorre via SSH, utilizando o modo **Append-Only** do BorgBackup no Repositório. |
----
 
 ## 07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server
 
@@ -320,7 +352,6 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 02) Repos
     <Add Repository>
 
-
 03) Repositories
     Create New Repository
       Description: backup-dados
@@ -331,7 +362,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 <Create Repo>
 ```
 
-# 10_ Criando o Plano de Backup dp BBS no Ubuntu Server
+## 10_ Criando o Plano de Backup dp BBS no Ubuntu Server
 
 ```bash
 01) No Painel Web do BBS, acessar o menu:
@@ -340,7 +371,6 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 
 02) Plans
     <Add Add Backup Plan>
-
 
 02) Backup Schedules
     Create New Backup Plan
@@ -415,6 +445,8 @@ sha256sum /dados/arquivo_de_teste.txt
 
 ## 13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server
 
+> **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FAS Auth (https://2fas.com/) no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
+
 ```bash
 01) No Painel Web do BBS, acessar o menu:
     Configurações (Settings) <Notificações (Notifications)>
@@ -429,8 +461,6 @@ sha256sum /dados/arquivo_de_teste.txt
         Confirmar o Código de 6 dígitos gerado
 <Ativar 2FA>
 ```
-
-> **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FAS Auth (https://2fas.com/) no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
 
 ## 14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server
 
@@ -454,3 +484,15 @@ sha256sum /dados/arquivo_de_teste.txt
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl -k | grep -i sdd
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO BORG BACKUP SERVER A SEGUINTE FRASE: *Configuração do Borg Backup Server On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #bbs #bbsubuntu #bbsuntuserver #bbsuntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/14-borgbackup.png
+
+---

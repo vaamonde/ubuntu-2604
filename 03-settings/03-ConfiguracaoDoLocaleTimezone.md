@@ -113,7 +113,11 @@ sudo systemctl reboot
 #opção do comando locale: -a (all-locales)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
+
+#verificando as localidades instaladas
 sudo locale -a
+
+#verificando as localidades configuradas
 sudo localectl
 ```
 

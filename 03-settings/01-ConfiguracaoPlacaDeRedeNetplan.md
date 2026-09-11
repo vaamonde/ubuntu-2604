@@ -82,7 +82,7 @@ sudo apt install bridge-utils net-tools traceroute
 sudo lspci -v | grep -i ethernet | cat -n
 ```
 
-Entendendo a saída do comando: __`lspci`__<br>
+Entendendo a saída do comando: __`lspci -v`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌐 **Barramento PCI** | `00:03.0` | Endereço do dispositivo no barramento **PCI/PCI Express**, indicando o barramento, dispositivo e função (`Bus:Device.Function`). |
@@ -99,7 +99,7 @@ Entendendo a saída do comando: __`lspci`__<br>
 sudo lshw -class network
 ```
 
-Entendendo a saída do comando: __`lshw`__<br>
+Entendendo a saída do comando: __`lshw -class network`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌐 **Descrição** | `Ethernet interface` | Tipo do dispositivo de rede detectado pelo sistema operacional. |
@@ -132,7 +132,7 @@ Entendendo a saída do comando: __`lshw`__<br>
 
 ## 03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server
 ```bash
-#verificando as configurações de endereçamento IP da Placa de Rede instalada
+#verificando as configurações de endereçamento IP da Placa de Rede instalada no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
@@ -205,7 +205,7 @@ Entendendo a saída do comando: __`ip route show`__<br>
 sudo resolvectl status
 ```
 
-Entendendo a saída do comando: __`resolvectl`__<br>
+Entendendo a saída do comando: __`resolvectl status`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌍 **Escopo** | `Global` | Configurações globais do serviço **systemd-resolved**, responsável pela resolução de nomes (DNS) no sistema. |
@@ -261,7 +261,7 @@ Entendendo a saída do arquivo: __`/run/systemd/netif/leases/*`__<br>
 sudo netplan status
 ```
 
-Entendendo a saída do comando: __`sudo netplan status`__<br>
+Entendendo a saída do comando: __`netplan status`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌐 **Estado da Rede** | `online` | Indica que o sistema possui conectividade de rede ativa. |
@@ -346,11 +346,11 @@ network:
     # Configuração da Interface Física (Nome Lógico visto no comando: lshw -class network)
     enp0s3:
       #
-      # Identificando a Interface de Rede Física pelo Endereço MAC Address (Visto no comando ip address show)
+      # Identificando a Interface de Rede Física pelo Endereço MAC Address (Visto no comando: ip address show)
       match:
         macaddress: SEU_ENDEREÇO_MAC_ADDRESS
       #
-      # Definindo o Nome Lógico da Interface de Rede (seguindo o padrão do comando lshw -class network)
+      # Definindo o Nome Lógico da Interface de Rede (seguindo o padrão do comando: lshw -class network)
       set-name: enp0s3
       #
       # Desabilitando o suporte ao DHCP Client IPv4 (DHCPv4) na Interface Física
@@ -537,7 +537,11 @@ sudo ip address show
 #verificando as configurações de Gateway (route) IPv4 e IPv6 no Ubuntu Server
 #opções do comando ip: -4 (use IPv4), -6 (use IPv6) route (Routing table entry), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
+
+#visualizando as rotas IPv4
 sudo ip -4 route show
+
+#visualizando as rotas IPv6
 sudo ip -6 route show
 
 #verificando as informações dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
@@ -573,9 +577,17 @@ sudo netplan status
 #testando a conexão com a Internet e Resolução de nomes de DNS IPv4 e IPv6 no Ubuntu Server
 #opções do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
+
+#pingando endereço IPv4 do DNS do Google
 ping -4 -c 5 8.8.8.8
+
+#pingando endereço IPv6 do DNS do Google
 ping -6 -c 5 2001:4860:4860::8888
+
+#pingando o nome e resolvendo IPv4 do DNS do Google
 ping -4 -c 5 google.com
+
+#pingando o nome e resolvendo IPv6 do DNS do Google
 ping -6 -c 5 google.com
 ```
 

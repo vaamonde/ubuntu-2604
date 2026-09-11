@@ -78,10 +78,12 @@ sudo apt policy
 #Add-Apt-Repository é utilizado para adicionar, gerenciar ou remover repositórios.
 #opção do comando add-apt-repository: --remove (Remove the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
+
 #Removendo o repositório Multiverso do Ubuntu Server
 sudo add-apt-repository --remove multiverse
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
+
 #Removendo o repositório Universo do Ubuntu Server
 sudo add-apt-repository --remove universe
   Removing component(s) 'multiverse' from all repositories.
@@ -180,8 +182,8 @@ sudo apt clean
 #List é utilizado para listar todos os software que serão atualizados ou instalados no sistema.
 #opção do comando apt: list (list is used to display a list of packages), --installed (shows
 #a list of packages names as well as options to list installed)
-#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #opção do comando cat: -n (number line)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo apt list --installed | cat -n

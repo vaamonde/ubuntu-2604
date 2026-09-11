@@ -1,25 +1,38 @@
-Autor: Robson Vaamonde<br>
-Procedimentos em TI: http://procedimentosemti.com.br<br>
-Bora para Prática: http://boraparapratica.com.br<br>
-Robson Vaamonde: http://vaamonde.com.br<br>
-Facebook Procedimentos em TI: https://www.facebook.com/ProcedimentosEmTi<br>
-Facebook Bora para Prática: https://www.facebook.com/BoraParaPratica<br>
-Instagram Procedimentos em TI: https://www.instagram.com/procedimentoem<br>
-YouTUBE Bora Para Prática: https://www.youtube.com/boraparapratica<br>
-LinkedIn Robson Vaamonde: https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
-Github Procedimentos em TI: https://github.com/vaamonde<br>
-Data de criação: 29/07/2026<br>
-Data de atualização: 29/07/2026<br>
-Versão: 0.01<br>
-Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS<br>
-Testado e homologado no Oracle VirtualBOX 7.x
+**Autor:** `Robson Vaamonde`<br>
+**Procedimentos em TI:** http://procedimentosemti.com.br<br>
+**Bora para Prática:** http://boraparapratica.com.br<br>
+**Robson Vaamonde:** http://vaamonde.com.br<br>
+**Facebook Procedimentos em TI:** https://www.facebook.com/ProcedimentosEmTi<br>
+**Facebook Bora para Prática:** https://www.facebook.com/BoraParaPratica<br>
+**Instagram Procedimentos em TI:** https://www.instagram.com/procedimentoem<br>
+**YouTUBE Bora Para Prática:** https://www.youtube.com/boraparapratica<br>
+**LinkedIn Robson Vaamonde:** https://www.linkedin.com/in/robson-vaamonde-0b029028/<br>
+**Github Robson Vaamonde:** https://github.com/vaamonde<br>
+
+**Data de criação:** `06/07/2026`<br>
+**Data de atualização:** `10/09/2026`<br>
+**Versão:** `0.07`<br>
+
+> __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO PARTED A SEGUINTE FRASE: *Configuração da Partição On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #parted #partedubuntu #parteduntuserver #parteduntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/12-parted.png
+
+---
 
 Release Ubuntu Server 26.04: https://documentation.ubuntu.com/release-notes/26.04/<br>
 Releases All Ubuntu Server: https://wiki.ubuntu.com/Releases<br>
 Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br>
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
-Conteúdo estudado nessa configuração:<br>
+**Conteúdo estudado nessa configuração:**<br>
 #01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
 #02_ Verificando os Discos Reconhecidos no Ubuntu Server<br>
 #03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server<br>
@@ -35,8 +48,6 @@ Conteúdo estudado nessa configuração:<br>
 
 Link da vídeo aula: 
 
-> **OBSERVAÇÃO IMPORTANTE:** este procedimento é a **base (pré-requisito)** para o próximo passo do Workflow: __`11. Configuração do Backup`__, onde o disco particionado e formatado aqui será utilizado como **destino (repositório) dos backups** gerados pelo software **BorgBackupServer**, responsável por proteger a partição de dados criada anteriormente no procedimento de **LVM (Logical Volume Manager)**.
-
 | **🧱 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
 | 🗂️ **Particionamento Tradicional** | Divisão de um disco físico em uma ou mais áreas lógicas (Partições), gravadas diretamente na Tabela de Partições do disco (GPT/MBR), sem nenhuma camada de abstração adicional. | Ideal para discos com finalidade única e simples, como um **destino de backup**, onde não há necessidade de Redundância (RAID) nem de Flexibilidade de Redimensionamento (LVM). |
@@ -50,11 +61,15 @@ Link da vídeo aula:
 
 ## 01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
 
+> **OBSERVAÇÃO IMPORTANTE:** neste roteiro o novo disco será reconhecido pelo Ubuntu Server como __`/dev/sdd`__, pois os dispositivos __`/dev/sdb`__ e __`/dev/sdc`__ já estão em uso pelo Array do **RAID-1** (procedimento anterior). Sempre confira o dispositivo correto no seu cenário antes de prosseguir.
+
 ```bash
+#Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremise
 <Configurações>
     Expert
 
+#Adicionando um Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
     Dispositivos
       Controladora: SATA
@@ -67,11 +82,10 @@ Link da vídeo aula:
         backup-01.vdi <Escolher>
     <OK>
 
+#Iniciando a Máquina Virtual do Ubuntu Server
 03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
 <Iniciar>
 ```
-
-> **OBSERVAÇÃO IMPORTANTE:** neste roteiro o novo disco será reconhecido pelo Ubuntu Server como __`/dev/sdd`__, pois os dispositivos __`/dev/sdb`__ e __`/dev/sdc`__ já estão em uso pelo Array do **RAID-1** (procedimento anterior). Sempre confira o dispositivo correto no seu cenário antes de prosseguir.
 
 ## 02_ Verificando os Discos Reconhecidos no Ubuntu Server
 
@@ -82,7 +96,7 @@ Link da vídeo aula:
 sudo lsblk -f
 ```
 
-Entendendo a saída do comando: __`sudo lsblk -f`__ (Disco Novo)<br>
+Entendendo a saída do comando: __`lsblk -f`__ (Disco Novo)<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Quarto disco físico (virtual) reconhecido pelo Ubuntu Server, ainda sem particionamento. |
@@ -91,7 +105,7 @@ Entendendo a saída do comando: __`sudo lsblk -f`__ (Disco Novo)<br>
 ---
 
 ```bash
-#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM no disco novo
+#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM no disco novo no Ubuntu Server
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -n /dev/sdd
@@ -100,18 +114,18 @@ sudo wipefs -n /dev/sdd
 > **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no VirtualBOX normalmente não retornam nada, só execute o comando abaixo se o dry-run acima detectar alguma assinatura residual.
 
 ```bash
-#removendo todas as assinaturas de sistema de arquivos, RAID ou LVM no disco novo
+#removendo todas as assinaturas de sistema de arquivos, RAID ou LVM no disco novo no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -a /dev/sdd
 
-#listando as tabelas de partição de todos os discos reconhecidos
+#listando as tabelas de partição de todos os discos reconhecidos no Ubuntu Server
 #opção do comando fdisk: -l (List the partition tables for the specified devices and then exit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/fdisk.8.html
 sudo fdisk -l /dev/sdd
 ```
 
-Entendendo a saída do comando: __`sudo fdisk -l /dev/sdd`__<br>
+Entendendo a saída do comando: __`fdisk -l /dev/sdd`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional Linux. |
@@ -127,7 +141,7 @@ Entendendo a saída do comando: __`sudo fdisk -l /dev/sdd`__<br>
 ## 03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server
 
 ```bash
-#criando a tabela de particionamento GPT no Disco /dev/sdd
+#criando a tabela de particionamento GPT no Disco /dev/sdd no Ubuntu Server
 #opções do comando gdisk: o (create a new empty GUID partition table (GPT)), n (add a new partition),
 #t (change a partition's type code), p (print the partition table), v (verify disk), w (write table
 #to disk and exit)
@@ -164,13 +178,13 @@ sudo gdisk /dev/sdd
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /proc/partitions | grep -i sdd
 
-#verificando a nova tabela de partição GPT criada no Disco /dev/sdd
+#verificando a nova tabela de partição GPT criada no Disco /dev/sdd no Ubuntu Server
 #opção do comando parted: -l (lists partition layout on all block devices)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/parted.8.html
 sudo parted -l /dev/sdd
 ```
 
-Entendendo a saída do comando: __`sudo parted -l /dev/sdd`__<br>
+Entendendo a saída do comando: __`parted -l /dev/sdd`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Disco dedicado ao repositório de Backup. |
@@ -189,7 +203,7 @@ Entendendo a saída do comando: __`sudo parted -l /dev/sdd`__<br>
 sudo mkfs.ext4 -L backup01 /dev/sdd1
 ```
 
-Entendendo a saída do comando: __`sudo mkfs.ext4 -L backup01 /dev/sdd1`__<br>
+Entendendo a saída do comando: __`mkfs.ext4 -L backup01 /dev/sdd1`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🏷️ **Label** | `backup01` | Rótulo atribuído ao sistema de arquivos, útil para identificação rápida em comandos como `lsblk` e `blkid`. |
@@ -202,6 +216,8 @@ Entendendo a saída do comando: __`sudo mkfs.ext4 -L backup01 /dev/sdd1`__<br>
 
 ## 05_ Criando o Diretório de Ponto de Montagem do Backup no Ubuntu Server
 
+> **OBSERVAÇÃO IMPORTANTE:** o diretório __`/backup`__ será utilizado no próximo procedimento (__`11. Configuração do Backup`__) como o **Repositório (Repository)** do **BorgBackupServer**, onde ficarão armazenados os Snapshots incrementais e deduplicados da partição de Dados criada no procedimento de **LVM** (`/dados`, Volume Lógico `lv_dados`).
+
 ```bash
 #criando o diretório de ponto de montagem do repositório de Backup no Ubuntu Server
 #opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
@@ -209,17 +225,15 @@ Entendendo a saída do comando: __`sudo mkfs.ext4 -L backup01 /dev/sdd1`__<br>
 sudo mkdir -pv /backup
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** o diretório __`/backup`__ será utilizado no próximo procedimento (__`11. Configuração do Backup`__) como o **Repositório (Repository)** do **BorgBackupServer**, onde ficarão armazenados os Snapshots incrementais e deduplicados da partição de Dados criada no procedimento de **LVM** (`/dados`, Volume Lógico `lv_dados`).
-
 ## 06_ Verificando o UUID da Partição de Backup no Ubuntu Server
 
 ```bash
-#verificando o UUID e o Label do sistema de arquivos criado na partição de Backup
+#verificando o UUID e o Label do sistema de arquivos criado na partição de Backup no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid /dev/sdd1
 ```
 
-Entendendo a saída do comando: __`sudo blkid /dev/sdd1`__<br>
+Entendendo a saída do comando: __`blkid /dev/sdd1`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📁 **Dispositivo** | `/dev/sdd1` | Partição onde o repositório de Backup está armazenado. |
@@ -232,7 +246,7 @@ Entendendo a saída do comando: __`sudo blkid /dev/sdd1`__<br>
 ## 07_ Configurando a Montagem Automática no Fstab no Ubuntu Server
 
 ```bash
-#fazendo o backup do arquivo de configuração original do Fstab
+#fazendo o backup do arquivo de configuração original do Fstab no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/fstab /etc/fstab.bkp-backup
@@ -252,17 +266,18 @@ INSERT
 #      Backup                    Montagem    Arquivos    Montagem
 UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup       ext4      defaults,nofail     0      2
 ```
+
+> **OBSERVAÇÃO IMPORTANTE:** a opção __`nofail`__ é uma boa prática para discos de **Backup**, pois evita que o Ubuntu Server fique preso na tela de Boot (Emergency Mode) caso o disco de Backup esteja fisicamente desconectado ou indisponível no momento da inicialização.
+
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 
-#reinicializando as configurações do SystemD com as mudanças do Fstab
+#reinicializando as configurações do SystemD com as mudanças do Fstab no Ubuntu Server
 #opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl daemon-reload
 ```
-
-> **OBSERVAÇÃO IMPORTANTE:** a opção __`nofail`__ é uma boa prática para discos de **Backup**, pois evita que o Ubuntu Server fique preso na tela de Boot (Emergency Mode) caso o disco de Backup esteja fisicamente desconectado ou indisponível no momento da inicialização.
 
 ## 08_ Montando e Verificando o Espaço em Disco da Partição de Backup no Ubuntu Server
 
@@ -278,7 +293,7 @@ sudo mount -va
 sudo df -h /backup
 ```
 
-Entendendo a saída do comando: __`sudo df -h /backup`__<br>
+Entendendo a saída do comando: __`df -h /backup`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Filesystem** | `/dev/sdd1` | Partição de Backup formatada com o sistema de arquivos EXT4 e montada em `/backup`. |
@@ -290,13 +305,13 @@ Entendendo a saída do comando: __`sudo df -h /backup`__<br>
 ---
 
 ```bash
-#listando os discos e partições em formato de árvore, incluindo o disco de Backup montado
+#listando os discos e partições em formato de árvore, incluindo o disco de Backup montado no Ubuntu Server
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
 sudo lsblk -f /dev/sdd
 ```
 
-Entendendo a saída do comando: __`sudo lsblk -f /dev/sdd`__<br>
+Entendendo a saída do comando: __`lsblk -f /dev/sdd`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco** | `/dev/sdd` | Quarto disco de armazenamento detectado pelo sistema operacional. |
@@ -310,9 +325,9 @@ Entendendo a saída do comando: __`sudo lsblk -f /dev/sdd`__<br>
 | 📍 **Ponto de Montagem (MOUNTPOINTS)** | `/backup` | Diretório onde a partição está montada e acessível pelo sistema operacional. |
 ---
 
-## 09_ Preparando Permissões e Estrutura de Diretórios para o BorgBackupServer
+## 09_ Preparando as Permissões e Estrutura de Diretórios para o BorgBackupServer no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** esta etapa apenas prepara a estrutura de diretórios e permissões da partição de Backup. A instalação, configuração e inicialização dos Repositórios do **BorgBackupServer** propriamente ditos serão detalhadas no próximo procedimento do Workflow: __`11. Configuração do Backup`__.
+> **OBSERVAÇÃO IMPORTANTE:** esta etapa apenas prepara a estrutura de diretórios e permissões da partição de Backup. A instalação, configuração e inicialização dos Repositórios do **BorgBackupServer** propriamente ditos serão detalhadas no próximo procedimento do Workflow: __`05-backup/02-ConfigurandoBackupServer.md`__.
 
 ```bash
 #criando a estrutura de diretórios do repositório de Backup, separado por tipo de dado protegido
@@ -342,7 +357,7 @@ sudo chmod -Rv 770 /backup
 sudo ls -lh /backup
 ```
 
-Entendendo a saída do comando: __`sudo ls -lh /backup`__<br>
+Entendendo a saída do comando: __`ls -lh /backup`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🔐 **Permissões** | `drwxrwx---` | Leitura, Escrita e Execução liberadas para o Proprietário (`root`) e para o Grupo (`backupadm`); sem nenhum acesso para outros usuários. |
@@ -369,3 +384,15 @@ Entendendo a saída do comando: __`sudo ls -lh /backup`__<br>
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl -k | grep -i sdd
 ```
+
+---
+
+> **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO PARTED A SEGUINTE FRASE: *Configuração da Partição On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
+>
+> COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
+>
+> #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #parted #partedubuntu #parteduntuserver #parteduntuserver2604
+>
+> LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/11-parted.png
+
+---

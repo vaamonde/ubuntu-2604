@@ -111,7 +111,7 @@ sudo lsof -nP -iUDP:'323'
 /etc/chrony/sources.d/                       <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
 /etc/chrony/sources.d/ntp-br-pools.sources   <-- Arquivo de configuração dos servidores NTP.br do Chrony Server e Client
 /var/log/chrony/                             <-- Diretório de logs do Chrony Server e Client
-/var/lib/chrony/                             <-- Diretório das configurações de sincronismo Chrony Server e Client
+/var/lib/chrony/                             <-- Diretório das bibliotecas de sincronismo Chrony Server e Client
 ```
 
 ## 04_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server

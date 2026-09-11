@@ -103,7 +103,7 @@ SUA_REDE_GLOBAL_IPV6   srvseunome.seu.domínio   srvseunome
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 
-#verificando as informações de hosts no Ubuntu Server
+#verificando as informações de hosts IPv4 no Ubuntu Server
 #opção do comando getent: hosts (When no key is provided to enumerate the hosts database)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent hosts
@@ -111,9 +111,17 @@ sudo getent hosts
 #verificando as informações do nome do servidor no Ubuntu Server
 #opção do comando hostname: -A (all-fqdns), -d (domain), -i (ip address)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/hostname.1.html
+
+#visualizando o nome FQDN do servidor
 sudo hostname
+
+#visualizando todas as informações FQDN do servidor
 sudo hostname -A
+
+#visualizando o nome de domínio do servidor
 sudo hostname -d
+
+#visualizando todas as informações de IPv4 e IPv6 do servidor
 sudo hostname -i
 ```
 
@@ -121,9 +129,9 @@ sudo hostname -i
 ```bash
 #verificando as resoluções de nomes DNS do servidor Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
-nslookup localhost
-nslookup srvvaamonde
-nslookup srvvaamonde.pti.intra
+nslookup localhost               #OBSERVAÇÃO: consultando o localhost
+nslookup srvvaamonde             #OBSERVAÇÃO: consultando o hostname
+nslookup srvvaamonde.pti.intra   #OBSERVAÇÃO: consultando o nome FQDN
 
 #verificando as resoluções de endereços IPv4 e IPv6 do servidor Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
@@ -142,10 +150,10 @@ resolvectl query srvvaamonde.pti.intra   #OBSERVAÇÃO: alterar o nome FQDN do s
 #testando a conexão com a Internet e Resolução de nomes de DNS do servidor Ubuntu Server
 #opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
-ping -4 -c 5 127.0.0.1
-ping -4 -c 5 172.16.1.20
-ping -6 -c 5 fe80::20%enp0s3        #OBSERVAÇÃO: para o ping em IPv6 Link Local funcionar e necessário indicar a interface
-ping -6 -c 5 2804:14c:90:8697::20
+ping -4 -c 5 127.0.0.1              #OBSERVAÇÃO: pingando o endereço de Loopback (Localhost)
+ping -4 -c 5 172.16.1.20            #OBSERVAÇÃO: pingando o endereço IPv4
+ping -6 -c 5 fe80::20%enp0s3        #OBSERVAÇÃO: para pingar o endereço IPv6 Link Local e necessário indicar a interface
+ping -6 -c 5 2804:14c:90:8697::20   #OBSERVAÇÃO: pingando o endereço IPv6 Global Unicast
 ```
 
 ---

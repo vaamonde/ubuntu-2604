@@ -34,14 +34,14 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
 #01_ Verificando as Informações do Sistema Operacional do Ubuntu Server<br>
-#02_ Atualizando o Sistema Operacional Ubuntu Server<br>
+#02_ Forçando uma Atualização Completa do Sistema Operacional do Ubuntu Server<br>
 #03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server<br>
-#04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal<br>
-#05_ Verificando a versão do Ubuntu Advantage Tools no Ubuntu Server<br>
+#04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal (Suporte para 5 Servidores)<br>
+#05_ Verificando a versão do Ubuntu Advantage Tools (Ubuntu Pro) no Ubuntu Server<br>
 #06_ Ativando a sua Assinatura do Ubuntu Pro no Ubuntu Server<br>
 #07_ Verificando os repositórios de origem das atualizações do Ubuntu Pro no Ubuntu Server<br>
-#08_ Atualizando o sistema com o suporte do Ubuntu Pro no Ubuntu Server<br>
-#09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server<br>
+#08_ Atualizando o Sistema Operacional com o suporte do Ubuntu Pro no Ubuntu Server<br>
+#09_ Configurando o serviço de Atualizações Automáticas do Ubuntu Server<br>>
 
 Site Oficial do Ubuntu Pro: https://ubuntu.com/pro<br>
 Site Oficial dos Procedimentos do Ubuntu Pro: https://ubuntu.com/pro/tutorial<br>
@@ -124,7 +124,7 @@ Entendendo a saída do comando: __`uname -a`__<br>
 | 🐧 **Sistema Operacional** | `GNU/Linux` | Indica que o sistema utiliza o kernel Linux juntamente com as ferramentas do projeto GNU. |
 ---
 
-## 02_ Forçando uma Atualizando Completa do Sistema Operacional do Ubuntu Server
+## 02_ Forçando uma Atualização Completa do Sistema Operacional do Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** recomendo fazer um upgrade completo do servidor antes de adicionar a *Licença do Ubuntu Pro*.
 
@@ -139,11 +139,26 @@ Entendendo a saída do comando: __`uname -a`__<br>
 #conflict), autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
 #repository of retrieved package files)
+
+#01_ limpando todos os repositórios locais do Ubuntu Server
+sudo apt clean
+
+#02_ atualizando todas as listas (sources.list) do Ubuntu Server
 sudo apt update
+
+#03_ atualizando todos os softwares com suporte do Ubuntu Pro no Ubuntu Server
 sudo apt upgrade
+
+#04_ forçando uma atualização completa do Ubuntu Pro no Ubuntu Server
 sudo apt full-upgrade
+
+#05_ atualizando o sistema e kernel do Ubuntu Pro no Ubuntu Server
 sudo apt dist-upgrade
+
+#06_ removendo todos os softwares desnecessários do Ubuntu Pro no Ubuntu Server
 sudo apt autoremove
+
+#07_ limpando todos os caches de instalação do Ubuntu Pro no Ubuntu Server
 sudo apt autoclean
 ```
 
@@ -275,7 +290,7 @@ sudo canonical-livepatch status --verbose
 sudo apt policy
 ```
 ```bash
-#Forçando uma atualizando completa do sistema operacional com suporte do Ubuntu Pro no Ubuntu Server
+#Forçando uma atualização completa do sistema operacional com suporte do Ubuntu Pro no Ubuntu Server
 #opções do comando apt: update (Resynchronize the package index files from their sources)
 #upgrade (Install the newest versions of all packages currently installed on the system 
 #from the sources enumerated in /etc/apt/sources.list.), dist-upgrade (dist-upgrade in 
@@ -285,12 +300,26 @@ sudo apt policy
 #conflict), autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
 #repository of retrieved package files)
+
+#01_ limpando todos os repositórios locais do Ubuntu Server
 sudo apt clean
+
+#02_ atualizando todas as listas (sources.list) do Ubuntu Server
 sudo apt update
+
+#03_ atualizando todos os softwares com suporte do Ubuntu Pro no Ubuntu Server
 sudo apt upgrade
+
+#04_ forçando uma atualização completa do Ubuntu Pro no Ubuntu Server
 sudo apt full-upgrade
+
+#05_ atualizando o sistema e kernel do Ubuntu Pro no Ubuntu Server
 sudo apt dist-upgrade
+
+#06_ removendo todos os softwares desnecessários do Ubuntu Pro no Ubuntu Server
 sudo apt autoremove
+
+#07_ limpando todos os caches de instalação do Ubuntu Pro no Ubuntu Server
 sudo apt autoclean
 ```
 
