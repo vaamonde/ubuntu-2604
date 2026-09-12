@@ -35,7 +35,20 @@ Site Oficial do Prometheus: https://prometheus.io/<br>
 Site Oficial do Node Exporter: https://github.com/prometheus/node_exporter<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ 
+[#01_ Criando o Grupo e o Usuário de Serviço do Node Exporter no Ubuntu Server](#01_-criando-o-grupo-e-o-usuário-de-serviço-do-node-exporter-no-ubuntu-server)<br>
+[#02_ Baixando o Coletor de Métricas Node Exporter do Github no Ubuntu Server](#02_-baixando-o-coletor-de-métricas-node-exporter-do-github-no-ubuntu-server)<br>
+[#03_ Descompactando o arquivo do Node Exporter no Ubuntu Server](#03_-descompactando-o-arquivo-do-node-exporter-no-ubuntu-server)<br>
+[#04_ Atualizando os arquivos de executáveis do Node Exporter no Ubuntu Server](#04_-atualizando-os-arquivos-de-executáveis-do-node-exporter-no-ubuntu-server)<br>
+[#05_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server](#05_-localização-dos-diretórios-e-arquivos-principais-do-prometheus-no-ubuntu-server)<br>
+[#06_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server](#06_-baixando-e-atualizando-os-arquivos-customizados-do-node-exporter-no-ubuntu-server)<br>
+[#07_ Alterando as permissões do executável do Node Exporter no Ubuntu Server](#07_-alterando-as-permissões-do-executável-do-node-exporter-no-ubuntu-server)<br>
+[#08_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server](#08_-editando-o-arquivo-de-configuração-do-node-exporter-no-ubuntu-server)<br>
+[#09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#09_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
+[#10_ Habilitando o Serviço do Node Exporter no Ubuntu Server](#10_-habilitando-o-serviço-do-node-exporter-no-ubuntu-server)<br>
+[#11_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server](#11_-verificando-o-serviço-e-versão-do-node-exporter-no-ubuntu-server)<br>
+[#12_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server](#12_-verificando-a-porta-de-conexão-do-node-exporter-no-ubuntu-server)<br>
+[#13_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server](#13_-verificando-as-métrica-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
+[#14_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server](#14_-verificando-as-regras-e-alertas-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -192,6 +205,13 @@ INSERT
 #salvar e sair do arquivo
 ESC SHIFT : x <Enter>
 ```
+```bash
+#testando o arquivo de configuração dos Alertas do Node Exporter no Ubuntu Server
+#opção do comando sudo: -u (Run the command as a user other than the default target user)
+#opções do comando promtool: check config (Check if the config files are valid or not) 
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
+sudo -u prometheus promtool check rules /etc/prometheus/rules/alertas-node-linux.yml
+```
 
 ## 09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
 
@@ -319,11 +339,28 @@ firefox ou google chrome: http://endereço_ipv4_ubuntuserver:9090
 Status
   Targets health
     #Monitoramento do Prometheus na porta 9090
-    Prometheus
+    prometheus-srv
       Endpoint: http://172.16.1.20:9090/metrics
     #Monitoramento do Node Exporter na porta 9100
     srvvaamonde
       Endpoint: http://172.16.1.20:9100/metrics
+```
+
+## 14_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server
+
+```bash
+#acessando o Prometheus via navegador
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver:9090
+```
+```bash
+#verificando as regras do Node Exporter do Prometheus no Ubuntu Server
+Status
+  Rule health
+```
+```bash
+#verificando os alertas do Node Exporter do Prometheus no Ubuntu Server
+Status
+  Rule health
 ```
 
 ---

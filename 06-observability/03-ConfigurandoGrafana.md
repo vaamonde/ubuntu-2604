@@ -34,14 +34,23 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Site Oficial do Grafana: https://grafana.com/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ 
+[#01_ Instalando as Dependências do Grafana Server no Ubuntu Server](#01_-instalando-as-dependências-do-grafana-server-no-ubuntu-server)<br>
+[#02_ Baixando a Chave GPG e Criando o Repositório do Grafana Server no Ubuntu Server](#02_-baixando-a-chave-gpg-e-criando-o-repositório-do-grafana-server-no-ubuntu-server)<br>
+[#03_ Instalando o Grafana Server no Ubuntu Server](#03_-instalando-o-grafana-server-no-ubuntu-server)<br>
+[#04_ Atualizado os arquivos de configuração do Grafana Server no Ubuntu Server](#04_-atualizado-os-arquivos-de-configuração-do-grafana-server-no-ubuntu-server)<br>
+[#05_ Localização dos diretórios e arquivos principais do Grafana Server no Ubuntu Server](#05_-localização-dos-diretórios-e-arquivos-principais-do-grafana-server-no-ubuntu-server)<br>
+[#06_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server](#06_-editando-os-arquivos-de-configuração-do-grafana-server-no-ubuntu-server)<br>
+[#07_ Habilitando o Serviço do Grafana Server no Ubuntu Server](#07_-habilitando-o-serviço-do-grafana-server-no-ubuntu-server)<br>
+[#08_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server](#08_-verificando-o-serviço-e-versão-do-grafana-server-no-ubuntu-server)<br>
+[#09_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server](#09_-verificando-a-porta-de-conexão-do-grafana-server-no-ubuntu-server)<br>
+[#10_ Configurando o Grafana Server via Navegador](#10_-configurando-o-grafana-server-via-navegador)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
 | **Grafana** | Plataforma de código aberto para **visualização, análise e monitoramento de dados**, capaz de consultar diferentes fontes de dados e apresentar as informações por meio de dashboards, gráficos, tabelas e indicadores. | Serve para **visualizar e analisar as métricas coletadas pelo Prometheus**, permitindo acompanhar CPU, memória, disco, filesystem, rede, uptime e outros indicadores do Ubuntu Server 26.04. Também permite criar **dashboards personalizados, consultas, painéis e alertas**, facilitando a identificação de problemas e o acompanhamento da saúde do servidor. |
 ---
 
-[![Node Exporter Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Node Exporter Ubuntu Server")
+[![Grafana Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Grafana Ubuntu Server")
 
 Link da vídeo aula: 
 
@@ -172,10 +181,10 @@ INSERT
 ```bash
 #descomentar a variável protocol = na linha: 32
 protocol = http
-
+#
 #descomentar a variável ;http_port = na linha 41
 http_port = 3000
-
+#
 #descomentar a variável ;domain = na linha 44
 #altere o nome de domínio conforme o seu cenário
 domain = pti.intra
