@@ -34,7 +34,19 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Site Oficial do Prometheus: https://prometheus.io/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ 
+[#01_ Criando o Grupo e o Usuário de Serviço do Prometheus no Ubuntu Server](#01_-criando-o-grupo-e-o-usuário-de-serviço-do-prometheus-no-ubuntu-server)<br>
+[#02_ Criando os Diretórios de Configuração do Prometheus no Ubuntu Server](#02_-criando-os-diretórios-de-configuração-do-prometheus-no-ubuntu-server)<br>
+[#03_ Baixando o Prometheus do Github no Ubuntu Server](#03_-baixando-o-prometheus-do-github-no-ubuntu-server)<br>
+[#04_ Descompactando o arquivo do Prometheus no Ubuntu Server](#04_-descompactando-o-arquivo-do-prometheus-no-ubuntu-server)<br>
+[#05_ Atualizando os arquivos executáveis do Prometheus no Ubuntu Server](#05_-atualizando-os-arquivos-executáveis-do-prometheus-no-ubuntu-server)<br>
+[#06_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server](#06_-localização-dos-diretórios-e-arquivos-principais-do-prometheus-no-ubuntu-server)<br>
+[#07_ Baixando e atualizando os arquivos de Configurações Customizados do Prometheus no Ubuntu Server](#07_-baixando-e-atualizando-os-arquivos-de-configurações-customizados-do-prometheus-no-ubuntu-server)<br>
+[#08_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server](#08_-alterando-as-permissões-dos-arquivos-e-diretórios-do-prometheus-no-ubuntu-server)<br>
+[#09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#09_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
+[#10_ Habilitando o Serviço do Prometheus no Ubuntu Server](#10_-habilitando-o-serviço-do-prometheus-no-ubuntu-server)<br>
+[#11_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server](#11_-verificando-o-serviço-e-versão-do-prometheus-no-ubuntu-server)<br>
+[#12_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server](#12_-verificando-a-porta-de-conexão-do-prometheus-no-ubuntu-server)<br>
+[#13_ Configurando o Prometheus via Navegador no Ubuntu Server](#13_-configurando-o-prometheus-via-navegador-no-ubuntu-server)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |

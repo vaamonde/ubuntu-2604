@@ -108,7 +108,16 @@ tar -zxvf node_exporter*.tar.gz
 sudo cp -Rv node_exporter*/node_exporter /usr/local/bin/
 ```
 
-## 05_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server
+## 05_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server 
+
+| **📂 Caminho** | **📌 Tipo** | **📖 Descrição** | **🎯 Finalidade** |
+| :------------- | :---------- | :--------------- | :---------------- |
+| `/etc/prometheus/` | Diretório | Diretório principal dos **arquivos de configuração** do Prometheus. | Centralizar as configurações utilizadas pelo serviço. |
+| `/etc/prometheus/node_exporter.conf` | Arquivo | Principal arquivo de configuração do **Node Exporter**. | Define parâmetros de inicialização do serviço do Node Exporter e seus recursos de monitoramento. |
+| `/etc/prometheus/rules/alertas-node-linux.yml` | Arquivo | Arquivo contendo as **regras de alertas relacionadas ao Node Exporter/Linux**. | Definir condições que, quando atendidas, podem gerar **alertas sobre CPU, memória, disco, rede e outros recursos do servidor**. |
+---
+
+## 06_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server
 ```bash
 #download do arquivo de serviço do Node Exporter no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
@@ -128,7 +137,7 @@ sudo wget -v -O /etc/prometheus/node_exporter.conf https://raw.githubusercontent
 sudo wget -v -O /etc/prometheus/rules/alertas-node-linux.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/alertas-node-linux.yml
 ```
 
-## 06_ Alterando as permissões do executável do Node Exporter no Ubuntu Server
+## 07_ Alterando as permissões do executável do Node Exporter no Ubuntu Server
 ```bash
 #alterando o dono e grupo do arquivo do Node Exporter no Ubuntu Server
 #opção do comando chown: -R (recursive) -v (verbose), node_exporter (user), :node_exporter (group)
@@ -148,7 +157,83 @@ sudo chown -Rv node_exporter:node_exporter /etc/prometheus/node_exporter.conf
 sudo chmod -Rv 775 /usr/local/bin/node_exporter
 ```
 
-## 07_ Habilitando o Serviço do Node Exporter no Ubuntu Server
+## 08_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do `Node Exporter` e baseado no formato de Serialização de Dados Legíveis *YAML (Yet Another Markup Language)* utilizado pela linguagem de programação Python, muito cuidado com o uso de espaços e tabulação e principalmente sua indentação.
+
+```bash
+#editando arquivo de configuração dos Alertas do Node Exporter no Ubuntu Server
+sudo vim /etc/prometheus/rules/alertas-node-linux.yml
+```
+```bash
+#habilitando o número de linhas do arquivo alertas-node-linux.yml
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```yaml
+# Configuração dos grupos de alertas do Node Exporter na linha 26
+# Configuração do alerta de: Node Exporter Inativo (Sonda Fora do Ar) na linha 31
+# Configuração do alerta de: Uso elevado de CPU na linha 43
+# Configuração do alerta de: Uso elevado de Memória RAM na linha 53
+# Configuração do alerta de: Uso elevado de Memória Swap na linha 63
+# Configuração do alerta de: Hard Disk (Partição/Volume Lógico) quase cheio na linha 73
+# Configuração do alerta de: Previsão de Esgotamento de Disco (Antecipação de Falha) na linha 86
+# Configuração do alerta de: Load Average (Média de Carga de Processamento) elevado na linha 96
+# Configuração do alerta de: Uso elevado de I/O (Entrada e Saída) de Disco na linha 106
+# Configuração do alerta de: Relógio do Sistema Dessincronizado (NTP/Chrony) na linha 116
+# Configuração do alerta de: Desvio (Offset) de Relógio elevado na linha 128
+# Configuração do alerta de: Unidade do Systemd em Estado de Falha (Failed) na linha 138
+# Configuração do alerta de: Reinicialização Recente do Servidor na linha 150
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+```
+
+## 09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do `Prometheus` e baseado no formato de Serialização de Dados Legíveis *YAML (Yet Another Markup Language)* utilizado pela linguagem de programação Python, muito cuidado com o uso de espaços e tabulação e principalmente sua indentação.
+
+```bash
+#editando arquivo de configuração do Prometheus no Ubuntu Server
+sudo vim /etc/prometheus/prometheus.yml
+```
+```bash
+#habilitando o número de linhas do arquivo prometheus.yml
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```yaml
+#Descomentar as linhas de configuração do Node Exporter a partir da linha 71
+# Configurações dos Serviços de Monitoramento de Métricas do Prometheus utilizando
+# o recurso de Exportação do Node Remoto para sistemas operacionais Linux ou Windows
+  - job_name: "srvvaamonde"
+    static_configs:
+      - targets: ["172.16.1.20:9100"]
+        labels:
+          host: "srvvaamonde"
+          sistema: "linux"
+          funcao: "servidor"
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+```
+```bash
+#testando o arquivo de configuração do Prometheus no Ubuntu Server
+#opção do comando sudo: -u (Run the command as a user other than the default target user)
+#opções do comando promtool: check config (Check if the config files are valid or not) 
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
+sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
+```
+
+## 10_ Habilitando o Serviço do Node Exporter no Ubuntu Server
 ```bash
 #habilitando o serviço do Node Exporter no Ubuntu Server
 #opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
@@ -156,19 +241,23 @@ sudo chmod -Rv 775 /usr/local/bin/node_exporter
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#atualizando os serviços do Systemd
+#atualizando os serviços do Systemd no Ubuntu Server
 sudo systemctl daemon-reload
 ```
 ```bash
-#habilitando o serviço do Node Exporter
+#habilitando o serviço do Node Exporter no Ubuntu Server
 sudo systemctl enable node_exporter
 ```
 ```bash
-#iniciando o serviço do Node Exporter
-sudo systemctl start node_exporter
+#reiniciando o serviço do Node Exporter no Ubuntu Server
+sudo systemctl restart node_exporter
+```
+```bash
+#reiniciando o serviço do Prometheus no Ubuntu Server
+sudo systemctl restart prometheus
 ```
 
-## 08_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server
+## 11_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server
 ```bash
 #verificando o serviço do Node Exporter no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then 
@@ -177,19 +266,19 @@ sudo systemctl start node_exporter
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#verificando o status do serviço do Node Exporter
+#verificando o status do serviço do Node Exporter no Ubuntu Server
 sudo systemctl status node_exporter
 ```
 ```bash
-#reinicializando o serviço do Node Exporter
+#reinicializando o serviço do Node Exporter no Ubuntu Server
 sudo systemctl restart node_exporter
 ```
 ```bash
-#parando o serviço do Node Exporter
+#parando o serviço do Node Exporter no Ubuntu Server
 sudo systemctl stop node_exporter
 ```
 ```bash
-#iniciando o serviço do Node Exporter
+#iniciando o serviço do Node Exporter no Ubuntu Server
 sudo systemctl start node_exporter
 ```
 ```bash
@@ -208,7 +297,7 @@ sudo journalctl -xeu node_exporter
 sudo node_exporter --version
 ```
 
-## 09_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server
+## 12_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
@@ -219,11 +308,23 @@ sudo node_exporter --version
 sudo lsof -nP -iTCP:'9100' -sTCP:LISTEN
 ```
 
+## 13_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server
 
-
-
-
-
+```bash
+#acessando o Prometheus via navegador
+firefox ou google chrome: http://endereço_ipv4_ubuntuserver:9090
+```
+```bash
+#verificando o monitoramento do Prometheus no Ubuntu Server
+Status
+  Targets health
+    #Monitoramento do Prometheus na porta 9090
+    Prometheus
+      Endpoint: http://172.16.1.20:9090/metrics
+    #Monitoramento do Node Exporter na porta 9100
+    srvvaamonde
+      Endpoint: http://172.16.1.20:9100/metrics
+```
 
 ---
 
