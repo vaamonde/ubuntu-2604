@@ -28,16 +28,19 @@ Github Procedimentos em TI: https://github.com/vaamonde<br>
 
 Vídeo de instalação do Ubuntu Server 26.04.x LTS no Oracle VirtualBOX, nesse vídeo você vai aprender a baixar a ISO do Ubuntu Server do site oficial, criar e customizar a máquina virtual no VirtualBOX e fazer a instalação padrão do Ubuntu Server, no próximo vídeo começamos a etapa de configuração.
 
-Conteúdo estudado nessa instalação:<br>
+**Conteúdo estudado nessa instalação:**<br>
 #01_ Download da ISO do Ubuntu Server 26.04.x LTS<br>
-#02_ Criação da Máquina Virtual no Oracle VirtualBOX<br>
-#03_ Configurações da Máquina Virtual UbuntuOnPremise<br>
-#04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO)<br>
+#02_ Criação da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX<br>
+#03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX<br>
+#04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX<br>
 #05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS<br>
-#06_ Acessando o Ubuntu Server pela primeira vez<br>
+#06_ Particionamento do Hard Disk do Ubuntu Server 26.04.x LTS<br>
+#07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS<br>
+#08_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)<br>
+#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH<br>
 
 [![Instalação Ubuntu Server](http://img.youtube.com/vi/8/0.jpg)]( "Instalação Ubuntu Server")
 
 Link da vídeo aula: 
 
-Link da documentação: 
+Link da documentação: https://github.com/vaamonde/ubuntu-2604/blob/main/01-install/01-InstalacaoDoUbuntuServer-26.04-LTS.md

@@ -33,15 +33,15 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa instalação:**<br>
-#01_ Download da ISO do Ubuntu Server 26.04.x LTS<br>
-#02_ Criação da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX<br>
-#03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX<br>
-#04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX<br>
-#05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS<br>
-#06_ Particionamento do Hard Disk do Ubuntu Server 26.04.x LTS<br>
-#07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS<br>
-#08_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)<br>
-#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH<br>
+[#01_ Download da ISO do Ubuntu Server 26.04.x LTS](#01_-download-da-iso-do-ubuntu-server-2604x-lts)<br>
+[#02_ Criação da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX](#02_-criação-da-máquina-virtual-do-ubuntu-server-no-oracle-virtualbox)<br>
+[#03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX](#03_-configurações-da-máquina-virtual-do-ubuntu-server-no-oracle-virtualbox)<br>
+[#04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX](#04_-iniciando-a-instalação-do-ubuntu-server-2604x-lts-localizar-a-iso-no-oracle-virtualbox)<br>
+[#05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS](#05_-instalação-e-configuração-do-ubuntu-server-2604x-lts)<br>
+[#06_ Particionamento do Hard Disk do Ubuntu Server 26.04.x LTS](#06_-particionamento-do-hard-disk-do-ubuntu-server-2604x-lts)<br>
+[#07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS](#07_-finalização-da-instalação-do-ubuntu-server-2604x-lts)<br>
+[#08_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)](#08_-acessando-o-ubuntu-server-pela-primeira-vez-via-terminal-tty)<br>
+[#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH](#09_-acessando-a-máquina-virtual-do-ubuntu-server-remotamente-via-ssh)<br>
 
 [![Instalação Ubuntu Server 26.04](http://img.youtube.com/vi//0.jpg)]( "Instalação Ubuntu Server 26.04")
 
@@ -51,7 +51,7 @@ Link da vídeo aula:
 
 Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 
-01) Versão do download Ubuntu Server: ubuntu-26.04-live-server-amd64.iso (Link atualizado em 10/09/2026)<br>
+01) Versão do download Ubuntu Server: ubuntu-26.04.1-live-server-amd64.iso (Link atualizado em 10/09/2026)<br>
 02) Arquitetura do Ubuntu Server: AMD64 (64-bit)<br>
 03) Tipo de instalação: DVD Image (ISO) Installer<br>
 
@@ -69,7 +69,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 <Novo>
 ```
 ```bash
-#Personalizando a criação da máquinas virtual do Ubuntu Server
+#Personalizando a criação da Máquina Virtual do Ubuntu Server
 02) Nome e Sistema Operacional:
     Nome: UbuntuOnPremises (altere conforme a sua necessidade)
     Pasta (F): #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
@@ -85,7 +85,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
     Sem configuração
 ```
 ```bash
-#Configuração da Memória RAM Virtual e dos Processadores
+#Configuração da Memória RAM Virtual (vRAM) e dos Processadores Virtual (vCPU)
 04) Hardware
     Memória Base: 4096 MB (altere conforme a sua necessidade)
     Processadores: 2 (VCPUs) (altere conforme sua necessidade)
@@ -108,7 +108,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 
 ## 03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX
 ```bash
-#Configurando a máquinas virtual do Ubuntu Server
+#Configurando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
@@ -127,7 +127,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
         #O COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
 ```
 ```bash
-#Configuração da Placa de Vídeo e Resolução
+#Configuração da Placa de Vídeo (vGPU) e Resolução do Monitor
 03) Display
     Tela (S)
       Memória de Vídeo: 256 MB
@@ -153,12 +153,12 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 
 ## 04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX
 ```bash
-#Iniciando a máquinas virtual do Ubuntu Server
+#Iniciando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises: 
 <Iniciar>
 ```
 ```bash
-#Locando a ISO da instalação do Ubuntu Server
+#Localizando a ISO da Instalação do Ubuntu Server
 02) VirtualBOX VM
     DVD: <Outro...>
     #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 26.04.x LTS <Abrir>
@@ -320,7 +320,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 #Configuração do suporte ao Ubuntu Pro do Ubuntu Server
 13) Upgrade to Ubuntu Pro
     ( ) Enable Ubuntu Pro
-    (X) Skip Ubuntu Pro setup for now
+    (X) Skip Ubuntu Pro setup for now (DEFAULT - Selecionado por padrão)
 <Continue>
 ```
 ```bash
