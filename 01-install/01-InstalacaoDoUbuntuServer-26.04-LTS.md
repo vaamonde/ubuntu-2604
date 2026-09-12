@@ -23,6 +23,8 @@
 >
 > #boraparapratica #boraparaprática #vaamonde #robsonvaamonde #vavaaprova #ubuntu #ubuntuserver #ubuntuserver2604 #install #installubuntu #installubuntuserver #installubuntuserver2604
 >
+> [![Instalação Ubuntu Server 26.04](https://github.com/vaamonde/ubuntu-2604/blob/main/selos/01-install.png)]
+>
 > LINK DO SELO: https://github.com/vaamonde/ubuntu-2604/blob/main/selos/01-install.png
 
 ---
