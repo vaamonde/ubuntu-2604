@@ -68,7 +68,7 @@ scrape_configs:
 #
 # Configurações dos Serviços de Monitoramento de Métricas do Prometheus utilizando
 # o recurso de Exportação do Node Remoto para sistemas operacionais Linux ou Windows
-#  - job_name: "srvvaamonde"
+#  - job_name: "node-exporter"
 #    static_configs:
 #      - targets: ["172.16.1.20:9100"]
 #        labels:

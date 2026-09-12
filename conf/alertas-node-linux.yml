@@ -32,7 +32,7 @@ groups:
   # OBSERVAÇÃO IMPORTANTE: este e o alerta mais importante do arquivo, pois se o Node
   # Exporter cair, TODOS os demais alertas ficam cegos silenciosamente (sem series de dados)
   - alert: NodeExporterInativo
-    expr: up{job="srvvaamonde"} == 0
+    expr: up{job="node-exporter"} == 0
     for: 2m
     labels:
       severity: critical
@@ -42,7 +42,7 @@ groups:
   #
   # Configuração do alerta de: Uso elevado de CPU
   - alert: CPUAlta
-    expr: 100 - (avg without (cpu, mode) (rate(node_cpu_seconds_total{job="srvvaamonde", mode="idle"}[5m]))) * 100 > 80
+    expr: 100 - (avg without (cpu, mode) (rate(node_cpu_seconds_total{job="node-exporter", mode="idle"}[5m]))) * 100 > 80
     for: 5m
     labels:
       severity: warning
@@ -52,7 +52,7 @@ groups:
   #
   # Configuração do alerta de: Uso elevado de Memória RAM
   - alert: MemoriaAlta
-    expr: (1 - (node_memory_MemAvailable_bytes{job="srvvaamonde"} / node_memory_MemTotal_bytes{job="srvvaamonde"})) * 100 > 80
+    expr: (1 - (node_memory_MemAvailable_bytes{job="node-exporter"} / node_memory_MemTotal_bytes{job="node-exporter"})) * 100 > 80
     for: 5m
     labels:
       severity: warning
@@ -62,7 +62,7 @@ groups:
   #
   # Configuração do alerta de: Uso elevado de Memória Swap
   - alert: SwapAlto
-    expr: (node_memory_SwapTotal_bytes{job="srvvaamonde"} > 0) and ((1 - (node_memory_SwapFree_bytes{job="srvvaamonde"} / node_memory_SwapTotal_bytes{job="srvvaamonde"})) * 100 > 50)
+    expr: (node_memory_SwapTotal_bytes{job="node-exporter"} > 0) and ((1 - (node_memory_SwapFree_bytes{job="node-exporter"} / node_memory_SwapTotal_bytes{job="srvvaamonde"})) * 100 > 50)
     for: 5m
     labels:
       severity: warning
@@ -75,7 +75,7 @@ groups:
   # do Volume Group/Logical Volume do LVM muda conforme o Particionamento de cada servidor
   # (exemplo: ubuntu--vg-lv--root, ubuntu--vg-lv--var, vg_dados-lv_dados, etc)
   - alert: DiscoCheio
-    expr: (1 - (node_filesystem_avail_bytes{job="srvvaamonde", fstype!~"tmpfs|overlay|squashfs|devtmpfs"} / node_filesystem_size_bytes{job="srvvaamonde", fstype!~"tmpfs|overlay|squashfs|devtmpfs"})) * 100 > 80
+    expr: (1 - (node_filesystem_avail_bytes{job="node-exporter", fstype!~"tmpfs|overlay|squashfs|devtmpfs"} / node_filesystem_size_bytes{job="srvvaamonde", fstype!~"tmpfs|overlay|squashfs|devtmpfs"})) * 100 > 80
     for: 5m
     labels:
       severity: critical
@@ -85,7 +85,7 @@ groups:
   #
   # Configuração do alerta de: Previsão de Esgotamento de Disco (Antecipação de Falha)
   - alert: DiscoVaiEsgotar
-    expr: predict_linear(node_filesystem_avail_bytes{job="srvvaamonde", fstype!~"tmpfs|overlay|squashfs|devtmpfs"}[6h], 4 * 3600) < 0
+    expr: predict_linear(node_filesystem_avail_bytes{job="node-exporter", fstype!~"tmpfs|overlay|squashfs|devtmpfs"}[6h], 4 * 3600) < 0
     for: 15m
     labels:
       severity: warning
@@ -95,7 +95,7 @@ groups:
   #
   # Configuração do alerta de: Load Average (Processamento) elevado
   - alert: Processamento
-    expr: node_load15{job="srvvaamonde"} > count without (cpu, mode) (node_cpu_seconds_total{job="srvvaamonde", mode="idle"})
+    expr: node_load15{job="node-exporter"} > count without (cpu, mode) (node_cpu_seconds_total{job="node-exporter", mode="idle"})
     for: 5m
     labels:
       severity: warning
@@ -105,7 +105,7 @@ groups:
   #
   # Configuração do alerta de: Uso elevado de I/O de Disco
   - alert: IOAlto
-    expr: rate(node_disk_io_time_seconds_total{job="srvvaamonde"}[5m]) > 0.8
+    expr: rate(node_disk_io_time_seconds_total{job="node-exporter"}[5m]) > 0.8
     for: 5m
     labels:
       severity: warning
@@ -117,7 +117,7 @@ groups:
   # OBSERVAÇÃO IMPORTANTE: essencial em ambientes com Hardening/Auditoria, pois logs,
   # certificados TLS e trilhas de auditoria dependem de um relógio confiável e sincronizado
   - alert: RelogioDessincronizado
-    expr: node_timex_sync_status{job="srvvaamonde"} == 0
+    expr: node_timex_sync_status{job="node-exporter"} == 0
     for: 5m
     labels:
       severity: critical
@@ -127,7 +127,7 @@ groups:
   #
   # Configuração do alerta de: Desvio (Offset) de Relógio elevado
   - alert: DesvioRelogioAlto
-    expr: abs(node_timex_offset_seconds{job="srvvaamonde"}) > 0.5
+    expr: abs(node_timex_offset_seconds{job="node-exporter"}) > 0.5
     for: 5m
     labels:
       severity: warning
@@ -139,7 +139,7 @@ groups:
   # OBSERVAÇÃO IMPORTANTE: detecta a queda de serviços críticos de Hardening, como
   # sshd, fail2ban, ufw, auditd, chrony, mdmonitor, lvm2-monitor, entre outros
   - alert: ServicoSystemdFalhou
-    expr: node_systemd_unit_state{job="srvvaamonde", state="failed"} == 1
+    expr: node_systemd_unit_state{job="node-exporter", state="failed"} == 1
     for: 2m
     labels:
       severity: critical
@@ -149,7 +149,7 @@ groups:
   #
   # Configuração do alerta de: Reinicialização Recente do Servidor
   - alert: ServidorReiniciado
-    expr: (time() - node_boot_time_seconds{job="srvvaamonde"}) < 600
+    expr: (time() - node_boot_time_seconds{job="node-exporter"}) < 600
     labels:
       severity: warning
     annotations:
