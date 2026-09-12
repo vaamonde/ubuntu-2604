@@ -33,15 +33,15 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Instalando os principais software de Rede (Network) no Ubuntu Server<br>
-#02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server<br>
-#03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server<br>
-#04_ Alterando as configurações da Placa de Rede do Ubuntu Server<br>
-#05_ Aplicando as configurações do Netplan e verificando as informações de Rede do Ubuntu Server<br>
-#06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server<br>
-#07_ Reinicializar o serviço do Systemd Resolved (Resolução de Nomes) no Ubuntu Server<br>
-#08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server<br>
-#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH utilizando IPv4 e IPv6<br>
+[#01_ Instalando os principais software de Rede (Network) no Ubuntu Server](#01_-instalando-os-principais-software-de-rede-network-no-ubuntu-server)<br>
+[#02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server](#02_-verificando-as-informações-do-hardware-de-rede-placa-de-rede-no-ubuntu-server)<br>
+[#03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server](#03_-verificando-as-informações-de-endereços-ipv4-e-ipv6-no-ubuntu-server)<br>
+[#04_ Alterando as configurações da Placa de Rede do Ubuntu Server](#04_-alterando-as-configurações-da-placa-de-rede-do-ubuntu-server)<br>
+[#05_ Aplicando as configurações do Netplan e verificando as informações de Rede do Ubuntu Server](#05_-aplicando-as-configurações-do-netplan-e-verificando-as-informações-de-rede-do-ubuntu-server)<br>
+[#06_ Habilitando o suporte ao DNS Over TLS (DoT) e DNSSEC no Ubuntu Server](#06_-habilitando-o-suporte-ao-dns-over-tls-dot-e-dnssec-no-ubuntu-server)<br>
+[#07_ Reinicializar o serviço do Systemd Resolved (Resolução de Nomes) no Ubuntu Server](#07_-reinicializar-o-serviço-do-systemd-resolved-resolução-de-nomes-no-ubuntu-server)<br>
+[#08_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server](#08_-verificando-as-informações-da-placa-de-rede-depois-de-alterada-no-ubuntu-server)<br>
+[#09_ Acessando a máquina virtual do Ubuntu Server remotamente via SSH utilizando IPv4 e IPv6](#09_-acessando-a-máquina-virtual-do-ubuntu-server-remotamente-via-ssh-utilizando-o-ipv4-e-ipv6)<br>
 
 | **🌐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -328,7 +328,7 @@ sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-confi
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config.yaml
 ```
 ```bash
-#editando o arquivo de configuração personalizado do Netplan
+#editando o arquivo de configuração personalizado do Netplan no Ubuntu Server
 sudo vim /etc/netplan/00-installer-config.yaml
 ```
 ```bash
@@ -354,7 +354,7 @@ network:
       #
       # Identificando a Interface de Rede Física pelo Endereço MAC Address (Visto no comando: ip address show)
       match:
-        macaddress: SEU_ENDEREÇO_MAC_ADDRESS
+        macaddress: SEU_ENDEREÇO_MAC_ADDRESS_INTERFACE_FÍSICA
       #
       # Definindo o Nome Lógico da Interface de Rede (seguindo o padrão do comando: lshw -class network)
       set-name: enp0s3
@@ -416,7 +416,7 @@ ESC SHIFT :x <Enter>
 #fazendo o backup do arquivo de configuração modificado do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp
+sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
 ```
 ```bash
 #listando o conteúdo do diretório do Netplan com os novos arquivos no Ubuntu Server
@@ -509,15 +509,15 @@ INSERT
 #configuração do domínio raiz (.) como domínio de roteamento ~ (routing domain)
 #~. = Utilize este servidor DNS para resolver qualquer domínio da Internet
 Domains=~.
-
+#
 #descomentar e alterar o valor da variável DNSSEC na linha 33 para: DNSSEC=yes
 #habilita a validação do DNSSEC (Domain Name System Security Extensions)
 DNSSEC=yes
-
+#
 #descomentar e alterar o valor da variável DNSOverTLS na linha 34 para: DNSOverTLS=yes
 #habilita o DNS over TLS (DoT), As consultas DNS passam a ser criptografadas utilizando TLS (porta TCP 853)
 DNSOverTLS=yes
-
+#
 #descomentar e alterar o valor da variável Cache na linha 37 para: Cache=yes
 #habilita o cache local de respostas DNS para acelerar as consultas
 Cache=yes
@@ -560,11 +560,11 @@ sudo ip address show
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 ```
 ```bash
-#visualizando as rotas IPv4
+#visualizando as rotas IPv4 no Ubuntu Server
 sudo ip -4 route show
 ```
 ```bash
-#visualizando as rotas IPv6
+#visualizando as rotas IPv6 no Ubuntu Server
 sudo ip -6 route show
 ```
 ```bash
@@ -609,19 +609,19 @@ sudo netplan status
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ```
 ```bash
-#pingando endereço IPv4 do DNS do Google
+#pingando endereço IPv4 do DNS do Google no Ubuntu Server
 ping -4 -c 5 8.8.8.8
 ```
 ```bash
-#pingando endereço IPv6 do DNS do Google
+#pingando endereço IPv6 do DNS do Google no Ubuntu Server
 ping -6 -c 5 2001:4860:4860::8888
 ```
 ```bash
-#pingando o nome e resolvendo IPv4 do DNS do Google
+#pingando o nome e resolvendo IPv4 do DNS do Google no Ubuntu Server
 ping -4 -c 5 google.com
 ```
 ```bash
-#pingando o nome e resolvendo IPv6 do DNS do Google
+#pingando o nome e resolvendo IPv6 do DNS do Google no Ubuntu Server
 ping -6 -c 5 google.com
 ```
 
@@ -653,7 +653,6 @@ seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
-
 ```bash
 #testando a conexão remota no Ubuntu Server (alterar o Endereço IPv6 para o seu cenário)
 ping SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
@@ -675,6 +674,10 @@ seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER password: sua_senha <Enter>
 ```bash
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
+```
+```bash
+#verificando os usuários logados no TTY e PTS do Ubuntu Server
+w
 ```
 
 ---

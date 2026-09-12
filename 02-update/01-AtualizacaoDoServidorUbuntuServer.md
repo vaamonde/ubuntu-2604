@@ -33,19 +33,19 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa atualização:**<br>
-#01_ Verificando as políticas dos repositórios locais no Ubuntu Server<br>
-#02_ Removendo os repositórios Multiverse (Multiverso) e Universe (Universo) no Ubuntu Server<br>
-#03_ Atualizando as Listas (sources.list) do Apt no Ubuntu Server<br>
-#04_ Verificando todos os pacotes a serem atualizados no Ubuntu Server<br>
-#05_ Atualizando todos os software (Pacotes) no Ubuntu Server<br>
-#06_ Forçando uma atualização completa de todos os software e dependências no Ubuntu Server<br>
-#07_ Forçando uma atualização e remoção de software desnecessários no Ubuntu Server<br>
-#08_ Removendo todos os pacotes desnecessários no Ubuntu Server<br>
-#09_ Fazendo a limpeza dos repositórios locais e pacotes desnecessários no Ubuntu Server<br>
-#10_ Limpando o cache local do (sources.list) no Ubuntu Server<br>
-#11_ Verificando todas as versões de software atualizados no Ubuntu Server<br>
-#12_ Verificando os Logs de atualização de software no Ubuntu Server<br>
-#13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server<br>
+[#01_ Verificando as políticas dos repositórios locais no Ubuntu Server](#01_-verificando-as-políticas-dos-repositórios-locais-no-ubuntu-server)<br>
+[#02_ Removendo os repositórios Multiverse (Multiverso) e Universe (Universo) no Ubuntu Server](#02_-removendo-os-repositórios-multiverse-multiverso-e-universe-universo-no-ubuntu-server)<br>
+[#03_ Atualizando as Listas (sources.list) do Apt no Ubuntu Server](#03_-atualizando-as-listas-sourceslist-do-apt-no-ubuntu-server)<br>
+[#04_ Verificando todos os pacotes a serem atualizados no Ubuntu Server](#04_-verificando-todos-os-pacotes-a-serem-atualizados-no-ubuntu-server)<br>
+[#05_ Atualizando todos os software (Pacotes) no Ubuntu Server](#05_-atualizando-todos-os-software-pacotes-no-ubuntu-server)<br>
+[#06_ Forçando uma atualização completa de todos os software e dependências no Ubuntu Server](#06_-forçando-uma-atualização-completa-de-todos-os-software-e-dependências-no-ubuntu-server)<br>
+[#07_ Forçando uma atualização e remoção de software desnecessários no Ubuntu Server](#07_-forçando-uma-atualização-e-remoção-de-software-desnecessários-no-ubuntu-server)<br>
+[#08_ Removendo todos os pacotes desnecessários no Ubuntu Server](#08_-removendo-todos-os-pacotes-desnecessários-no-ubuntu-server)<br>
+[#09_ Fazendo a limpeza dos repositórios locais e pacotes desnecessários no Ubuntu Server](#09_-fazendo-a-limpeza-dos-repositórios-locais-e-pacotes-desnecessários-no-ubuntu-server)<br>
+[#10_ Limpando o cache local do (sources.list) no Ubuntu Server](#10_-limpando-o-cache-local-do-sourceslist-no-ubuntu-server)<br>
+[#11_ Verificando todas as versões de software atualizados no Ubuntu Server](#11_-verificando-todas-as-versões-de-software-atualizados-no-ubuntu-server)<br>
+[#12_ Verificando os Logs de atualização de software no Ubuntu Server](#12_-verificando-os-logs-de-atualização-de-software-no-ubuntu-server)<br>
+[#13_ Reiniciando e aplicando as mudanças das atualizações no Ubuntu Server](#13_-reiniciando-e-aplicando-as-mudanças-das-atualizações-no-ubuntu-server)<br>
 
 [![Atualização Ubuntu Server](http://img.youtube.com/vi//0.jpg)]("Atualização Ubuntu Server")
 
@@ -78,12 +78,14 @@ sudo apt policy
 #Add-Apt-Repository é utilizado para adicionar, gerenciar ou remover repositórios.
 #opção do comando add-apt-repository: --remove (Remove the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
-
+```
+```bash
 #Removendo o repositório Multiverso do Ubuntu Server
 sudo add-apt-repository --remove multiverse
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
-
+```
+```bash
 #Removendo o repositório Universo do Ubuntu Server
 sudo add-apt-repository --remove universe
   Removing component(s) 'multiverse' from all repositories.
@@ -119,9 +121,12 @@ sudo apt list --upgradable | cat -n
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt upgrade
   Continue? [Y/n] y <Enter>
+```
 
-#OBSERVAÇÃO: algumas vezes pode aparecer uma tela na cor: Rosa/Branca informando que alguns
-#serviços de rede serão reinicializados, isso é comum na distribuição Ubuntu Server.
+> **OBSERVAÇÃO:** algumas vezes pode aparecer uma tela na cor: `Rosa/Branca` informando que alguns serviços de rede serão reinicializados, isso é comum na distribuição Ubuntu Server.
+
+```bash
+#Tela informando que alguns serviços serão reinicializados
 Daemons using outdated libraries
   Which services should be restarted?
 <OK>
@@ -149,10 +154,9 @@ sudo apt full-upgrade
 
 ## 08_ Removendo todos os pacotes desnecessários no Ubuntu Server
 ```bash
-#Autoremove é utilizado para remover pacotes que foram instalados automaticamente para 
-#satisfazer dependências de outros pacotes e agora não são mais necessários, pois as 
-#dependências foram alteradas ou os pacotes que precisavam deles foram removidos nesse 
-#meio tempo.
+#Autoremove é utilizado para remover pacotes que foram instalados automaticamente para satisfazer
+#dependências de outros pacotes e agora não são mais necessários, pois as dependências foram alteradas
+#ou os pacotes que precisavam deles foram removidos nesse meio tempo.
 #opção do comando apt: autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html

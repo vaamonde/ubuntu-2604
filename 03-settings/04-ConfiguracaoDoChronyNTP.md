@@ -33,14 +33,14 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server<br>
-#02_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server<br>
-#03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server<br>
-#04_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server<br>
-#05_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server<br>
-#06_ Verificando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server<br>
-#07_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
-#08_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
+[#01_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server](#01_-verificando-o-serviço-e-versão-do-chrony-server-e-client-no-ubuntu-server)<br>
+[#02_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server](#02_-verificando-a-porta-de-conexão-do-chrony-server-no-ubuntu-server)<br>
+[#03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server](#03_-localização-dos-arquivos-de-configuração-do-chrony-server-e-client-no-ubuntu-server)<br>
+[#04_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server](#04_-atualizando-os-arquivos-de-configuração-do-chrony-server-e-client-no-ubuntu-server)<br>
+[#05_ Editando os arquivos de configuração do Chrony Server e Client no Ubuntu Server](#05_-editando-os-arquivos-de-configuração-do-chrony-server-e-client-no-ubuntu-server)<br>
+[#06_ Verificando o Sincronismo de Data e Hora com o Protocolo NTP no Ubuntu Server](#06_-verificando-o-sincronismo-de-data-e-hora-com-o-protocolo-ntp-no-ubuntu-server)<br>
+[#07_ Configuração de Data e Hora Manual no Sistema Operacional Ubuntu Server (SOMENTE SE NECESSÁRIO)](#07_-configuração-de-data-e-hora-manual-no-sistema-operacional-ubuntu-server-somente-se-necessário)<br>
+[#08_ Sincronizando Data e Hora do Sistema Operacional com o Hardware (BIOS) no Ubuntu Server (SOMENTE SE NECESSÁRIO)](#08_-sincronizando-data-e-hora-do-sistema-operacional-com-o-hardware-bios-no-ubuntu-server-somente-se-necessário)<br>
 
 | **🌍 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -62,19 +62,19 @@ Link da vídeo aula:
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#verificando o status do serviço do Chrony Server
+#verificando o status do serviço do Chrony Server no Ubuntu Server
 sudo systemctl status chrony
 ```
 ```bash
-#reinicializando o serviço do Chrony Server
+#reinicializando o serviço do Chrony Server no Ubuntu Server
 sudo systemctl restart chrony
 ```
 ```bash
-#parando o serviço do Chrony Server
+#parando o serviço do Chrony Server no Ubuntu Server
 sudo systemctl stop chrony
 ```
 ```bash
-#iniciando o serviço do Chrony Server
+#iniciando o serviço do Chrony Server no Ubuntu Server
 sudo systemctl start chrony
 ```
 ```bash
@@ -222,11 +222,11 @@ ESC SHIFT : x <Enter>
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#reinicializando o serviço do Chrony Server
+#reinicializando o serviço do Chrony Server no Ubuntu Server
 sudo systemctl restart chrony
 ```
 ```bash
-#verificando o status do serviço do Chrony Server
+#verificando o status do serviço do Chrony Server no Ubuntu Server
 sudo systemctl status chrony
 ```
 ```bash

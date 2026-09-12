@@ -241,15 +241,15 @@ sudo journalctl -xeu grafana-server
 
 ```bash
 #verificando a versão do Grafana Server no Ubuntu Server
-#opção do comando grafana-server: -v (version)
+#opção do comando grafana: server (run the grafana server), -v (version)
 #mais informações acesse a documentação oficial em: https://grafana.com/docs/grafana/latest/setup-grafana/start-restart-grafana/
-sudo grafana-server -v
+sudo grafana server -v
 ```
 ```bash
 #verificando a versão do Grafana Cli no Ubuntu Server
-#opção do comando grafana-cli: -v (version)
+#opção do comando grafana: cli (run the grafana cli), -v (version)
 #mais informações acesse a documentação oficial em: https://grafana.com/docs/grafana/latest/administration/cli/
-sudo grafana-cli -v
+sudo grafana cli -v
 ```
 
 ## 09_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server

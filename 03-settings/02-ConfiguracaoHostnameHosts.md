@@ -33,9 +33,9 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server<br>
-#02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server<br>
-#03_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server<br>
+[#01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server](#01_-alterando-o-nome-fqdn-fully-qualified-domain-name-do-ubuntu-server)<br>
+[#02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server](#02_-alterando-as-entradas-de-resolução-de-nomes-no-arquivo-hosts-do-ubuntu-server)<br>
+[#03_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server](#03_-verificando-as-informações-de-resolução-de-nomes-locais-depois-de-alterada-no-ubuntu-server)<br>
 
 | **🖥️ Conceito** | **📖 O que é?** | **🎯 Para que serve?** |
 | :-------------- | :-------------- | :--------------------- |
@@ -74,6 +74,12 @@ sudo hostname
 
 ## 02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server
 ```bash
+#fazendo o backup do arquivo de configuração original do Hosts no Ubuntu Server
+#opção do comando cp: -v (verbose)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
+sudo cp -v /etc/hosts /etc/hosts.old
+```
+```bash
 #editando o arquivo de configuração do Hosts no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
 sudo vim /etc/hosts
@@ -90,21 +96,21 @@ INSERT
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O ENDEREÇO IPv4, NOME DE DOMÍNIO E APELIDO PARA O SEU CENÁRIO
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
 
-#adicionar o nome de domínio e apelido nas linhas 2 e 3
-#Endereço IPv4  Nome FQDN do Servidor    Apelido do Servidor
-127.0.0.1       localhost.seu.domínio    localhost
-127.0.1.1       srvseunome.seu.domínio   srvseunome
-SUA_REDE_IPV4   srvseunome.seu.domínio   srvseunome
+#adicionar o nome de domínio e apelido nas linhas 1 até 3
+#Endereço IPv4      Nome FQDN do Servidor    Apelido do Servidor
+127.0.0.1           localhost.seu.domínio    localhost
+127.0.1.1           srvseunome.seu.domínio   srvseunome
+SEU_ENDEREÇO_IPV4   srvseunome.seu.domínio   srvseunome
 
-#adicionar o nome de domínio e apelido nas linhas 2 e 3
-#Endereço IPv6         Nome FQDN do Servidor    Apelido do Servidor
-::1                    ip6-localhost            ip6-loopback
-fe00::0                ip6-localnet
-ff00::0                ip6-mcastprefix
-ff02::1                ip6-allnodes
-ff02::2                ip6-allrouters
-SUA_REDE_LOCAL_IPV6    srvseunome.seu.domínio   srvseunome
-SUA_REDE_GLOBAL_IPV6   srvseunome.seu.domínio   srvseunome
+#adicionar o nome de domínio e apelido nas linhas 11 e 12
+#Endereço IPv6             Nome FQDN do Servidor    Apelido do Servidor
+::1                        ip6-localhost            ip6-loopback
+fe00::0                    ip6-localnet
+ff00::0                    ip6-mcastprefix
+ff02::1                    ip6-allnodes
+ff02::2                    ip6-allrouters
+SEU_ENDEREÇO_LOCAL_IPV6    srvseunome.seu.domínio   srvseunome
+SEU_ENDEREÇO_GLOBAL_IPV6   srvseunome.seu.domínio   srvseunome
 ```
 ```bash
 #salvar e sair do arquivo
@@ -122,19 +128,19 @@ sudo getent hosts
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/hostname.1.html
 ```
 ```bash
-#visualizando o nome FQDN do servidor
+#visualizando o nome FQDN do servidor no Ubuntu Server
 sudo hostname
 ```
 ```bash
-#visualizando todas as informações FQDN do servidor
+#visualizando todas as informações FQDN do servidor no Ubuntu Server
 sudo hostname -A
 ```
 ```bash
-#visualizando o nome de domínio do servidor
+#visualizando o nome de domínio do servidor no Ubuntu Server
 sudo hostname -d
 ```
 ```bash
-#visualizando todas as informações de IPv4 e IPv6 do servidor
+#visualizando todas as informações de IPv4 e IPv6 do servidor no Ubuntu Server
 sudo hostname -i
 ```
 

@@ -33,16 +33,16 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
-#02_ Verificando os Discos Reconhecidos no Ubuntu Server<br>
-#03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server<br>
-#04_ Formatando a Partição com o Sistema de Arquivos EXT4 no Ubuntu Server<br>
-#05_ Criando o Diretório de Ponto de Montagem do Backup no Ubuntu Server<br>
-#06_ Verificando o UUID da Partição de Backup no Ubuntu Server<br>
-#07_ Configurando a Montagem Automática no Fstab no Ubuntu Server<br>
-#08_ Montando e Verificando o Espaço em Disco da Partição de Backup no Ubuntu Server<br>
-#09_ Preparando Permissões e Estrutura de Diretórios para o BorgBackupServer<br>
-#10_ Localização dos Arquivos de Configuração do Particionamento no Ubuntu Server<br>
+[#01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX](#01_-adicionando-o-hard-disk-de-backup-na-máquina-virtual-ubuntuonpremises-no-oracle-virtualbox)<br>
+[#02_ Verificando os Discos Reconhecidos no Ubuntu Server](#02_-verificando-os-discos-reconhecidos-no-ubuntu-server)<br>
+[#03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server](#03_-criando-a-tabela-e-partição-gpt-do-disco-de-backup-no-ubuntu-server)<br>
+[#04_ Formatando a Partição com o Sistema de Arquivos EXT4 no Ubuntu Server](#04_-formatando-a-partição-com-o-sistema-de-arquivos-ext4-no-ubuntu-server)<br>
+[#05_ Criando o Diretório de Ponto de Montagem do Backup no Ubuntu Server](#05_-criando-o-diretório-de-ponto-de-montagem-do-backup-no-ubuntu-server)<br>
+[#06_ Verificando o UUID da Partição de Backup no Ubuntu Server](#06_-verificando-o-uuid-da-partição-de-backup-no-ubuntu-server)<br>
+[#07_ Configurando a Montagem Automática no Fstab no Ubuntu Server](#07_-configurando-a-montagem-automática-no-fstab-no-ubuntu-server)<br>
+[#08_ Montando e Verificando o Espaço em Disco da Partição de Backup no Ubuntu Server](#08_-montando-e-verificando-o-espaço-em-disco-da-partição-de-backup-no-ubuntu-server)<br>
+[#09_ Preparando Permissões e Estrutura de Diretórios para o BorgBackupServer](#09_-preparando-as-permissões-e-estrutura-de-diretórios-para-o-borgbackupserver-no-ubuntu-server)<br>
+[#10_ Localização dos Arquivos de Configuração do Particionamento no Ubuntu Server](#10_-localização-dos-arquivos-de-configuração-do-particionamento-no-ubuntu-server)<br>
 
 [![Particionamento Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Particionamento Ubuntu Server")
 
@@ -59,7 +59,7 @@ Link da vídeo aula:
 
 > **DIFERENÇA IMPORTANTE:** ao contrário dos procedimentos anteriores (**RAID-1** e **LVM**), este disco de Backup **NÃO** utiliza `mdadm` (Software RAID) nem `lvm2` (Volume Manager). É um **Particionamento Tradicional**, simples e direto, pois o objetivo é apenas disponibilizar um espaço de armazenamento isolado, dedicado exclusivamente ao repositório do **BorgBackupServer**, sem misturar a camada de Backup com a camada de Dados (LVM) protegida por Redundância (RAID-1).
 
-## 01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
+## 01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX
 
 > **OBSERVAÇÃO IMPORTANTE:** neste roteiro o novo disco será reconhecido pelo Ubuntu Server como __`/dev/sdd`__, pois os dispositivos __`/dev/sdb`__ e __`/dev/sdc`__ já estão em uso pelo Array do **RAID-1** (procedimento anterior). Sempre confira o dispositivo correto no seu cenário antes de prosseguir.
 
@@ -150,10 +150,12 @@ Entendendo a saída do comando: __`fdisk -l /dev/sdd`__<br>
 #to disk and exit)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
 sudo gdisk /dev/sdd
+
   #criando a tabela GPT no disco /dev/sdd
   Command (? for help): o <Enter>
     This option deletes all partitions and creates a new protective MBR.
     Proceed? (Y/N): y <Enter>
+
   #criando a partição GPT no disco /dev/sdd (utilizando 100% do espaço disponível)
   Command (? for help): n <Enter>
     Partition number (1-128, default 1): <Enter>
@@ -162,10 +164,13 @@ sudo gdisk /dev/sdd
     Current type is 8300 (Linux filesystem)
     Hex code or GUID (L to show codes, Enter = 8300): <Enter>
     Changed type of partition to 'Linux filesystem'
+
   #visualizando as informações da tabela e partição GPT no disco /dev/sdd
   Command (? for help): p <Enter>
+
   #verificando problemas no disco /dev/sdd
   Command (? for help): v <Enter>
+
   #salvando as configurações da tabela e partição GPT no disco /dev/sdd
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
@@ -220,7 +225,7 @@ Entendendo a saída do comando: __`mkfs.ext4 -L backup01 /dev/sdd1`__<br>
 
 ## 05_ Criando o Diretório de Ponto de Montagem do Backup no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** o diretório __`/backup`__ será utilizado no próximo procedimento (__`11. Configuração do Backup`__) como o **Repositório (Repository)** do **BorgBackupServer**, onde ficarão armazenados os Snapshots incrementais e deduplicados da partição de Dados criada no procedimento de **LVM** (`/dados`, Volume Lógico `lv_dados`).
+> **OBSERVAÇÃO IMPORTANTE:** o diretório __`/backup`__ será utilizado no próximo procedimento (__`05-backup/02-ConfigurandoBorgBackupServer.md`__) como o **Repositório (Repository)** do **BorgBackupServer**, onde ficarão armazenados os Snapshots incrementais e deduplicados da partição de `Dados` criada no procedimento de **LVM** (`/dados`, Volume Lógico `lv_dados`).
 
 ```bash
 #criando o diretório de ponto de montagem do repositório de Backup no Ubuntu Server
@@ -230,7 +235,6 @@ sudo mkdir -pv /backup
 ```
 
 ## 06_ Verificando o UUID da Partição de Backup no Ubuntu Server
-
 ```bash
 #verificando o UUID e o Label do sistema de arquivos criado na partição de Backup no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
@@ -248,12 +252,11 @@ Entendendo a saída do comando: __`blkid /dev/sdd1`__<br>
 ---
 
 ## 07_ Configurando a Montagem Automática no Fstab no Ubuntu Server
-
 ```bash
 #fazendo o backup do arquivo de configuração original do Fstab no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/fstab /etc/fstab.bkp-backup
+sudo cp -v /etc/fstab /etc/fstab.bkp01
 ```
 ```bash
 #editando o arquivo de configuração do Fstab para montagem automática no boot
@@ -287,7 +290,6 @@ sudo systemctl daemon-reload
 ```
 
 ## 08_ Montando e Verificando o Espaço em Disco da Partição de Backup no Ubuntu Server
-
 ```bash
 #montando todos os sistemas de arquivos listados no Fstab no Ubuntu Server
 #opção do comando mount: -v (Enables verbose mode), -a (Mount all filesystems mentioned in fstab)
@@ -335,10 +337,10 @@ Entendendo a saída do comando: __`lsblk -f /dev/sdd`__<br>
 
 ## 09_ Preparando as Permissões e Estrutura de Diretórios para o BorgBackupServer no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** esta etapa apenas prepara a estrutura de diretórios e permissões da partição de Backup. A instalação, configuração e inicialização dos Repositórios do **BorgBackupServer** propriamente ditos serão detalhadas no próximo procedimento do Workflow: __`05-backup/02-ConfigurandoBackupServer.md`__.
+> **OBSERVAÇÃO IMPORTANTE:** esta etapa apenas prepara a estrutura de diretórios e permissões da partição de Backup. A instalação, configuração e inicialização dos Repositórios do **BorgBackupServer** propriamente ditos serão detalhadas no próximo procedimento do Workflow: __`05-backup/02-ConfigurandoBorgBackupServer.md`__.
 
 ```bash
-#criando a estrutura de diretórios do repositório de Backup, separado por tipo de dado protegido
+#criando a estrutura de diretórios do repositório de Backup, separado por tipo de dado protegido no Ubuntu Server
 #opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 sudo mkdir -pv /backup/repository/lv-dados

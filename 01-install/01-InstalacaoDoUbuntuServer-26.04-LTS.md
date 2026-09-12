@@ -401,9 +401,9 @@ Entendendo a saída do comando: __`w`__<br>
 | 🕒 **Current Time** | `12:22:16` | Hora em que o comando `w` foi executado. |
 | ⏱️ **System Uptime** | `14 min` | Tempo decorrido desde a inicialização do servidor. |
 | 👥 **Logged-in Users** | `2 users` | Quantidade de usuários atualmente conectados ao sistema. |
-| 📊 **Load Average (1 min)** | `1,23` | Carga média do sistema nos últimos 1 minuto. |
-| 📊 **Load Average (5 min)** | `1,62` | Carga média do sistema nos últimos 5 minutos. |
-| 📊 **Load Average (15 min)** | `1,10` | Carga média do sistema nos últimos 15 minutos. |
+| 📊 **Load Average (1 min)** | `1,23` | Carga média absoluta do sistema nos últimos 1 minuto em relação ao vCPU. |
+| 📊 **Load Average (5 min)** | `1,62` | Carga média absoluta do sistema nos últimos 5 minutos em relação ao vCPU. |
+| 📊 **Load Average (15 min)** | `1,10` | Carga média absoluta do sistema nos últimos 15 minutos em relação ao vCPU. |
 | 👤 **USER** | `vaamonde` | Usuário atualmente conectado à sessão. |
 | 🖥️ **TTY** | `pts/0` | Terminal virtual utilizado pela sessão SSH ou terminal remoto. |
 | 🌐 **FROM** | `172.16.1.113` | Endereço IP de origem da conexão do usuário. |

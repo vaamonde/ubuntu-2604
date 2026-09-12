@@ -37,26 +37,26 @@ BorgBackup Server / BBS (Documentação Oficial - Wiki): https://github.com/marc
 BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server<br>
-#02_ Verificando os Requisitos de Sistema (Software Base) do BBS no Ubuntu Server<br>
-#03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server<br>
-#04_ Verificando os Serviços Instalados pelo BBS no Ubuntu Server<br>
-#05_ Assistente de Configuração Inicial (Setup Wizard) do BBS no Ubuntu Server<br>
-#06_ Instalando e Registrando o Agente Local (Linux Agent Client) no Ubuntu Server<br>
-#07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server<br>
-#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server<br>
-#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server<br>
-#10_ Criando o Plano de Backup dp BBS no Ubuntu Server<br>
-#11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server<br>
-#12_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server<br>
-#13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server<br>
-#14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server<br>
+[#01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server](#01_-verificando-os-pré-requisitos-do-ambiente-para-o-borgbackupserver-no-ubuntu-server)<br>
+[#02_ Verificando os Requisitos de Sistema (Software Base) do BBS no Ubuntu Server](#02_-verificando-os-requisitos-de-sistema-software-base-do-bbs-no-ubuntu-server)<br>
+[#03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server](#03_-instalando-o-borgbackupserver-bbs-no-ubuntu-server)<br>
+[#04_ Verificando os Serviços Instalados pelo BBS no Ubuntu Server](#04_-verificando-os-serviços-instalados-pelo-bbs-no-ubuntu-server)<br>
+[#05_ Assistente de Configuração Inicial (Setup Wizard) do BBS no Ubuntu Server](#05_-assistente-de-configuração-inicial-setup-wizard-do-bbs-no-ubuntu-server)<br>
+[#06_ Instalando e Registrando o Agente Local (Linux Agent Client) no Ubuntu Server](#06_-instalando-e-registrando-o-agente-local-linux-agent-client-no-ubuntu-server)<br>
+[#07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server](#07_-criando-o-armazenamento-local-storage-do-bbs-no-ubuntu-server)<br>
+[#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server](#08_-criando-o-modelo-template-de-backup-do-bbs-no-ubuntu-server)<br>
+[#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server](#09_-configurando-o-repositório-do-bbs-para-a-partição-de-backup-no-ubuntu-server)<br>
+[#10_ Criando o Plano de Backup dp BBS no Ubuntu Server](#10_-criando-o-plano-de-backup-dp-bbs-no-ubuntu-server)<br>
+[#11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#11_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
+[#12_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#12_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
+[#13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server](#13_-habilitando-notificações-e-autenticação-de-dois-fatores-2fa-do-bbs-no-ubuntu-server)<br>
+[#14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server](#14_-localização-dos-arquivos-de-configuração-e-logs-do-bbs-no-ubuntu-server)<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
 
 Link da vídeo aula: 
 
-> **OBSERVAÇÃO IMPORTANTE:** este procedimento assume o **Cenário de Servidor Único (All-in-One)**, ou seja, o **Painel Web do BBS** (Backend PHP + Banco de Dados MySQL) e o **Agente Local (Linux Agent)** serão instalados na **MESMA** Máquina Virtual `UbuntuOnPremise`, junto com a partição de Dados (LVM) e a partição de Backup (Particionamento Tradicional) criadas nos procedimentos anteriores. Em um cenário de Produção On-Premises real, o recomendado é instalar o Painel do BBS em um servidor dedicado, separado dos servidores que ele protege.
+> **OBSERVAÇÃO IMPORTANTE:** este procedimento assume o **Cenário de Servidor Único (All-in-One)**, ou seja, o **Painel Web do BBS** (Backend PHP + Banco de Dados MySQL) e o **Agente Local (Linux Agent)** serão instalados na **MESMA** Máquina Virtual `UbuntuOnPremises`, junto com a partição de Dados (LVM) e a partição de Backup (Particionamento Tradicional) criadas nos procedimentos anteriores. Em um cenário de Produção On-Premises real, o recomendado é instalar o Painel do BBS em um servidor dedicado, separado dos servidores que ele protege.
 
 | **💾 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -69,7 +69,6 @@ Link da vídeo aula:
 ---
 
 ## 01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server
-
 ```bash
 #verificando se a partição de Dados (LVM) está montada e disponível no Ubuntu Server
 #opção do comando df: -h (human-readable)
@@ -154,7 +153,7 @@ sudo apt upgrade
 
 ## 03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único Script Bash, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache2 Server, MySQL Server, Certificado SSL e o serviço de Cron.
+> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único `Script Bash`, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache2 Server, MySQL Server, Certificado SSL e o serviço de Cron.
 
 ```bash
 #efetuando o download do script oficial de instalação do BorgBackupServer no Ubuntu Server
@@ -172,7 +171,7 @@ curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bb
 sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
 ```
 ```bash
-#confirmando a criação da Base de Dados do BBS no MySQL Server
+#confirmando a criação da Base de Dados do BBS no MySQL Server no Ubuntu Server
 MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
@@ -487,12 +486,15 @@ sha256sum /dados/arquivo_de_teste.txt
 > **OBSERVAÇÃO IMPORTANTE:** habilitar **Notificações de Falha de Backup** é essencial: um Backup que falha silenciosamente, sem ninguém perceber, é tão perigoso quanto não ter Backup nenhum. O 2FAS Auth (https://2fas.com/) no Painel Administrativo também será revisitado com mais detalhes no procedimento de **Hardening PAM/2FA** (`13_Hardening OpenSSH + Certificado + 2FA` do Workflow).
 
 ```bash
+#Acessando o painel de configuração da autenticação de Dois Fatores
 01) No Painel Web do BBS, acessar o menu:
     Configurações (Settings) <Notificações (Notifications)>
       Canal: E-mail (SMTP) ou Webhook
       Eventos: Falha de Backup, Sucesso de Backup, Repositório quase cheio
 <Salvar>
-
+```
+```bash
+#Configuração o recurso de autenticação de Dois Fatores
 02) Acessar o menu:
     Configurações (Settings) <Usuários (User Management)> <Seu Usuário Admin>
       <Habilitar Autenticação de Dois Fatores (2FA)>

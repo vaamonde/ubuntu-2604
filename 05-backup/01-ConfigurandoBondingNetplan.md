@@ -36,14 +36,14 @@ Linux Bonding Driver (Kernel.org): https://www.kernel.org/doc/Documentation/netw
 Oracle VirtualBOX Networking (Documentação Oficial): https://www.virtualbox.org/manual/ch06.html
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Entendendo as limitações do Oracle VirtualBOX para o Bonding<br>
-#02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise<br>
-#03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage<br>
-#04_ Verificando as duas Interfaces de Rede reconhecidas no Ubuntu Server<br>
-#05_ Instalando o módulo do Kernel de Bonding no Ubuntu Server<br>
-#06_ Atualizando o arquivo de configuração do Netplan com Bonding<br>
-#07_ Aplicando as configurações do Netplan e verificando a Interface bond0<br>
-#08_ Testando a Redundância (Failover) do Bonding no Ubuntu Server<br>
+[#01_ Entendendo as limitações do Oracle VirtualBOX para o Bonding](#01_-entendendo-as-limitações-do-oracle-virtualbox-para-o-bonding)<br>
+[#02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise](#02_-adicionando-a-segunda-placa-de-rede-na-máquina-virtual-ubuntuonpremises)<br>
+[#03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage](#03_-habilitando-o-modo-promíscuo-nos-adaptadores-de-rede-via-vboxmanage)<br>
+[#04_ Verificando as duas Interfaces de Rede reconhecidas no Ubuntu Server](#04_-verificando-as-duas-interfaces-de-rede-reconhecidas-no-ubuntu-server)<br>
+[#05_ Instalando o módulo do Kernel de Bonding no Ubuntu Server](#05_-instalando-o-módulo-do-kernel-de-bonding-no-ubuntu-server)<br>
+[#06_ Atualizando o arquivo de configuração do Netplan com Bonding](#06_-atualizando-o-arquivo-de-configuração-do-netplan-com-bonding-no-ubuntu-server)<br>
+[#07_ Aplicando as configurações do Netplan e verificando a Interface bond0](#07_-aplicando-as-configurações-do-netplan-e-verificando-a-interface-bond0-no-ubuntu-server)<br>
+[#08_ Testando a Redundância (Failover) do Bonding no Ubuntu Server](#08_-testando-a-redundância-failover-do-bonding-no-ubuntu-server)<br>
 
 | **🔗 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -76,7 +76,6 @@ Link da vídeo aula:
 > **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de Produção On-Premises com Switches físicos gerenciáveis, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
 
 ## 02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremises
-
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
@@ -162,7 +161,6 @@ sudo ip address show
 ```
 
 ## 05_ Instalando o módulo do Kernel de Bonding no Ubuntu Server
-
 ```bash
 #verificando se o módulo de Bonding do Kernel já está carregado no Ubuntu Server
 #opção do comando lsmod: (Show the status of modules in the Linux Kernel)
@@ -183,7 +181,6 @@ echo "bonding" | sudo tee -a /etc/modules-load.d/bonding.conf
 ```
 
 ## 06_ Atualizando o arquivo de configuração do Netplan com Bonding no Ubuntu Server
-
 ```bash
 #listando o conteúdo do diretório de configuração do Netplan no Ubuntu Server
 #opção do comando ls: -l (long listing), -h (human-readable)
@@ -194,7 +191,7 @@ ls -lh /etc/netplan/
 #fazendo o backup do arquivo de configuração original do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp00
+sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp02
 ```
 ```bash
 #download do arquivo de configuração do Netplan com Bonding no Ubuntu Server
@@ -270,12 +267,11 @@ ESC SHIFT :x <Enter>
 ```
 
 ## 07_ Aplicando as configurações do Netplan e verificando a Interface bond0 no Ubuntu Server
-
 ```bash
 #fazendo o backup do arquivo de configuração modificado do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
-sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
+sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp03
 ```
 ```bash
 #verificando as configurações do arquivo do Netplan no Ubuntu Server
@@ -337,7 +333,6 @@ Entendendo a saída do arquivo: __`/proc/net/bonding/bond0`__<br>
 > **OBSERVAÇÃO IMPORTANTE:** para simular a falha de um Link físico no Oracle VirtualBOX, você pode Desabilitar o Adaptador de Rede diretamente na tela: __`Dispositivos > Rede > Desconectar Cabo de Rede`__ da Máquina Virtual em execução, ou utilizar o comando abaixo diretamente no Host.
 >
 > **OBSERVAÇÃO IMPORTANTE:** durante o teste de Failover, o campo __`Currently Active Slave`__ do arquivo `/proc/net/bonding/bond0` deve mudar automaticamente de `enp0s3` para `enp0s8`, confirmando que a Redundância do Bonding está funcionando corretamente, mesmo em ambiente virtualizado no Oracle VirtualBOX.
-
 
 ```bash
 #simulando a falha de um Link de Rede desconectando o Cabo Virtual do Adaptador (executar no Host Hospedeiro)

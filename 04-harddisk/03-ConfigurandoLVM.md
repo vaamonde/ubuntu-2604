@@ -33,18 +33,18 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server<br>
-#02_ Instalando os principais software de LVM no Ubuntu Server<br>
-#03_ Verificando a versão do Sistema de LVM do Ubuntu Server<br>
-#04_ Criando o Physical Volume (PV) sobre o Array do RAID-1 no Ubuntu Server<br>
-#05_ Criando o Volume Group (VG) no Ubuntu Server<br>
-#06_ Criando o Logical Volume (LV) no Ubuntu Server<br>
-#07_ Formatando e Montando o Logical Volume no Ubuntu Server<br>
-#08_ Localização dos Arquivos de Configuração do LVM no Ubuntu Server<br>
-#09_ Verificando o Mapeamento de PE (Physical Extent) e LE (Logical Extent) no Ubuntu Server<br>
-#10_ Redimensionando o Volume Group e o Logical Volume no Ubuntu Server<br>
-#11_ Criando um Snapshot do Logical Volume no Ubuntu Server<br>
-#12_ Analisando os Logs do LVM no Ubuntu Server<br>
+[#01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server](#01_-preparando-o-array-raid-1-para-a-configuração-do-lvm-no-ubuntu-server)<br>
+[#02_ Instalando os principais software de LVM no Ubuntu Server](#02_-instalando-os-principais-software-de-lvm-no-ubuntu-server)<br>
+[#03_ Verificando a versão do Sistema de LVM do Ubuntu Server](#03_-verificando-a-versão-do-sistema-de-lvm-do-ubuntu-server)<br>
+[#04_ Criando o Physical Volume (PV) sobre o Array do RAID-1 no Ubuntu Server](#04_-criando-o-physical-volume-pv-sobre-o-array-do-raid-1-no-ubuntu-server)<br>
+[#05_ Criando o Volume Group (VG) no Ubuntu Server](#05_-criando-o-volume-group-vg-no-ubuntu-server)<br>
+[#06_ Criando o Logical Volume (LV) no Ubuntu Server](#06_-criando-o-logical-volume-lv-no-ubuntu-server)<br>
+[#07_ Formatando e Montando o Logical Volume no Ubuntu Server](#07_-formatando-e-montando-o-logical-volume-no-ubuntu-server)<br>
+[#08_ Localização dos Arquivos de Configuração do LVM no Ubuntu Server](#08_-localização-dos-arquivos-de-configuração-do-lvm-no-ubuntu-server)<br>
+[#09_ Verificando o Mapeamento de PE (Physical Extent) e LE (Logical Extent) no Ubuntu Server](#09_-verificando-o-mapeamento-de-pe-physical-extent-e-le-logical-extent-no-ubuntu-server)<br>
+[#10_ Redimensionando o Volume Group e o Logical Volume no Ubuntu Server](#10_-redimensionando-o-volume-group-e-o-logical-volume-no-ubuntu-server)<br>
+[#11_ Criando um Snapshot do Logical Volume no Ubuntu Server](#11_-criando-um-snapshot-do-logical-volume-no-ubuntu-server)<br>
+[#12_ Analisando os Logs do LVM no Ubuntu Server](#12_-analisando-os-logs-do-lvm-no-ubuntu-server)<br>
 
 [![LVM Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "LVM Ubuntu Server")
 
@@ -63,7 +63,7 @@ Link da vídeo aula:
 ---
 
 | **Camada** | **Comando de Criação** | **Comando de Consulta** | **Unidade de Alocação** |
-| :--------- | :---------------------- | :------------------------ | :----------------------- |
+| :--------- | :--------------------- | :---------------------- | :---------------------- |
 | **PV (Physical Volume)** | `pvcreate` | `pvdisplay` / `pvs` | Não se aplica (disco/partição/RAID inteiro) |
 | **VG (Volume Group)** | `vgcreate` | `vgdisplay` / `vgs` | **PE (Physical Extent)** |
 | **LV (Logical Volume)** | `lvcreate` | `lvdisplay` / `lvs` | **LE (Logical Extent)** |
@@ -136,19 +136,19 @@ sudo lvm version
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 
-#visualizando o status do serviço do LVM Monitor
+#visualizando o status do serviço do LVM Monitor no Ubuntu Server
 sudo systemctl status lvm2-monitor
 ```
 ```bash
-#reinicializando o serviço do LVM Monitor
+#reinicializando o serviço do LVM Monitor no Ubuntu Server
 sudo systemctl restart lvm2-monitor
 ```
 ```bash
-#parando o serviço do LVM Monitor
+#parando o serviço do LVM Monitor no Ubuntu Server
 sudo systemctl stop lvm2-monitor
 ```
 ```bash
-#iniciando o serviço do LVM Monitor
+#iniciando o serviço do LVM Monitor no Ubuntu Server
 sudo systemctl start lvm2-monitor
 ```
 ```bash

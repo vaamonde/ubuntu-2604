@@ -33,17 +33,17 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server<br>
-#02_ Verificando a versão do Sistema de RAID-1 do Ubuntu Server<br>
-#03_ Criando a Tabela e Partição GPT dos Discos para a Configuração do RAID-1 no Ubuntu Server<br>
-#04_ Criando o Array (Conjunto) dos Discos do RAID-1 no Ubuntu Server<br>
-#05_ Verificando as Informações do Array (Conjunto) do RAID-1 no Ubuntu Server<br>
-#06_ Examinando os Discos do Array (Conjunto) do RAID-1 no Ubuntu Server<br>
-#07_ Localização dos Arquivos de Configuração do Gerenciador de RAID no Ubuntu Server<br>
-#08_ Configurando o Serviço do RAID-1 no Ubuntu Server<br>
-#09_ Verificando o Serviço do RAID Monitor no Ubuntu Server<br>
-#10_ Simulação da Falha e Performance do RAID-1 no Ubuntu Server<br>
-#11_ Analisando os Logs do Array do RAID-1 no Ubuntu Server<br>
+[#01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server](#01_-preparando-os-discos-para-a-configuração-do-raid-1-no-ubuntu-server)<br>
+[#02_ Verificando a versão do Sistema de RAID-1 do Ubuntu Server](#02_-verificando-a-versão-do-sistema-de-raid-1-do-ubuntu-server)<br>
+[#03_ Criando a Tabela e Partição GPT dos Discos para a Configuração do RAID-1 no Ubuntu Server](#03_-criando-a-tabela-e-partição-gpt-dos-discos-para-a-configuração-do-raid-1-no-ubuntu-server)<br>
+[#04_ Criando o Array (Conjunto) dos Discos do RAID-1 no Ubuntu Server](#04_-criando-o-array-conjunto-dos-discos-do-raid-1-no-ubuntu-server)<br>
+[#05_ Verificando as Informações do Array (Conjunto) do RAID-1 no Ubuntu Server](#05_-verificando-as-informações-do-array-conjunto-do-raid-1-no-ubuntu-server)<br>
+[#06_ Examinando os Discos do Array (Conjunto) do RAID-1 no Ubuntu Server](#06_-examinando-os-discos-do-array-conjunto-do-raid-1-no-ubuntu-server)<br>
+[#07_ Localização dos Arquivos de Configuração do Gerenciador de RAID no Ubuntu Server](#07_-localização-dos-arquivos-de-configuração-do-gerenciador-de-raid-no-ubuntu-server)<br>
+[#08_ Configurando o Serviço do RAID-1 no Ubuntu Server](#08_-configurando-o-serviço-do-raid-1-no-ubuntu-server)<br>
+[#09_ Verificando o Serviço do RAID Monitor no Ubuntu Server](#09_-verificando-o-serviço-do-raid-monitor-no-ubuntu-server)<br>
+[#10_ Simulação da Falha e Performance do RAID-1 no Ubuntu Server](#10_-simulação-da-falha-e-performance-do-raid-1-no-ubuntu-server)<br>
+[#11_ Analisando os Logs do Array do RAID-1 no Ubuntu Server](#11_-analisando-os-logs-do-array-do-raid-1-no-ubuntu-server)<br>
 
 [![RAID-1 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( RAID-1 Ubuntu Server")
 
@@ -88,32 +88,32 @@ Link da vídeo aula:
 
 ## 01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server
 ```bash
-#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
+#verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM nos discos novos no Ubuntu Server
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 ```
 ```bash
-#verificando as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
+#verificando as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo wipefs -n /dev/sdb
 ```
 ```bash
-#verificando as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
+#verificando as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo wipefs -n /dev/sdc
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no VirtualBOX normalmente não retornam nada, só execute o comando abaixo se o dry-run acima detectar alguma assinatura residual
+> **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no `VirtualBOX` normalmente não retornam nada, só execute o comando abaixo se o dry-run acima detectar alguma assinatura residual
 
 ```bash
-#removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
+#removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 ```
 ```bash
-#removendo as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
+#removendo as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo wipefs -a /dev/sdb
 ```
 ```bash
-#removendo as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
+#removendo as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo wipefs -a /dev/sdc
 ```
 
@@ -134,24 +134,26 @@ sudo mdadm --version
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
 ```
 ```bash
-#verificado as tabelas GPT do Hard Disk SDB (Primeiro Disco do RAID-1)
+#verificado as tabelas GPT do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo gdisk -l /dev/sdb
 ```
 ```bash
-#verificado as tabelas GPT do Hard Disk SDC (Segundo Disco do RAID-1)
+#verificado as tabelas GPT do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo gdisk -l /dev/sdc
 ```
 ```bash
-#criando a tabela de particionamento RAID-1 no Disco /dev/sdb
+#criando a tabela de particionamento RAID-1 no Disco /dev/sdb no Ubuntu Server
 #opções do comando gdisk: o (create a new empty GUID partition table (GPT)), n (add a new partition), 
 #t (change a partition's type code), p (print the partition table), v (verify disk), w (write table 
 #to disk and exit)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
 sudo gdisk /dev/sdb
+
   #criando a tabela GPT no disco /dev/sdb
   Command (? for help): o <Enter>
     This option deletes all partitions and creates a new protective MBR.
     Proceed? (Y/N): y <Enter>
+
   #criando a partição GPT no disco /dev/sdb
   Command (? for help): n <Enter>
     Partition number (1-128, default 1): <Enter>
@@ -160,28 +162,34 @@ sudo gdisk /dev/sdb
     Current type is 8300 (Linux filesystem)
     Hex code or GUID (L to show codes, Enter = 8300): <Enter>
     Changed type of partition to 'Linux filesystem'
+
   #alterando a partição GPT para RAID no disco /dev/sdb
   Command (? for help): t <Enter>
     Hex code or GUID (L to show codes, Enter = 8300): fd00 <Enter>
+
   #visualizando as informações da tabela e partição GPT no disco /dev/sdb
   Command (? for help): p <Enter>
+
   #verificando problemas no disco /dev/sdb
   Command (? for help): v <Enter>
+
   #salvando as configurações da tabela e partição GPT no disco /dev/sdb
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
 ```
 ```bash
-#criando a tabela de particionamento RAID-1 no Disco /dev/sdc
+#criando a tabela de particionamento RAID-1 no Disco /dev/sdc no Ubuntu Server
 #opções do comando gdisk: o (create a new empty GUID partition table (GPT)), n (add a new partition), 
 #t (change a partition's type code), p (print the partition table), v (verify disk), w (write table 
 #to disk and exit)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
 sudo gdisk /dev/sdc
+
   #criando a tabela GPT no disco /dev/sdc
   Command (? for help): o <Enter>
     This option deletes all partitions and creates a new protective MBR.
     Proceed? (Y/N): y <Enter>
+
   #criando a partição GPT no disco /dev/sdc
   Command (? for help): n <Enter>
     Partition number (1-128, default 1): <Enter>
@@ -190,13 +198,17 @@ sudo gdisk /dev/sdc
     Current type is 8300 (Linux filesystem)
     Hex code or GUID (L to show codes, Enter = 8300): <Enter>
     Changed type of partition to 'Linux filesystem'
+
   #alterando a partição GPT para RAID no disco /dev/sdc
   Command (? for help): t <Enter>
     Hex code or GUID (L to show codes, Enter = 8300): fd00 <Enter>
+
   #visualizando as informações da tabela e partição GPT no disco /dev/sdc
   Command (? for help): p <Enter>
+
   #verificando problemas no disco /dev/sdc
   Command (? for help): v <Enter>
+
   #salvando as configurações da tabela e partição GPT no disco /dev/sdc
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
@@ -261,9 +273,10 @@ Entendendo a saída do comando: __`lsblk -f | grep -i 'sdb\|sdc\|md'`__<br>
 
 ```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server
+#opção do comando cat: -n (number lines)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
-sudo cat /proc/mdstat
+sudo cat -n /proc/mdstat
 ```
 
 Entendendo a saída do comando: __`/proc/mdstat`__<br>
@@ -325,11 +338,11 @@ Entendendo a saída do comando: __`mdadm --detail /dev/md0`__<br>
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 ```
 ```bash
-#examinando o disco do Array do RAID-1 do Disco SDB
+#examinando o disco do Array do RAID-1 do Disco SDB no Ubuntu Server
 sudo mdadm --examine /dev/sdb1
 ```
 ```bash
-#examinando o disco do Array do RAID-1 do Disco SDC
+#examinando o disco do Array do RAID-1 do Disco SDC no Ubuntu Server
 sudo mdadm --examine /dev/sdc1
 ```
 
@@ -416,19 +429,19 @@ sudo update-initramfs -u
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#verificando o status do serviço do RAID Monitor
+#verificando o status do serviço do RAID Monitor no Ubuntu Server
 sudo systemctl status mdmonitor
 ```
 ```bash
-#reinicializando o serviço do RAID Monitor
+#reinicializando o serviço do RAID Monitor no Ubuntu Server
 sudo systemctl restart mdmonitor
 ```
 ```bash
-#parando o serviço do RAID Monitor
+#parando o serviço do RAID Monitor no Ubuntu Server
 sudo systemctl stop mdmonitor
 ```
 ```bash
-#iniciando o serviço do RAID Monitor
+#iniciando o serviço do RAID Monitor no Ubuntu Server
 sudo systemctl start mdmonitor
 ```
 ```bash
@@ -487,9 +500,10 @@ Entendendo a saída do comando: __`mdadm --detail /dev/md0`__ (Estado Degradado)
 
 ```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server (estado degradado)
+#opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
-sudo cat /proc/mdstat
+sudo cat -n /proc/mdstat
 ```
 
 Entendendo a saída do comando: __`/proc/mdstat`__ (Estado Degradado)<br>
@@ -525,9 +539,10 @@ sudo mdadm --detail /dev/md0
 ```
 ```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server (após remoção)
+#opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
-sudo cat /proc/mdstat
+sudo cat -n /proc/mdstat
 ```
 ```bash
 #adicionando o novo disco (substituto) no Array do RAID-1 no Ubuntu Server
@@ -543,9 +558,10 @@ sudo mdadm --detail /dev/md0
 ```
 ```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server (durante a reconstrução)
+#opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
-sudo cat /proc/mdstat
+sudo cat -n /proc/mdstat
 ```
 
 Entendendo a saída do comando: __`/proc/mdstat`__ (Reconstrução/Rebuild)<br>

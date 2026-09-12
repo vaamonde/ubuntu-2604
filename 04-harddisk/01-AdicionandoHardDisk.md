@@ -33,14 +33,14 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX<br>
-#02_ Instalando os principais software de Hard Disk no Ubuntu Server<br>
-#03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server<br>
-#04_ Verificando as informações de Hard Disk e Partições do Ubuntu Server<br>
-#05_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server<br>
-#06_ Verificando o Desempenho (Performance) dos Discos no Ubuntu Server<br>
-#07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server<br>
-#08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server<br>
+[#01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX](#01_-adicionando-hard-disk-na-máquina-virtual-ubuntuonpremises-no-oracle-virtualbox)<br>
+[#02_ Instalando os principais software de Hard Disk no Ubuntu Server](#02_-instalando-os-principais-software-de-hard-disk-no-ubuntu-server)<br>
+[#03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server](#03_-verificando-as-informações-da-controladora-de-hard-disk-do-ubuntu-server)<br>
+[#04_ Verificando as informações de Hard Disk e Partições do Ubuntu Server](#04_-verificando-as-informações-de-hard-disk-e-partições-do-ubuntu-server)<br>
+[#05_ Verificando todas as informações detalhadas de Hard Disk e Partições do Ubuntu Server](#05_-verificando-todas-as-informações-detalhadas-de-hard-disk-e-partições-do-ubuntu-server)<br>
+[#06_ Verificando o Desempenho (Performance) dos Discos no Ubuntu Server](#06_-verificando-o-desempenho-performance-dos-discos-no-ubuntu-server)<br>
+[#07_ Verificando a Saúde (SMART) dos Discos no Ubuntu Server](#07_-verificando-a-saúde-smart-dos-discos-no-ubuntu-server)<br>
+[#08_ Verificando o Espaço em Disco Utilizado no Ubuntu Server](#08_-verificando-o-espaço-em-disco-utilizado-no-ubuntu-server)<br>
 
 [![Hard Disk Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Hard Disk Ubuntu Server")
 
@@ -57,7 +57,6 @@ Link da vídeo aula:
 ---
 
 ## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX
-
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
@@ -391,15 +390,15 @@ Entendendo a saída do comando: __`parted -l`__<br>
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
 ```
 ```bash
-#verificando o desempenho do Hard Disk SDA (Instalação do Ubuntu Server)
+#verificando o desempenho do Hard Disk SDA (Instalação do Ubuntu Server) no Ubuntu Server
 sudo hdparm -Tt /dev/sda
 ```
 ```bash
-#verificando o desempenho do Hard Disk SDB (Primeiro Disco do RAID-1)
+#verificando o desempenho do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo hdparm -Tt /dev/sdb
 ```
 ```bash
-#verificando o desempenho do Hard Disk SDC (segundo Disco do RAID-1)
+#verificando o desempenho do Hard Disk SDC (segundo Disco do RAID-1) no Ubuntu Server
 sudo hdparm -Tt /dev/sdc
 ```
 
@@ -427,15 +426,15 @@ Entendendo a saída do comando: __`hdparm -Tt /dev/sdx`__<br>
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
 ```
 ```bash
-#verificando a saúde do Hard Disk SDA (Instalação do Ubuntu Server)
+#verificando a saúde do Hard Disk SDA (Instalação do Ubuntu Server) no Ubuntu Server
 sudo smartctl -i /dev/sda
 ```
 ```bash
-#verificando o saúde do Hard Disk SDB (Primeiro Disco do RAID-1)
+#verificando o saúde do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo smartctl -i /dev/sdb
 ```
 ```bash
-#verificando o saúde do Hard Disk SDC (Segundo Disco do RAID-1)
+#verificando o saúde do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo smartctl -i /dev/sdc
 ```
 
@@ -470,11 +469,11 @@ Entendendo a saída do comando: __`smartctl -i /dev/sdx`__<br>
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/badblocks.8.html
 ```
 ```bash
-#verificando setores defeituosos do Hard Disk SDB (Primeiro Disco do RAID-1)
+#verificando setores defeituosos do Hard Disk SDB (Primeiro Disco do RAID-1) no Ubuntu Server
 sudo badblocks -sv /dev/sdb
 ```
 ```bash
-#verificando setores defeituosos do Hard Disk SDC (Segundo Disco do RAID-1)
+#verificando setores defeituosos do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo badblocks -sv /dev/sdc
 ```
 

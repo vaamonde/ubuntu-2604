@@ -33,8 +33,8 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Alterando as Configurações do Teclado no Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
-#02_ Alterando as Configurações do Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)<br>
+[#01_ Alterando as Configurações do Teclado no Ubuntu Server (SOMENTE SE NECESSÁRIO)](#01_-alterando-as-configurações-do-teclado-no-ubuntu-server-somente-se-necessário)<br>
+[#02_ Alterando as Configurações do Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)](#02_-alterando-as-configurações-do-console-no-ubuntu-server-somente-se-necessário)<br>
 
 | **🌍 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -71,7 +71,7 @@ Entendendo a saída do comando: __`cat -n /etc/default/keyboard`__<br>
 ---
 
 ```bash
-#reconfigurando o Teclado no Ubuntu Server
+#reconfigurando o Teclado (Keyboard) no Ubuntu Server
 #opção do comando dpkg-reconfigure: keyboard-configuration (packet reconfiguration)
 #mais informações acesse a documentação oficial em: https://linuxcommandlibrary.com/man/dpkg-reconfigure
 sudo dpkg-reconfigure keyboard-configuration
