@@ -253,12 +253,14 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 09) Storage configuration
     AVAILABLE DEVICES
       free space <Enter>
+
         #Criando a partição de Memória Virtual Swap do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-swap
           Size (max 49.000G): 8.000G #Alterar conforme a sua necessidade
           Format: swap
         <Create>
+
         #Criando a partição do Perfil dos Usuários (/home) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-home
@@ -266,6 +268,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Format: ext4
           Mount: /home
         <Create>
+
         #Criando a partição Temporária (/tmp) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-tmp
@@ -274,6 +277,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Mount: Other
             /tmp
         <Create>
+
         #Criando a partição Variável (/var) do Ubuntu Server
         Create Logical Volume <Enter>
           Name: lv-var
@@ -281,13 +285,21 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
           Format: ext4
           Mount: /var
         <Create>
+```
+```bash
+#Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
+10) Storage configuration
     USER DEVICES
+
       #Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
       ubuntu-lv <Enter>
         Edit <Enter>
           Name: lv-root
         <Save>
-<Done>
+```
+```bash
+#Confirmando as alterações do Hard Disk do Ubuntu Server
+11) <Done>
   Confirm destructive action
 <Continue>
 ```
@@ -295,7 +307,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ## 07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS
 ```bash
 #Configuração do Usuário e Senha de acesso do Ubuntu Server
-10) Profile setup
+12) Profile setup
     #OBSERVAÇÃO: ALTERAR OS DADOS DO NOME DO SERVIDOR, USUÁRIO E SENHA PARA O SEU CENÁRIO.
     Your name: Seu Nome e Sobrenome <Tab>
     Your servers name: srvseunome <Tab>
@@ -306,31 +318,31 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```
 ```bash
 #Configuração do suporte ao Ubuntu Pro do Ubuntu Server
-11) Upgrade to Ubuntu Pro
+13) Upgrade to Ubuntu Pro
     ( ) Enable Ubuntu Pro
     (X) Skip Ubuntu Pro setup for now
 <Continue>
 ```
 ```bash
 #Configuração do acesso remoto via SSH do Ubuntu Server
-12) SSH Setup
+14) SSH Setup
     [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
     [X] Allow password authentication over SSH: ON (Habilitar)
 <Done>
 ```
 ```bash
 #Configuração do recursos via SNAP's do Ubuntu Server
-13) Featured Server Snaps
+15) Featured Server Snaps
 <Done>
 ```
 ```bash
 #Finalização da instalação do Ubuntu Server
-14) Install complete!
+16) Install complete!
 <Reboot Now>
 ```
 ```bash
 #Remoção da média de instalação do Ubuntu Server
-15) Please remove the installation medium, then press ENTER:
+17) Please remove the installation medium, then press ENTER:
 <Enter>
 ```
 
