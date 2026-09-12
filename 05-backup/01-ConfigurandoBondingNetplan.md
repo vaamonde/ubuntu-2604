@@ -75,14 +75,15 @@ Link da vídeo aula:
 
 > **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de Produção On-Premises com Switches físicos gerenciáveis, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
 
-## 02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise
+## 02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremises
 
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
-01) Selecionar a Máquina Virtual: UbuntuOnPremise
+01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
-
+```
+```bash
 #Adicionado mais uma Placa de Rede na Máquina Virtual do Ubuntu Server
 02) Rede
     Adaptador 1 (LAN)
@@ -105,7 +106,8 @@ Link da vídeo aula:
         Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
         Modo Promíscuo: Permitir Tudo (Allow All)
     <OK>
-
+```
+```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
 03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
 <Iniciar>
@@ -120,17 +122,19 @@ Link da vídeo aula:
 #opção do comando VBoxManage: list vms (List all registered virtual machines)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
 VBoxManage list vms
-
+```
+```bash
 #habilitando o Modo Promíscuo (Allow-All) nos dois Adaptadores de Rede da Máquina Virtual
 #opção do comando VBoxManage: modifyvm --nicpromiscN (Set the promiscuous mode policy of the network card)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
-VBoxManage modifyvm "UbuntuOnPremise" --nicpromisc1 allow-all
-VBoxManage modifyvm "UbuntuOnPremise" --nicpromisc2 allow-all
-
+VBoxManage modifyvm "UbuntuOnPremises" --nicpromisc1 allow-all
+VBoxManage modifyvm "UbuntuOnPremises" --nicpromisc2 allow-all
+```
+```bash
 #verificando as configurações de rede aplicadas na Máquina Virtual
 #opção do comando VBoxManage: showvminfo (Show information about a particular virtual machine)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
-VBoxManage showvminfo "UbuntuOnPremise" | grep -i "NIC\|Promisc"
+VBoxManage showvminfo "UbuntuOnPremises" | grep -i "NIC\|Promisc"
 ```
 
 ## 04_ Verificando as duas Interfaces de Rede reconhecidas no Ubuntu Server
@@ -143,12 +147,14 @@ VBoxManage showvminfo "UbuntuOnPremise" | grep -i "NIC\|Promisc"
 #opção do comando grep: -i (ignore-case)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 sudo lspci -v | grep -i ethernet
-
+```
+```bash
 #verificando os detalhes das duas Placas de Rede (Nome Lógico e Endereço MAC) no Ubuntu Server
 #opção do comando lshw: -class (Only show the given class of hardware)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/lshw.1.html
 sudo lshw -class network
-
+```
+```bash
 #verificando o Nome Lógico e o Endereço MAC de cada Interface de Rede no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
@@ -162,12 +168,14 @@ sudo ip address show
 #opção do comando lsmod: (Show the status of modules in the Linux Kernel)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsmod.8.html
 sudo lsmod | grep bonding
-
+```
+```bash
 #carregando manualmente o módulo de Bonding do Kernel no Ubuntu Server
 #opção do comando modprobe: (Add and remove modules from the Linux Kernel)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/modprobe.8.html
 sudo modprobe bonding
-
+```
+```bash
 #garantindo que o módulo de Bonding seja carregado automaticamente no Boot do Ubuntu Server
 #opção do comando tee: -a (append)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tee.1.html
@@ -181,20 +189,28 @@ echo "bonding" | sudo tee -a /etc/modules-load.d/bonding.conf
 #opção do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh /etc/netplan/
-
+```
+```bash
 #fazendo o backup do arquivo de configuração original do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp00
-
+```
+```bash
 #download do arquivo de configuração do Netplan com Bonding no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config-bond.yaml
-
+```
+```bash
 #editando o arquivo de configuração do Netplan
 sudo vim /etc/netplan/00-installer-config.yaml
-
+```
+```bash
+#habilitando o número de linhas do arquivo 00-installer-config.yaml
+ESC SHIFT :set number <Enter>
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -260,38 +276,45 @@ ESC SHIFT :x <Enter>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp01
-
+```
+```bash
 #verificando as configurações do arquivo do Netplan no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), get (get a settings config netplan)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug get
-
+```
+```bash
 #validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug generate
-
+```
+```bash
 #testando a configuração com possibilidade de reversão do Netplan em modo Debug (detalhado) no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: a opção try reverte automaticamente a configuração caso ocorra falha
 #opções do comando netplan: --debug (enable debug messages), try (try to apply a new netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug try
-
+```
+```bash
 #aplicando as mudanças definitivas do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug apply
-
+```
+```bash
 #verificando o status das configurações do Netplan e a Interface bond0 no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
-
+```
+```bash
 #verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
-
+```
+```bash
 #verificando o status detalhado do Bonding (Interface Ativa, Escravas e Modo de Operação) no Ubuntu Server
 #opção do comando cat: /proc/net/bonding/bond0 (arquivo virtual do Kernel com o status do Bonding)
 #mais informações acesse a documentação oficial em: https://www.kernel.org/doc/Documentation/networking/bonding.txt
@@ -320,23 +343,27 @@ Entendendo a saída do arquivo: __`/proc/net/bonding/bond0`__<br>
 #simulando a falha de um Link de Rede desconectando o Cabo Virtual do Adaptador (executar no Host Hospedeiro)
 #opção do comando VBoxManage: controlvm setlinkstateN (Sets the link state)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
-VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 off
-
+VBoxManage controlvm "UbuntuOnPremises" setlinkstate1 off
+```
+```bash
 #verificando dentro do Ubuntu Server se o Bonding assumiu a interface escrava (enp0s8) no Ubuntu Server
 #opção do comando watch: -n (Specify  update  interval), 1 (second)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/watch
 sudo watch -n 1 /proc/net/bonding/bond0
-
+```
+```bash
 #verificando o Endereço IPv4/IPv6 da Interface Lógica bond0 e das Interfaces Escravas no Ubuntu Server
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show bond0
-
+```
+```bash
 #reconectando o Cabo Virtual do Adaptador para restaurar a interface Primária (executar no Host Hospedeiro)
 #opção do comando VBoxManage: controlvm setlinkstateN (Sets the link state)
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
-VBoxManage controlvm "UbuntuOnPremise" setlinkstate1 on
-
+VBoxManage controlvm "UbuntuOnPremises" setlinkstate1 on
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Netplan no Ubuntu Server
 #opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html

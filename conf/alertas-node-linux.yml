@@ -1,0 +1,69 @@
+# Autor: Robson Vaamonde
+# Site: www.procedimentosemti.com.br
+# Facebook: facebook.com/ProcedimentosEmTI
+# Facebook: facebook.com/BoraParaPratica
+# YouTube: youtube.com/BoraParaPratica
+# Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
+# Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
+# Data de criação: 12/09/2029
+# Data de atualização: 12/09/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64x
+# Testado e homologado para a versão do Prometheus 3.13.x e Node Exporter 1.12.x
+#
+# ======= BLOCO DE ALERTAS BÁSICO DO NODE EXPORTER LINUX ======= 
+#
+# Configuração dos grupos de alertas do Node Exporter
+groups:
+- name: alertas-node-linux
+  rules:
+  #
+  # Configuração do alerta de: Uso elevado de CPU
+  - alert: CPUAlta
+    expr: 100 - (avg without (cpu, mode)(rate(node_cpu_seconds_total{mode="idle"}[1m]))) * 100 > 80
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Uso elevado de CPU"
+      description: "CPU acima de 80% por mais de 5 minutos no host {{ $labels.instance }}."
+  #
+  # Configuração do alerta de: Uso elevado de Memória RAM
+  - alert: MemoriaAlta
+    expr: (1 - (node_memory_MemAvailable_bytes{job="srvvaamonde"} / node_memory_MemTotal_bytes{job="srvvaamonde"})) * 100 > 80
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Uso elevado de Memória"
+      description: "Memória RAM acima de 85% no host {{ $labels.instance }}."
+  #
+  # Configuração do alerta de: Uso elevado de Hard Disk Cheio
+  - alert: DiscoCheio
+    expr: (1 - (node_filesystem_avail_bytes{job="srvvaamonde",device="/dev/mapper/ubuntu--vg-ubuntu--lv"} / node_filesystem_size_bytes{job="srvvaamonde",device="/dev/mapper/ubuntu--vg-ubuntu--lv"})) * 100 > 80
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Disco quase cheio"
+      description: "Uso de disco acima de 90% no host {{ $labels.instance }} ({{ $labels.mountpoint }})."
+  #
+  # Configuração do alerta de: Uso elevado de Processamento
+  - alert: Processamento
+    expr: node_load15 > count without (cpu, mode) (node_cpu_seconds_total{job="srvvaamonde",mode="idle"})
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Load Average elevado"
+      description: "Load 15 maior que o número de CPUs no host {{ $labels.instance }}."
+  #
+  # Configuração do alerta de: Uso elevado de I/O de Disco
+  - alert: IOAlto
+    expr: rate(node_disk_io_time_seconds_total{job="srvvaamonde"}[1m]) > 0.8
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Disco com I/O elevado"
+      description: "Disco com I/O acima de 80% no host {{ $labels.instance }}."

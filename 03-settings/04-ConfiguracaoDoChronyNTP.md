@@ -60,11 +60,24 @@ Link da vídeo aula:
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+```
+```bash
+#verificando o status do serviço do Chrony Server
 sudo systemctl status chrony
+```
+```bash
+#reinicializando o serviço do Chrony Server
 sudo systemctl restart chrony
+```
+```bash
+#parando o serviço do Chrony Server
 sudo systemctl stop chrony
+```
+```bash
+#iniciando o serviço do Chrony Server
 sudo systemctl start chrony
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Chrony Server e Client no Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
@@ -78,7 +91,8 @@ sudo journalctl -u chrony
 #opção do comando chronyd: -v (version)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/chronyd
 sudo chronyd -v
-
+```
+```bash
 #verificando a versão do Chrony Client no Ubuntu Server
 #opção do comando chronyc: -v (version)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/chronyc
@@ -103,16 +117,18 @@ sudo lsof -nP -iUDP:'323'
 ```
 
 ## 03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server
-```bash
-/etc/chrony/                                 <-- Diretório de configuração do Chrony Server e Client
-/etc/chrony/chrony.conf                      <-- Arquivo de configuração do Chrony Server e Client
-/etc/chrony/chrony.keys                      <-- Arquivo de configuração das chaves de autenticação do Chrony Server e Client
-/etc/chrony/conf.d/                          <-- Diretório dos arquivos de configuração extras do Chrony Server e Client
-/etc/chrony/sources.d/                       <-- Diretório dos arquivos de servidores NTP do Chrony Server e Client
-/etc/chrony/sources.d/ntp-br-pools.sources   <-- Arquivo de configuração dos servidores NTP.br do Chrony Server e Client
-/var/log/chrony/                             <-- Diretório de logs do Chrony Server e Client
-/var/lib/chrony/                             <-- Diretório das bibliotecas de sincronismo Chrony Server e Client
-```
+
+| **📂 Caminho** | **📌 Tipo** | **📖 Descrição** | **🎯 Finalidade** |
+| :------------- | :---------- | :--------------- | :---------------- |
+| `/etc/chrony/` | Diretório | Diretório principal de **configuração do Chrony**. | Centralizar os arquivos utilizados na configuração do **Chrony como cliente e servidor NTP**. |
+| `/etc/chrony/chrony.conf` | Arquivo | Arquivo principal de configuração do **Chrony**. | Definir parâmetros de **sincronização, servidores NTP, políticas de acesso, NTS, rede e comportamento do `chronyd`**. |
+| `/etc/chrony/chrony.keys` | Arquivo | Arquivo que armazena **chaves de autenticação** utilizadas pelo Chrony. | Permitir **autenticação das comunicações NTP** quando configurada. |
+| `/etc/chrony/conf.d/` | Diretório | Diretório destinado a **configurações adicionais** do Chrony. | Permitir organizar configurações complementares sem concentrá-las exclusivamente no `chrony.conf`. |
+| `/etc/chrony/sources.d/` | Diretório | Diretório destinado às configurações dos **servidores/fontes NTP**. | Organizar separadamente as fontes de tempo utilizadas pelo Chrony. |
+| `/etc/chrony/sources.d/ntp-br-pools.sources` | Arquivo | Arquivo contendo as **fontes de tempo do NTP.br** utilizadas pelo ambiente. | Centralizar a definição dos servidores/pools NTP.br utilizados para **sincronização de horário**. |
+| `/var/log/chrony/` | Diretório | Diretório destinado aos **arquivos de log** do Chrony. | Registrar informações para **monitoramento, diagnóstico e troubleshooting** da sincronização de tempo. |
+| `/var/lib/chrony/` | Diretório | Diretório utilizado para armazenar **dados persistentes e informações de estado** do Chrony. | Manter informações necessárias ao funcionamento e à **manutenção do estado de sincronização** do serviço. |
+---
 
 ## 04_ Atualizando os arquivos de configuração do Chrony Server e Client no Ubuntu Server
 ```bash
@@ -120,17 +136,20 @@ sudo lsof -nP -iUDP:'323'
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/chrony/chrony.conf /etc/chrony/chrony.conf.old
-
+```
+```bash
 #fazendo o backup do arquivo de servidores NTP original do Chrony Server e Client no Ubuntu Server
 #opção do comando mv: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mv.1.html
 sudo mv -v /etc/chrony/sources.d/ubuntu-ntp-pools.sources /etc/chrony/sources.d/ubuntu-ntp-pools.sources.old
-
+```
+```bash
 #download do arquivo de configuração personalizado do Chrony Server e Client no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/chrony.conf
-
+```
+```bash
 #download do arquivo de servidores NTP personalizados do Chrony Server e Client no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
@@ -146,10 +165,12 @@ sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubuse
 ```bash
 #editando o arquivo de configuração do Chrony Server e Client no Ubuntu Server
 sudo vim /etc/chrony/chrony.conf
-
+```
+```bash
 #habilitando o número de linhas do arquivo chrony.conf
 ESC SHIFT :set number <Enter>
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -170,13 +191,16 @@ noclientlog
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT : x <Enter>
-
+```
+```bash
 #editando o arquivo de origens dos NTP do Chrony Server
 sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
-
+```
+```bash
 #habilitando o número de linhas do arquivo ntp-br-pools.sources
 ESC SHIFT :set number <Enter>
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -190,14 +214,22 @@ server e.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT : x <Enter>
-
+```
+```bash
 #verificando o serviço do Chrony Server e Client no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or
 #more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+```
+```bash
+#reinicializando o serviço do Chrony Server
 sudo systemctl restart chrony
+```
+```bash
+#verificando o status do serviço do Chrony Server
 sudo systemctl status chrony
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Chrony Server e Client no Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
@@ -323,58 +355,69 @@ Entendendo a saída do comando: __`openssl s_client -connect a.st1.ntp.br:4460 -
 #opção do comando timedatectl: status (Show current time settings)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
-
+```
+```bash
 #definindo que o relógio de hardware (RTC) utiliza UTC e não Hora Local (0 = desabilita RTC em Hora Local) no Ubuntu Server
 #opção do comando timedatectl: set-local-rtc (Takes a boolean argument)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-local-rtc 0
-
+```
+```bash
 #desabilitando temporariamente a sincronização automática via NTP/Chrony no Ubuntu Server
 #opção do comando timedatectl: set-ntp (Controls whether NTP based network time synchronization is active)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-ntp false
-
+```
+```bash
 #configurando o Timezone de São Paulo no Ubuntu Server
 #opção do comando timedatectl: set-timezone (Set the system time zone to the specified value)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-timezone America/Sao_Paulo
-
+```
+```bash
 #configurando manualmente a Data e Hora do sistema no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O VALOR "YYYY-MM-DD HH:MM:SS" PARA A DATA/HORA CORRETA DO SEU CENÁRIO
 #opção do comando timedatectl: set-time (Set the system clock to the specified date and time)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-time "YYYY-MM-DD HH:MM:SS"
-
+```
+```bash
 #reabilitando a sincronização automática via NTP/Chrony após o ajuste manual no Ubuntu Server
 #opção do comando timedatectl: set-ntp (Controls whether NTP based network time synchronization is active)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-ntp true
-
+```
+```bash
 #verificando o status final de Data, Hora, Timezone e Sincronismo NTP no Ubuntu Server
 #opção do comando timedatectl: status (Show current time settings)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
-
+```
+```bash
 #reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br no Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl restart chrony.service
-
+```
+```bash
 #reiniciando o serviço do Systemd Resolved para limpar o cache de respostas DNS/DNSSEC inválidas no Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl restart systemd-resolved
-
+```
+```bash
 #analisando os Log's e mensagens de erro mais recentes do serviço do Chrony no Ubuntu Server
 #opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -eu chrony
-
+```
+```bash
 #analisando os Log's e mensagens de erro mais recentes do serviço do Systemd Resolved no Ubuntu Server
 #opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -eu systemd-resolved
-
+```
+```bash
 #testando a resolução de nomes e a validação do DNSSEC após o ajuste manual de Data e Hora no Ubuntu Server
 #opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
@@ -390,12 +433,14 @@ sudo resolvectl query cloudflare.com
 #opções do comando hwclock: --show (show hardware clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --show
-
+```
+```bash
 #sincronizando a data e hora de software para o hardware de forma manual no Ubuntu Server
 #opções do comando hwclock: --systohc (system clock to hardware clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html
 sudo hwclock --systohc
-
+```
+```bash
 #sincronizando a data e hora de hardware para o software de forma manual no Ubuntu Server
 #opções do comando hwclock: --hctosys (hardware clock to system clock)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/hwclock.8.html

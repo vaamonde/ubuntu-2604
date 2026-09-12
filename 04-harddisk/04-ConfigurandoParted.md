@@ -65,10 +65,11 @@ Link da vídeo aula:
 
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
-01) Selecionar a Máquina Virtual: UbuntuOnPremise
+01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
-
+```
+```bash
 #Adicionando um Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
     Dispositivos
@@ -81,9 +82,10 @@ Link da vídeo aula:
           <Finalizar>
         backup-01.vdi <Escolher>
     <OK>
-
+```
+```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
-03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
+03) Selecionar a Máquina Virtual: UbuntuOnPremises: 
 <Iniciar>
 ```
 
@@ -118,7 +120,8 @@ sudo wipefs -n /dev/sdd
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -a /dev/sdd
-
+```
+```bash
 #listando as tabelas de partição de todos os discos reconhecidos no Ubuntu Server
 #opção do comando fdisk: -l (List the partition tables for the specified devices and then exit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/fdisk.8.html
@@ -177,7 +180,8 @@ sudo gdisk /dev/sdd
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /proc/partitions | grep -i sdd
-
+```
+```bash
 #verificando a nova tabela de partição GPT criada no Disco /dev/sdd no Ubuntu Server
 #opção do comando parted: -l (lists partition layout on all block devices)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/parted.8.html
@@ -250,10 +254,12 @@ Entendendo a saída do comando: __`blkid /dev/sdd1`__<br>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/fstab /etc/fstab.bkp-backup
-
+```
+```bash
 #editando o arquivo de configuração do Fstab para montagem automática no boot
 sudo vim /etc/fstab
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -272,7 +278,8 @@ UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup       ext4      defaults,nofail     0  
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
-
+```
+```bash
 #reinicializando as configurações do SystemD com as mudanças do Fstab no Ubuntu Server
 #opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
@@ -286,7 +293,8 @@ sudo systemctl daemon-reload
 #opção do comando mount: -v (Enables verbose mode), -a (Mount all filesystems mentioned in fstab)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/mount.8.html
 sudo mount -va
-
+```
+```bash
 #verificando o espaço em disco e o ponto de montagem da partição de Backup no Ubuntu Server
 #opção do comando df: -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
@@ -334,23 +342,27 @@ Entendendo a saída do comando: __`lsblk -f /dev/sdd`__<br>
 #opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 sudo mkdir -pv /backup/repository/lv-dados
-
+```
+```bash
 #criando o grupo dedicado para administração dos Backups no Ubuntu Server
 #opção do comando groupadd: (Create a new group)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/groupadd.8.html
 sudo groupadd backupadm
-
+```
+```bash
 #ajustando o proprietário (Owner) e grupo (Group) do diretório de Backup no Ubuntu Server
 #opção do comando chown: -R (recursive), -v (verbose), root (owner), backupadm (group)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chown.1.html
 sudo chown -Rv root:backupadm /backup
-
+```
+```bash
 #ajustando as permissões do diretório de Backup no Ubuntu Server
 #opção do comando chmod: -R (recursive), -v (verbose), 770 = Leitura/Escrita/Execução para Owner e Group, 
 #Sem acesso para Others
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 770 /backup
-
+```
+```bash
 #verificando as permissões finais aplicadas no diretório de Backup no Ubuntu Server
 #opção do comando ls: -lh (long listing, human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html

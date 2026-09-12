@@ -195,22 +195,26 @@ sudo apt list --installed | cat -n
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/history.log
-
+```
+```bash
 #Verificando o Log de finalização da atualização de pacotes no Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/term.log
-
+```
+```bash
 #Verificando a necessidade de reinicialização do Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
 sudo needrestart
-
+```
+```bash
 #Verificando o arquivo de reinicialização requerida do Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/run/reboot-required
-
+```
+```bash
 #Verificando os pacotes que precisam ser reinicializados do Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
@@ -224,7 +228,8 @@ sudo cat -n /var/run/reboot-required.pkgs
 #opção do comando systemctl: reboot (Shut down and reboot the system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl reboot
-
+```
+```bash
 #Verificando os Logs de reinicialização do Ubuntu Server
 #opções do comando journalctl: -u (Show messages for the specified systemd unit), --since (Start showing 
 #entries on or newer than the specified date)

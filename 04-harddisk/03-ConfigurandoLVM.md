@@ -75,12 +75,14 @@ Link da vídeo aula:
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -n /dev/md0
-
+```
+```bash
 #removendo todas as assinaturas de sistema de arquivos, RAID ou LVM no Array do RAID-1 no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
 sudo wipefs -a /dev/md0
-
+```
+```bash
 #verificando o estado atual do Array do RAID-1 antes de iniciar a configuração do LVM no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat /proc/mdstat
@@ -110,7 +112,8 @@ Entendendo a saída do comando: __`/proc/mdstat`__<br>
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
+```
+```bash
 #instalando os pacotes e ferramentas de LVM no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
@@ -126,17 +129,30 @@ sudo apt install lvm2 thin-provisioning-tools
 #opção do comando lvm: version (Display  the  LVM,  and  library, and driver version)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvm.8.html
 sudo lvm version
-
-#verificando o status do serviço do LVM no Ubuntu Server
+```
+```bash
+#verificando o status do serviço do LVM Monitor no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or 
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
-sudo systemctl status lvm2-monitor
-sudo systemctl restart lvm2-monitor
-sudo systemctl stop lvm2-monitor
-sudo systemctl start lvm2-monitor
 
-#analisando os Log's e mensagens do LVM no Ubuntu Server
+#visualizando o status do serviço do LVM Monitor
+sudo systemctl status lvm2-monitor
+```
+```bash
+#reinicializando o serviço do LVM Monitor
+sudo systemctl restart lvm2-monitor
+```
+```bash
+#parando o serviço do LVM Monitor
+sudo systemctl stop lvm2-monitor
+```
+```bash
+#iniciando o serviço do LVM Monitor
+sudo systemctl start lvm2-monitor
+```
+```bash
+#analisando os Log's e mensagens do LVM Monitor no Ubuntu Server
 #opção do comando journalctl: -u (unit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u lvm2-monitor
@@ -149,7 +165,8 @@ sudo journalctl -u lvm2-monitor
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/pvcreate.8.html
 sudo pvcreate /dev/md0
   Physical volume "/dev/md0" successfully created.
-
+```
+```bash
 #verificando as informações resumidas do Physical Volume no Ubuntu Server
 #opção do comando pvs: (List physical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/pvs.8.html
@@ -195,7 +212,8 @@ Entendendo a saída do comando: __`pvdisplay /dev/md0`__<br>
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgcreate.8.html
 sudo vgcreate vg_dados /dev/md0
   Volume group "vg_dados" successfully created
-
+```
+```bash
 #verificando as informações resumidas do Volume Group no Ubuntu Server
 #opção do comando vgs: (List volume groups)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/vgs.8.html
@@ -249,7 +267,8 @@ Entendendo a saída do comando: __`vgdisplay vg_dados`__<br>
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvcreate.8.html
 sudo lvcreate -L 20G -n lv_dados vg_dados
   Logical volume "lv_dados" created.
-
+```
+```bash
 #verificando as informações resumidas do Logical Volume no Ubuntu Server
 #opção do comando lvs: (List logical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.html
@@ -329,7 +348,8 @@ Entendendo a saída do comando: __`mkfs.ext4 /dev/vg_dados/lv_dados`__<br>
 #opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 sudo mkdir -pv /dados
-
+```
+```bash
 #verificando o UUID do sistema de arquivos criado no Logical Volume no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 sudo blkid /dev/vg_dados/lv_dados
@@ -349,10 +369,12 @@ Entendendo a saída do comando: __`blkid /dev/vg_dados/lv_dados`__<br>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/fstab /etc/fstab.old
-
+```
+```bash
 #editando o arquivo de configuração do Fstab para montagem automática no boot
 sudo vim /etc/fstab
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -367,12 +389,14 @@ UUID=SEU_UUID_DO_LV_DADOS   /dados     ext4         defaults    0      2
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
-
+```
+```bash
 #reinicializando as configurações do Systemd com as mudanças do Fstab no Ubuntu Server
 #opção do comando systemctl: daemon-reload (Reload the systemd manager configuration)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl daemon-reload
-
+```
+```bash
 #montando todos os sistemas de arquivos listados no Fstab no Ubuntu Server
 #opção do comando mount: -v (Enables verbose mode), -a (Mount all filesystems mentioned in fstab)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/mount.8.html
@@ -575,7 +599,8 @@ Entendendo a saída do comando: __`lvs vg_dados`__<br>
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvcreate.8.html
 sudo lvcreate -s -L 5G -n lv_dados_snap /dev/vg_dados/lv_dados
   Logical volume "lv_dados_snap" created.
-
+```
+```bash
 #verificando as informações resumidas dos Logical Volumes, incluindo o Snapshot, no Ubuntu Server
 #opção do comando lvs: (List logical volumes)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/lvs.8.html

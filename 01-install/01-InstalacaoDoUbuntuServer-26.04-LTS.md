@@ -67,7 +67,8 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 #Criando a Máquina Virtual do Ubuntu Server 26.04.x LTS no Oracle VirtualBOX
 01) Ferramentas;
 <Novo>
-
+```
+```bash
 #Personalizando a criação da máquinas virtual do Ubuntu Server
 02) Nome e Sistema Operacional:
     Nome: UbuntuOnPremises (altere conforme a sua necessidade)
@@ -77,17 +78,20 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
     Tipo: Linux
     Subtype: Ubuntu
     Versão: Ubuntu (64-bit)
-
+```
+```bash
 #Desabilitando o recursos de Instalação Desassistida (Automática)
 03) Instalação Desassistida:
     Sem configuração
-
+```
+```bash
 #Configuração da Memória RAM Virtual e dos Processadores
 04) Hardware
     Memória Base: 4096 MB (altere conforme a sua necessidade)
     Processadores: 2 (VCPUs) (altere conforme sua necessidade)
     (OFF) Habilitar EFI (SO especiais apneas)
-
+```
+```bash
 #Criando o Hard Disk Virtual para a instalação do Ubuntu Server
 05) Disco Rígido
     (ON) Criar um novo disco rígido virtual agora
@@ -103,13 +107,13 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```
 
 ## 03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX
-
 ```bash
 #Configurando a máquinas virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
-
+```
+```bash
 #Configurando o Processador, Memória e Recursos de Virtualização
 02) Sistema
     Placa-Mãe
@@ -121,17 +125,20 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
         #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITA O RECURSO DE:
         #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL
         #O COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
-
+```
+```bash
 #Configuração da Placa de Vídeo e Resolução
 03) Display
     Tela (S)
       Memória de Vídeo: 256 MB
       Recursos Estendidos: (ON) Habilitar Aceleração 3D: (Habilitar)
-
+```
+```bash
 #Desabilitando os Recursos de Audio do Servidor
 04) Áudio
     (OFF) Habilitar Áudio: (Desabilitar)
-
+```
+```bash
 #Configuração da Placa de Rede em Modo Bridge (Ponte)
 05) Rede
     Adaptador 1 (LAN)
@@ -145,12 +152,12 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```
 
 ## 04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX
-
 ```bash
 #Iniciando a máquinas virtual do Ubuntu Server
-01) Selecionar a Máquina Virtual: UbuntuOnPremise: 
+01) Selecionar a Máquina Virtual: UbuntuOnPremises: 
 <Iniciar>
-
+```
+```bash
 #Locando a ISO da instalação do Ubuntu Server
 02) VirtualBOX VM
     DVD: <Outro...>
@@ -170,19 +177,22 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 #Selecione *Try or Install Ubuntu Server para iniciar o processo de instalação
 01) *Try or Install Ubuntu Server
 <Enter>
-
+```
+```bash
 #Recomendado utilizar sempre a opção em Inglês para instalar o Ubuntu Server
 02) Use UP, DOWN and ENTER keys to select your language
     English 
 <Enter>
-
+```
+```bash
 #Configuração do Teclado e Acentuação do Terminal do Ubuntu Server
 03) Keyboard configuration
     Layout:  [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
     Variant: [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
              [English (US) - English (US, intl., with dead keys)] (suporte americano com acentuação)
 <Done>
-
+```
+```bash
 #Tipo de instalação do Ubuntu Server (Sistema Completo)
 04) Choose type of install
     (X) Ubuntu Server (DEFAULT - Selecionado por padrão)
@@ -190,7 +200,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     Additional options
       [ ] Search for third-party drivers
 <Done>
-
+```
+```bash
 #Configuração da Placa de Rede do Ubuntu Server
 05) Network connections
     enp0s3 eth - (o nome lógico da placa de rede muda de equipamento para equipamento)
@@ -199,12 +210,14 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO, A CONFIGURAÇÃO DA PLACA DE REDE SERÁ
     #FEITA MANUALMENTE NAS PRÓXIMAS AULAS (NETPLAN E BONDING).
 <Done>
-
+```
+```bash
 #Configuração do Proxy Server do Ubuntu Server
 06) Configure proxy
     Proxy address: (Default)
 <Done>
-
+```
+```bash
 #Configuração dos Espelhos dos Repositórios do Ubuntu Server
 07) Configure Ubuntu archive mirror
     Mirror: http://archive.ubuntu.com/ubuntu (padrão da distribuição)
@@ -212,7 +225,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     #OFICIAL DO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
     #URL: http://us.archive.ubuntu.com/ubuntu
 <Done>
-
+```
+```bash
 #Configuração do Hard Disk e Particionamento do Ubuntu Server
 08) Guided storage configuration
     (X) Use an entire disk (Default)
@@ -279,7 +293,6 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```
 
 ## 07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS
-
 ```bash
 #Configuração do Usuário e Senha de acesso do Ubuntu Server
 10) Profile setup
@@ -290,27 +303,32 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     Choose a passwords: sua_senha <Tab>
     Confirm your passwords: confirmar_sua_senha
 <Done>
-
+```
+```bash
 #Configuração do suporte ao Ubuntu Pro do Ubuntu Server
 11) Upgrade to Ubuntu Pro
     ( ) Enable Ubuntu Pro
     (X) Skip Ubuntu Pro setup for now
 <Continue>
-
+```
+```bash
 #Configuração do acesso remoto via SSH do Ubuntu Server
 12) SSH Setup
     [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
     [X] Allow password authentication over SSH: ON (Habilitar)
 <Done>
-
+```
+```bash
 #Configuração do recursos via SNAP's do Ubuntu Server
 13) Featured Server Snaps
 <Done>
-
+```
+```bash
 #Finalização da instalação do Ubuntu Server
 14) Install complete!
 <Reboot Now>
-
+```
+```bash
 #Remoção da média de instalação do Ubuntu Server
 15) Please remove the installation medium, then press ENTER:
 <Enter>
@@ -327,7 +345,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
       srvseunome login: seu_usuário <Enter> (altere para o nome do seu usuário)
       Password: sua_senha <Enter> (altere para a sua senha)
     seu_usuário@srvseunome:~$ (primeiro acesso ao Terminal do Ubuntu Server)
-
+```
+```bash
 #Verificando o endereço IPv4 obtido via DHCP do Ubuntu Server
 02) Verificando o endereço IPv4 do Ubuntu Server
     seu_usuário@srvseunome:~$ sudo ip address show
@@ -340,21 +359,26 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
 ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
-
+```
+```bash
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
-
+```
+```bash
 #confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
 The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
-
+```
+```bash
 #digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
 seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
-
+```
+```bash
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
-
+```
+```bash
 #verificando os usuários logados no TTY e PTS do Ubuntu Server
 w
 ```

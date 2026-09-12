@@ -139,25 +139,32 @@ Entendendo a saída do comando: __`uname -a`__<br>
 #conflict), autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
 #repository of retrieved package files)
-
+```
+```bash
 #01_ limpando todos os repositórios locais do Ubuntu Server
 sudo apt clean
-
+```
+```bash
 #02_ atualizando todas as listas (sources.list) do Ubuntu Server
 sudo apt update
-
+```
+```bash
 #03_ atualizando todos os softwares com suporte do Ubuntu Pro no Ubuntu Server
 sudo apt upgrade
-
+```
+```bash
 #04_ forçando uma atualização completa do Ubuntu Pro no Ubuntu Server
 sudo apt full-upgrade
-
+```
+```bash
 #05_ atualizando o sistema e kernel do Ubuntu Pro no Ubuntu Server
 sudo apt dist-upgrade
-
+```
+```bash
 #06_ removendo todos os softwares desnecessários do Ubuntu Pro no Ubuntu Server
 sudo apt autoremove
-
+```
+```bash
 #07_ limpando todos os caches de instalação do Ubuntu Pro no Ubuntu Server
 sudo apt autoclean
 ```
@@ -177,7 +184,8 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
       Re-type password: (CONFIRME SUA SENHA)
       Marque a opção: (ON) I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
       Clique em: <Create account>
-
+```
+```bash
 #Finalizar o cadastro ativando a sua conta no link enviado por email
 02) Finalize os procedimentos acessando seu email para ativar a sua conta no Ubuntu One.
     Are you sure you want to confirm and validate this email address?
@@ -186,16 +194,21 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 
 ## 04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal (Suporte para 5 Servidores)
 
-Link para o Dashboard oficial do Ubuntu Pro: Acesse o site: https://ubuntu.com/pro/dashboard
+> Link para o Dashboard oficial do Ubuntu Pro: Acesse o site: https://ubuntu.com/pro/dashboard
 
 ```bash
+#Acessando e se autenticando no site do Ubuntu Pro Dashboard
 01) Faça a autenticação com a sua conta criada no Ubuntu One;
     Personal Data Request: <Yes, log me in>
-
+```
+```bash
+#Copiando o Token de ativação do Ubuntu Pro
 02) Será mostrado no campo Free Personal Token o seu token;
     Copiar o seu Token no campo: Token. ou
     Copiar o comando com o Token na linha: Command to attach a machine: 
-
+```
+```bash
+#Verificando as licenças atividades do Ubuntu Pro
 03) No lado esquerdo em: Free Personal Token é mostrado as colunas:
     Machines (Licenças Disponíveis), Created (Data de Criação) e Expires (Data de Expiração)
 ```
@@ -222,12 +235,14 @@ sudo pro attach COPIAR_E_COLAR_O_SEU_TOKEN
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status ubuntu-advantage
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Ubuntu Pro no Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -u ubuntu-advantage
-
+```
+```bash
 #verificando o status do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: status (Report current status of Ubuntu Pro services on system)
 #--all (view all information command and verbose mode)
@@ -259,19 +274,22 @@ sudo pro status --all
 #opção do comando pro: security-status (Show security updates for packages in the system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro security-status
-
+```
+```bash
 #verificando os status dos pacotes de segurança ESM (Enterprise Service Manager) do Ubuntu Pro no Ubuntu Server
 #opção do comando pro: security-status (Show security updates for packages in the system), 
 #--esm-apps (flag will only  show  information  about esm-apps packages)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 sudo pro security-status --esm-apps
-
+```
+```bash
 #verificando as informações de Fix (correções) dos CVE (Common Vulnerabilities and Exposures) no Ubuntu Server
 #opção do comando pro: fix (Fix a CVE or USN on the system by upgrading the appropriate package(s))
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/ua.1.html
 #Site dos CVEs do Ubuntu: https://ubuntu.com/security/cves
 sudo pro fix CVE-2026-54591
-
+```
+```bash
 #verificando os status do Canonical Livepatch do Ubuntu Pro no Ubuntu Server
 #opção do comando canonical-livepatch: status (To show the current state of the client)
 #--verbose (shows extended details such as client version, architecture, boot time, and applied CVEs.)
@@ -300,25 +318,32 @@ sudo apt policy
 #conflict), autoremove (Autoremove is used to remove packages that were automatically
 #installed to satisfy dependencies), autoclean (Like clean, autoclean clears out the local 
 #repository of retrieved package files)
-
+```
+```bash
 #01_ limpando todos os repositórios locais do Ubuntu Server
 sudo apt clean
-
+```
+```bash
 #02_ atualizando todas as listas (sources.list) do Ubuntu Server
 sudo apt update
-
+```
+```bash
 #03_ atualizando todos os softwares com suporte do Ubuntu Pro no Ubuntu Server
 sudo apt upgrade
-
+```
+```bash
 #04_ forçando uma atualização completa do Ubuntu Pro no Ubuntu Server
 sudo apt full-upgrade
-
+```
+```bash
 #05_ atualizando o sistema e kernel do Ubuntu Pro no Ubuntu Server
 sudo apt dist-upgrade
-
+```
+```bash
 #06_ removendo todos os softwares desnecessários do Ubuntu Pro no Ubuntu Server
 sudo apt autoremove
-
+```
+```bash
 #07_ limpando todos os caches de instalação do Ubuntu Pro no Ubuntu Server
 sudo apt autoclean
 ```
@@ -329,13 +354,16 @@ sudo apt autoclean
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status unattended-upgrades
-
+```
+```bash
 #editando o arquivo de configuração de atualizações automáticas do Ubuntu Server
 sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
-
+```
+```bash
 #habilitando o número de linhas do arquivo 50unattended-upgrades
 ESC SHIFT :set number <Enter>
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -353,12 +381,14 @@ ESC SHIFT :x <Enter>
 #opção do comando systemctl: restart (Stop and then start one or more units specified on the command line)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl restart unattended-upgrades
-
+```
+```bash
 #verificando o status do serviço das Atualizações Automáticas do Ubuntu Server
 #opção do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man1/systemctl.1.html
 sudo systemctl status unattended-upgrades
-
+```
+```bash
 #analisando os Log's e mensagens de erro das Atualizações Automáticas do Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html

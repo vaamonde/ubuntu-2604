@@ -124,22 +124,26 @@ Entendendo a saída do arquivo: __`df -h /dados`__<br>
 #Habilitando os repositórios Multiverso e Universo do Ubuntu Server (dependências para a instalação).
 #opção do comando add-apt-repository: --enable-source (Enable the specified repository)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/jammy/man1/add-apt-repository.1.html
-
+```
+```bash
 #Habilitando o repositório Multiverso (Recomendado para instalar as dependências)
 sudo add-apt-repository --enable-source multiverse
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
-
+```
+```bash
 #Habilitando o repositório Universo (Recomendado para instalar as dependências)
 sudo add-apt-repository --enable-source universe
   Removing component(s) 'multiverse' from all repositories.
   Press [ENTER] to continue or Ctrl-c to cancel.
-
+```
+```bash
 #atualizando as listas do Apt do sources.list no Ubuntu Server (garantindo pacotes atualizados)
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
+```
+```bash
 #atualizando todos os software instalado no Ubuntu Server (garantindo versões atualizadas)
 #opção do comando apt: upgrade (Install the newest versions of all packages currently installed
 #on the system from the sources enumerated in /etc/apt/sources.list.)
@@ -157,7 +161,8 @@ sudo apt upgrade
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bbs-install
-
+```
+```bash
 #executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings no Ubuntu Server
 #opções do script bbs-install: --hostname (Sets the server's Fully Qualified Domain Name (FQDN) 
 #used by BorgBackupServer during installation.), --no-ssl (Disables HTTPS/SSL configuration, allowing 
@@ -165,7 +170,8 @@ curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bb
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO, NESSE CENÁRIO NÃO SERÁ INSTALADO
 #O CERTIFICADO DIGITAL COM A OPÇÃO: --no-ssl
 sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
-
+```
+```bash
 #confirmando a criação da Base de Dados do BBS no MySQL Server
 MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
@@ -182,29 +188,32 @@ Entendendo o comando: __`sudo bash bbs-install --hostname srvvaamonde.pti.intra 
 ---
 
 ## 04_ Verificando os Serviços Instalados pelo BBS no Ubuntu Server
-
 ```bash
 #verificando o status do serviço do Apache (Painel Web do BBS) no Ubuntu Server
 #opções do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status apache2
-
+```
+```bash
 #verificando o status do serviço do MySQL (Banco de Dados do BBS) no Ubuntu Server
 #opções do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status mysql
-
+```
+```bash
 #verificando o status do serviço do Cron (Agendador de Tarefas do BBS) no Ubuntu Server
 #opções do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status cron
-
+```
+```bash
 #verificando a versão do Borg Backup instalada como dependência do BBS no Ubuntu Server
 #opção do comando borg: --version (Print version and exit)
 #mais informações acesse a documentação oficial em: https://borgbackup.readthedocs.io/
 sudo borg --version
-
-#verificando se as Portas 80/TCP (HTTP), 443/TCP (HTTPS) e 3306 (MySQL) do Painel Web está em escuta no Ubuntu Server
+```
+```bash
+#verificando as Portas 80/TCP (HTTP), 443/TCP (HTTPS) e 3306/TCP (MySQL) no Ubuntu Server
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsof.8.html
 sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
@@ -217,11 +226,14 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 > **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a Senha da Conta de Administrador do BBS deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** (abordado na seção #11 deste procedimento) deve ser habilitado assim que possível.
 
 ```bash
+#Acessando o navegador para fazer as primeiras configurações do BBS
 01) Abrir o navegador e acessar o Painel Web do BBS
     URL: https://srvvaamonde.pti.intra (ou https://SEU_ENDEREÇO_IPv4 ou https://SEU_ENDEREÇO_IPv6)
     #OBSERVAÇÃO: como o certificado SSL é autoassinado ou emitido localmente, o navegador
     #pode exibir um aviso de segurança, sendo necessário aceitar/prosseguir manualmente.
-
+```
+```bash
+#Tela de Bem-Vindo e verificação do sistema BBS
 02) Step 1 of 5 - Welcome
   Welcome
     System Requirements
@@ -231,7 +243,9 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
     OpenSSL extensions          Installed
     Config directory writable   Writable
 <Begin Setup>
-
+```
+```bash
+#Configuração do Banco de Dados do BBS
 03) Step 2 of 5 - Database
   Database
     Database Host: localhost
@@ -239,7 +253,9 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
     Database User: bbs
     Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFA DO SCRIPT DE INSTALAÇÃO>
 <Test Connections & Continue>
-
+```
+```bash
+#Configuração do Usuários Administrador do BBS
 04) Step 3 of 5 - Admin Account
   Admin Account
     Email: seu_usuário@seu_domínio.local
@@ -247,14 +263,18 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
     Password: sua_senha
     Confirm Password: repetir_sua_senha
 <Continue>
-
+```
+```bash
+#Configuração do Armazenamento do BBS
 05) Step 4 of 5 - Storage & Server
   Storage & Server
     Storage: Default storage: /var/bbs/home
     Server Hostname / IP: seu_endereço_ipv4 ou nome_servidor
     (OFF) Enable SSL (HTTPS) - Disable
 <Continue>
-
+```
+```bash
+#Tela resumo da Instalação do BBS
 06) Step 5 of 5 - Install
   Review & Install
     Database Host: localhost
@@ -266,7 +286,9 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
     Server Host: seu_endereço_ipv4 ou nome_servidor
     SSH Helper: Installed
 <Install>
-
+```
+```bash
+#Finalização da Instalação do BBS
 07) Setup Complete
 <Go to Dashboard>
 ```
@@ -283,6 +305,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 > **OBSERVAÇÃO IMPORTANTE:** mesmo no Cenário de Servidor Único (Painel e Cliente na mesma VM), o BBS exige a instalação do **Agente**, pois toda a comunicação de tarefas (Jobs) entre o Painel e a execução real do `borg` acontece através dele, inclusive em modo Localhost.
 
 ```bash
+#Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
     Clients (Managing Clients) <Add Client>
       Client Name: seu_hostname
@@ -295,12 +318,14 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 #efetuando o download e a instalação do Agente Linux do BBS no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: SUBSTITUIR A URL E O TOKEN PELOS VALORES GERADOS NO SEU PAINEL
 curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
-
+```
+```bash
 #verificando o status do serviço do Agente do BBS no Ubuntu Server
 #opções do comando systemctl: status (runtime status information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status bbs-agent
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Agente do BBS no Ubuntu Server
 #opção do comando journalctl: u (unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
@@ -308,8 +333,8 @@ sudo journalctl -u bbs-agent
 ```
 
 ## 07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server
-
 ```bash
+#Configurando o Armazenamento Local do Diretório de Backup do BBS
 01) No Painel Web do BBS, acessar o menu:
     Storage (Armazenamento) <Add Location>
       Label (Rótulo): repo-dados-on-premises
@@ -319,8 +344,8 @@ sudo journalctl -u bbs-agent
 ```
 
 ## 08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server
-
 ```bash
+#Criando o Modelo de Backup do BBS
 01) No Painel Web do BBS, acessar o menu:
     Settings (Configurações)
       Templates (Modelos)
@@ -342,16 +367,20 @@ sudo journalctl -u bbs-agent
 <Add Template>
 ```
 
-## 09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server
-
+## 09_ Configurando o Repositório do BBS para a Partição de Backup no Ubuntu Server
 ```bash
+#Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
     Clients (Clientes)
       Name: srvvaamonde
-
+```
+```bash
+#Adicionando um Novo Repositório no Cliente do BBS
 02) Repos
     <Add Repository>
-
+```
+```bash
+#Configurando o Repositório de Backup do BBS
 03) Repositories
     Create New Repository
       Description: backup-dados
@@ -363,15 +392,19 @@ sudo journalctl -u bbs-agent
 ```
 
 ## 10_ Criando o Plano de Backup dp BBS no Ubuntu Server
-
 ```bash
+#Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
     Clients (Clientes)
       Name: srvvaamonde
-
+```
+```bash
+#Criando o Plano de Backup do BBS
 02) Plans
     <Add Add Backup Plan>
-
+```
+```bash
+#Configurando o Agendamento do Plano de Backup do BBS
 02) Backup Schedules
     Create New Backup Plan
       Plan Name: backup-diario-dados
@@ -385,32 +418,34 @@ sudo journalctl -u bbs-agent
 ```
 
 ## 11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server
-
 ```bash
+#Executando o Plano de Backup do BBS
 01) No Painel Web do BBS, acessar o Plano de Backup criado: backup-lv-dados
 <Executar Agora (Run Now)>
-
+```
+```bash
+#Verificando os Trabalhos de Backup e Filas do BBS
 02) Acessar o menu: Fila e Jobs (Queue and Jobs)
     Acompanhar em Tempo Real:
       Status: Em Execução (Running)
       Progresso: Barra de Progresso + Taxa de Transferência
       Log: Streaming de Log em Tempo Real
 ```
-
 ```bash
 #acompanhando o processo do BBS em execução diretamente no Ubuntu Server (validação cruzada)
 #opção do comando ps: aux (mostra todos os processos em execução no sistema)
 #opção do comando grep: -i (ignore-case)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ps.1.html
 sudo ps aux | grep -i borg
-
+```
+```bash
 #verificando o consumo de I/O do disco durante o Backup no Ubuntu Server
 #opção do comando iostat: -x (extended statistics), 2 (intervalo de atualização em segundos)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/iostat.1.html
 sudo iostat -x 2
 ```
-
 ```bash
+#Verificando a Execução do Plano de Backup do BBS
 01) Após a conclusão, verificar no Painel Web do BBS:
     Status do Job: Concluído (Completed)
     Arquivo (Archive) gerado: srvvaamonde-2026-07-29T02:00:00
@@ -422,20 +457,24 @@ sudo iostat -x 2
 > **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup confiável sem antes validar o processo completo de Restauração (Restore).
 
 ```bash
+#Acessando o Painel de Repositórios do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Repositórios (Repositories) <repo-dados-onpremise>
+    Repositórios (Repositories) <repo-dados-onpremises>
       Selecionar o Arquivo (Archive): srvvaamonde-2026-07-29T02:00:00
       <Navegar pelos Arquivos (Browse Files)>
-
+```
+```bash
+#Localizando os arquivos no Diretório de Dados do BBS
 02) Localizar o arquivo/diretório de teste dentro de: /dados
     Selecionar o(s) arquivo(s) desejado(s)
-
+```
+```bash
+#Escolhendo o Método de Restauração dos Dados do BBS
 03) Escolher o método de Restauração:
     ( ) Restaurar Diretamente no Cliente (caminho original ou alternativo)
     (X) Fazer Download como .tar.gz (recomendado para teste inicial)
 <Restaurar>
 ```
-
 ```bash
 #validando a integridade do arquivo restaurado no Ubuntu Server (checksum)
 #opção do comando sha256sum: (calcula o hash SHA-256 do arquivo)

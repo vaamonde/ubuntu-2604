@@ -62,7 +62,8 @@ Link da vídeo aula:
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
+```
+```bash
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
@@ -313,23 +314,28 @@ Entendendo a saída do comando: __`netplan status`__<br>
 #opção do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh /etc/netplan/
-
+```
+```bash
 #fazendo o backup do arquivo de configuração original do Netplan no Ubuntu Server
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.old
-
+```
+```bash
 #download do arquivo de configuração do Netplan personalizado para o cenário do Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/00-installer-config.yaml
-
+```
+```bash
 #editando o arquivo de configuração personalizado do Netplan
 sudo vim /etc/netplan/00-installer-config.yaml
-
+```
+```bash
 #habilitando o número de linhas do arquivo 00-installer-config.yaml
 ESC SHIFT :set number <Enter>
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -411,49 +417,58 @@ ESC SHIFT :x <Enter>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bkp
-
+```
+```bash
 #listando o conteúdo do diretório do Netplan com os novos arquivos no Ubuntu Server
 #opções do comando ls: -l (long listing), -h (human-readable)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.htm
 ls -lh /etc/netplan/
-
+```
+```bash
 #verificando as configurações do arquivo do Netplan no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), get (get a settings config netplan)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug get
-
+```
+```bash
 #validando a sintaxe e gerando os arquivos do backend do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), generate (generate backend specific configuration)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug generate
-
+```
+```bash
 #testando a configuração com possibilidade de reversão o Netplan em modo Debug (detalhado) no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: você pode utilizar a opção: try que caso aconteça alguma falha na 
 #hora de configurar a placa de rede ele reverte a configuração inicial depois de um período
 #opções do comando netplan: --debug (enable debug messages), try (try to apply a new netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug try
-
+```
+```bash
 #aplicando as mudanças definitivas do Netplan em modo Debug (detalhado) no Ubuntu Server
 #opções do comando netplan: --debug (enable debug messages), apply (apply current netplan config)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan --debug apply
-
+```
+```bash
 #verificando o status das configurações do Netplan no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
-
+```
+```bash
 #verificando o arquivo de configuração do Systemd do Netplan no Ubuntu Server
 #opção do comando cat: -n (number line), * (asterisco) todos os arquivos
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /run/systemd/network/*.network
-
+```
+```bash
 #verificar o status do serviço do Netplan no Ubuntu Server
 #opção do comando systemctl: status (Show terse runtime status information about one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.htm
 sudo systemctl status netplan-configure
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Netplan no Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
@@ -476,13 +491,16 @@ sudo journalctl -u netplan-configure
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/systemd/resolved.conf /etc/systemd/resolved.conf.old
-
+```
+```bash
 #editando o arquivo de configuração do Systemd Resolved no Ubuntu Server
 sudo vim /etc/systemd/resolved.conf
-
+```
+```bash
 #habilitando o número de linhas do arquivo resolved.conf
 ESC SHIFT :set number <Enter>
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -491,7 +509,7 @@ INSERT
 #configuração do domínio raiz (.) como domínio de roteamento ~ (routing domain)
 #~. = Utilize este servidor DNS para resolver qualquer domínio da Internet
 Domains=~.
- 
+
 #descomentar e alterar o valor da variável DNSSEC na linha 33 para: DNSSEC=yes
 #habilita a validação do DNSSEC (Domain Name System Security Extensions)
 DNSSEC=yes
@@ -515,12 +533,14 @@ ESC SHIFT :x <Enter>
 #opção do comando systemctl: restart (Stop and then start one or more units specified on the command line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl restart systemd-resolved
-
+```
+```bash
 #verificar o status do serviço do Resolved no Ubuntu Server
 #opção do comando systemctl: status (Show terse runtime status information about one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.htm
 sudo systemctl status systemd-resolved
-
+```
+```bash
 #analisando os Log's e mensagens de erro do serviço do Resolved no Ubuntu Server
 #opção do comando journalctl: -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
@@ -533,60 +553,74 @@ sudo journalctl -u systemd-resolved
 #opções do comando ip: address (Protocol (IP or IPv6) address on a device), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
 sudo ip address show
-
+```
+```bash
 #verificando as configurações de Gateway (route) IPv4 e IPv6 no Ubuntu Server
 #opções do comando ip: -4 (use IPv4), -6 (use IPv6) route (Routing table entry), show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
-
+```
+```bash
 #visualizando as rotas IPv4
 sudo ip -4 route show
-
+```
+```bash
 #visualizando as rotas IPv6
 sudo ip -6 route show
-
+```
+```bash
 #verificando as informações dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: status (Shows the global and per-link DNS settings currently in effect)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl status
-
+```
+```bash
 #verificando as informações de Estatísticas dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: statistics (Shows general resolver statistics, including information whether DNSSEC)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl statistics
-
+```
+```bash
 #verificando as informações de Cache dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: show-cache (Show current cache content, per scope)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl show-cache
-
+```
+```bash
 #monitorando as consultas dos Servidores DNS (resolução de nomes) IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: monitor (Show a continuous stream of local client resolution queries and their responses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl monitor
-
+```
+```bash
 #testando a resolução de nomes e a validação do DNSSEC IPv4 e IPv6 no Ubuntu Server
 #opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 sudo resolvectl query google.com
-
+```
+```bash
 #verificando o status das configurações do Netplan IPv4 e IPv6 no Ubuntu Server
 #opções do comando netplan: status (Query networking state of the running system)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man5/netplan.5.html
 sudo netplan status
-
+```
+```bash
 #testando a conexão com a Internet e Resolução de nomes de DNS IPv4 e IPv6 no Ubuntu Server
 #opções do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
-
+```
+```bash
 #pingando endereço IPv4 do DNS do Google
 ping -4 -c 5 8.8.8.8
-
+```
+```bash
 #pingando endereço IPv6 do DNS do Google
 ping -6 -c 5 2001:4860:4860::8888
-
+```
+```bash
 #pingando o nome e resolvendo IPv4 do DNS do Google
 ping -4 -c 5 google.com
-
+```
+```bash
 #pingando o nome e resolvendo IPv6 do DNS do Google
 ping -6 -c 5 google.com
 ```
@@ -600,18 +634,22 @@ ping -6 -c 5 google.com
 ```bash
 #testando a conexão remota no Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
 ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
-
+```
+```bash
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
-
+```
+```bash
 #confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
 The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
-
+```
+```bash
 #digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
 seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
-
+```
+```bash
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
@@ -619,18 +657,22 @@ seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```bash
 #testando a conexão remota no Ubuntu Server (alterar o Endereço IPv6 para o seu cenário)
 ping SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
-
+```
+```bash
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv6 para o seu cenário)
 ssh seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER
-
+```
+```bash
 #confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
 The authenticity of host 'SEU_ENDEREÇO_IPV6_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
-
+```
+```bash
 #digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
 seu_usuário@SEU_ENDEREÇO_IPV6_UBUNTU_SERVER password: sua_senha <Enter>
-
+```
+```bash
 #acesso ao terminal remotamente feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```

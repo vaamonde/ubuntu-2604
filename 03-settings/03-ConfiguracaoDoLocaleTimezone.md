@@ -90,19 +90,22 @@ Entendendo a saída do comando: __`locale -a`__<br>
 #gerando a localidade do Português do Brasil (pt_BR) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 sudo locale-gen pt_BR.UTF-8
-
+```
+```bash
 #configurando a localidade do Português do Brasil (pt_BR) no Ubuntu Server
 #opção do comando localectl: set-locale (Set the system locale), LANG (This sets the base locale for your system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
 sudo localectl set-locale LANG=pt_BR.UTF-8
-
+```
+```bash
 #atualizando as localidades do Português do Brasil (pt_BR) e os Linguagens no Ubuntu Server
 #opções das variáveis do comando update-locale: LANG (This sets the base locale for your system),
 #LC_ALL (This is the strongest overriding variable), LANGUAGE (his variable controls GNU gettext 
 #message translation fallbacks)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/update-locale.8.html
 sudo update-locale LANG=pt_BR.UTF-8 LC_ALL=pt_BR.UTF-8 LANGUAGE="pt_BR:pt:en"
-
+```
+```bash
 #recomendado rebootar o sistema para testar as localidades no Ubuntu Server
 #opção do comando systemctl: reboot (Shut down and reboot the system)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
@@ -113,11 +116,13 @@ sudo systemctl reboot
 #opção do comando locale: -a (all-locales)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/locale-gen.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/localectl.1.html
-
-#verificando as localidades instaladas
+```
+```bash
+#verificando as localidades instaladas no Ubuntu Server
 sudo locale -a
-
-#verificando as localidades configuradas
+```
+```bash
+#verificando as localidades configuradas no Ubuntu Server
 sudo localectl
 ```
 
@@ -167,12 +172,14 @@ Entendendo a saída do comando: __`timedatectl status`__<br>
 #opção do comando timedatectl: list-timezones (List available time zones, one per line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl list-timezones
-
+```
+```bash
 #configurando o fuso horário da America São Paulo no Ubuntu Server
 #opção do comando timedatectl: set-timezone (set the system time zone to the specified value)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl set-timezone "America/Sao_Paulo"
-
+```
+```bash
 #verificando as mudanças do Timezone no Sistema do Ubuntu Server
 #opção do comando timedatectl: status (Show current settings of the system clock and RTC)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html

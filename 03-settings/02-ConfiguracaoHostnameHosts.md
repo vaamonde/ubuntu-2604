@@ -53,7 +53,8 @@ Link da vídeo aula:
 #editando o arquivo de configuração do Hostname no Ubuntu Server
 #mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man5/hostname.5.html
 sudo vim /etc/hostname
-
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -65,7 +66,8 @@ srvseunome.seu.domínio
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
-
+```
+```bash
 #verificando as informações de Hostname no Ubuntu Server
 sudo hostname
 ```
@@ -75,7 +77,12 @@ sudo hostname
 #editando o arquivo de configuração do Hosts no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
 sudo vim /etc/hosts
-
+```
+```bash
+#habilitando o número de linhas do arquivo hosts
+ESC SHIFT :set number <Enter>
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -102,25 +109,31 @@ SUA_REDE_GLOBAL_IPV6   srvseunome.seu.domínio   srvseunome
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
-
+```
+```bash
 #verificando as informações de hosts IPv4 no Ubuntu Server
 #opção do comando getent: hosts (When no key is provided to enumerate the hosts database)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent hosts
-
+```
+```bash
 #verificando as informações do nome do servidor no Ubuntu Server
 #opção do comando hostname: -A (all-fqdns), -d (domain), -i (ip address)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/hostname.1.html
-
+```
+```bash
 #visualizando o nome FQDN do servidor
 sudo hostname
-
+```
+```bash
 #visualizando todas as informações FQDN do servidor
 sudo hostname -A
-
+```
+```bash
 #visualizando o nome de domínio do servidor
 sudo hostname -d
-
+```
+```bash
 #visualizando todas as informações de IPv4 e IPv6 do servidor
 sudo hostname -i
 ```
@@ -132,21 +145,24 @@ sudo hostname -i
 nslookup localhost               #OBSERVAÇÃO: consultando o localhost
 nslookup srvvaamonde             #OBSERVAÇÃO: consultando o hostname
 nslookup srvvaamonde.pti.intra   #OBSERVAÇÃO: consultando o nome FQDN
-
+```
+```bash
 #verificando as resoluções de endereços IPv4 e IPv6 do servidor Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
 nslookup 127.0.0.1              #OBSERVAÇÃO: endereço de Loopback padrão é sempre 127.0.0.1
 nslookup 172.16.1.20            #OBSERVAÇÃO: alterar o endereço IPv4 do seu servidor
 nslookup fe80::20               #OBSERVAÇÃO: alterar o endereço IPv6 de Link Local do seu servidor
 nslookup 2804:14c:90:8697::20   #OBSERVAÇÃO: alterar o endereço IPv6 de Unicast Global do seu servidor
-
+```
+```bash
 #verificando as resoluções de endereços IPv4 e IPv6 e estatísticas do servidor Ubuntu Server
 #opção do comando resolvectl: query (Resolve domain names, as well as IPv4 and IPv6 addresses)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/resolvectl.1.html
 resolvectl query localhost               #OBSERVAÇÃO: nome do Localhost padrão que faz referência ao Loopback
 resolvectl query srvvaamonde             #OBSERVAÇÃO: alterar o hostname do seu servidor
 resolvectl query srvvaamonde.pti.intra   #OBSERVAÇÃO: alterar o nome FQDN do seu servidor
-
+```
+```bash
 #testando a conexão com a Internet e Resolução de nomes de DNS do servidor Ubuntu Server
 #opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping

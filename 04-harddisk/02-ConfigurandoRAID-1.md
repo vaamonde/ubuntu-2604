@@ -91,10 +91,12 @@ Link da vídeo aula:
 #verificando se já existe alguma assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
 #opção do comando wipefs: -n (dry-run, apenas simula sem apagar nada)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
-
+```
+```bash
 #verificando as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo wipefs -n /dev/sdb
-
+```
+```bash
 #verificando as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo wipefs -n /dev/sdc
 ```
@@ -105,10 +107,12 @@ sudo wipefs -n /dev/sdc
 #removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos  no Ubuntu Server
 #opção do comando wipefs: -a (apaga todas as assinaturas encontradas)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/wipefs.8.html
-
+```
+```bash
 #removendo as assinaturas do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo wipefs -a /dev/sdb
-
+```
+```bash
 #removendo as assinaturas do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo wipefs -a /dev/sdc
 ```
@@ -128,10 +132,12 @@ sudo mdadm --version
 #verificando as tabelas de partições GPT dos Discos do RAID-1 no Ubuntu Server
 #opção do comando gdisk: -l (list known partition types)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/gdisk
-
+```
+```bash
 #verificado as tabelas GPT do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo gdisk -l /dev/sdb
-
+```
+```bash
 #verificado as tabelas GPT do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo gdisk -l /dev/sdc
 ```
@@ -317,10 +323,12 @@ Entendendo a saída do comando: __`mdadm --detail /dev/md0`__<br>
 #examinando os discos do Array do RAID-1 no Ubuntu Server
 #opções do comando mdadm: --examine (Print contents of the metadata stored on the named device(s))
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
-
+```
+```bash
 #examinando o disco do Array do RAID-1 do Disco SDB
 sudo mdadm --examine /dev/sdb1
-
+```
+```bash
 #examinando o disco do Array do RAID-1 do Disco SDC
 sudo mdadm --examine /dev/sdc1
 ```
@@ -378,19 +386,22 @@ Entendendo a saída do comando: __`mdadm --examine /dev/sdb_x`__<br>
 #opção do comando cp: -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -v /etc/mdadm/mdadm.conf /etc/mdadm/mdadm.conf.old
-
+```
+```bash
 #adicionando as informações do Array de RAID 1 no arquivo de configuração do mdadm no Ubuntu Server
 #opção do comando mdadm: --detail (Print detail of a device), --scan (scan config file or
 #/proc/mdstat for missing information)
 #opção do redirecionador >> (append): adiciona a saída no final do arquivo, sem sobrescrever
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/mdadm.8.html
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
-
+```
+```bash
 #verificando o conteúdo do arquivo de configuração do mdadm no Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /etc/mdadm/mdadm.conf
-
+```
+```bash
 #atualizando o Initramfs com as novas informações do RAID (necessário para o boot reconhecer o Array) no Ubuntu Server
 #opção do comando update-initramfs: -u (update an existing initramfs)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/update-initramfs.8.html
@@ -403,11 +414,24 @@ sudo update-initramfs -u
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or 
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+```
+```bash
+#verificando o status do serviço do RAID Monitor
 sudo systemctl status mdmonitor
+```
+```bash
+#reinicializando o serviço do RAID Monitor
 sudo systemctl restart mdmonitor
+```
+```bash
+#parando o serviço do RAID Monitor
 sudo systemctl stop mdmonitor
+```
+```bash
+#iniciando o serviço do RAID Monitor
 sudo systemctl start mdmonitor
-
+```
+```bash
 #analisando os Log's e mensagens de erro do RAID Monitor no Ubuntu Server
 #opção do comando journalctl: -u (unit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
@@ -441,7 +465,8 @@ Entendendo a saída do comando: __`mdadm --detail /dev/md0`__ (Estado Saudável)
 #opções do comando mdadm: --fail (Mark listed devices as faulty)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm /dev/md0 --fail /dev/sdb1
-
+```
+```bash
 #verificando as informações do Array do RAID-1 no Ubuntu Server (estado degradado)
 #opções do comando mdadm: --detail (Print details of one or more md devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
@@ -497,24 +522,26 @@ Entendendo a saída do comando: __`mdadm /dev/md0 --remove /dev/sdb1`__<br>
 #opções do comando mdadm: --detail (Print details of one or more md devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm --detail /dev/md0
-
+```
+```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server (após remoção)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html
 sudo cat /proc/mdstat
 ```
-
 ```bash
 #adicionando o novo disco (substituto) no Array do RAID-1 no Ubuntu Server
 #opções do comando mdadm: --add (hot-add listed devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm /dev/md0 --add /dev/sdb1
-
+```
+```bash
 #verificando as informações do Array do RAID-1 no Ubuntu Server (durante a reconstrução)
 #opções do comando mdadm: --detail (Print details of one or more md devices)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm --detail /dev/md0
-
+```
+```bash
 #verificando as informações do Kernel referente ao sistema de RAID do Ubuntu Server (durante a reconstrução)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://archive.kernel.org/oldwiki/raid.wiki.kernel.org/index.php/Mdstat.html

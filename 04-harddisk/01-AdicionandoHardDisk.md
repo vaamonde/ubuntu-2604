@@ -56,14 +56,15 @@ Link da vídeo aula:
 | 🧵 **I/O Scheduler** | Algoritmo do kernel que organiza as operações de leitura/escrita em disco. | Otimiza desempenho conforme o tipo de mídia (HDD ou SSD/NVMe). |
 ---
 
-## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX
+## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX
 
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
-01) Selecionar a Máquina Virtual: UbuntuOnPremise
+01) Selecionar a Máquina Virtual: UbuntuOnPremises
 <Configurações>
     Expert
-
+```
+```bash
 #Adicionando dois Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
     Dispositivos
@@ -81,9 +82,10 @@ Link da vídeo aula:
         raid-01.vdi <Escolher>
         raid-02.vdi <Escolher>
     <OK>
-
+```
+```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
-03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
+03) Selecionar a Máquina Virtual: UbuntuOnPremises: 
 <Iniciar>
 ```
 
@@ -93,11 +95,12 @@ Link da vídeo aula:
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
+```
+```bash
 #instalando os pacotes e ferramentas de hard disk no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install smartmontools hdparm sysstat
+sudo apt install smartmontools hdparm sysstat tree
 ```
 
 ## 03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server
@@ -386,13 +389,16 @@ Entendendo a saída do comando: __`parted -l`__<br>
 #testando a velocidade de leitura em cache e em disco (bruto) no Ubuntu Server
 #opção do comando hdparm: -t (device readings), -T (cache readings)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/hdparm
-
+```
+```bash
 #verificando o desempenho do Hard Disk SDA (Instalação do Ubuntu Server)
 sudo hdparm -Tt /dev/sda
-
+```
+```bash
 #verificando o desempenho do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo hdparm -Tt /dev/sdb
-
+```
+```bash
 #verificando o desempenho do Hard Disk SDC (segundo Disco do RAID-1)
 sudo hdparm -Tt /dev/sdc
 ```
@@ -419,13 +425,16 @@ Entendendo a saída do comando: __`hdparm -Tt /dev/sdx`__<br>
 #verificando a saúde geral e informações completas dos discos no Ubuntu Server
 #opções do comando smartctl: -i (device identify)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/smartctl.8.html
-
+```
+```bash
 #verificando a saúde do Hard Disk SDA (Instalação do Ubuntu Server)
 sudo smartctl -i /dev/sda
-
+```
+```bash
 #verificando o saúde do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo smartctl -i /dev/sdb
-
+```
+```bash
 #verificando o saúde do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo smartctl -i /dev/sdc
 ```
@@ -459,10 +468,12 @@ Entendendo a saída do comando: __`smartctl -i /dev/sdx`__<br>
 #verificando se existem setores defeituosos nos discos antes de montar o RAID (opcional, teste demorado) no Ubuntu Server
 #opções do comando badblocks: -s (show progress), -v (verbose)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/badblocks.8.html
-
+```
+```bash
 #verificando setores defeituosos do Hard Disk SDB (Primeiro Disco do RAID-1)
 sudo badblocks -sv /dev/sdb
-
+```
+```bash
 #verificando setores defeituosos do Hard Disk SDC (Segundo Disco do RAID-1)
 sudo badblocks -sv /dev/sdc
 ```
