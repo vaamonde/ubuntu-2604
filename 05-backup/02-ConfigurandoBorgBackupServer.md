@@ -177,7 +177,7 @@ MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
 
-Entendendo o comando: __`sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl`__<br>
+Entendendo o comando: __`bbs-install --hostname srvvaamonde.pti.intra --no-ssl`__<br>
 | **Etapa Interna do Instalador** | **Descrição** |
 | :------------------------------- | :------------ |
 | 📦 **Instalação de Pacotes** | Instala automaticamente PHP, MySQL, Apache, Cron e o próprio BorgBackup via repositórios do Ubuntu. |
@@ -213,7 +213,7 @@ sudo systemctl status cron
 sudo borg --version
 ```
 ```bash
-#verificando as Portas 80/TCP (HTTP), 443/TCP (HTTPS) e 3306/TCP (MySQL) no Ubuntu Server
+#verificando as Portas TCP-80 (HTTP), TCP-443 (HTTPS) e TCP-3306 (MySQL) no Ubuntu Server
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsof.8.html
 sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN

@@ -1,0 +1,52 @@
+# Autor: Robson Vaamonde
+# Site: www.procedimentosemti.com.br
+# Facebook: facebook.com/ProcedimentosEmTI
+# Facebook: facebook.com/BoraParaPratica
+# YouTube: youtube.com/BoraParaPratica
+# Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
+# Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
+# Data de criação: 12/09/2029
+# Data de atualização: 12/09/2026
+# Versão: 0.01
+# Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64x
+# Testado e homologado para a versão do Grafana Server 13.2.x
+#
+# ======= BLOCO DE CONFIGURAÇÃO BÁSICA DO GRAFANA NO LINUX ======= 
+#
+# ======== BLOCO DE CONFIGURAÇÃO DA REDE ========
+#
+# configuração do nome do usuário do serviço do Grafana Server
+GRAFANA_USER=grafana
+#
+# configuração do grupo do usuário do serviço do Grafana Server
+GRAFANA_GROUP=grafana
+#
+# configuração do diretório home do serviço do Grafana Server
+GRAFANA_HOME=/usr/share/grafana
+#
+# configuração do diretório de Log do serviço do Grafana Server
+LOG_DIR=/var/log/grafana
+#
+# configuração do diretório de Biblioteca do serviço do Grafana Server
+DATA_DIR=/var/lib/grafana
+#
+# configuração do número máximo de arquivos abertos do serviço do Grafana Server
+MAX_OPEN_FILES=10000
+#
+# configuração do diretório de configuração do serviço do Grafana Server
+CONF_DIR=/etc/grafana
+#
+# configuração do arquivo do serviço do Grafana Server
+CONF_FILE=/etc/grafana/grafana.ini
+#
+# configuração da reinicialização depois da atualização do Grafana Server
+RESTART_ON_UPGRADE=true
+#
+# configuração do diretório dos Plugins do serviço do Grafana Server
+PLUGINS_DIR=/var/lib/grafana/plugins
+#
+# configuração do diretório do provisionamento do serviço do Grafana Server
+PROVISIONING_CFG_DIR=/etc/grafana/provisioning
+#
+# configuração do diretório do Pid de Processo do serviço do Grafana Server
+PID_FILE_DIR=/run/grafana

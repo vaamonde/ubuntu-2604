@@ -49,22 +49,26 @@ Link da vídeo aula:
 ```bash
 #criando o grupo de serviço do Prometheus no Ubuntu Server
 #opção do comando groupadd: --system (Create a system group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/groupadd.8.html
 sudo groupadd --system prometheus
 ```
 ```bash
 #criando o usuário de serviço do Prometheus no Ubuntu Server
 #opções do comando useradd: -s (shell), --no-create-home (Do no create the user's home directory), 
-#--system (Create a system account). -g (group) 
+#--system (Create a system account). -g (group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/useradd.8.html
 sudo useradd -s /sbin/nologin --no-create-home --system -g prometheus prometheus
 ```
 ```bash
 #verificando o grupo do Prometheus criado no Ubuntu Server
 #opção do comando getent: group (show enumerate the group database)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent group prometheus
 ```
 ```bash
 #verificando o usuário do Prometheus criado no Ubuntu Server
 #opção do comando getent: passwd (show enumerate the passwd database)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent passwd prometheus
 ```
 
@@ -73,6 +77,7 @@ sudo getent passwd prometheus
 #criando os diretórios de configuração e bibliotecas do Prometheus no Ubuntu Server
 #opção do comando mkdir: -p (parents), -v (verbose)
 #opção do bloco de agrupamento {} (chaves): Agrupa comandos em um bloco em looping
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 sudo mkdir -pv /etc/prometheus/{targets,rules} /var/lib/prometheus
 ```
 
@@ -82,12 +87,14 @@ sudo mkdir -pv /etc/prometheus/{targets,rules} /var/lib/prometheus
 
 ```bash
 #download do Prometheus do Github no Ubuntu Server (Link atualizado no dia 12/09/2026)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
 wget https://github.com/prometheus/prometheus/releases/download/v3.13.3/prometheus-3.13.3.linux-amd64.tar.gz
 ```
 ```bash
 #listando o download do arquivo do Prometheus no Ubuntu Server
 #opção do comando ls: -l (long listing), -h (human-readable)
-#opção do caractere curinga * (asterisco): Qualquer coisa e alto complemento
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
 ls -lh prometheus*
 ```
 
@@ -95,7 +102,8 @@ ls -lh prometheus*
 ```bash
 #descompactando o arquivo do Prometheus no Ubuntu Server
 #opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-#opção do caractere curinga * (asterisco): Qualquer coisa e alto complemento
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tar.1.html
 tar -zxvf prometheus*.tar.gz 
 ```
 
@@ -103,8 +111,9 @@ tar -zxvf prometheus*.tar.gz
 ```bash
 #atualizando os arquivos binários do Prometheus no Ubuntu Server
 #opção do comando cp: -R (recursive), -v (verbose)
-#opção do caractere curinga * (asterisco): Qualquer coisa e alto complemento
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
 #opção do bloco de agrupamento {} (chaves): Agrupa comandos em um bloco em lopping
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
 sudo cp -Rv prometheus*/{prometheus,promtool} /usr/local/bin/
 ```
 
@@ -124,28 +133,27 @@ sudo cp -Rv prometheus*/{prometheus,promtool} /usr/local/bin/
 ```bash
 #download do arquivo de serviço do Prometheus no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
 sudo wget -v -O /etc/systemd/system/prometheus.service https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/prometheus.service
 ```
 ```bash
 #download do arquivo de configuração do Prometheus no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
 sudo wget -v -O /etc/prometheus/prometheus.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/prometheus.yml
-```
-```bash
-#download do arquivo de configuração dos alertas periódicos do Prometheus no Ubuntu Server
-#opção do comando wget: -v (verbose), -O (output file)
-sudo wget -v -O /etc/prometheus/rules/alertas-node-linux.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/alertas-node-linux.yml
 ```
 
 ## 08_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server
 ```bash
 #alterando o dono e grupo dos arquivos e diretórios do Prometheus no Ubuntu Server
 #opção do comando chown: -R (recursive) -v (verbose), prometheus (user), :prometheus (group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chown.1.html
 sudo chown -Rv prometheus:prometheus /etc/prometheus/ /var/lib/prometheus/
 ```
 ```bash
 #alterando as permissões de arquivos e diretórios do Prometheus no Ubuntu Server
 #opção do comando chmod: -R (recursive) -v (verbose), 775 (User: RWX, Group: RWX, Other: R-X)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 775 /etc/prometheus/ /var/lib/prometheus/
 ```
 
@@ -188,6 +196,7 @@ ESC SHIFT : x <Enter>
 #testando o arquivo de configuração do Prometheus no Ubuntu Server
 #opção do comando sudo: -u (Run the command as a user other than the default target user)
 #opções do comando promtool: check config (Check if the config files are valid or not) 
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
 sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
 ```
 
@@ -196,17 +205,18 @@ sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
 #habilitando o serviço do Prometheus no Ubuntu Server 
 #opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
 #enable (Enable one or more units), start (Start (activate) one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#atualizando os serviços do Systemd
+#atualizando os serviços do Systemd no Ubuntu Server
 sudo systemctl daemon-reload
 ```
 ```bash
-#habilitando o serviço do Prometheus
+#habilitando o serviço do Prometheus no Ubuntu Server
 sudo systemctl enable prometheus
 ```
 ```bash
-#iniciando o serviço do Prometheus
+#iniciando o serviço do Prometheus no Ubuntu Server
 sudo systemctl start prometheus
 ```
 
@@ -216,26 +226,28 @@ sudo systemctl start prometheus
 #opções do comando systemctl: status (runtime status information), restart (Stop and then 
 #start one or more units), stop (Stop (deactivate) one or more units), start (Start (activate) 
 #one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#verificando o status do serviço do Prometheus
+#verificando o status do serviço do Prometheus no Ubuntu Server
 sudo systemctl status prometheus
 ```
 ```bash
-#reinicializando o serviço do Prometheus
+#reinicializando o serviço do Prometheus no Ubuntu Server
 sudo systemctl restart prometheus
 ```
 ```bash
-#parando o serviço do Prometheus
+#parando o serviço do Prometheus no Ubuntu Server
 sudo systemctl stop prometheus
 ```
 ```bash
-#iniciando o serviço do Prometheus
+#iniciando o serviço do Prometheus no Ubuntu Server
 sudo systemctl start prometheus
 ```
 ```bash
 #analisando os Log's e mensagens de erro do Prometheus no Ubuntu Server 
 #opção do comando journalctl: -t (identifier), -x (catalog), -e (pager-end), -u (unit)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -t prometheus
 sudo journalctl -xeu prometheus
 ```
@@ -245,11 +257,13 @@ sudo journalctl -xeu prometheus
 ```bash
 #verificando a versão do Prometheus no Ubuntu Server
 #opção do comando prometheus: --version (Show application version.)
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started
 sudo prometheus --version
 ```
 ```bash
 #verificado a versão do Promtool do Prometheus no Ubuntu Server
 #opção do comando promtool: --version (Show application version.)
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started
 sudo promtool --version
 ```
 
@@ -260,6 +274,7 @@ sudo promtool --version
 ```bash
 #verificando a porta padrão TCP-9090 do Prometheus no Ubuntu Server
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsof.8.html
 sudo lsof -nP -iTCP:'9090' -sTCP:LISTEN
 ```
 

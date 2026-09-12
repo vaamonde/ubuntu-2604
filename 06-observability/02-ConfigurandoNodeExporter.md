@@ -46,6 +46,183 @@ Site Oficial do Node Exporter: https://github.com/prometheus/node_exporter<br>
 
 Link da vídeo aula: 
 
+## 01_ Criando o Grupo e o Usuário de Serviço do Node Exporter no Ubuntu Server
+```bash
+#criando o grupo de serviço do Node Exporter no Ubuntu Server
+#opção do comando groupadd: --system (Create a system group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/groupadd.8.html
+sudo groupadd --system node_exporter
+```
+```bash
+#criando o usuário de serviço do Node Exporter no Ubuntu Server
+#opções do comando useradd: -s (shell), --no-create-home (Do no create the user's home directory), 
+#--system (Create a system account). -g (group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/useradd.8.html
+sudo useradd -s /sbin/nologin --no-create-home --system -g node_exporter node_exporter
+```
+```bash
+#verificando o grupo do Node Exporter criado no Ubuntu Server
+#opção do comando getent: group (show enumerate the group database)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
+sudo getent group node_exporter
+```
+```bash
+#verificando o usuário do Node Exporter criado no Ubuntu Server
+#opção do comando getent: passwd (show enumerate the passwd database)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
+sudo getent passwd node_exporter
+```
+
+## 02_ Baixando o Coletor de Métricas Node Exporter do Github no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** o executável do *Node Exporter do Prometheus* sofre alteração o tempo todo, sempre acessar o projeto do Github para verificar a última versão do software no Link: https://github.com/prometheus/node_exporter/releases/
+
+```bash
+#download do Node Exporter do Github no Ubuntu Server (Link atualizado no dia 12/09/2026)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+wget https://github.com/prometheus/node_exporter/releases/download/v1.12.1/node_exporter-1.12.1.linux-amd64.tar.gz
+```
+```bash
+#listando o download do arquivo do Node Exporter no Ubuntu Server
+#opção do comando ls: -l (long listing), -h (human-readable)
+#opção do caractere curinga * (asterisco):Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
+ls -lh node_exporter*
+```
+
+## 03_ Descompactando o arquivo do Node Exporter no Ubuntu Server
+```bash
+#descompactando o arquivo do Node Exporter no Ubuntu Server
+#opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tar.1.html
+tar -zxvf node_exporter*.tar.gz 
+```
+
+## 04_ Atualizando os arquivos de executáveis do Node Exporter no Ubuntu Server
+```bash
+#atualizando os arquivos de configurações do Node Exporter no Ubuntu Server
+#opção do comando cp: -R (recursive), -v (verbose)
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cp.1.html
+sudo cp -Rv node_exporter*/node_exporter /usr/local/bin/
+```
+
+## 05_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server
+```bash
+#download do arquivo de serviço do Node Exporter no Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+sudo wget -v -O /etc/systemd/system/node_exporter.service https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/node_exporter.service
+```
+```bash
+#download do arquivo de configuração do Node Exporter no Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+sudo wget -v -O /etc/prometheus/node_exporter.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/node_exporter.conf
+```
+```bash
+#download do arquivo de configuração dos alertas periódicos do Node Exporter no Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+sudo wget -v -O /etc/prometheus/rules/alertas-node-linux.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/alertas-node-linux.yml
+```
+
+## 06_ Alterando as permissões do executável do Node Exporter no Ubuntu Server
+```bash
+#alterando o dono e grupo do arquivo do Node Exporter no Ubuntu Server
+#opção do comando chown: -R (recursive) -v (verbose), node_exporter (user), :node_exporter (group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chown.1.html
+sudo chown -Rv node_exporter:node_exporter /usr/local/bin/node_exporter
+```
+```bash
+#alterando o dono e grupo do arquivo do Node Exporter no Ubuntu Server
+#opção do comando chown: -R (recursive) -v (verbose), node_exporter (user), :node_exporter (group)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chown.1.html
+sudo chown -Rv node_exporter:node_exporter /etc/prometheus/node_exporter.conf
+```
+```bash
+#alterando as permissões do arquivo do Node Exporter no Ubuntu Server
+#opção do comando chmod: -R (recursive) -v (verbose), 775 (User: RWX, Group: RWX, Other: R-X)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
+sudo chmod -Rv 775 /usr/local/bin/node_exporter
+```
+
+## 07_ Habilitando o Serviço do Node Exporter no Ubuntu Server
+```bash
+#habilitando o serviço do Node Exporter no Ubuntu Server
+#opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
+#enable (Enable one or more units), start (Start (activate) one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+```
+```bash
+#atualizando os serviços do Systemd
+sudo systemctl daemon-reload
+```
+```bash
+#habilitando o serviço do Node Exporter
+sudo systemctl enable node_exporter
+```
+```bash
+#iniciando o serviço do Node Exporter
+sudo systemctl start node_exporter
+```
+
+## 08_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server
+```bash
+#verificando o serviço do Node Exporter no Ubuntu Server
+#opções do comando systemctl: status (runtime status information), restart (Stop and then 
+#start one or more units), stop (Stop (deactivate) one or more units), start (Start (activate) 
+#one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+```
+```bash
+#verificando o status do serviço do Node Exporter
+sudo systemctl status node_exporter
+```
+```bash
+#reinicializando o serviço do Node Exporter
+sudo systemctl restart node_exporter
+```
+```bash
+#parando o serviço do Node Exporter
+sudo systemctl stop node_exporter
+```
+```bash
+#iniciando o serviço do Node Exporter
+sudo systemctl start node_exporter
+```
+```bash
+#analisando os Log's e mensagens de erro do Node Exporter no Ubuntu Server
+#opção do comando journalctl: -t (identifier), -x (catalog), -e (pager-end), -u (unit)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -t node_exporter
+sudo journalctl -xeu node_exporter
+```
+
+> **OBSERVAÇÃO IMPORTANTE:** Por que sempre é necessário verificar a versão do serviço de rede que você está implementando ou configurando no Servidor Ubuntu Server, devido as famosas falhas de segurança chamadas de: *CVE (Common Vulnerabilities and Exposures)*, com base na versão utilizada podemos pesquisar no site do **Ubuntu Security CVE Reports:** https://ubuntu.com/security/cves as falhas de segurança encontradas e corrigidas da versão do nosso aplicativo, o que ela afeta, se foi corrigida e como aplicar a correção.
+
+```bash
+#verificando a versão do Node Exporter no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/guides/node-exporter/
+sudo node_exporter --version
+```
+
+## 09_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
+
+```bash
+#verificando a porta padrão TCP-9100 do Node Exporter no Ubuntu Server
+#opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsof.8.html
+sudo lsof -nP -iTCP:'9100' -sTCP:LISTEN
+```
+
+
+
+
+
 
 
 ---
