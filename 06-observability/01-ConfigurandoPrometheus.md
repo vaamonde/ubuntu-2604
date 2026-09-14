@@ -46,7 +46,7 @@ Site Oficial do Prometheus: https://prometheus.io/<br>
 [#10_ Habilitando o Serviço do Prometheus no Ubuntu Server](#10_-habilitando-o-serviço-do-prometheus-no-ubuntu-server)<br>
 [#11_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server](#11_-verificando-o-serviço-e-versão-do-prometheus-no-ubuntu-server)<br>
 [#12_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server](#12_-verificando-a-porta-de-conexão-do-prometheus-no-ubuntu-server)<br>
-[#13_ Configurando o Prometheus via Navegador no Ubuntu Server](#13_-configurando-o-prometheus-via-navegador-no-ubuntu-server)<br>
+[#13_ Configurando o Prometheus via Navegador](#13_-configurando-o-prometheus-via-navegador)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -290,7 +290,7 @@ sudo promtool --version
 sudo lsof -nP -iTCP:'9090' -sTCP:LISTEN
 ```
 
-## 13_ Configurando o Prometheus via Navegador no Ubuntu Server
+## 13_ Configurando o Prometheus via Navegador 
 
 > **OBSERVAÇÃO IMPORTANTE:** Quando você acessa o Prometheus via Navegador e aparece a seguinte mensagem de aviso em vermelho: *Warning: Error fetching server time: Detected 65.21499991416931 seconds time difference between your browser and the server. Prometheus relies on accurate time and time drift might cause unexpected query results*. Esse erro está associado a falha de sincronismo da Data e Hora em relação o Servidor e Cliente, para resolver essa falha é necessário acertar a Data Hora entre os equipamentos ou utilizar o Protocolo **NTP (Network Time Protocol)** para sincronizar a data/hora de forma correta. 
 
@@ -299,7 +299,7 @@ sudo lsof -nP -iTCP:'9090' -sTCP:LISTEN
 firefox ou google chrome: http://endereço_ipv4_ubuntuserver:9090
 ```
 ```bash
-#verificando o monitoramento do Prometheus no Ubuntu Server
+#verificando o monitoramento do Prometheus via navegador
 Status
   Targets health
     Prometheus

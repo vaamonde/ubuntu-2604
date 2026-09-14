@@ -233,7 +233,7 @@ Entendendo a saída do comando: __`resolvectl status`__<br>
 
 ```bash
 #verificando as informações de Leases (Alugueis) do DHCP Client no Ubuntu Server
-#opção do comando cat: -n (number line), * (asterisco) todos os arquivos
+#opção do comando cat: -n (number line), * (asterisco) todos os arquivos autocomplemento
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /run/systemd/netif/leases/*
 ```

@@ -47,9 +47,9 @@ BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 [#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server](#08_-criando-o-modelo-template-de-backup-do-bbs-no-ubuntu-server)<br>
 [#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server](#09_-configurando-o-repositório-do-bbs-para-a-partição-de-backup-no-ubuntu-server)<br>
 [#10_ Criando o Plano de Backup dp BBS no Ubuntu Server](#10_-criando-o-plano-de-backup-dp-bbs-no-ubuntu-server)<br>
-[#11_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#11_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
-[#12_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#12_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
-[#13_ Habilitando Notificações e Autenticação de Dois Fatores (2FA) do BBS no Ubuntu Server](#13_-habilitando-notificações-e-autenticação-de-dois-fatores-2fa-do-bbs-no-ubuntu-server)<br>
+[#11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server](#11_-criando-a-estrutura-de-informações-na-partição-dados-do-ubuntu-server)<br>
+[#12_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#12_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
+[#13_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#13_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
 [#14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server](#14_-localização-dos-arquivos-de-configuração-e-logs-do-bbs-no-ubuntu-server)<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
@@ -76,7 +76,7 @@ Link da vídeo aula:
 sudo df -h /dados
 ```
 
-Entendendo a saída do arquivo: __`df -h /dados`__<br>
+Entendendo a saída do comando: __`df -h /dados`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Filesystem** | `/dev/mapper/vg_dados-lv_dados` | Sistema de arquivos armazenado no **Logical Volume `lv_dados`**, pertencente ao **Volume Group `vg_dados`**, gerenciado pelo **LVM (Logical Volume Manager)**. |
@@ -94,10 +94,9 @@ Entendendo a saída do arquivo: __`df -h /dados`__<br>
 sudo df -h /backup
 ```
 
-Entendendo a saída do arquivo: __`df -h /dados`__<br>
+Entendendo a saída do comando: __`df -h /backup`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 💾 **Comando** | `sudo df -h /backup` | Exibe informações sobre a utilização do sistema de arquivos montado no diretório `/backup`, apresentando os valores em formato legível (*Human Readable*). |
 | 💽 **Filesystem** | `/dev/sdd1` | Primeira partição do disco `/dev/sdd`, utilizada como volume dedicado para armazenamento de backups. |
 | 📦 **Capacidade Total (Size)** | `49 GiB` | Capacidade total disponível no sistema de arquivos da partição `/dev/sdd1`. |
 | 📂 **Espaço Utilizado (Used)** | `2,1 MiB` | Espaço atualmente utilizado pelo sistema de arquivos EXT4 e seus metadados. |
@@ -153,7 +152,7 @@ sudo apt upgrade
 
 ## 03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único `Script Bash`, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: pacotes de sistema, Apache2 Server, MySQL Server, Certificado SSL e o serviço de Cron.
+> **OBSERVAÇÃO IMPORTANTE:** o instalador oficial é um único `Script Bash`, publicado pelo mantenedor do projeto no repositório oficial do GitHub. Ele instala e configura automaticamente: **pacotes de sistema, Apache2 Server, MySQL Server, Certificado SSL e o serviço de Cron**.
 
 ```bash
 #efetuando o download do script oficial de instalação do BorgBackupServer no Ubuntu Server
@@ -168,7 +167,7 @@ curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bb
 #the installation to use HTTP only)
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O HOSTNAME PARA O FQDN DO SEU CENÁRIO, NESSE CENÁRIO NÃO SERÁ INSTALADO
 #O CERTIFICADO DIGITAL COM A OPÇÃO: --no-ssl
-sudo bash bbs-install --hostname srvvaamonde.pti.intra --no-ssl
+sudo bash bbs-install --hostname nome_do_seu_servidor.seu.domínio --no-ssl
 ```
 ```bash
 #confirmando a criação da Base de Dados do BBS no MySQL Server no Ubuntu Server
@@ -176,7 +175,7 @@ MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
 
-Entendendo o comando: __`bbs-install --hostname srvvaamonde.pti.intra --no-ssl`__<br>
+Entendendo o comando: __`bbs-install --hostname nome_do_seu_servidor.seu.domínio --no-ssl`__<br>
 | **Etapa Interna do Instalador** | **Descrição** |
 | :------------------------------- | :------------ |
 | 📦 **Instalação de Pacotes** | Instala automaticamente PHP, MySQL, Apache, Cron e o próprio BorgBackup via repositórios do Ubuntu. |
@@ -186,7 +185,7 @@ Entendendo o comando: __`bbs-install --hostname srvvaamonde.pti.intra --no-ssl`_
 | ✅ **Finalização** | Exibe no terminal a URL de acesso ao Painel Web para a conclusão do Assistente de Configuração Inicial. |
 ---
 
-> **OBSERVAÇÃO IMPORTANTE:** Após o término da instalação do BBB anotar as informações no final da tela de: **Database Credentials (save these):** - `Host`, `Database`, `User` e  principalmente `Password`que serão utilizados na etapa de configuração via **WebGUI do BBS**.
+> **OBSERVAÇÃO IMPORTANTE:** Após o término da instalação do BBS anotar as informações no final da tela de: **Database Credentials (save these):** - `Host`, `Database`, `User` e  principalmente `Password`que serão utilizados na etapa de configuração via **WebGUI do BBS**.
 
 ## 04_ Verificando os Serviços Instalados pelo BBS no Ubuntu Server
 ```bash
@@ -207,12 +206,18 @@ sudo systemctl status mysql
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 sudo systemctl status cron
 ```
+
+> **OBSERVAÇÃO IMPORTANTE:** Por que sempre é necessário verificar a versão do serviço de rede que você está implementando ou configurando no Servidor Ubuntu Server, devido as famosas falhas de segurança chamadas de: *CVE (Common Vulnerabilities and Exposures)*, com base na versão utilizada podemos pesquisar no site do **Ubuntu Security CVE Reports:** https://ubuntu.com/security/cves as falhas de segurança encontradas e corrigidas da versão do nosso aplicativo, o que ela afeta, se foi corrigida e como aplicar a correção
+
 ```bash
-#verificando a versão do Borg Backup instalada como dependência do BBS no Ubuntu Server
+#verificando a versão do Borg Backup instalado como dependência do BBS no Ubuntu Server
 #opção do comando borg: --version (Print version and exit)
 #mais informações acesse a documentação oficial em: https://borgbackup.readthedocs.io/
 sudo borg --version
 ```
+
+> **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
+
 ```bash
 #verificando as Portas TCP-80 (HTTP), TCP-443 (HTTPS) e TCP-3306 (MySQL) no Ubuntu Server
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
@@ -222,9 +227,9 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 
 ## 05_ Assistente de Configuração Inicial (Setup Wizard) do BBS no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** a partir desta etapa, a configuração ocorre pela **Interface Web** do BBS, acessada de um navegador na mesma rede do Ubuntu Server. Utilize o Endereço IPv4 ou o FQDN configurado no procedimento de Settings.
+> **OBSERVAÇÃO IMPORTANTE:** a partir desta etapa, a configuração ocorre pela **Interface Web** do `BBS`, acessada de um navegador na mesma rede do `Ubuntu Server`. Utilize o Endereço `IPv4 ou o FQDN` configurado no procedimento de Settings.
 >
-> **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a Senha da Conta de Administrador do BBS deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** (abordado na seção #11 deste procedimento) deve ser habilitado assim que possível.
+> **OBSERVAÇÃO IMPORTANTE:** por se tratar da porta de entrada de toda a estrutura de Backup do ambiente, a `Senha da Conta de Administrador do BBS` deve seguir uma Política de Senha Forte, e o recurso de **Autenticação de Dois Fatores (2FA)** deve ser habilitado assim que possível.
 
 ```bash
 #Acessando o navegador para fazer as primeiras configurações do BBS
@@ -252,7 +257,7 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
     Database Host: localhost
     Database Name: bbs
     Database User: bbs
-    Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFA DO SCRIPT DE INSTALAÇÃO>
+    Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFADA DO SCRIPT DE INSTALAÇÃO>
 <Test Connections & Continue>
 ```
 ```bash
@@ -299,11 +304,11 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 Entendendo a Arquitetura de Comunicação do Agente:<br>
 | **Camada** | **Protocolo** | **Descrição** |
 | :--------- | :------------ | :------------ |
-| 🎛️ **Plano de Controle (Control Plane)** | `HTTPS` | O Agente consulta periodicamente (Polling) o Painel do BBS em busca de novas tarefas, progresso e status; **nenhuma Porta de Entrada precisa ser aberta no Cliente**. |
+| 🎛️ **Plano de Controle (Control Plane)** | `HTTPS` OU `HTTP` | O Agente consulta periodicamente (Polling) o Painel do BBS em busca de novas tarefas, progresso e status; **nenhuma Porta de Entrada precisa ser aberta no Cliente**. |
 | 📦 **Plano de Dados (Data Plane)** | `SSH (borg serve)` | Quando uma tarefa é disparada, a transferência real dos dados do Backup ocorre via SSH, utilizando o modo **Append-Only** do BorgBackup no Repositório. |
 ---
 
-> **OBSERVAÇÃO IMPORTANTE:** mesmo no Cenário de Servidor Único (Painel e Cliente na mesma VM), o BBS exige a instalação do **Agente**, pois toda a comunicação de tarefas (Jobs) entre o Painel e a execução real do `borg` acontece através dele, inclusive em modo Localhost.
+> **OBSERVAÇÃO IMPORTANTE:** mesmo no `Cenário de Servidor Único` (Painel e Cliente na mesma VM), o BBS exige a instalação do **Agente**, pois toda a comunicação de **tarefas (Jobs)** entre o Painel e a execução real do `borg` acontece através dele, inclusive em modo Localhost.
 
 ```bash
 #Acessando o Painel de Clientes do BBS
@@ -400,14 +405,14 @@ sudp getent group www-data
       Name: srvvaamonde (Servidor Ubuntu)
 ```
 ```bash
-#Adicionando um Novo Repositório no Cliente srvvaamonde do BBS
+#Adicionando um Novo Repositório no Cliente do BBS
 02) Repos (Repositório)
     <Add Repository>
 ```
 ```bash
-#Configurando o Repositório de Backup do BBS do servidor srvvaamonde
+#Configurando o Repositório de Backup do BBS
 03) Repositories (Repositórios)
-    Create New Repository (Criando um novo respositório)
+    Create New Repository (Criando um novo repositório)
       Description (Descrição): backup-dados
       Storage (Armazenamento): Local (this server)
       Location (Localização): repo-dados-onpremises (/backup/repository/lv-dados)
@@ -462,21 +467,21 @@ sudp getent group www-data
 <Create Backup Plan>
 ```
 
-## 11_ Gerando Dados e Informações na Partição Dados do Ubuntu Server
+## 11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server
 ```bash
-#baixando o script para a criação de diretórios e arquivos na partição Dados do Ubuntu Server
+#baixando o script para a criação dos diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/vaamonde/ubuntu-2604/refs/heads/main/scripts/01-criar-estrutura-empresa.sh
 ```
 ```bash
-#baixando o script para modificação dos diretórios e arquivos na partição Dados do Ubuntu Server
+#baixando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/vaamonde/ubuntu-2604/refs/heads/main/scripts/02-simular-alteracoes.sh
 ```
 ```bash
-#executando o script para a criação de diretórios e arquivos na partição Dados do Ubuntu Server
+#executando o script para a criação dos diretórios e arquivos na partição Dados do Ubuntu Server
 sudo bash 01-criar-estrutura-empresa.sh
 ```
 ```bash
@@ -529,7 +534,7 @@ sudo tree /dados
 #executando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do script 02-simular-alteracoes.sh: incremental (simula uma alteração no diretório de incremento)
 #opção do script 02-simular-alteracoes.sh: diferencial (simula uma alteração no diretório de diferença)
-#opção do script 02-simular-alteracoes.sh: completo (simula uma alteração no diretório completo)
+#opção do script 02-simular-alteracoes.sh: completo (simula uma alteração no diretório completa)
 sudo bash 02-simular-alteracoes.sh incremental
 sudo bash 02-simular-alteracoes.sh diferencial
 ```
@@ -546,7 +551,7 @@ sudo tree /backup
 
 ## 13_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup confiável sem antes validar o processo completo de Restauração (Restore).
+> **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup `confiável` sem antes validar o processo completo de Restauração (Restore).
 
 ```bash
 #Acessando o Painel de Repositórios do BBS
@@ -556,7 +561,7 @@ sudo tree /backup
         Restore (Restaurar)
 ```
 ```bash
-#Localizando o Arquivo de Backup para Restaurar do BB
+#Localizando o Arquivo de Backup para Restaurar do BBS
 02) No Painel Web do BBS, acessar as opções
     Archive (Arquivos)
       backup-dados

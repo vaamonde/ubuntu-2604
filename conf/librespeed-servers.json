@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "srvvaamonde",
+    "server": "http://172.16.1.20:8080/backend",
+    "dlURL": "garbage.php",
+    "ulURL": "empty.php",
+    "pingURL": "empty.php",
+    "getIpURL": "getIP.php"
+  }
+]
