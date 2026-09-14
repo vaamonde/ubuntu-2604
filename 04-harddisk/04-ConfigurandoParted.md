@@ -343,7 +343,14 @@ Entendendo a saída do comando: __`lsblk -f /dev/sdd`__<br>
 #criando a estrutura de diretórios do repositório de Backup, separado por tipo de dado protegido no Ubuntu Server
 #opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
+```
+```bash
+#criando o diretório de backup do LVM de Dados no Ubuntu Server
 sudo mkdir -pv /backup/repository/lv-dados
+```
+```bash
+#criando o diretório de restauração do backup do LVM de Dados no Ubuntu Server
+sudo mkdir -pv /backup/restore
 ```
 ```bash
 #criando o grupo dedicado para administração dos Backups no Ubuntu Server
@@ -363,6 +370,13 @@ sudo chown -Rv root:backupadm /backup
 #Sem acesso para Others
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 770 /backup
+```
+```bash
+#adicionando o usuário local de administração do servidor no grupo do backup no Ubuntu Server
+#opções do comando usermod: -a (append), -G (groups), $USER (environment variable)
+#OBSERVAÇÃO IMPORTANTE: você pode substituir a variável de ambiente $USER pelo nome do usuário 
+#existente no sistema para adicionar no Grupo desejado.
+sudo usermod -a -G backupadm $USER
 ```
 ```bash
 #verificando as permissões finais aplicadas no diretório de Backup no Ubuntu Server
