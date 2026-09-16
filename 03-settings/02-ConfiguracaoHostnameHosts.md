@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `16/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -80,6 +80,12 @@ sudo hostname
 sudo cp -v /etc/hosts /etc/hosts.old
 ```
 ```bash
+#download do arquivo de configuração do Hosts personalizado para o cenário do Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
+sudo wget -v -O /etc/hosts https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/hosts
+```
+```bash
 #editando o arquivo de configuração do Hosts no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
 sudo vim /etc/hosts
@@ -87,7 +93,7 @@ sudo vim /etc/hosts
 ```bash
 #habilitando o número de linhas do arquivo hosts
 ESC SHIFT :set number <Enter>
-```
+```srv
 ```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
@@ -170,12 +176,12 @@ resolvectl query srvvaamonde.pti.intra   #OBSERVAÇÃO: alterar o nome FQDN do s
 ```
 ```bash
 #testando a conexão com a Internet e Resolução de nomes de DNS do servidor Ubuntu Server
-#opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c 5 (Stop after sending count ECHO_REQUEST packets)
+#opção do comando ping: -4 (use IPv4), -6 (use IPv6) -c (Stop after sending count ECHO_REQUEST packets)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
-ping -4 -c 5 127.0.0.1              #OBSERVAÇÃO: pingando o endereço de Loopback (Localhost)
-ping -4 -c 5 172.16.1.20            #OBSERVAÇÃO: pingando o endereço IPv4
-ping -6 -c 5 fe80::20%enp0s3        #OBSERVAÇÃO: para pingar o endereço IPv6 Link Local e necessário indicar a interface
-ping -6 -c 5 2804:14c:90:8697::20   #OBSERVAÇÃO: pingando o endereço IPv6 Global Unicast
+ping -4 -c 3 127.0.0.1              #OBSERVAÇÃO: pingando o endereço de Loopback (Localhost)
+ping -4 -c 3 172.16.1.20            #OBSERVAÇÃO: pingando o endereço IPv4
+ping -6 -c 3 fe80::20%enp0s3        #OBSERVAÇÃO: para pingar o endereço IPv6 Link Local e necessário indicar a interface
+ping -6 -c 3 2804:14c:90:8697::20   #OBSERVAÇÃO: pingando o endereço IPv6 Global Unicast
 ```
 
 ---

@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -114,7 +114,7 @@ Entendendo a saída do comando: __`/proc/mdstat`__<br>
 sudo apt update
 ```
 ```bash
-#instalando os pacotes e ferramentas de LVM no Ubuntu Server
+#instalando os pacotes e ferramentas de LVM2 no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt install lvm2 thin-provisioning-tools
@@ -135,7 +135,8 @@ sudo lvm version
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or 
 #more units), stop (Stop (deactivate) one or more units), start (Start (activate) one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
-
+```
+```bash
 #visualizando o status do serviço do LVM Monitor no Ubuntu Server
 sudo systemctl status lvm2-monitor
 ```
@@ -205,7 +206,7 @@ Entendendo a saída do comando: __`pvdisplay /dev/md0`__<br>
 | 🆔 **PV UUID** | `7YIW1H-rEVU-7XUy-k3wx-iwp7-c1qh-5KAdll` | Identificador único do Physical Volume dentro do LVM. |
 ---
 
-## 05_ Criando o Volume Group (VG) no Ubuntu Server
+## 05_ Criando o Volume Group (VG) sobre o Array do RAID-1 no Ubuntu Server
 ```bash
 #criando o Volume Group (VG) a partir do Physical Volume /dev/md0 no Ubuntu Server
 #opção do comando vgcreate: (Create a volume group)
@@ -260,7 +261,7 @@ Entendendo a saída do comando: __`vgdisplay vg_dados`__<br>
 | 🔢 **Total PE** | `12791` | Quantidade total de Physical Extents disponíveis no Volume Group.|
 ---
 
-## 06_ Criando o Logical Volume (LV) no Ubuntu Server
+## 06_ Criando o Logical Volume (LV) sobre o Array do RAID-1 no Ubuntu Server
 ```bash
 #criando o Logical Volume (LV) com tamanho fixo de 20 GiB dentro do Volume Group vg_dados no Ubuntu Server
 #opções do comando lvcreate: -L (Specify the size directly), -n (Set the name)
@@ -375,13 +376,19 @@ sudo cp -v /etc/fstab /etc/fstab.old
 sudo vim /etc/fstab
 ```
 ```bash
+#habilitando o número de linhas do arquivo fstab
+ESC SHIFT :set number <Enter>
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
 ```bash
-#adicionando a entrada de montagem do Logical Volume no Ubuntu Server
+#adicionando a entrada de montagem do Logical Volume no final do arquivo no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O UUID PARA O UUID GERADO NO SEU CENÁRIO (comando blkid acima)
 #Opção default: rw,suid,dev,exec,auto,nouser,async
+#Opção dump 0: Não realizar dump de backup
+#Opção fsck 2: Segunda prioridade depois de verificar o / primeiro
 #Identificação do LV        Ponto de   Sistema de   Opção de   Dump   FSCK
 #      Dados                Montagem    Arquivos    Montagem
 UUID=SEU_UUID_DO_LV_DADOS   /dados     ext4         defaults    0      2

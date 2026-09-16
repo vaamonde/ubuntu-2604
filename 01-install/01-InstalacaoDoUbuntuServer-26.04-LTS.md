@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -66,7 +66,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```bash
 #Criando a Máquina Virtual do Ubuntu Server 26.04.x LTS no Oracle VirtualBOX
 01) Ferramentas;
-<Novo>
+    <Novo>
 ```
 ```bash
 #Personalizando a criação da Máquina Virtual do Ubuntu Server
@@ -78,91 +78,97 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
     Tipo: Linux
     Subtype: Ubuntu
     Versão: Ubuntu (64-bit)
+    (OFF) Pular Instalação Desassistida (não selecionado)
 ```
 ```bash
 #Desabilitando o recursos de Instalação Desassistida (Automática)
 03) Instalação Desassistida:
-    Sem configuração
+    Sem configuração para esse cenário
 ```
 ```bash
 #Configuração da Memória RAM Virtual (vRAM) e dos Processadores Virtual (vCPU)
 04) Hardware
     Memória Base: 4096 MB (altere conforme a sua necessidade)
-    Processadores: 2 (VCPUs) (altere conforme sua necessidade)
-    (OFF) Habilitar EFI (SO especiais apneas)
+    Processadores: 2 (vCPUs) (altere conforme sua necessidade)
+    (OFF) Habilitar EFI (SOs especiais apenas)
 ```
 ```bash
-#Criando o Hard Disk Virtual para a instalação do Ubuntu Server
+#Criando o Hard Disk Virtual (vHD) para a instalação do Ubuntu Server
 05) Disco Rígido
     (ON) Criar um novo disco rígido virtual agora
-    Localização e Tamanho do Arquivo de Disco Virtual: 
-      #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
-      Tamanho: 100,00 GB (altere conforme a sua necessidade)
-    Tipo e Variante de Arquivo de Disco Virtual
-      VDI (VirtualBox Disk Image)
-      (OFF) Pré-alocar Tamanho Total
-    (OFF) Utilizar um disco rígido virtual existente
-    (OFF) Não acrescentar um Disco Rígido Virtual
-<Finalizar>
+      Localização e Tamanho do Arquivo de Disco Virtual: 
+        #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
+        Tamanho: 100,00 GB (altere conforme a sua necessidade)
+      Tipo e Variante de Arquivo de Disco Virtual
+        VDI (VirtualBox Disk Image)
+        (OFF) Pré-alocar Tamanho Total (não selecionado)
+        (OFF) Split into 2GB Parts (Nào selecionado)
+      (OFF) Utilizar um disco rígido virtual existente
+      (OFF) Não acrescentar um Disco Rígido Virtual
+    <Finalizar>
 ```
 
 ## 03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX
 ```bash
 #Configurando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
-<Configurações>
-    Expert
+    <Configurações>
+      Expert
 ```
 ```bash
 #Configurando o Processador, Memória e Recursos de Virtualização
 02) Sistema
-    Placa-Mãe
-      Recurso Estendidos
-        (OFF) Relógio da máquina retorno hora UTC: (Desabilitar)
-    Processador
-        Recursos Estendidos: Habilitar PAE/NX
-                             Habilitar VT-x/AMD-v Aninhado
-        #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITA O RECURSO DE:
-        #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL
-        #O COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
+      Placa-Mãe
+        Recurso Estendidos
+          (OFF) Relógio da máquina retorno hora UTC: (Desabilitar)
+      Processador
+          Recursos Estendidos: Habilitar PAE/NX
+                               Habilitar VT-x/AMD-v Aninhado
+          #OBSERVAÇÃO: NO LINUX MINT A VERSÃO DO ORACLE VIRTUALBOX 7.X NÃO HABILITA O RECURSO DE:
+          #Habilitar VT-x/AMD-v Aninhado EM MODO GRÁFICO, SENDO NECESSÁRIO EXECUTAR NO TERMINAL O
+          #COMANDO: VBoxManage modifyvm UbuntuOnPremises --nested-hw-virt on
 ```
 ```bash
 #Configuração da Placa de Vídeo (vGPU) e Resolução do Monitor
 03) Display
-    Tela (S)
-      Memória de Vídeo: 256 MB
-      Recursos Estendidos: (ON) Habilitar Aceleração 3D: (Habilitar)
+      Tela (S)
+        Memória de Vídeo: 256 MB
+        Recursos Estendidos: (ON) Habilitar Aceleração 3D: (Habilitar)
 ```
 ```bash
 #Desabilitando os Recursos de Audio do Servidor
 04) Áudio
-    (OFF) Habilitar Áudio: (Desabilitar)
+      (OFF) Habilitar Áudio: (Desabilitar)
 ```
 ```bash
 #Configuração da Placa de Rede em Modo Bridge (Ponte)
 05) Rede
-    Adaptador 1 (LAN)
-      (ON) Habilitar Placa de Rede: (Habilitar)
-      Conectado a: Placa em modo Bridge
-      Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
-      #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR QUE ESTÁ 
-      #CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA DE REDE SEM-FIO 
-      #RECOMENDADO SEMPRE UTILIZAR PLACA DE REDE CABEADA, MELHOR DESEMPENHO E MAIS CONFIÁVEL.
-<OK>
+      Adaptador 1 (LAN)
+        (ON) Habilitar Placa de Rede: (Habilitar)
+          Conectado a: Placa em modo Bridge
+          Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
+          #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR QUE ESTÁ 
+          #CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA DE REDE SEM-FIO 
+          #RECOMENDADO SEMPRE UTILIZAR PLACA DE REDE CABEADA, MELHOR DESEMPENHO E MAIS CONFIÁVEL.
+          Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
+          Modo Promiscuo: Permitir Tudo (Selecionar)
+          Endereço MAC: <Gerado Automaticamente>
+          (ON) Cabo conectado (Habilitado)
+    <OK>
 ```
 
 ## 04_ Iniciando a Instalação do Ubuntu Server 26.04.x LTS (localizar a ISO) no Oracle VirtualBOX
 ```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises: 
-<Iniciar>
+    <Iniciar>
 ```
 ```bash
 #Localizando a ISO da Instalação do Ubuntu Server
 02) VirtualBOX VM
-    DVD: <Outro...>
-    #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 26.04.x LTS <Abrir>
-<Montar e Tentar Novo Boot>
+      DVD: <Outro...>
+      #LOCALIZAR E SELECIONAR A IMAGEM DA ISO DO UBUNTU SERVER 26.04.x LTS <Abrir>
+    <Montar e Tentar Novo Boot>
 ```
 
 ## 05_ Instalação e Configuração do Ubuntu Server 26.04.x LTS
@@ -176,65 +182,75 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```bash
 #Selecione *Try or Install Ubuntu Server para iniciar o processo de instalação
 01) *Try or Install Ubuntu Server
-<Enter>
+    <Enter>
 ```
 ```bash
 #Recomendado utilizar sempre a opção em Inglês para instalar o Ubuntu Server
-02) Use UP, DOWN and ENTER keys to select your language
-    English 
-<Enter>
+02) Willkommen! Bienvenue! Welcome! WElkom! 
+      Use UP, DOWN and ENTER keys to select your language
+        English 
+    <Enter>
 ```
 ```bash
 #Configuração do Teclado e Acentuação do Terminal do Ubuntu Server
 03) Keyboard configuration
-    Layout:  [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
-    Variant: [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
-             [English (US) - English (US, intl., with dead keys)] (suporte americano com acentuação)
-<Done>
+      Please select your keyboard layout below, or select "Identify keyboard" to detect your layout automatically.
+        Layout:  [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
+        Variant: [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
+                 [English (US) - English (US, intl., with dead keys)] (suporte americano com acentuação)
+    <Done>
 ```
 ```bash
 #Tipo de instalação do Ubuntu Server (Sistema Completo)
-04) Choose type of install
-    (X) Ubuntu Server (DEFAULT - Selecionado por padrão)
-    ( ) Ubuntu Server (minimized)
-    Additional options
-      [ ] Search for third-party drivers
-<Done>
+04) Choose the type of installation
+      Choose the base for the installation
+        (X) Ubuntu Server (Default - Selecionado por padrão)
+        ( ) Ubuntu Server (minimized)
+        Additional options
+          [ ] Search for third-party drivers
+    <Done>
 ```
 ```bash
 #Configuração da Placa de Rede do Ubuntu Server
-05) Network connections
-    enp0s3 eth - (o nome lógico da placa de rede muda de equipamento para equipamento)
-    DHCPv4 172.16.1.XXX/24 (verifique se obteve o endereço da sua rede corretamente)
-    #OBSERVAÇÃO IMPORTANTE: VERIFIQUE O ENDEREÇO IPv4 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
-    #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO, A CONFIGURAÇÃO DA PLACA DE REDE SERÁ
-    #FEITA MANUALMENTE NAS PRÓXIMAS AULAS (NETPLAN E BONDING).
-<Done>
+05) Network configuration
+      Configure at least one interface this server can use to talk to other machines and which preferably
+      provides sufficient access for updates
+        enp0s3 eth - (o nome lógico da placa de rede muda de equipamento para equipamento)
+        DHCPv4 172.16.1.XXX/24 (verifique se obteve o endereço IPv4 da sua rede corretamente)
+        DHCPv6 2894:14c:90:8697::/64 (verifique se obteve o endereço IPv6 da sua rede corretamente)
+        DHCPv6 2894:14c:90:8697::/128 (verifique se obteve o endereço IPv6 da sua rede corretamente)
+        #OBSERVAÇÃO IMPORTANTE: VERIFIQUE O ENDEREÇO IPv4 e IPv6 QUE VOCÊ ESTÁ USANDO NA SUA REDE 
+        #LOCAL (INTERNA) PARA ADAPTAR NO SEU CENÁRIO, A CONFIGURAÇÃO DA PLACA DE REDE SERÁ FEITA 
+        #MANUALMENTE NAS PRÓXIMAS AULAS (NETPLAN E BONDING).
+    <Done>
 ```
 ```bash
 #Configuração do Proxy Server do Ubuntu Server
-06) Configure proxy
-    Proxy address: (Default)
-<Done>
+06) Proxy configuration
+      If this system requires a proxy to connect to the internet, enter its details here
+        Proxy address: (Default)
+    <Done>
 ```
 ```bash
 #Configuração dos Espelhos dos Repositórios do Ubuntu Server
-07) Configure Ubuntu archive mirror
-    Mirror: http://archive.ubuntu.com/ubuntu (padrão da distribuição)
-    #OBSERVAÇÃO IMPORTANTE: CASO QUEIRA TROCAR O MIRROR DO UBUNTU DO BRASIL PARA O
-    #OFICIAL DO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
-    #URL: http://us.archive.ubuntu.com/ubuntu
-<Done>
+07) Ubuntu archive mirror configuration
+      If you use an alternative mirror for ubuntu, enter its details here
+        Mirror address: http://archive.ubuntu.com/ubuntu (padrão da distribuição)
+        #OBSERVAÇÃO IMPORTANTE: CASO QUEIRA TROCAR O MIRROR DO UBUNTU DO BRASIL PARA O
+        #OFICIAL DO US, SUBSTITUA A URL DE: http://br.archive.ubuntu.com/ubuntu PARA A
+        #URL: http://us.archive.ubuntu.com/ubuntu
+    <Done>
 ```
 ```bash
 #Configuração do Hard Disk e Particionamento do Ubuntu Server
 08) Guided storage configuration
-    (X) Use an entire disk (Default)
-      [VBOX_HARDISK-XXXX local disk 100.000G]
-        (X) Set up this disk as an LVM group (Default)
-          [ ] Encrypt the LVM group with LUKS (Default - No (Não))
-    ( ) Custom storage layout
-<Done>
+      Configure a guided storage layout, or create a custom one
+        (X) Use an entire disk (Default)
+          [VBOX_HARDISK-XXXX local disk 100.000G]
+            (X) Set up this disk as an LVM group (Default)
+              [ ] Encrypt the LVM group with LUKS (Default - No (Não))
+        ( ) Custom storage layout (Default - No (Não))
+    <Done>
 ```
 
 ## 06_ Particionamento do Hard Disk do Ubuntu Server 26.04.x LTS
@@ -251,104 +267,120 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```bash
 #Customização o Particionamento do Ubuntu Server
 09) Storage configuration
-    AVAILABLE DEVICES
-      free space <Enter>
+      AVAILABLE DEVICES
+        free space 49.000G <Enter>
 
-        #Criando a partição de Memória Virtual Swap do Ubuntu Server
-        Create Logical Volume <Enter>
-          Name: lv-swap
-          Size (max 49.000G): 8.000G #Alterar conforme a sua necessidade
-          Format: swap
-        <Create>
+          #Criando a partição de Memória Virtual Swap do Ubuntu Server
+          Create Logical Volume <Enter>
+            Name: lv-swap
+            Size (max 49.000G): 8.000G #Alterar conforme a sua necessidade
+            Format: swap
+            Mount: (Disable)
+          <Create>
 
-        #Criando a partição do Perfil dos Usuários (/home) do Ubuntu Server
-        Create Logical Volume <Enter>
-          Name: lv-home
-          Size (max 41.000G): 5.000G
-          Format: ext4
-          Mount: /home
-        <Create>
+          #Criando a partição do Perfil dos Usuários (/home) do Ubuntu Server
+          Create Logical Volume <Enter>
+            Name: lv-home
+            Size (max 41.000G): 5.000G
+            Format: ext4
+            Mount: /home
+          <Create>
 
-        #Criando a partição Temporária (/tmp) do Ubuntu Server
-        Create Logical Volume <Enter>
-          Name: lv-tmp
-          Size (max 36.000G): 5.000G
-          Format: ext4
-          Mount: Other
-            /tmp
-        <Create>
+          #Criando a partição Temporária (/tmp) do Ubuntu Server
+          Create Logical Volume <Enter>
+            Name: lv-tmp
+            Size (max 36.000G): 5.000G
+            Format: ext4
+            Mount: Other
+              /tmp
+          <Create>
 
-        #Criando a partição Variável (/var) do Ubuntu Server
-        Create Logical Volume <Enter>
-          Name: lv-var
-          Size (max 36.000G): 15.000G
-          Format: ext4
-          Mount: /var
-        <Create>
+          #Criando a partição Variável (/var) do Ubuntu Server
+          Create Logical Volume <Enter>
+            Name: lv-var
+            Size (max 36.000G): 15.000G
+            Format: ext4
+            Mount: /var
+          <Create>
 ```
 ```bash
 #Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
 10) Storage configuration
-    USER DEVICES
+      USER DEVICES
 
-      #Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
-      ubuntu-lv <Enter>
-        Edit <Enter>
-          Name: lv-root
-        <Save>
+        #Alterando o nome do Volume Lógico da Raiz (/ - Root) do Ubuntu Server
+        ubuntu-lv 48.996G <Enter>
+          Edit <Enter>
+            Name: lv-root
+          <Save>
 ```
 ```bash
 #Confirmando as alterações do Hard Disk do Ubuntu Server
-11) <Done>
-  Confirm destructive action
-<Continue>
+11) Storage configuration
+    <Done>
+      Confirm destructive action: Are you sure you want to continue?
+    <Continue>
 ```
 
 ## 07_ Finalização da Instalação do Ubuntu Server 26.04.x LTS
 ```bash
 #Configuração do Usuário e Senha de acesso do Ubuntu Server
-12) Profile setup
-    #OBSERVAÇÃO: ALTERAR OS DADOS DO NOME DO SERVIDOR, USUÁRIO E SENHA PARA O SEU CENÁRIO.
-    Your name: Seu Nome e Sobrenome <Tab>
-    Your servers name: srvseunome <Tab>
-    Pick a username: seu_usuário <Tab>
-    Choose a passwords: sua_senha <Tab>
-    Confirm your passwords: confirmar_sua_senha
-<Done>
+12) Profile configuration
+      Enter the username and password you will use to log into the system.
+        #OBSERVAÇÃO: ALTERAR OS DADOS DO NOME DO SERVIDOR, USUÁRIO E SENHA PARA O SEU CENÁRIO.
+        Your name: Seu Nome e Sobrenome <Tab>
+        Your servers name: srvseunome <Tab>
+        Pick a username: seu_usuário <Tab>
+        Choose a password: sua_senha <Tab>
+        Confirm your password: confirmar_sua_senha
+    <Done>
 ```
 ```bash
 #Configuração do suporte ao Ubuntu Pro do Ubuntu Server
 13) Upgrade to Ubuntu Pro
-    ( ) Enable Ubuntu Pro
-    (X) Skip Ubuntu Pro setup for now (DEFAULT - Selecionado por padrão)
-<Continue>
+      Upgrade this machine to Ubuntu Pro for security updates on a much wider range of packages, until 2036.
+        ( ) Enable Ubuntu Pro
+        (X) Skip Ubuntu Pro setup for now (Default - Selecionado por padrão)
+    <Continue>
 ```
 ```bash
 #Configuração do acesso remoto via SSH do Ubuntu Server
-14) SSH Setup
-    [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
-    [X] Allow password authentication over SSH: ON (Habilitar)
-<Done>
+14) SSH Configuration
+      You can choose to install the OpenSSH server package to enable secure remote access to your server
+        [X] Install OpenSSH server: ON (Habilitar - pressione <Space> para selecionar)
+        [X] Allow password authentication over SSH: ON (Default - Habilitado por padrão)
+    <Done>
 ```
 ```bash
 #Configuração do recursos via SNAP's do Ubuntu Server
 15) Featured Server Snaps
-<Done>
+      These are popular snaps in server environments.
+    <Done>
+```
+```bash
+#Instalação do Ubuntu Server
+16) Installer system
+    #Demora cerca de 10/15 minutos o procedimento de instalação
+```
+```bash
+#Atualização do Ubuntu Server
+17) Updating system
+    #Demora cerca de 10/15 minutos o procedimento de atualização
 ```
 ```bash
 #Finalização da instalação do Ubuntu Server
-16) Install complete!
-<Reboot Now>
+18) Installation complete!
+    <Reboot Now>
 ```
 ```bash
 #Remoção da média de instalação do Ubuntu Server
-17) Please remove the installation medium, then press ENTER:
-<Enter>
+19) Please remove the installation medium, then press ENTER:
+    <Enter>
 ```
 
 ## 08_ Acessando o Ubuntu Server pela primeira vez via Terminal (TTY)
 
-> **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO OPENSSH SERVER, PRESSIONE `<ENTER>` PARA APARECER A TELA DE LOGIN.
+> **OBSERVAÇÃO:** AGUARDAR A INICIALIZAÇÃO TOTAL DO UBUNTU SERVER, NO FINAL SERÁ GERADO VÁRIAS CHAVES DE AUTENTICAÇÃO DO **OPENSSH SERVER**, PRESSIONE `<ENTER>` PARA APARECER A TELA DE LOGIN.
 
 ```bash
 #Primeiro acesso via terminal do Ubuntu Server

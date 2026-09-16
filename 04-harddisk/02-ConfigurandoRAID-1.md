@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -101,7 +101,7 @@ sudo wipefs -n /dev/sdb
 sudo wipefs -n /dev/sdc
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no `VirtualBOX` normalmente não retornam nada, só execute o comando abaixo se o dry-run acima detectar alguma assinatura residual
+> **OBSERVAÇÃO IMPORTANTE:** discos recém-criados no `VirtualBOX` normalmente não retornam nada, só execute o comando abaixo se o **dry-run** acima detectar alguma assinatura residual
 
 ```bash
 #removendo todas as assinatura de sistema de arquivos, RAID ou LVM nos discos novos no Ubuntu Server
@@ -141,8 +141,34 @@ sudo gdisk -l /dev/sdb
 #verificado as tabelas GPT do Hard Disk SDC (Segundo Disco do RAID-1) no Ubuntu Server
 sudo gdisk -l /dev/sdc
 ```
+
+Entendendo a saída do comando: __`gdisk -l /dev/sdX`__<br
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💽 **Dispositivo** | `/dev/sdX` | Disco analisado pelo `gdisk`. |
+| 🧰 **Versão do GPT fdisk** | `1.0.10` | Versão do utilitário `gdisk` utilizada para realizar a análise do disco. |
+| 🗂️ **MBR** | `not present` | Não existe uma tabela de particionamento MBR identificada no disco. |
+| 🗂️ **BSD** | `not present` | Não existe uma tabela de particionamento BSD identificada no disco. |
+| 🗂️ **APM** | `not present` | Não existe um mapa de partições Apple Partition Map (APM) identificado. |
+| 🗂️ **GPT** | `not present` | Não existe atualmente uma tabela GPT gravada no disco. O `gdisk` iniciou uma nova estrutura GPT **apenas em memória**. |
+| 🧮 **Total de setores** | `104857600` | Quantidade total de setores disponíveis no disco. |
+| 📏 **Capacidade** | `50.0 GiB` | Capacidade total do disco virtual `/dev/sdX`. |
+| 🖥️ **Modelo** | `VBOX HARDDISK` | Modelo do disco virtual apresentado pelo **Oracle VirtualBox**. |
+| 📦 **Setor lógico** | `512 bytes` | Tamanho do setor lógico utilizado pelo dispositivo. |
+| 💾 **Setor físico** | `512 bytes` | Tamanho do setor físico informado pelo disco virtual. |
+| 🆔 **Disk Identifier (GUID)** | `0A7BBEF5-60D1-4D79-BD19-10FD3B8C147D` | Identificador único (**GUID**) atribuído à nova estrutura GPT criada em memória pelo `gdisk`. |
+| 🔢 **Máximo de entradas** | `128` | Quantidade máxima de entradas de partição que a tabela GPT pode armazenar. |
+| 📋 **Tabela GPT principal** | `Setores 2–33` | Área reservada para a **tabela de partições GPT principal**. |
+| ▶️ **Primeiro setor utilizável** | `34` | Primeiro setor disponível para criação de partições após as estruturas iniciais da GPT. |
+| ⏹️ **Último setor utilizável** | `104857566` | Último setor que pode ser utilizado para armazenamento de dados/partições. |
+| 📐 **Alinhamento** | `2048 setores` | As partições serão alinhadas em limites de **2048 setores**, equivalente a aproximadamente 1 MiB. |
+| 🆓 **Espaço livre** | `104857533 setores (50.0 GiB)` | Todo o espaço utilizável do disco está livre, pois nenhuma partição foi criada. |
+| 🧱 **Partições** | `Nenhuma` | A seção `Number / Start / End / Size / Code / Name` não apresenta nenhuma partição configurada. |
+| ⚠️ **Estado da GPT** | `Criada em memória` | O `gdisk` detectou que não existe GPT no disco e criou uma nova estrutura **temporariamente em memória**. Ela só será gravada no disco se o usuário confirmar a gravação das alterações. |
+---
+
 ```bash
-#criando a tabela de particionamento RAID-1 no Disco /dev/sdb no Ubuntu Server
+#criando a tabela de particionamento do RAID-1 no Disco /dev/sdb no Ubuntu Server
 #opções do comando gdisk: o (create a new empty GUID partition table (GPT)), n (add a new partition), 
 #t (change a partition's type code), p (print the partition table), v (verify disk), w (write table 
 #to disk and exit)
@@ -150,11 +176,13 @@ sudo gdisk -l /dev/sdc
 sudo gdisk /dev/sdb
 
   #criando a tabela GPT no disco /dev/sdb
+  #opção o: create a new empty GUID partition table (GPT)
   Command (? for help): o <Enter>
     This option deletes all partitions and creates a new protective MBR.
     Proceed? (Y/N): y <Enter>
 
   #criando a partição GPT no disco /dev/sdb
+  #opção n: add a new partition
   Command (? for help): n <Enter>
     Partition number (1-128, default 1): <Enter>
     First sector (34-104857566, default = 2048) or {+-}size{KMGTP}: <Enter>
@@ -164,18 +192,24 @@ sudo gdisk /dev/sdb
     Changed type of partition to 'Linux filesystem'
 
   #alterando a partição GPT para RAID no disco /dev/sdb
+  #opção t: change a partition's type code
   Command (? for help): t <Enter>
     Hex code or GUID (L to show codes, Enter = 8300): fd00 <Enter>
 
   #visualizando as informações da tabela e partição GPT no disco /dev/sdb
+  #opção p: print the partition table
   Command (? for help): p <Enter>
 
   #verificando problemas no disco /dev/sdb
+  #opção v: verify disk
   Command (? for help): v <Enter>
 
   #salvando as configurações da tabela e partição GPT no disco /dev/sdb
+  #opção w: write table to disk and exit
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
+    OK; writing new GUID partition table (GPT) to /dev/sdb.
+    The operation has completed successfully.
 ```
 ```bash
 #criando a tabela de particionamento RAID-1 no Disco /dev/sdc no Ubuntu Server
@@ -186,11 +220,13 @@ sudo gdisk /dev/sdb
 sudo gdisk /dev/sdc
 
   #criando a tabela GPT no disco /dev/sdc
+  #opção o: create a new empty GUID partition table (GPT)
   Command (? for help): o <Enter>
     This option deletes all partitions and creates a new protective MBR.
     Proceed? (Y/N): y <Enter>
 
   #criando a partição GPT no disco /dev/sdc
+  #opção n: add a new partition
   Command (? for help): n <Enter>
     Partition number (1-128, default 1): <Enter>
     First sector (34-104857566, default = 2048) or {+-}size{KMGTP}: <Enter>
@@ -200,25 +236,43 @@ sudo gdisk /dev/sdc
     Changed type of partition to 'Linux filesystem'
 
   #alterando a partição GPT para RAID no disco /dev/sdc
+  #opção t: change a partition's type code
   Command (? for help): t <Enter>
     Hex code or GUID (L to show codes, Enter = 8300): fd00 <Enter>
 
   #visualizando as informações da tabela e partição GPT no disco /dev/sdc
+  #opção p: print the partition table
   Command (? for help): p <Enter>
 
   #verificando problemas no disco /dev/sdc
+  #opção v: verify disk
   Command (? for help): v <Enter>
 
   #salvando as configurações da tabela e partição GPT no disco /dev/sdc
+  #opção w: write table to disk and exit
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
+    OK; writing new GUID partition table (GPT) to /dev/sdc.
+    The operation has completed successfully.
 ```
 ```bash
 #listando as partições RAID-1 dos Disco /dev/sdb e /dev/sdc do Ubuntu Server
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo blkid | grep -i 'sdb\|sdc'
 ```
+
+Entendendo a saída do comando: __`blkid | grep -i 'sdb\|sdc'`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 💾 **Dispositivo** | `/dev/sdb1` | Primeira partição do disco `/dev/sdb`, utilizada como membro do **Linux RAID**. |
+| 🏷️ **PARTLABEL** | `Linux RAID` | Rótulo atribuído à partição, identificando sua finalidade como membro de um **Linux RAID**. |
+| 🆔 **PARTUUID** | `1f29877e-dbce-43ca-80fc-e12424a784a0` | Identificador único da partição `/dev/sdb1` dentro da tabela de particionamento. |
+| 💾 **Dispositivo** | `/dev/sdc1` | Primeira partição do disco `/dev/sdc`, utilizada como membro do **Linux RAID**. |
+| 🏷️ **PARTLABEL** | `Linux RAID` | Rótulo atribuído à partição, identificando sua finalidade como membro de um **Linux RAID**. |
+| 🆔 **PARTUUID** | `542eb124-227d-4014-a3a5-8795d1201073` | Identificador único da partição `/dev/sdc1` dentro da tabela de particionamento. |
+---
 
 ## 04_ Criando o Array (Conjunto) dos Discos do RAID-1 no Ubuntu Server
 ```bash
@@ -228,11 +282,20 @@ sudo blkid | grep -i 'sdb\|sdc'
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/mdadm
 sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1 
   To optimize recovery speed, it is recommended to enable write-intent bitmap, do you want to enable it now? [y/N]? y <Enter>
+    mdadm: Note: this array has metadata at the start and
+      may not be suitable as a boot device.  If you plan to
+      store '/boot' on this device please ensure that
+      your boot-loader understands md/v1.x metadata, or use
+      --metadata=0.90
+    mdadm: size set to 52392960K
   Continue creating array [y/N]? y <Enter>
+    mdadm: Defaulting to version 1.2 metadata
+    mdadm: array /dev/md0 started.
 ```
 ```bash
 #listando as partições RAID-1 dos Disco /dev/sdb e /dev/sdc do Ubuntu Server
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo blkid | grep -i 'sdb\|sdc'
@@ -254,6 +317,7 @@ Entendendo a saída do comando: __`blkid | grep -i 'sdb\|sdc'`__<br>
 #listando os discos e partições em formato de árvore no Ubuntu Server
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo lsblk -f | grep -i 'sdb\|sdc\|md'

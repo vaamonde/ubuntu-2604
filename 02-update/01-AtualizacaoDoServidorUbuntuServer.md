@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -83,13 +83,13 @@ sudo apt policy
 #Removendo o repositório Multiverso do Ubuntu Server
 sudo add-apt-repository --remove multiverse
   Removing component(s) 'multiverse' from all repositories.
-  Press [ENTER] to continue or Ctrl-c to cancel.
+  Press [ENTER] to continue or Ctrl-c to cancel. <Enter>
 ```
 ```bash
 #Removendo o repositório Universo do Ubuntu Server
 sudo add-apt-repository --remove universe
   Removing component(s) 'multiverse' from all repositories.
-  Press [ENTER] to continue or Ctrl-c to cancel.
+  Press [ENTER] to continue or Ctrl-c to cancel. <Enter>
 ```
 
 ## 03_ Atualizando as Listas (sources.list) do Apt no Ubuntu Server
@@ -161,6 +161,7 @@ sudo apt full-upgrade
 #installed to satisfy dependencies)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt autoremove
+  Continue? [Y/n] y <Enter>
 ```
 
 ## 09_ Fazendo a limpeza dos repositórios locais e pacotes desnecessários no Ubuntu Server
@@ -210,6 +211,8 @@ sudo cat -n /var/log/apt/term.log
 #Verificando a necessidade de reinicialização do Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html
 sudo needrestart
+  Daemons using outdated libraries
+  <OK>
 ```
 ```bash
 #Verificando o arquivo de reinicialização requerida do Ubuntu Server

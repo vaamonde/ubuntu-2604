@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -60,32 +60,46 @@ Link da vídeo aula:
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
-<Configurações>
-    Expert
+      <Configurações>
+        Expert
 ```
 ```bash
 #Adicionando dois Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
-    Dispositivos
-      Controladora: SATA
-        Adicionar Hard Disk
-          Criar
-            Localização e Tamanho do Arquivo de Disco Virtual
-              Localização: raid-01.vdi
-              Tamanho: 50,00 GB
-          <Finalizar>
-            Localização e Tamanho do Arquivo de Disco Virtual
-              Localização: raid-02.vdi
-              Tamanho: 50,00 GB
-           <Finalizar>
-        raid-01.vdi <Escolher>
-        raid-02.vdi <Escolher>
+      Dispositivos
+        Controladora: SATA
+          Adicionar Hard Disk
+
+            #Criando o primeiro Hard Disk do RAID-1
+            Criar
+              Localização e Tamanho do Arquivo de Disco Virtual
+                Localização: raid-01.vdi
+                Tamanho: 50,00 GB
+              Tipo e Variante de Arquivo de Disco Virtual
+                VDI (VirtualBox Disk Image)
+                (OFF) Pré-alocar Tamanho Total (Disable)
+                (OFF) Split into 2GB Parts (Disable)
+            <Finalizar>
+
+            #Criando o segundo Hard Disk do RAID-1
+              Localização e Tamanho do Arquivo de Disco Virtual
+                Localização: raid-02.vdi
+                Tamanho: 50,00 GB
+              Tipo e Variante de Arquivo de Disco Virtual
+                VDI (VirtualBox Disk Image)
+                (OFF) Pré-alocar Tamanho Total (Disable)
+                (OFF) Split into 2GB Parts (Disable)
+            <Finalizar>
+
+          #Selecionar os Hard Disk Não Anexados (Not Attached)
+          raid-01.vdi <Escolher>
+          raid-02.vdi <Escolher>
     <OK>
 ```
 ```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
 03) Selecionar a Máquina Virtual: UbuntuOnPremises: 
-<Iniciar>
+      <Iniciar>
 ```
 
 ## 02_ Instalando os principais software de Hard Disk no Ubuntu Server
@@ -99,7 +113,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de hard disk no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install smartmontools hdparm sysstat tree
+sudo apt install smartmontools hdparm sysstat
 ```
 
 ## 03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server
@@ -111,10 +125,10 @@ sudo apt install smartmontools hdparm sysstat tree
 #opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1p.html
-sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
+sudo lspci -v | grep -i -A5 "IDE\|SATA\|SCSI\|NVM"
 ```
 
-Entendendo a saída do comando: __`sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"`__<br>
+Entendendo a saída do comando: __`lspci -v | grep -i -A5 "IDE\|SATA\|SCSI\|NVM"`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🖥️ **Dispositivo PCI** | `00:0d.0` | Endereço do controlador no barramento **PCI (Bus:Device.Function)**. Identifica fisicamente o dispositivo na placa-mãe ou na máquina virtual. |
@@ -138,7 +152,7 @@ Entendendo a saída do comando: __`sudo lspci -v | grep -i -A5 "SATA\|SCSI\|NVM"
 sudo lshw -class storage
 ```
 
-Entendendo a saída do comando: __`sudo lshw -class storage`__<br>
+Entendendo a saída do comando: __`lshw -class storage`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🖥️ **Classe do Dispositivo** | `storage` | Classe de hardware responsável pelo gerenciamento dos dispositivos de armazenamento do sistema. |
@@ -197,8 +211,11 @@ Entendendo a saída do comando: __`lshw -class disk`__<br>
 
 ```bash
 #verificando o UUID (Universally Unique Identifier) e o tipo de sistema de arquivos de cada dispositivo no Ubuntu Server
+#opção do comando grep: -v (Invert the sense of matching, to select non-matching lines)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/blkid.8.html
-sudo blkid
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo blkid | grep -v '^/dev/loop'
 ```
 
 Entendendo a saída do comando: __`blkid`__<br>
@@ -284,8 +301,11 @@ Entendendo a saída do comando: __`/sys/block/`__<br>
 ```bash
 #listando todos os discos e partições em formato de árvore no Ubuntu Server
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
+#opção do comando grep: -v (Invert the sense of matching, to select non-matching lines)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
-sudo lsblk -f
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo lsblk -f | grep -v 'loop'
 ```
 
 Entendendo a saída do comando: __`lsblk -f`__<br>
@@ -309,12 +329,12 @@ Entendendo a saída do comando: __`lsblk -f`__<br>
 
 ```bash
 #listando as tabelas de partição de todos os discos no Ubuntu Server
-#opção do comando fdisk: -l (List the partition tables for the specified devices and then exit)
+#opção do comando fdisk: -x (List the partition tables for the specified devices and then exit)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/fdisk.8.html
-sudo fdisk -l
+sudo fdisk -x
 ```
 
-Entendendo a saída do comando: __`fdisk -l`__<br>
+Entendendo a saída do comando: __`fdisk -x`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 💽 **Disco Principal** | `/dev/sda` | Disco principal onde está instalado o Ubuntu Server 26.04 LTS. |
@@ -405,7 +425,6 @@ sudo hdparm -Tt /dev/sdc
 Entendendo a saída do comando: __`hdparm -Tt /dev/sdx`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 💽 **Comando** | `hdparm -Tt /dev/sdX` | Realiza um teste simples de desempenho dos dispositivos de armazenamento, medindo a velocidade de leitura da memória cache e do disco. |
 | ⚡ **Opção `-T`** | `Timing cached reads` | Mede a velocidade de leitura da memória **cache do sistema (RAM/Page Cache)**. Não avalia o desempenho físico do disco. |
 | 💿 **Opção `-t`** | `Timing buffered disk reads` | Mede a velocidade de leitura sequencial diretamente do dispositivo de armazenamento, indicando seu desempenho real. |
 | 📦 **Unidade** | `MB/sec` | Taxa de transferência medida em Megabytes por segundo (MB/s). Quanto maior o valor, melhor o desempenho. |
@@ -493,11 +512,14 @@ Entendendo a saída do comando: __`badblocks -sv /dev/sdx`__<br>
 ```bash
 #verificando o espaço disponível/utilizado por partição montada no Ubuntu Server
 #opção do comando df: -h (human-readable)
+#opção do comando grep: -v (Invert the sense of matching, to select non-matching lines)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
-sudo df -h
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo df -h | grep -v 'tmpfs\|none'
 ```
 
-Entendendo a saída do comando: __`sudo df -h`__<br>
+Entendendo a saída do comando: __`df -h`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 📂 **Sistema de Arquivos** | `/dev/mapper/ubuntu--vg-lv--root` | Volume Lógico (LVM) responsável pelo diretório raiz (`/`). |

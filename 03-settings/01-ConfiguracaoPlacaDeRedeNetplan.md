@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -67,7 +67,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install bridge-utils net-tools traceroute 
+sudo apt install bridge-utils net-tools
 ```
 
 ## 02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server
@@ -183,12 +183,19 @@ Entendendo a saída do comando: __`ip address show`__<br>
 
 ```bash
 #verificando as configurações de Gateway (route) no Ubuntu Server
-#opções do comando ip: route (Routing table entry), show (view all information)
+#opções do comando ip: route (Routing table entry), -4 (IPv4 family inet), -6 (IPv6 family inet6) show (view all information)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/ip.8.html
-sudo ip route show
+```
+```bash
+#visualizando o Gateway IPv4 no Ubuntu Server
+sudo ip -4 route show
+```
+```bash
+#visualizando o Gateway IPv6 no Ubuntu Server
+sudo ip -6 route show
 ```
 
-Entendendo a saída do comando: __`ip route show`__<br>
+Entendendo a saída do comando: __`ip -4 route show`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
 | 🌍 **Rota Padrão (Default Gateway)** | `default via 172.16.1.254` | Define a rota padrão utilizada para encaminhar pacotes destinados a redes externas (Internet ou outras redes não presentes na tabela de roteamento). |
@@ -197,6 +204,25 @@ Entendendo a saída do comando: __`ip route show`__<br>
 | ⚙️ **Protocolo da Rota**  | `dhcp` | A rota foi criada automaticamente pelo cliente DHCP. |
 | 📍 **Endereço de Origem** | `172.16.1.157` | Endereço IP de origem utilizado pelo sistema ao enviar pacotes por essa rota. |
 | 📊 **Métrica** | `100` | Prioridade da rota. Quanto menor o valor, maior a preferência quando existem múltiplas rotas para o mesmo destino. |
+---
+
+Entendendo a saída do comando: __`ip -6 route show`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| **Rede IPv6 local** | `2804:14c:90:8697::/64` | Prefixo IPv6 da rede configurada na interface `enp0s3`. A rota foi criada por **Router Advertisement (RA)** (`proto ra`), com métrica `100` e preferência `high`. |
+| **Interface** | `enp0s3` | Interface de rede utilizada para comunicação com a rede IPv6 `2804:14c:90:8697::/64`. |
+| **Rota Link-Local** | `fe80::/64` | Define a rede IPv6 **Link-Local** diretamente conectada à interface `enp0s3`. |
+| **Protocolo da rota** | `kernel` | Indica que a rota `fe80::/64` foi criada automaticamente pelo **kernel Linux** devido à configuração da interface. |
+| **Métrica** | `256` | Valor de preferência utilizado pelo kernel para essa rota. |
+| **Gateway IPv6** | `fe80::e638:83ff:fe36:c58e` | Endereço **Link-Local IPv6** utilizado como próximo salto (**next-hop**) para a rota padrão. |
+| **Rota padrão IPv6** | `default` | Rota utilizada quando não existe uma rota mais específica para o destino IPv6. |
+| **Interface da rota padrão** | `enp0s3` | Interface utilizada para encaminhar o tráfego IPv6 destinado a redes externas. |
+| **Protocolo da rota padrão** | `ra` | Indica que a rota padrão foi aprendida através de **Router Advertisement (RA)**. |
+| **Métrica da rota padrão** | `100` | Métrica utilizada para determinar a preferência da rota padrão IPv6. |
+| **Expiração da rota padrão** | `1793sec` | Tempo restante, em segundos, até a validade anunciada dessa rota ser renovada/expirar pelo mecanismo de **Router Advertisement**. |
+| **Preferência** | `high` | Indica **alta preferência** para a rota anunciada pelo Router Advertisement. |
+| **NHID** | `2090544868` | Identificador interno do **next-hop** utilizado pelo kernel para essa rota. |
+| **Expiração da rede IPv6** | `53571sec` | Tempo restante, em segundos, associado à validade anunciada da rota `2804:14c:90:8697::/64`. |
 ---
 
 ```bash
@@ -232,7 +258,7 @@ Entendendo a saída do comando: __`resolvectl status`__<br>
 ---
 
 ```bash
-#verificando as informações de Leases (Alugueis) do DHCP Client no Ubuntu Server
+#verificando as informações de Leases (Alugueis) do DHCP Client IPv4 no Ubuntu Server
 #opção do comando cat: -n (number line), * (asterisco) todos os arquivos autocomplemento
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /run/systemd/netif/leases/*

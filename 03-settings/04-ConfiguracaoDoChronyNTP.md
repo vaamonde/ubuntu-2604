@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -216,7 +216,7 @@ server e.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 ESC SHIFT : x <Enter>
 ```
 ```bash
-#verificando o serviço do Chrony Server e Client no Ubuntu Server
+#reiniciando e visualizando o serviço do Chrony Server e Client no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start one or
 #more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
@@ -372,7 +372,7 @@ sudo timedatectl set-ntp false
 #configurando o Timezone de São Paulo no Ubuntu Server
 #opção do comando timedatectl: set-timezone (Set the system time zone to the specified value)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
-sudo timedatectl set-timezone America/Sao_Paulo
+sudo timedatectl set-timezone "America/Sao_Paulo"
 ```
 ```bash
 #configurando manualmente a Data e Hora do sistema no Ubuntu Server
@@ -394,10 +394,10 @@ sudo timedatectl set-ntp true
 sudo timedatectl status
 ```
 ```bash
-#reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br no Ubuntu Server
+#reiniciando o serviço do Timedate para forçar uma atualização da Data Hora no Ubuntu Server
 #opção do comando systemctl: restart (Stop and then start one or more units)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
-sudo systemctl restart chrony.service
+sudo systemctl restart systemd-timedated
 ```
 ```bash
 #reiniciando o serviço do Systemd Resolved para limpar o cache de respostas DNS/DNSSEC inválidas no Ubuntu Server
@@ -406,16 +406,28 @@ sudo systemctl restart chrony.service
 sudo systemctl restart systemd-resolved
 ```
 ```bash
-#analisando os Log's e mensagens de erro mais recentes do serviço do Chrony no Ubuntu Server
+#reiniciando o serviço do Chrony para forçar uma nova sincronização com os servidores NTP.br no Ubuntu Server
+#opção do comando systemctl: restart (Stop and then start one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl restart chrony.service
+```
+```bash
+#analisando os Log's e mensagens de erro mais recentes do serviço do Systemd Timedated no Ubuntu Server
 #opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
-sudo journalctl -eu chrony
+sudo journalctl -eu systemd-timedated
 ```
 ```bash
 #analisando os Log's e mensagens de erro mais recentes do serviço do Systemd Resolved no Ubuntu Server
 #opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 sudo journalctl -eu systemd-resolved
+```
+```bash
+#analisando os Log's e mensagens de erro mais recentes do serviço do Chrony no Ubuntu Server
+#opção do comando journalctl: -e (jump to the end of the journal), -u (Show messages for the specified systemd unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -eu chrony
 ```
 ```bash
 #testando a resolução de nomes e a validação do DNSSEC após o ajuste manual de Data e Hora no Ubuntu Server

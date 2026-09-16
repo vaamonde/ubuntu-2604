@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -66,36 +66,46 @@ Link da vídeo aula:
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
-<Configurações>
-    Expert
+      <Configurações>
+        Expert
 ```
 ```bash
 #Adicionando um Hard Disk na Máquina Virtual do Ubuntu Server
 02) Armazenamento
-    Dispositivos
-      Controladora: SATA
-        Adicionar Hard Disk
-          Criar
-            Localização e Tamanho do Arquivo de Disco Virtual
-              Localização: backup-01.vdi
-              Tamanho: 50,00 GB (altere conforme a sua necessidade)
-          <Finalizar>
-        backup-01.vdi <Escolher>
+      Dispositivos
+        Controladora: SATA
+          Adicionar Hard Disk
+
+            #Criando o primeiro Hard Disk do Particionamento
+            Criar
+              Localização e Tamanho do Arquivo de Disco Virtual
+                Localização: backup-01.vdi
+                Tamanho: 50,00 GB (altere conforme a sua necessidade)
+              Tipo e Variante de Arquivo de Disco Virtual
+                VDI (VirtualBox Disk Image)
+                (OFF) Pré-alocar Tamanho Total (Disable)
+                (OFF) Split into 2GB Parts (Disable)
+            <Finalizar>
+
+          #Selecionar os Hard Disk Não Anexados (Not Attached)
+          backup-01.vdi <Escolher>
     <OK>
 ```
 ```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
 03) Selecionar a Máquina Virtual: UbuntuOnPremises: 
-<Iniciar>
+      <Iniciar>
 ```
 
 ## 02_ Verificando os Discos Reconhecidos no Ubuntu Server
-
 ```bash
 #listando todos os discos e partições em formato de árvore no Ubuntu Server
 #opção do comando lsblk: -f (mostra sistema de arquivos e UUID)
+#opção do comando grep: -v (Invert the sense of matching, to select non-matching lines)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsblk.8.html
-sudo lsblk -f
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo lsblk -f | grep -v 'loop'
 ```
 
 Entendendo a saída do comando: __`lsblk -f`__ (Disco Novo)<br>
@@ -142,7 +152,6 @@ Entendendo a saída do comando: __`fdisk -l /dev/sdd`__<br>
 ---
 
 ## 03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server
-
 ```bash
 #criando a tabela de particionamento GPT no Disco /dev/sdd no Ubuntu Server
 #opções do comando gdisk: o (create a new empty GUID partition table (GPT)), n (add a new partition),
@@ -174,9 +183,11 @@ sudo gdisk /dev/sdd
   #salvando as configurações da tabela e partição GPT no disco /dev/sdd
   Command (? for help): w <Enter>
     Do you want to proceed? (Y/N): y <Enter>
+      OK; writing new GUID partition table (GPT) to /dev/sdd.
+      The operation has completed successfully
 ```
 
-> **OBSERVAÇÃO IMPORTANTE:** diferente do procedimento de **RAID-1** (`04-harddisk/02-ConfigurandoRAID-1.md`), aqui o Código Hexadecimal (Hex code) da partição __`PERMANECE 8300 (Linux filesystem)`__, e **NÃO** deve ser alterado para __`fd00 (Linux RAID)`__, pois este disco não fará parte de nenhum Array de RAID.
+> **OBSERVAÇÃO IMPORTANTE:** diferente do procedimento de **RAID-1** (`04-harddisk/02-ConfigurandoRAID-1.md`), aqui o Código Hexadecimal (Hex code) da partição __`PERMANECE 8300 (Linux filesystem)`__, e **NÃO** deve ser alterado para __`FD00 (Linux RAID)`__, pois este disco não fará parte de nenhum Array de RAID.
 
 ```bash
 #listando a partição criada no Disco /dev/sdd do Ubuntu Server
@@ -203,7 +214,6 @@ Entendendo a saída do comando: __`parted -l /dev/sdd`__<br>
 ---
 
 ## 04_ Formatando a Partição com o Sistema de Arquivos EXT4 no Ubuntu Server
-
 ```bash
 #formatando a partição /dev/sdd1 com o sistema de arquivos ext4 no Ubuntu Server
 #opção do comando mkfs.ext4: (cria um sistema de arquivos ext4 no dispositivo informado)
@@ -263,6 +273,10 @@ sudo cp -v /etc/fstab /etc/fstab.bkp01
 sudo vim /etc/fstab
 ```
 ```bash
+#habilitando o número de linhas do arquivo fstab
+ESC SHIFT :set number <Enter>
+```
+```bash
 #entrando no modo de edição do editor de texto VIM
 INSERT
 ```
@@ -271,9 +285,11 @@ INSERT
 #OBSERVAÇÃO IMPORTANTE: ALTERAR O UUID PARA O UUID GERADO NO SEU CENÁRIO (comando blkid acima)
 #Opção default: rw,suid,dev,exec,auto,nouser,async
 #Opção nofail: evita que o Boot trave/pare caso o disco de Backup esteja indisponível
+#Opção dump 0: Não realizar dump de backup
+#Opção fsck 2: Segunda prioridade depois de verificar o / primeiro
 #Identificação da Partição       Ponto de   Sistema de   Opção de           Dump   FSCK
 #      Backup                    Montagem    Arquivos    Montagem
-UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup       ext4      defaults,nofail     0      2
+UUID=SEU_UUID_DA_PARTICAO_SDD1   /backup    ext4         defaults,nofail     0      2
 ```
 
 > **OBSERVAÇÃO IMPORTANTE:** a opção __`nofail`__ é uma boa prática para discos de **Backup**, pois evita que o Ubuntu Server fique preso na tela de Boot (Emergency Mode) caso o disco de Backup esteja fisicamente desconectado ou indisponível no momento da inicialização.
@@ -341,7 +357,7 @@ Entendendo a saída do comando: __`lsblk -f /dev/sdd`__<br>
 
 ```bash
 #criando a estrutura de diretórios do repositório de Backup, separado por tipo de dado protegido no Ubuntu Server
-#opção do comando mkdir: -p (cria diretórios pais conforme necessário), -v (modo verboso)
+#opção do comando mkdir: -p (make parent directories as needed), -v (print a message for each printed directory)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/mkdir.1.html
 ```
 ```bash
@@ -366,8 +382,8 @@ sudo chown -Rv root:backupadm /backup
 ```
 ```bash
 #ajustando as permissões do diretório de Backup no Ubuntu Server
-#opção do comando chmod: -R (recursive), -v (verbose), 770 = Leitura/Escrita/Execução para Owner e Group, 
-#Sem acesso para Others
+#opção do comando chmod: -R (recursive), -v (verbose), 770 = Read/Write/Execute Owner and Group, Not
+#access Others Users and Groups
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 770 /backup
 ```
@@ -377,6 +393,12 @@ sudo chmod -Rv 770 /backup
 #OBSERVAÇÃO IMPORTANTE: você pode substituir a variável de ambiente $USER pelo nome do usuário 
 #existente no sistema para adicionar no Grupo desejado.
 sudo usermod -a -G backupadm $USER
+```
+```bash
+#consultando os usuários nos grupos adicionados no Ubuntu Server
+#opção do comando getent: group (show to enumerate the group database)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
+sudo getent group backupadm
 ```
 ```bash
 #verificando as permissões finais aplicadas no diretório de Backup no Ubuntu Server
@@ -392,6 +414,7 @@ Entendendo a saída do comando: __`ls -lh /backup`__<br>
 | 👤 **Proprietário (Owner)** | `root` | Usuário responsável pela administração do repositório de Backup. |
 | 👥 **Grupo (Group)** | `backupadm` | Grupo dedicado, criado para futuramente conceder acesso ao serviço/usuário do **BorgBackupServer**, sem a necessidade de privilégios totais de `root`. |
 | 📁 **Diretório** | `repository/lv-dados` | Subdiretório destinado especificamente ao Repositório de Backup da partição de Dados (LVM) criada no procedimento anterior. |
+| 📁 **Diretório** | `restore` | Diretório destinado especificamente para os procedimentos de restauração do arquivos antes de mover ou restaurar no seu diretório real |
 ---
 
 ## 10_ Localização dos Arquivos de Configuração do Particionamento no Ubuntu Server

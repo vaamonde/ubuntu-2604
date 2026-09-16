@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -37,6 +37,7 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [#02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server](#02_-configurando-o-locale-localidades-do-brasil-no-sistema-operacional-ubuntu-server)<br>
 [#03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server](#03_-verificando-as-informações-do-timezone-fuso-horário-do-sistema-operacional-ubuntu-server)<br>
 [#04_ Configurando o Timezone (Fuso Horário) de São Paulo no Sistema Operacional Ubuntu Server](#04_-configurando-o-timezone-fuso-horário-de-são-paulo-no-sistema-operacional-ubuntu-server)<br>
+[#05_ Desativando a atualização do Timezone (Fuso Horário) do Cloud-Init no Ubuntu Server](#05_-desativando-a-atualização-do-timezone-fuso-horário-do-cloud-init-no-ubuntu-server)<br>
 
 | **🌍 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -184,6 +185,38 @@ sudo timedatectl set-timezone "America/Sao_Paulo"
 #opção do comando timedatectl: status (Show current settings of the system clock and RTC)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/timedatectl.1.html
 sudo timedatectl status
+```
+
+## 05_ Desativando a atualização do Timezone (Fuso Horário) do Cloud-Init no Ubuntu Server
+
+> **OBSERVAÇÃO IMPORTANTE:** por padrão no `Ubuntu Server 26.04` o **Cloud Init** vem instalado por padrão, ele controla as configurações de serviços para os principais `Sistema de Nuvem` do mercado, geralmente ele pode *alterar as configurações em servidores On-Premises*, recomendado sempre `desativar os recursos` que não estão sendo utilizados pelo **Cloud Init** para não sobrescrever as configurações atuais do servidor.
+
+```bash
+#editando o arquivo de configuração do Cloud Init do Ubuntu Server
+sudo vim /etc/cloud/cloud.cfg
+```
+```bash
+#habilitando o número de linhas do arquivo cloud.cfg
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#comentando as linhas de configuração dos módulos de config
+#comentar a linha: 51 - locale (configuração de localidade)
+#- locale
+#
+#comentar a linha: 56 - ntp (configuração do sincronismo NTP)
+#- ntp
+#
+#comentar a linha: 57 - timezone (configuração do zona de horário)
+#- timezone
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
 ```
 
 ---

@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `15/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -73,48 +73,53 @@ Link da vídeo aula:
 | **balance-alb** | `mode 6` | ❌ Não recomendado | Utiliza **ARP Negotiation** para balancear o tráfego de entrada, o que gera instabilidade em redes Bridged do VirtualBOX. |
 ---
 
-> **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de Produção On-Premises com Switches físicos gerenciáveis, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
+> **CONCLUSÃO:** para fins didáticos de **Alta Disponibilidade (Redundância)** em Laboratório com Oracle VirtualBOX, utilize sempre o modo: __`active-backup (mode 1)`__. Em um ambiente de `Produção On-Premises com Switches físicos gerenciáveis`, o modo __`802.3ad (LACP)`__ passa a ser o mais indicado.
 
 ## 02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremises
 ```bash
 #Acessando as configurações da Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
-<Configurações>
-    Expert
+      <Configurações>
+          Expert
 ```
 ```bash
 #Adicionado mais uma Placa de Rede na Máquina Virtual do Ubuntu Server
 02) Rede
-    Adaptador 1 (LAN)
-      (ON) Habilitar Placa de Rede: (Habilitar)
-      Conectado a: Placa em modo Bridge
-      Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
-      #OBSERVAÇÃO IMPORTANTE: RECOMENDA-SE UTILIZAR A MESMA PLACA DE REDE FÍSICA DO HOST
-      #NOS DOIS ADAPTADORES, SIMULANDO ASSIM DUAS CONEXÕES INDEPENDENTES NA MESMA REDE.
-      Avançado
-        Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
-        Modo Promíscuo: Permitir Tudo (Allow All)
 
-    Adaptador 2 (LAN)
-      (ON) Habilitar Placa de Rede: (Habilitar)
-      Conectado a: Placa em modo Bridge
-      Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
-      #OBSERVAÇÃO IMPORTANTE: RECOMENDA-SE UTILIZAR A MESMA PLACA DE REDE FÍSICA DO HOST
-      #NOS DOIS ADAPTADORES, SIMULANDO ASSIM DUAS CONEXÕES INDEPENDENTES NA MESMA REDE.
-      Avançado
+      #Configuração da Primeira Placa de Rede para o Bonding
+      Adaptador 1 (LAN)
+        (ON) Habilitar Placa de Rede: (Habilitar)
+        Conectado a: Placa em modo Bridge
+        Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
+        #OBSERVAÇÃO IMPORTANTE: RECOMENDA-SE UTILIZAR A MESMA PLACA DE REDE FÍSICA DO HOST
+        #NOS DOIS ADAPTADORES, SIMULANDO ASSIM DUAS CONEXÕES INDEPENDENTES NA MESMA REDE.
         Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
-        Modo Promíscuo: Permitir Tudo (Allow All)
+        Modo Promiscuo: Permitir Tudo (Selecionar)
+        Endereço MAC: <Gerado Automaticamente>
+        (ON) Cabo conectado (Habilitado)
+
+      #Configuração da Segunda Placa de Rede para o Bonding
+      Adaptador 2 (LAN)
+        (ON) Habilitar Placa de Rede: (Habilitar)
+        Conectado a: Placa em modo Bridge
+        Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
+        #OBSERVAÇÃO IMPORTANTE: RECOMENDA-SE UTILIZAR A MESMA PLACA DE REDE FÍSICA DO HOST
+        #NOS DOIS ADAPTADORES, SIMULANDO ASSIM DUAS CONEXÕES INDEPENDENTES NA MESMA REDE.
+        Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
+        Modo Promiscuo: Permitir Tudo (Selecionar)
+        Endereço MAC: <Gerado Automaticamente>
+        (ON) Cabo conectado (Habilitado)
     <OK>
 ```
 ```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
-03) Selecionar a Máquina Virtual: UbuntuOnPremise: 
-<Iniciar>
+03) Selecionar a Máquina Virtual: UbuntuOnPremises: 
+      <Iniciar>
 ```
 
 ## 03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage
 
-> **OBSERVAÇÃO IMPORTANTE:** o Modo Promíscuo também pode ser habilitado via linha de comando no Host (fora da Máquina Virtual), sendo útil para automação e Scripts de criação de Laboratório.
+> **OBSERVAÇÃO IMPORTANTE:** o `Modo Promíscuo` também pode ser habilitado via linha de comando no Host (fora da Máquina Virtual), sendo útil para automação e Scripts de criação de Laboratório.
 
 ```bash
 #listando as Máquinas Virtuais cadastradas no Oracle VirtualBOX (executar no Host Hospedeiro)
@@ -132,6 +137,9 @@ VBoxManage modifyvm "UbuntuOnPremises" --nicpromisc2 allow-all
 ```bash
 #verificando as configurações de rede aplicadas na Máquina Virtual
 #opção do comando VBoxManage: showvminfo (Show information about a particular virtual machine)
+#opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 #mais informações acesse a documentação oficial em: https://www.virtualbox.org/manual/ch08.html
 VBoxManage showvminfo "UbuntuOnPremises" | grep -i "NIC\|Promisc"
 ```
