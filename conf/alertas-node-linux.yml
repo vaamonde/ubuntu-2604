@@ -62,7 +62,7 @@ groups:
   #
   # Configuração do alerta de: Uso elevado de Memória Swap
   - alert: SwapAlto
-    expr: (node_memory_SwapTotal_bytes{job="node-exporter"} > 0) and ((1 - (node_memory_SwapFree_bytes{job="node-exporter"} / node_memory_SwapTotal_bytes{job="srvvaamonde"})) * 100 > 50)
+    expr: (node_memory_SwapTotal_bytes{job="node-exporter"} > 0) and ((1 - (node_memory_SwapFree_bytes{job="node-exporter"} / node_memory_SwapTotal_bytes{job="node-exporter"})) * 100 > 50)
     for: 5m
     labels:
       severity: warning
@@ -75,7 +75,7 @@ groups:
   # do Volume Group/Logical Volume do LVM muda conforme o Particionamento de cada servidor
   # (exemplo: ubuntu--vg-lv--root, ubuntu--vg-lv--var, vg_dados-lv_dados, etc)
   - alert: DiscoCheio
-    expr: (1 - (node_filesystem_avail_bytes{job="node-exporter", fstype!~"tmpfs|overlay|squashfs|devtmpfs"} / node_filesystem_size_bytes{job="srvvaamonde", fstype!~"tmpfs|overlay|squashfs|devtmpfs"})) * 100 > 80
+    expr: (1 - (node_filesystem_avail_bytes{job="node-exporter", fstype!~"tmpfs|overlay|squashfs|devtmpfs"} / node_filesystem_size_bytes{job="node-exporter", fstype!~"tmpfs|overlay|squashfs|devtmpfs"})) * 100 > 80
     for: 5m
     labels:
       severity: critical
