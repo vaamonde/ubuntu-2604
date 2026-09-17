@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `17/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -230,10 +230,10 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```yaml
-#Descomentar as linhas de configuração do Node Exporter a partir da linha 71
+#Descomentar as linhas de configuração do Node Exporter a partir da linha 66
 # Configurações dos Serviços de Monitoramento de Métricas do Prometheus utilizando
 # o recurso de Exportação do Node Remoto para sistemas operacionais Linux ou Windows
-  - job_name: "srvvaamonde"
+  - job_name: "node-exporter"
     static_configs:
       - targets: ["172.16.1.20:9100"]
         labels:
@@ -269,8 +269,8 @@ sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
 ```
 ```bash
-#reiniciando o serviço do Node Exporter no Ubuntu Server
-sudo systemctl restart node_exporter
+#iniciando o serviço do Node Exporter no Ubuntu Server
+sudo systemctl start node_exporter
 ```
 ```bash
 #reiniciando o serviço do Prometheus no Ubuntu Server

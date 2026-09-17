@@ -6,10 +6,10 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 12/09/2026
-# Data de atualização: 12/09/2026
-# Versão: 0.01
+# Data de atualização: 17/09/2026
+# Versão: 0.02
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS 64x
-# Testado e homologado para a versão do Prometheus 3.13.x e Node Exporter 1.12.x
+# Testado e homologado para a versão do Prometheus 3.14.x e Node Exporter 1.12.x
 #
 # ======= BLOCO DE CONFIGURAÇÃO BÁSICA DO PROMETHEUS NO LINUX ======= 
 #

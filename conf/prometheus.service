@@ -11,8 +11,11 @@ Type=simple
 ExecStart=/usr/local/bin/prometheus \
     --config.file=/etc/prometheus/prometheus.yml \
     --storage.tsdb.path=/var/lib/prometheus/ \
+    --storage.tsdb.retention.time=90d \
+    --storage.tsdb.retention.size=20GB \
     --web.console.templates=/etc/prometheus/consoles \
     --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.config.file=/etc/prometheus/web-config.yml \
     --web.listen-address=0.0.0.0:9090
 
 [Install]

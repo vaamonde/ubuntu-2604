@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `17/09/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -98,9 +98,9 @@ sudo mkdir -pv /etc/prometheus/{targets,rules} /var/lib/prometheus
 > **OBSERVAÇÃO IMPORTANTE:** o executável e os arquivos de configuração do *Prometheus* sofre alteração o tempo todo, sempre acessar o projeto do `Github` para verificar a *última versão do software* no Link: https://github.com/prometheus/prometheus/releases/
 
 ```bash
-#download do Prometheus do Github no Ubuntu Server (Link atualizado no dia 12/09/2026)
+#download do Prometheus do Github no Ubuntu Server (Link atualizado no dia 17/09/2026)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
-wget https://github.com/prometheus/prometheus/releases/download/v3.13.3/prometheus-3.13.3.linux-amd64.tar.gz
+wget https://github.com/prometheus/prometheus/releases/download/v3.14.0/prometheus-3.14.0.linux-amd64.tar.gz
 ```
 ```bash
 #listando o download do arquivo do Prometheus no Ubuntu Server
@@ -154,6 +154,12 @@ sudo wget -v -O /etc/systemd/system/prometheus.service https://raw.githubusercon
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
 sudo wget -v -O /etc/prometheus/prometheus.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/prometheus.yml
 ```
+```bash
+#download do arquivo de configuração do Web Server do Prometheus no Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+sudo wget -v -O /etc/prometheus/web-config.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/web-config.yml
+```
 
 ## 08_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server
 ```bash
@@ -186,14 +192,14 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```yaml
-#alterar os valores das viráveis a partir da linha: 23
+#alterar os valores das viráveis a partir da linha: 25
 external_labels:
   monitor: "prometheus-srvvaamonde"
   ambiente: "laboratorio"
 
-#alterar os valores das viráveis a partir da linha: 58
+#alterar os valores das viráveis a partir da linha: 55
 scrape_configs:
-  - job_name: "prometheus"
+  - job_name: "prometheus-srv"
     static_configs:
       - targets: ["172.16.1.20:9090"]
         labels:
@@ -210,6 +216,57 @@ ESC SHIFT : x <Enter>
 #opções do comando promtool: check config (Check if the config files are valid or not) 
 #mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
 sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
+```
+```bash
+#editando arquivo de configuração do Web Server do Prometheus no Ubuntu Server
+sudo vim /etc/prometheus/web-config.yml
+```
+```bash
+#habilitando o número de linhas do arquivo web-config.yml
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#descomentar e configurar a senha do usuário Admin do Prometheus na linha: 31
+# Para gerar a senha do usuário Admin via Hash Bcrypt usar o htpasswd
+# Instalando o htpasswd no Ubuntu Server: sudo apt install apache2-utils
+# Gerar a senha com o comando: htpasswd -nBC 12 admin
+basic_auth_users:
+  admin: COLAR_SENHA_GERADA_
+```
+```bash
+#testando o arquivo de configuração do Prometheus no Ubuntu Server
+#opção do comando sudo: -u (Run the command as a user other than the default target user)
+#opções do comando promtool: check web-config (Check if the config files are valid or not) 
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
+sudo -u prometheus promtool check web-config /etc/prometheus/web-config.yml
+```
+```bash
+#editando arquivo de serviço do Prometheus no Ubuntu Server
+sudo vim /etc/systemd/system/prometheus.service
+```
+```bash
+#habilitando o número de linhas do arquivo prometheus.service
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#bloco de configuração do inicialização do Prometheus a partir da linha: 11
+ExecStart=/usr/local/bin/prometheus \
+    --config.file=/etc/prometheus/prometheus.yml \
+    --storage.tsdb.path=/var/lib/prometheus/ \
+    --storage.tsdb.retention.time=90d \
+    --storage.tsdb.retention.size=20GB \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.config.file=/etc/prometheus/web-config.yml \
+    --web.listen-address=0.0.0.0:9090
 ```
 
 ## 10_ Habilitando o Serviço do Prometheus no Ubuntu Server 
