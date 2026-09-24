@@ -17,7 +17,6 @@
 
 ---
 
-> <br>
 > **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE ATUALIZAÇÃO DO UBUNTU SERVER 26.04 A SEGUINTE FRASE: *Atualização do Ubuntu Server 26.04.x LTS On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*
 >
 > COMPARTILHAR O SELO DO DESAFIO NAS SUAS REDES SOCIAIS DO LINKEDIN: `@Robson Vaamonde` E NO INSTAGRAM: `@procedimentoem` MARCANDO COM AS HASHTAGS ABAIXO E COPIANDO O CONTEÚDO ESTUDADO DESSA INSTALAÇÃO: 
