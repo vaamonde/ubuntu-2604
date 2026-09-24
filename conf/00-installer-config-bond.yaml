@@ -17,9 +17,9 @@
 # por exemplo, muito cuidado com o uso de espaços e tabulação e principalmente sua Indentação.
 #
 # OBSERVAÇÃO IMPORTANTE: no Oracle VirtualBOX, o modo Bridge NÃO possui um Switch Físico realizando
-# a negociação do protocolo LACP (802.3ad) entre as placas de rede, por isso o modo de Bonding
-# recomendado para Laboratório e Testes e o: active-backup (mode 1), que NÃO depende de nenhuma
-# negociação externa com o Switch/Rede.
+# a negociação do protocolo LACP (802.3ad - Link Aggregation Control Protocol) entre as placas de 
+# rede, por isso o modo de Bonding recomendado para Laboratório e Testes e o: active-backup (mode 1), 
+# que NÃO depende de nenhuma negociação externa com o Switch/Rede.
 #
 # Bloco inicial das configurações da Rede no Netplan (BLOCO COM BONDING PARA O VIRTUALBOX)
 network:

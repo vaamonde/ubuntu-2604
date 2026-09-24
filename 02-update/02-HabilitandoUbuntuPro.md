@@ -176,20 +176,20 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 ```bash
 #Criando a sua conta pessoal ou empresarial no Ubuntu One
 01) Clique em: I don’t have an Ubuntu One account
-    Preencha os campos:
-      Please type your email: (DIGITE SEU EMAIL)
-      Full name: (DIGITE SEU NOME COMPLETO)
-      Username: (DIGITE O NOME DO SEU USUÁRIO)
-      Choose password: (DIGITE SUA SENHA)
-      Re-type password: (CONFIRME SUA SENHA)
-      Marque a opção: (ON) I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
+      Preencha os campos:
+        Please type your email: (DIGITE SEU EMAIL)
+        Full name: (DIGITE SEU NOME COMPLETO)
+        Username: (DIGITE O NOME DO SEU USUÁRIO)
+        Choose password: (DIGITE SUA SENHA)
+        Re-type password: (CONFIRME SUA SENHA)
+        Marque a opção: (ON) I have read and accept the Ubuntu One terms of service, data privacy policy and Canonical SSO privacy notice.
       Clique em: <Create account>
 ```
 ```bash
 #Finalizar o cadastro ativando a sua conta no link enviado por email
 02) Finalize os procedimentos acessando seu email para ativar a sua conta no Ubuntu One.
-    Are you sure you want to confirm and validate this email address?
-<Sim, tenho certeza>
+      Are you sure you want to confirm and validate this email address?
+    <Sim, tenho certeza>
 ```
 
 ## 04_ Criando uma Assinatura do Ubuntu Pro Free para uso Pessoal (Suporte para 5 Servidores)
@@ -199,18 +199,18 @@ Link para o cadastro oficial: Acesse o site: https://login.ubuntu.com/
 ```bash
 #Acessando e se autenticando no site do Ubuntu Pro Dashboard
 01) Faça a autenticação com a sua conta criada no Ubuntu One;
-    Personal Data Request: <Yes, log me in>
+      Personal Data Request: <Yes, log me in>
 ```
 ```bash
 #Copiando o Token de ativação do Ubuntu Pro
 02) Será mostrado no campo Free Personal Token o seu token;
-    Copiar o seu Token no campo: Token. ou
-    Copiar o comando com o Token na linha: Command to attach a machine: 
+      Copiar o seu Token no campo: Token. ou
+      Copiar o comando com o Token na linha: Command to attach a machine: 
 ```
 ```bash
 #Verificando as licenças atividades do Ubuntu Pro
 03) No lado esquerdo em: Free Personal Token é mostrado as colunas:
-    Machines (Licenças Disponíveis), Created (Data de Criação) e Expires (Data de Expiração)
+      Machines (Licenças Disponíveis), Created (Data de Criação) e Expires (Data de Expiração)
 ```
 
 ## 05_ Verificando a versão do Ubuntu Advantage Tools (Ubuntu Pro) no Ubuntu Server
@@ -259,9 +259,9 @@ sudo pro status --all
 | 🔒 | **cis** | Ferramentas de auditoria e conformidade de segurança baseadas nos benchmarks do **Center for Internet Security (CIS)**. |
 | ✅ | **esm-apps** | **Expanded Security Maintenance** para aplicações do repositório **Universe**, fornecendo atualizações de segurança estendidas. |
 | ✅ | **esm-infra** | **Expanded Security Maintenance** para a infraestrutura do sistema operacional, incluindo pacotes essenciais do Ubuntu. |
-| 🔐 | **fips** | Pacotes criptográficos certificados pelo padrão **FIPS (Federal Information Processing Standards)** do NIST. |
-| 🧪 | **fips-preview** | Versão de avaliação dos pacotes criptográficos **FIPS** ainda em processo de certificação pelo NIST. |
-| 🔑 | **fips-updates** | Pacotes criptográficos compatíveis com **FIPS**, incluindo atualizações estáveis de segurança. |
+| 🔐 | **fips** | Pacotes criptográficos certificados pelo padrão **FIPS (Federal Information Processing Standards)** do **NIST (National Institute of Standards and Technology)**. |
+| 🧪 | **fips-preview** | Versão de avaliação dos pacotes criptográficos **FIPS (Federal Information Processing Standards)** ainda em processo de certificação pelo **NIST (National Institute of Standards and Technology)**. |
+| 🔑 | **fips-updates** | Pacotes criptográficos compatíveis com **FIPS (Federal Information Processing Standards)**, incluindo atualizações estáveis de segurança. |
 | 🖥️ | **landscape** | Plataforma da Canonical para gerenciamento, monitoramento e administração centralizada de servidores Ubuntu. |
 | ⚡ | **livepatch** | Serviço **Canonical Livepatch**, que aplica correções de segurança ao kernel sem necessidade de reinicialização. |
 | ⏱️ | **realtime-kernel** | Kernel Ubuntu com patches **PREEMPT_RT**, destinado a aplicações de tempo real (Real-Time). |

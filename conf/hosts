@@ -15,7 +15,7 @@
 127.0.0.1     localhost.pti.intra     localhost
 127.0.1.1     srvvaamonde.pti.intra   srvvaamonde
 172.16.1.20   srvvaamonde.pti.intra   srvvaamonde
-
+#
 # Configuração dos Hosts IPv6
 # Endereço IPv6 | Hostname FQDN | CNAME
 ::1                   ip6-localhost           ip6-loopback

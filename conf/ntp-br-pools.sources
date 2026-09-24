@@ -12,7 +12,50 @@
 # Testado e homologado para a versão do Chrony v4.8.x
 #
 # Bloco inicial das configurações dos Servidores de NTP do NTP.br
-# Servidores de NTP | Sincronismo | Fonte de Hora | Habilitar NTS | Porta do NTS | Preferencia
+#
+# OBSERVAÇÃO IMPORTANTE: o NTP.br (mantido pelo NIC.br em parceria com o Observatório Nacional)
+# disponibiliza servidores Stratum 1 com suporte ao NTS (Network Time Security - RFC 8915), que 
+# autentica a origem do horário e criptografa a negociação via TLS na porta TCP/4460, protegendo
+# o sincronismo contra ataques de Spoofing e Man-in-the-Middle.
+#
+###############################################################################
+# Sintaxe da diretiva: server
+###############################################################################
+# server <endereço> iburst maxsources <N> nts ntsport <porta> prefer
+#
+# Campo         | Descrição
+# --------------|----------------------------------------------------------------
+# server        | Declara uma Fonte de Hora (Time Source) do tipo servidor NTP
+#               | unicast, ao contrário de "pool" (que resolve múltiplos IPs).
+# <endereço>    | FQDN do servidor Stratum 1 do NTP.br utilizado como referência.
+# iburst        | Acelera a sincronização inicial, enviando uma rajada de pacotes
+#               | (em vez de 1) assim que o servidor é contatado pela primeira vez
+#               | ou quando ficar inacessível, reduzindo o tempo de convergência.
+# maxsources 1  | Limita a 1 (um) o número de endereços IP resolvidos e utilizados
+#               | a partir deste nome de servidor, evitando que o Chrony trate
+#               | múltiplos IPs de um mesmo FQDN como fontes independentes.
+# nts           | Habilita o NTS (Network Time Security) para esta fonte, exigindo
+#               | autenticação criptográfica da resposta NTP recebida.
+# ntsport 4460  | Define a porta TCP utilizada na etapa de negociação NTS-KE
+#               | (NTS Key Establishment/TLS Handshake). Porta oficial do NTP.br.
+# prefer        | Marca esta fonte como preferencial: em caso de empate na seleção
+#               | entre fontes com qualidade equivalente, o Chrony prioriza esta.
+###############################################################################
+#
+# Servidores de NTP | Sincronismo | Fonte de Hora | Habilitar NTS | Porta do NTS | Preferência
 server a.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 server c.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
 server e.st1.ntp.br iburst maxsources 1 nts ntsport 4460 prefer
+#
+###############################################################################
+# Observações sobre a escolha dos servidores (a, c, e)
+###############################################################################
+# O NTP.br disponibiliza vários servidores Stratum 1 (a.st1, b.st1, c.st1...),
+# distribuídos em diferentes localizações/data centers. A escolha de servidores
+# não sequenciais (a, c, e em vez de a, b, c) reduz a chance de indisponibilidade
+# simultânea por questões de proximidade geográfica ou rota de rede, seguindo a
+# recomendação do próprio NTP.br de intercalar servidores para maior redundância.
+#
+# minsources 2 (definido no chrony.conf) exige que ao menos 2 dessas 3 fontes
+# estejam disponíveis e sincronizadas para que o Chrony considere o horário
+# confiável, evitando ajustes baseados em uma única fonte isolada.
