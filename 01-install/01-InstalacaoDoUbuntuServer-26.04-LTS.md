@@ -66,54 +66,54 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```bash
 #Criando a Máquina Virtual do Ubuntu Server 26.04.x LTS no Oracle VirtualBOX
 01) Ferramentas;
-    <Novo>
+      <Novo>
 ```
 ```bash
 #Personalizando a criação da Máquina Virtual do Ubuntu Server
 02) Nome e Sistema Operacional:
-    Nome: UbuntuOnPremises (altere conforme a sua necessidade)
-    Pasta (F): #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
-    Imagem ISO: <não selecionado>
-    Edição: (sem informação)
-    Tipo: Linux
-    Subtype: Ubuntu
-    Versão: Ubuntu (64-bit)
-    (OFF) Pular Instalação Desassistida (não selecionado)
+      Nome: UbuntuOnPremises (altere conforme a sua necessidade)
+      Pasta (F): #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
+      Imagem ISO: <não selecionado>
+      Edição: (sem informação)
+      Tipo: Linux
+      Subtype: Ubuntu
+      Versão: Ubuntu (64-bit)
+      (OFF) Pular Instalação Desassistida (não selecionado)
 ```
 ```bash
 #Desabilitando o recursos de Instalação Desassistida (Automática)
 03) Instalação Desassistida:
-    Sem configuração para esse cenário
+      Sem configuração para esse cenário
 ```
 ```bash
-#Configuração da Memória RAM Virtual (vRAM) e dos Processadores Virtual (vCPU)
+#Configuração da Memória RAM Virtual (vRAM) e dos Processadores Virtuais (vCPU)
 04) Hardware
-    Memória Base: 4096 MB (altere conforme a sua necessidade)
-    Processadores: 2 (vCPUs) (altere conforme sua necessidade)
-    (OFF) Habilitar EFI (SOs especiais apenas)
+      Memória Base: 4096 MB (altere conforme a sua necessidade)
+      Processadores: 2 (vCPUs) (altere conforme sua necessidade)
+      (OFF) Habilitar EFI (SOs especiais apenas)
 ```
 ```bash
 #Criando o Hard Disk Virtual (vHD) para a instalação do Ubuntu Server
 05) Disco Rígido
-    (ON) Criar um novo disco rígido virtual agora
-      Localização e Tamanho do Arquivo de Disco Virtual: 
-        #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
-        Tamanho: 100,00 GB (altere conforme a sua necessidade)
-      Tipo e Variante de Arquivo de Disco Virtual
-        VDI (VirtualBox Disk Image)
-        (OFF) Pré-alocar Tamanho Total (não selecionado)
-        (OFF) Split into 2GB Parts (Nào selecionado)
-      (OFF) Utilizar um disco rígido virtual existente
-      (OFF) Não acrescentar um Disco Rígido Virtual
-    <Finalizar>
-```
+      (ON) Criar um novo disco rígido virtual agora
+        Localização e Tamanho do Arquivo de Disco Virtual: 
+          #PATH_PADRÃO\UbuntuOnPremises (altere conforme a sua necessidade)
+          Tamanho: 100,00 GB (altere conforme a sua necessidade)
+        Tipo e Variante de Arquivo de Disco Virtual
+          VDI (VirtualBox Disk Image)
+            (OFF) Pré-alocar Tamanho Total (não selecionado)
+            (OFF) Split into 2GB Parts (não selecionado)
+        (OFF) Utilizar um disco rígido virtual existente
+        (OFF) Não acrescentar um Disco Rígido Virtual
+      <Finalizar>
+  ```
 
 ## 03_ Configurações da Máquina Virtual do Ubuntu Server no Oracle VirtualBOX
 ```bash
 #Configurando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises
-    <Configurações>
-      Expert
+      <Configurações>
+        Expert
 ```
 ```bash
 #Configurando o Processador, Memória e Recursos de Virtualização
@@ -161,7 +161,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```bash
 #Iniciando a Máquina Virtual do Ubuntu Server
 01) Selecionar a Máquina Virtual: UbuntuOnPremises: 
-    <Iniciar>
+      <Iniciar>
 ```
 ```bash
 #Localizando a ISO da Instalação do Ubuntu Server
@@ -182,11 +182,11 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```bash
 #Selecione *Try or Install Ubuntu Server para iniciar o processo de instalação
 01) *Try or Install Ubuntu Server
-    <Enter>
+      <Enter>
 ```
 ```bash
 #Recomendado utilizar sempre a opção em Inglês para instalar o Ubuntu Server
-02) Willkommen! Bienvenue! Welcome! WElkom! 
+02) Willkommen! Bienvenue! Welcome! Welkom! 
       Use UP, DOWN and ENTER keys to select your language
         English 
     <Enter>
@@ -194,7 +194,7 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 ```bash
 #Configuração do Teclado e Acentuação do Terminal do Ubuntu Server
 03) Keyboard configuration
-      Please select your keyboard layout below, or select "Identify keyboard" to detect your layout automatically.
+      Please select your keyboard layout below, or select 'Identify keyboard' to detect your layout automatically.
         Layout:  [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
         Variant: [English (US)] ou [Portuguese (Brazil)] (altere conforme a sua necessidade)
                  [English (US) - English (US, intl., with dead keys)] (suporte americano com acentuação)
@@ -391,8 +391,8 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
     seu_usuário@srvseunome:~$ (primeiro acesso ao Terminal do Ubuntu Server)
 ```
 ```bash
-#Verificando o endereço IPv4 obtido via DHCP do Ubuntu Server
-02) Verificando o endereço IPv4 do Ubuntu Server
+#Verificando os endereços IPv4/IPv6 obtidos via DHCP do Ubuntu Server
+02) Verificando o endereço IPv4/IPv6 do Ubuntu Server
     seu_usuário@srvseunome:~$ sudo ip address show
 ```
 
@@ -419,11 +419,11 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>
 ```
 ```bash
-#acesso ao terminal remotamente feito com sucesso, etapa concluída
+#acesso ao terminal remoto feito com sucesso, etapa concluída
 seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
 ```bash
-#verificando os usuários logados no TTY e PTS do Ubuntu Server
+#verificando os usuários logados no TTY (Físico) e PTS (Remoto) do Ubuntu Server
 w
 ```
 
