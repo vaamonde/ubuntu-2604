@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `25/09/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -112,6 +112,15 @@ sudo apt update
 sudo apt list --upgradable | cat -n
 ```
 
+Entendendo a saída do comando: __`apt list --upgradable`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🔢 **Linha 1** | `Listando...` | Mensagem informativa indicando que o `apt` está iniciando a listagem dos pacotes que possuem versões disponíveis para atualização. |
+| 📦 **Pacote** | `libpcap0.8t64` | Biblioteca utilizada para **captura e análise de tráfego de rede**. Possui atualização disponível nos repositórios `resolute-updates` e `resolute-security`. |
+| 🔄 **Versão atual** | `1.10.6-1ubuntu1` | Versão atualmente instalada do pacote `libpcap0.8t64`. |
+| ⬆️ **Nova versão** | `1.10.6-1ubuntu1.1` | Versão disponível para atualização. |
+---
+
 ## 05_ Atualizando todos os software (Pacotes) no Ubuntu Server
 ```bash
 #Upgrade é utilizado para instalar atualizações disponíveis de todos os pacotes atualmente 
@@ -194,6 +203,19 @@ sudo apt clean
 sudo apt list --installed | cat -n
 ```
 
+Entendendo a saída do comando: __`apt list --installed`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🔢 **Linha 1** | `Listando...` | Mensagem informativa indicando que o `apt` iniciou a listagem dos pacotes instalados no sistema. |
+| 📦 **Pacote** | `3cpio` | Pacote instalado no sistema, identificado como `3cpio`.  |
+| 🏷️ **Repositório** | `resolute` | Repositório/distribuição Ubuntu **26.04 (Resolute)** associado ao pacote. |
+| 📌 **Estado** | `now` | Indica que o pacote está atualmente instalado no sistema. |
+| 🔄 **Versão instalada** | `0.14.0-1ubuntu1` | Versão atualmente instalada do pacote `3cpio`. |
+| 🖥️ **Arquitetura** | `amd64` | Pacote compilado para a arquitetura **64 bits x86 (AMD64)**. |
+| ⚙️ **Origem da instalação** | `automático` | Indica que o pacote foi instalado **automaticamente como dependência de outro pacote**, e não necessariamente solicitado diretamente pelo administrador. |
+| ✅ **Status** | `instalado, automático` | Confirma que o pacote está instalado e foi marcado pelo `apt` como **instalação automática**. |
+---
+
 ## 12_ Verificando os Logs de atualização de software no Ubuntu Server
 ```bash
 #Verificando o Log de instalação e atualização de pacotes no Ubuntu Server
@@ -201,12 +223,39 @@ sudo apt list --installed | cat -n
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/history.log
 ```
+
+Entendendo a saída do arquivo: __`/var/log/apt/history.log`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🕐 **Data/Hora de início** | `2026-08-26 04:45:22` | Data e horário em que a operação do **APT** foi iniciada. |
+| 💻 **Comando executado** | `apt-get install --reinstall apt` | Comando utilizado para **reinstalar o pacote `apt`**, mantendo a operação registrada no histórico. |
+| 📦 **Operação** | `Reinstall` | Indica que não foi uma instalação inicial, mas uma **reinstalação** de um pacote já instalado. |
+| 📦 **Pacote** | `apt:amd64` | Pacote **APT** para a arquitetura `amd64`. |
+| 🔄 **Versão** | `3.2.0` | Versão do pacote `apt` envolvida na operação registrada. |
+| 🕐 **Data/Hora de término** | `2026-08-26 04:45:22` | Data e horário em que a operação foi finalizada. |
+| ⏱️ **Duração aproximada** | `0 segundo` | Início e término ocorreram no mesmo segundo, conforme o registro apresentado. |
+---
+
 ```bash
 #Verificando o Log de finalização da atualização de pacotes no Ubuntu Server
 #opção do comando cat: -n (number line)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
 sudo cat -n /var/log/apt/term.log
 ```
+
+Entendendo a saída do arquivo: __`/var/log/apt/term.log`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🕐 **Início do log** | `2026-09-15 19:42:24` | Data e horário em que o registro da operação do APT foi iniciado. |
+| 🗄️ **Banco de dados de pacotes** | `139547 arquivos e diretórios atualmente instalados` | Quantidade informada pelo APT ao consultar o banco de dados de pacotes durante a operação. |
+| 📦 **Pacote** | `libaudit-common` | Pacote relacionado aos componentes comuns da biblioteca **libaudit**, utilizada pelo sistema de auditoria do Linux. |
+| 🔄 **Versão anterior** | `1:4.1.2-1build1` | Versão do pacote que estava instalada antes da operação. |
+| ⬆️ **Nova versão** | `1:4.1.2-1ubuntu0.1`  | Versão que está sendo instalada/substituída durante a operação registrada. |
+| 📥 **Operação** | `Unpacking` | O APT está **descompactando e substituindo** a versão anterior do pacote pela nova versão.  |
+| ⚙️ **Configuração** | `Setting up` | O APT está realizando a **configuração da nova versão** do pacote após a instalação dos arquivos. |
+| 📄 **Arquivo `.deb`** | `libaudit-common_1%3a4.1.2-1ubuntu0.1_all.deb` | Pacote Debian utilizado na operação. O `%3a` representa o caractere `:` utilizado na versão Debian `1:4.1.2-1ubuntu0.1`. |
+---
+
 ```bash
 #Verificando a necessidade de reinicialização do Ubuntu Server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/needs-restarting.1.html

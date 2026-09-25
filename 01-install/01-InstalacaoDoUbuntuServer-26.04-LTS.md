@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `25/09/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -62,6 +62,17 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 03) Atualização do VirtualBOX no Linux Mint: https://www.youtube.com/watch?v=DU47PLFSxpA<br>
 
 > **OBSERVAÇÃO:** Utilizar o Virtualizador Oracle VirtualBOX versão 7.x ou superior.
+
+| **🧩 Recurso** | **📚 Cenário Acadêmico / Pequeno Porte** | **📈 Projeção para Médio Porte** | **🎯 Observação** |
+| :------------- | :--------------------------------------: | :------------------------------: | :---------------- |
+| 🧠 **CPU** | `2 vCPU` | `4–8 vCPU` | Aumentar conforme serviços, usuários e carga simultânea. |
+| 💾 **RAM** | `4 GB` | `8–16 GB` | Serviços como banco de dados, monitoramento e aplicações podem exigir mais memória. |
+| 💽 **Disco** | `40–60 GB` | `80–160 GB+` | Preferencialmente **SSD/NVMe**; prever expansão para logs, atualizações e dados. |
+| 🌐 **Rede** | `1 vNIC` | `2+ vNICs` | Uma interface atende cenários básicos; múltiplas interfaces permitem segmentação, redundância e laboratórios de **Bonding**. |
+| 🖥️ **Firmware/Virtualização** | `BIOS/UEFI` + <br> `VT-x/AMD-V` | `UEFI + VT-x/AMD-V` | Ativar suporte à virtualização por hardware no host. |
+| 🔄 **Expansão de armazenamento** | `1 disco virtual` | `2+ discos virtuais` | Permite trabalhar com **RAID, LVM, `/dados`, `/backup` e snapshots** conforme o crescimento. |
+| 📊 **Recursos do host** | `Reserva para a VM` | `Reserva dedicada/ajustável` | O host deve possuir recursos suficientes para a VM **sem comprometer as demais máquinas virtuais**. |
+---
 
 ```bash
 #Criando a Máquina Virtual do Ubuntu Server 26.04.x LTS no Oracle VirtualBOX
