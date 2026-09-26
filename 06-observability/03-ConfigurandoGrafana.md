@@ -282,7 +282,7 @@ Welcome to Grafana
   Password: admin 
 <Log In>
 
-#atualização da senha do usuário Admin do Grafana Server
+#atualizando a senha do usuário Admin do Grafana Server
 Update your password
   New password: SUA_SENHA_SEGURA
   Confirm new password: SUA_SENHA_SEGURA 
