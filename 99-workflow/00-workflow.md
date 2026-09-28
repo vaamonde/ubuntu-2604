@@ -12,19 +12,13 @@
 10. Configuração do Particionamento                       OK
 11. Configuração do Bonding                               OK
 12. Configuração do Backup                                OK
-    https://github.com/marcpope/borgbackupserver
-13. Configuração da Observabilidade
+13. Configuração da Observabilidade                       OK
 ------------------------------------------------------------
 
 14. Configuração do Firewall UFW                          OK
-Portas UDP: 53 (DNS), 323 (Chrony), 123 (NTP), 
-Portas TCP: 22 (OpenSSH), 4460 (NTS), 80/443 (Apache2), 3306 (MySQL)
 ------------------------------------------------------------
 
 15. Hardening OpenSSH + Certificado + 2FAS
-    https://github.com/huashengdun/webssh
-    https://docs.termius.com/getting-started/download-termius
-    https://voltius.app/
 ------------------------------------------------------------
 
 16. Hardening TCP Wrappers
@@ -42,6 +36,9 @@ Portas TCP: 22 (OpenSSH), 4460 (NTS), 80/443 (Apache2), 3306 (MySQL)
 28. Hardening Snap
 ------------------------------------------------------------
 
+https://github.com/huashengdun/webssh
+https://docs.termius.com/getting-started/download-termius
+https://voltius.app/
 https://vestacp.com/install
 https://www.ispconfig.org/
 https://www.aapanel.com/

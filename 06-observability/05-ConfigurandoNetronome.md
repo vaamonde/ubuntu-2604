@@ -78,7 +78,8 @@ sudo apt install iperf3 traceroute mtr-tiny vnstat apache2 php librespeed-cli
 #opções do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 wget -v -O netronome.deb https://github.com/autobrr/netronome/releases/download/v0.14.0/netronome_0.14.0_linux_amd64.deb
-
+```
+```bash
 #instalando o Netronome Server no Ubuntu Server
 #opção do comando dpkg: -i (The package is selected for installation)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/dpkg.1.html

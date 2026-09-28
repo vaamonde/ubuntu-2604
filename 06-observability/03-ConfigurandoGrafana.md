@@ -223,19 +223,19 @@ sudo systemctl restart grafana-server
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
 ```
 ```bash
-#verificando o status do serviço do Prometheus no Ubuntu Server
+#verificando o status do serviço do Grafana Server no Ubuntu Server
 sudo systemctl status grafana-server
 ```
 ```bash
-#reinicializando o serviço do Prometheus no Ubuntu Server
+#reinicializando o serviço do Grafana Server no Ubuntu Server
 sudo systemctl restart grafana-server
 ```
 ```bash
-#parando o serviço do Prometheus no Ubuntu Server
+#parando o serviço do Grafana Server no Ubuntu Server
 sudo systemctl stop grafana-server
 ```
 ```bash
-#iniciando o serviço do Prometheus no Ubuntu Server
+#iniciando o serviço do Grafana Server no Ubuntu Server
 sudo systemctl start grafana-server
 ```
 ```bash
