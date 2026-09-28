@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `28/09/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -322,6 +322,14 @@ Entendendo a saída do comando: __`lvdisplay /dev/vg_dados/lv_dados`__<br>
 ---
 
 ## 07_ Formatando e Montando o Logical Volume no Ubuntu Server
+
+| Filesystem | Desempenho | Estabilidade | Complexidade | RAID-1 + LVM | Indicação |
+| ---------- | ---------- | ------------ | ------------ | ------------ | --------- |
+| **EXT4** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ Excelente | **🏆 Recomendado** |
+| **XFS** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✅ Excelente | Servidores com arquivos grandes |
+| **BTRFS** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⚠️ Menos indicado | Recursos avançados de snapshots |
+---
+
 ```bash
 #formatando o Logical Volume com o sistema de arquivos ext4 no Ubuntu Server
 #opção do comando mkfs.ext4: (cria um sistema de arquivos ext4 no dispositivo informado)
