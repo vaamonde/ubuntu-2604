@@ -29,7 +29,7 @@ ListenAddress ENDEREÇO_IPV6_SERVIDOR
 #
 # Especifica qual família de endereços IP o OpenSSH deve suportar.
 # Os argumentos válidos são: any (IPv4 e IPV6), inet (somente IPv4), inet6 (somente IPv6)
-AddressFamily inet
+AddressFamily any
 #
 # Métodos de Autenticação do OpenSSH, utilizar chaves públicas e autenticação por senha
 # Por padrão o Servidor de OpenSSH não trabalhar com Chaves Pública para autenticação, 
