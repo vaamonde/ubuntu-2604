@@ -31,11 +31,11 @@ ListenAddress ENDEREÇO_IPV6_SERVIDOR
 # Os argumentos válidos são: any (IPv4 e IPV6), inet (somente IPv4), inet6 (somente IPv6)
 AddressFamily any
 #
-# Métodos de Autenticação do OpenSSH, utilizar chaves públicas ou autenticação por senha
+# Métodos de Autenticação do OpenSSH, utilizar chaves públicas e autenticação por senha
 # Por padrão o Servidor de OpenSSH não trabalhar com Chaves Pública para autenticação, 
 # utilizando o arquivo /etc/passwd para se autenticar no servidor, por motivos de segurança, 
 # é recomendado utilizar chaves públicas e senhas para se autenticar no servidor.
-AuthenticationMethods publickey password
+# AuthenticationMethods publickey password
 #
 # Autenticação utilizando chaves públicas geradas no cliente com o comando: ssh-keygen 
 # e exportada para o servidor com o comando: ssh-copy-id, chaves localizadas no diretório: 
@@ -109,8 +109,9 @@ LoginGraceTime 60
 ClientAliveInterval 300
 ClientAliveCountMax 2
 #
-# Tentativa máxima de conexões simultâneas no Servidor de OpenSSH
-MaxAuthTries 3
+# Tentativa máxima de conexões simultâneas no Servidor de OpenSSH enviando chaves
+# públicas e após a tentativa de senha
+MaxAuthTries 10
 #
 # Número de usuários ou sessões que podem se conectar remotamente no Servidor de OpenSSH
 MaxSessions 2
