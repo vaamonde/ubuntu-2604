@@ -10,7 +10,7 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
+**Data de atualização:** `29/09/2026`<br>
 **Versão:** `0.07`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
@@ -160,6 +160,17 @@ sudo apt upgrade
 #mais informações acesse a documentação oficial em: https://curl.se/docs/manpage.html
 curl -sO https://raw.githubusercontent.com/marcpope/borgbackupserver/main/bin/bbs-install
 ```
+
+Entendendo o comando: __`bbs-install --hostname nome_do_seu_servidor.seu.domínio --no-ssl`__<br>
+| **Etapa Interna do Instalador** | **Descrição** |
+| :------------------------------- | :------------ |
+| 📦 **Instalação de Pacotes** | Instala automaticamente PHP, MySQL, Apache, Cron e o próprio BorgBackup via repositórios do Ubuntu. |
+| 🗄️ **Configuração do Banco de Dados** | Cria o banco de dados MySQL, o usuário de aplicação e as tabelas iniciais utilizadas pelo Painel do BBS. |
+| 🌐 **Configuração do Apache + SSL** | Cria o VirtualHost do Apache para o Hostname informado e emite um certificado SSL para o Painel Web. |
+| ⏱️ **Configuração do Cron** | Registra a tarefa agendada responsável por processar a fila de Jobs (Backups, Restores, Prunes) do BBS. |
+| ✅ **Finalização** | Exibe no terminal a URL de acesso ao Painel Web para a conclusão do Assistente de Configuração Inicial. |
+---
+
 ```bash
 #executando o instalador do BBS informando o Hostname/FQDN configurado no procedimento de Settings no Ubuntu Server
 #opções do script bbs-install: --hostname (Sets the server's Fully Qualified Domain Name (FQDN) 
@@ -174,16 +185,32 @@ sudo bash bbs-install --hostname nome_do_seu_servidor.seu.domínio --no-ssl
 MySQL setup: BBS needs a database.
   Auto-generate a 'bbs' database user with random password? [Y/n] y <Enter>
 ```
+```bash
+═══════════════════════════════════════════════════
+  BBS Installation Complete!
+═══════════════════════════════════════════════════
 
-Entendendo o comando: __`bbs-install --hostname nome_do_seu_servidor.seu.domínio --no-ssl`__<br>
-| **Etapa Interna do Instalador** | **Descrição** |
-| :------------------------------- | :------------ |
-| 📦 **Instalação de Pacotes** | Instala automaticamente PHP, MySQL, Apache, Cron e o próprio BorgBackup via repositórios do Ubuntu. |
-| 🗄️ **Configuração do Banco de Dados** | Cria o banco de dados MySQL, o usuário de aplicação e as tabelas iniciais utilizadas pelo Painel do BBS. |
-| 🌐 **Configuração do Apache + SSL** | Cria o VirtualHost do Apache para o Hostname informado e emite um certificado SSL para o Painel Web. |
-| ⏱️ **Configuração do Cron** | Registra a tarefa agendada responsável por processar a fila de Jobs (Backups, Restores, Prunes) do BBS. |
-| ✅ **Finalização** | Exibe no terminal a URL de acesso ao Painel Web para a conclusão do Assistente de Configuração Inicial. |
----
+  Open the setup wizard to finish configuration:
+  http://nome_do_seu_servidor.seu.domínio
+
+  The wizard will guide you through:
+  • Database connection (credentials below)
+  • Admin account creation
+  • Storage configuration
+
+  Database Credentials (save these):
+  ─────────────────────────────────
+  Host:     localhost
+  Database: bbs
+  User:     bbs
+  Password: senha_gerada_aleatoriamente
+
+  Useful commands:
+  • Update:    sudo /var/www/bbs/bin/bbs-update
+  • Logs:      tail -f /var/log/bbs-scheduler.log
+
+═══════════════════════════════════════════════════
+```
 
 > **OBSERVAÇÃO IMPORTANTE:** Após o término da instalação do BBS anotar as informações no final da tela de: **Database Credentials (save these):** - `Host`, `Database`, `User` e  principalmente `Password`que serão utilizados na etapa de configuração via **WebGUI do BBS**.
 
@@ -234,69 +261,69 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
 ```bash
 #Acessando o navegador para fazer as primeiras configurações do BBS
 01) Abrir o navegador e acessar o Painel Web do BBS
-    URL: https://srvvaamonde.pti.intra (ou https://SEU_ENDEREÇO_IPv4 ou https://SEU_ENDEREÇO_IPv6)
-    #OBSERVAÇÃO: como o certificado SSL é autoassinado ou emitido localmente, o navegador
-    #pode exibir um aviso de segurança, sendo necessário aceitar/prosseguir manualmente.
+      URL: https://srvvaamonde.pti.intra (ou https://SEU_ENDEREÇO_IPv4 ou https://SEU_ENDEREÇO_IPv6)
+      #OBSERVAÇÃO: como o certificado SSL é autoassinado ou emitido localmente, o navegador
+      #pode exibir um aviso de segurança, sendo necessário aceitar/prosseguir manualmente.
 ```
 ```bash
 #Tela de Bem-Vindo e verificação do sistema BBS
 02) Step 1 of 5 - Welcome
-  Welcome
-    System Requirements
-    PHP >= 8.1                  8.5.4
-    PDO MySQL extension         Installed
-    Mbstring extensions         Installed
-    OpenSSL extensions          Installed
-    Config directory writable   Writable
-<Begin Setup>
+      Welcome
+        System Requirements
+        PHP >= 8.1                  8.5.4
+        PDO MySQL extension         Installed
+        Mbstring extensions         Installed
+        OpenSSL extensions          Installed
+        Config directory writable   Writable
+      <Begin Setup>
 ```
 ```bash
 #Configuração do Banco de Dados do BBS
 03) Step 2 of 5 - Database
-  Database
-    Database Host: localhost
-    Database Name: bbs
-    Database User: bbs
-    Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFADA DO SCRIPT DE INSTALAÇÃO>
-<Test Connections & Continue>
+      Database
+        Database Host: localhost
+        Database Name: bbs
+        Database User: bbs
+        Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFADA DO SCRIPT DE INSTALAÇÃO>
+      <Test Connections & Continue>
 ```
 ```bash
 #Configuração do Usuários Administrador do BBS
 04) Step 3 of 5 - Admin Account
-  Admin Account
-    Email: seu_usuário@seu_domínio.local
-    Username: seu_usuário
-    Password: sua_senha
-    Confirm Password: repetir_sua_senha
-<Continue>
+      Admin Account
+        Email: seu_usuário@seu_domínio.local
+        Username: seu_usuário
+        Password: sua_senha
+        Confirm Password: repetir_sua_senha
+      <Continue>
 ```
 ```bash
 #Configuração do Armazenamento do BBS
 05) Step 4 of 5 - Storage & Server
-  Storage & Server
-    Storage: Default storage: /var/bbs/home
-    Server Hostname / IP: seu_endereço_ipv4 ou nome_servidor
-    (OFF) Enable SSL (HTTPS) - (Disable)
-<Continue>
+      Storage & Server
+        Storage: Default storage: /var/bbs/home
+        Server Hostname / IP: seu_endereço_ipv4 ou nome_servidor
+        (OFF) Enable SSL (HTTPS) - (Disable)
+      <Continue>
 ```
 ```bash
 #Tela resumo da Instalação do BBS
 06) Step 5 of 5 - Install
-  Review & Install
-    Database Host: localhost
-    Database Name: bbs
-    Database User: bbs
-    Admin Username: admin
-    Admin Email: seu_usuário@seu_domínio.local
-    Storage Path: /var/bbs/home
-    Server Host: seu_endereço_ipv4 ou nome_servidor
-    SSH Helper: Installed
-<Install>
+      Review & Install
+        Database Host: localhost
+        Database Name: bbs
+        Database User: bbs
+        Admin Username: admin
+        Admin Email: seu_usuário@seu_domínio.local
+        Storage Path: /var/bbs/home
+        Server Host: seu_endereço_ipv4 ou nome_servidor
+        SSH Helper: Installed
+      <Install>
 ```
 ```bash
 #Finalização da Instalação do BBS
 07) Setup Complete
-<Go to Dashboard>
+      <Go to Dashboard>
 ```
 
 ## 06_ Instalando e Registrando o Agente Local (Linux Agent Client) no Ubuntu Server
@@ -313,20 +340,20 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
 ```bash
 #Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes) <Add Client>
-      Add New Client
-        Client Name: seu_hostname
-        Client Profile: Default - Every client starts here until it is given a profile of its own
-        Assign to User : admin
-      <Create Client>
+      Clients (Clientes) <Add Client>
+        Add New Client
+          Client Name: seu_hostname
+          Client Profile: Default - Every client starts here until it is given a profile of its own
+          Assign to User : admin
+        <Create Client>
 ```
 ```bash
 #Copiando o comando de Instalação do Agente Linux do BBS no Ubuntu Server
 #OBSERVAÇÃO IMPORTANTE: SUBSTITUIR A URL E O TOKEN PELOS VALORES GERADOS NO SEU PAINEL
 02) Nas configurações do Cliente, acessar o menu:
-    Install (Instalar)
-      Install Agent (Linux / macOS) <Copy>
-        curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
+      Install (Instalar)
+        Install Agent (Linux / macOS) <Copy>
+          curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
 ```
 ```bash
 #verificando o status do serviço do Agente do BBS no Ubuntu Server
@@ -364,107 +391,107 @@ sudp getent group www-data
 ```bash
 #Configurando o Armazenamento Local do Diretório de Backup do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Storage (Armazenamento) <Add Location>
-      Label (Rótulo): repo-dados-on-premises
-      Path (Caminho): /backup/repository/lv-dados
-      Capacity (Capacidade): auto
-      Default (Padrão): on
-<Create>
+      Storage (Armazenamento) <Add Location>
+        Label (Rótulo): repo-dados-on-premises
+        Path (Caminho): /backup/repository/lv-dados
+        Capacity (Capacidade): auto (Default)
+        Default (Padrão): on (Enable)
+      <Create>
 ```
 
 ## 08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server
 ```bash
 #Criando o Modelo de Backup do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Management (Gerenciamento)
-      Settings (Configurações)
-        Templates (Modelos)
-          Add Template (Adicionar Modelo)
-            Name (Nome): backup-dados
-            Description (Descrição): Modelo de Backup da Partição Dados
-            Directories (Diretório): /dados
-            Excludes (Exclusões): lost+found/, *.tmp, *.log
-            Borg Options (Opções do Borg)
-              (ON) Compression (Compressão)
-              (ON) Exclude caches (Excluir arquivos em cache)
-              (OFF) One file system (Um arquivo por sistema)
-              (ON) No atime (Sem tempo de acesso)
-              (OFF) Numeric IDs (Identificação numérica)
-              (OFF) Skip xattrs (Ignorar xattrs = atributos estendidos)
-              (OFF) Skip ACLs (Ignorar acls = lista de controle de acesso)
-            Compression spec (Especificar a Compressão): lz4
-            Custom options (Opções Customizadas): --compression lz4 --exclude-caches --noatime
-<Add Template>
+      Management (Gerenciamento)
+        Settings (Configurações)
+          Templates (Modelos)
+            Add Template (Adicionar Modelo)
+              Name (Nome): backup-dados
+              Description (Descrição): Modelo de Backup da Partição Dados
+              Directories (Diretório): /dados
+              Excludes (Exclusões): lost+found/, *.tmp, *.log
+              Borg Options (Opções do Borg)
+                (ON) Compression (Compressão)
+                (ON) Exclude caches (Excluir arquivos em cache)
+                (OFF) One file system (Um arquivo por sistema)
+                (ON) No atime (Sem tempo de acesso)
+                (OFF) Numeric IDs (Identificação numérica)
+                (OFF) Skip xattrs (Ignorar xattrs = atributos estendidos)
+                (OFF) Skip ACLs (Ignorar acls = lista de controle de acesso)
+              Compression spec (Especificar a Compressão): lz4
+              Custom options (Opções Customizadas): --compression lz4 --exclude-caches --noatime
+            <Add Template>
 ```
 
 ## 09_ Configurando o Repositório do BBS para a Partição de Backup no Ubuntu Server
 ```bash
 #Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes)
-      Name: srvvaamonde (Servidor Ubuntu)
+      Clients (Clientes)
+        Name: srvvaamonde (Servidor Ubuntu)
 ```
 ```bash
 #Adicionando um Novo Repositório no Cliente do BBS
 02) Repos (Repositório)
-    <Add Repository>
+      <Add Repository>
 ```
 ```bash
 #Configurando o Repositório de Backup do BBS
 03) Repositories (Repositórios)
-    Create New Repository (Criando um novo repositório)
-      Description (Descrição): backup-dados
-      Storage (Armazenamento): Local (this server)
-      Location (Localização): repo-dados-onpremises (/backup/repository/lv-dados)
-      Encryption (Criptografia): repokey-blake2 (Recommended)
-      Repo Password (Senha do Repositório): SUA_SENHA_DO_REPOSITÓRIO (COPIAR E GUARDAR)
-<Create Repo>
+      Create New Repository (Criando um novo repositório)
+        Description (Descrição): backup-dados
+        Storage (Armazenamento): Local (this server)
+        Location (Localização): repo-dados-onpremises (/backup/repository/lv-dados)
+        Encryption (Criptografia): repokey-blake2 (Recommended)
+        Repo Password (Senha do Repositório): SUA_SENHA_DO_REPOSITÓRIO (COPIAR E GUARDAR)
+      <Create Repo>
 ```
 
 ## 10_ Criando o Plano de Agendamento de Backup do BBS no Ubuntu Server
 ```bash
 #Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes)
-      Name: srvvaamonde (Servidor Ubuntu)
+      Clients (Clientes)
+        Name: srvvaamonde (Servidor Ubuntu)
 ```
 ```bash
 #Criando o Plano de Agendamento de Backup do BBS
 02) Plans (Planos)
-    <Add Backup Plan>
+      <Add Backup Plan>
 ```
 ```bash
 #Configurando o Plano de Agendamento de Backup do BBS
 02) Backup Schedules
-    Create New Backup Plan (Criando um novo plano de backup)
-      Plan Name (Nome do Plano): backup-diario-dados
-      Frequency (Frequência): Every Day (Diariamente)
-      Run Hours (Hora para Rodar): PM 1 (Pós Meio Dia às 13hs)
-        @ 0 min past the hour (Minutos depois da hora)
-      Repository (Repositório): backup-dados (#1)
-      Template (Modelo): backup-dados - Modelo de Backup da Partição Dados
-      Backup Directories (Diretório de Backup): /dados
-      Exclude Patterns (Padrões de Exclusão): lost+found/, *.tmp, *.log
-      Options (Opções)
-        (ON) Compression (Compressão)
-        (ON) Exclude caches (Excluir arquivos em cache)
-        (OFF) One file system (Um arquivo por sistema)
-        (ON) No atime (Sem tempo de acesso)
-        (OFF) Numeric IDs (Identificação numérica)
-        (OFF) Skip xattrs (Ignorar xattrs = atributos estendidos)
-        (OFF) Skip ACLs (Ignorar acls = lista de controle de acesso)
-        (OFF) Back up from a snapshot (Restaurar a partir de um snapshot)
-      Priority (Prioridade): Normal
-      Compression spec (Especificar a Compressão): lz4
-      Custom options (Opções Customizadas): --compression lz4 --exclude-caches --noatime
-      Prune Retention (Tempo de Retenção): Default
-        Minutes (Minutos): 0
-        Hours (Horas): 0
-        Days (Dias): 7
-        Weeks (Semanas): 4
-        Months (Meses): 6
-        Years (Anos): 0
-<Create Backup Plan>
+      Create New Backup Plan (Criando um novo plano de backup)
+        Plan Name (Nome do Plano): backup-diario-dados
+        Frequency (Frequência): Every Day (Diariamente)
+        Run Hours (Hora para Rodar): PM 1 (Pós Meio Dia às 13hs)
+          @ 0 min past the hour (Minutos depois da hora)
+        Repository (Repositório): backup-dados (#1)
+        Template (Modelo): backup-dados - Modelo de Backup da Partição Dados
+        Backup Directories (Diretório de Backup): /dados
+        Exclude Patterns (Padrões de Exclusão): lost+found/, *.tmp, *.log
+        Options (Opções)
+          (ON) Compression (Compressão)
+          (ON) Exclude caches (Excluir arquivos em cache)
+          (OFF) One file system (Um arquivo por sistema)
+          (ON) No atime faster (Sem tempo de acesso rápido)
+          (OFF) Numeric owner IDs (Identificação numérica do dono)
+          (OFF) Skip xattrs (Ignorar xattrs = atributos estendidos)
+          (OFF) Skip ACLs (Ignorar acls = lista de controle de acesso)
+          (OFF) Back up from a snapshot (Restaurar a partir de um snapshot)
+        Priority (Prioridade): Normal
+        Compression spec (Especificar a Compressão): lz4
+        Custom options (Opções Customizadas): --compression lz4 --exclude-caches --noatime
+        Prune Retention (Tempo de Retenção): Default
+          Minutes (Minutos): 0
+          Hours (Horas): 0
+          Days (Dias): 7
+          Weeks (Semanas): 4
+          Months (Meses): 6
+          Years (Anos): 0
+      <Create Backup Plan>
 ```
 
 ## 11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server
@@ -482,6 +509,7 @@ curl -sO https://raw.githubusercontent.com/vaamonde/ubuntu-2604/refs/heads/main/
 ```
 ```bash
 #executando o script para a criação dos diretórios e arquivos na partição Dados do Ubuntu Server
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/bash.1.html
 sudo bash 01-criar-estrutura-empresa.sh
 ```
 ```bash
@@ -494,49 +522,57 @@ sudo tree /dados
 ```bash
 #Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes)
-      Name: srvvaamonde (Servidor Ubuntu)
+      Clients (Clientes)
+        Name: srvvaamonde (Servidor Ubuntu)
 ```
 ```bash
 #Acessando os Planos de Agendamento de Backup do BBS
 02) Plans (Planos)
-    Backup Schedules (Agendamento de Backup)
-      backup-diario-ados
-        Clicar nos 3 (três) pontinhos no canto superior
-        Selecionar a opção: Run Now (Rodar Agora)
+      Backup Schedules (Agendamento de Backup)
+        backup-diario-ados
+          Clicar nos 3 (três) pontinhos no canto superior
+            Selecionar a opção: Run Now (Rodar Agora)
 ```
 ```bash
 #Verificando os Trabalhos de Backup e Filas do BBS
 03) No Painel Web do BBS, acessar o menu:
-    Queue (Fila)
-      Acompanhar em Tempo Real:
-        Status (Status): Running (Em Execução)
-        In Progress (Em progresso): Barra de Progresso + Taxa de Transferência
-        Recently Completed (Completos recentemente): Streaming de Log em Tempo Real
+      Queue (Fila)
+        Acompanhar em Tempo Real:
+          Status (Status): Running (Em Execução)
+          In Progress (Em progresso): Barra de Progresso + Taxa de Transferência
+          Recently Completed (Completos recentemente): Streaming de Log em Tempo Real
 ```
 ```bash
 #Verificando os Logs de Backup do BBS
 04) No Painel Web do BBS, acessar o menu:
-    Log (Logs)
-      Analisar os logs dos backup:
+      Log (Logs)
+        Analisar os logs dos backup:
 ```
 ```bash
 #Verificando a Execução do Plano de Backup do BBS
 05) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes)
-      Name: srvvaamonde (Servidor Ubuntu)
-        Repos (Repositório)
-          Clicar em: backup-dados
-            Recovery Points (1) (Pontos de Recuperação)
-              Clicar em: backup-diario-dados
+      Clients (Clientes)
+        Name: srvvaamonde (Servidor Ubuntu)
+          Repos (Repositório)
+            Clicar em: backup-dados
+              Recovery Points (1) (Pontos de Recuperação)
+                Archive
+                  Clicar em: backup-diario-dados
 ```
 ```bash
 #executando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do script 02-simular-alteracoes.sh: incremental (simula uma alteração no diretório de incremento)
-#opção do script 02-simular-alteracoes.sh: diferencial (simula uma alteração no diretório de diferença)
-#opção do script 02-simular-alteracoes.sh: completo (simula uma alteração no diretório completa)
 sudo bash 02-simular-alteracoes.sh incremental
+```
+```bash
+#executando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
+#opção do script 02-simular-alteracoes.sh: diferencial (simula uma alteração no diretório de diferença)
 sudo bash 02-simular-alteracoes.sh diferencial
+```
+```bash
+#executando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
+#opção do script 02-simular-alteracoes.sh: completo (simula uma alteração no diretório completa)
+sudo bash 02-simular-alteracoes.sh completo
 ```
 ```bash
 #verificando a árvore de diretórios da partição Dados do Ubuntu Server
@@ -556,26 +592,26 @@ sudo tree /backup
 ```bash
 #Acessando o Painel de Repositórios do BBS
 01) No Painel Web do BBS, acessar o menu:
-    Clients (Clientes)
-      Name: srvvaamonde (Servidor Ubuntu)
-        Restore (Restaurar)
+      Clients (Clientes)
+        Name: srvvaamonde (Servidor Ubuntu)
+          Restore (Restaurar)
 ```
 ```bash
 #Localizando o Arquivo de Backup para Restaurar do BBS
 02) No Painel Web do BBS, acessar as opções
-    Archive (Arquivos)
-      backup-dados
-        Data e Hora - backup-diario-dados
-          Browse Archive (Navegação dos Arquivos)
-            Selecione os arquivos para serem restaurados
+      Archive (Arquivos)
+        backup-dados
+          Data e Hora - backup-diario-dados
+            Browse Archive (Navegação dos Arquivos)
+              Selecione os arquivos para serem restaurados
 ```
 ```bash
 #Escolhendo o Método de Restauração dos Dados do BBS
 03) Escolher o método de Restauração:
-    Destination optional (Destino opcional): /backup/restore
-    <Restore to client> (Usando o caminho opcional melhor para testar)
-    <Download .tar.gz>  (Melhor para testar o backup)
-<Restaurar>
+      Destination optional (Destino opcional): /backup/restore
+        <Restore to client> (Usando o caminho opcional melhor para testar)
+        <Download .tar.gz>  (Melhor para testar o backup)
+      <Restaurar>
 ```
 
 ## 14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server

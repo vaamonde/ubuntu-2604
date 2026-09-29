@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `29/09/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -382,10 +382,10 @@ sudo chown -Rv root:backupadm /backup
 ```
 ```bash
 #ajustando as permissões do diretório de Backup no Ubuntu Server
-#opção do comando chmod: -R (recursive), -v (verbose), 770 = Read/Write/Execute Owner and Group, Not
-#access Others Users and Groups
+#opção do comando chmod: -R (recursive), -v (verbose), 775 = Read/Write/Execute Owner and Group, Read/
+#Execute access Others Users and Groups
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
-sudo chmod -Rv 770 /backup
+sudo chmod -Rv 775 /backup
 ```
 ```bash
 #adicionando o usuário local de administração do servidor no grupo do backup no Ubuntu Server

@@ -6,8 +6,8 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 11/10/2021
-# Data de atualização: 29/09/2025
-# Versão: 0.14
+# Data de atualização: 29/09/2026
+# Versão: 0.15
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
 # Testado e homologado para a versão do OpenSSH Server v10.x
 #
@@ -31,22 +31,20 @@ ListenAddress ENDEREÇO_IPV6_SERVIDOR
 # Os argumentos válidos são: any (IPv4 e IPV6), inet (somente IPv4), inet6 (somente IPv6)
 AddressFamily any
 #
-# Métodos de Autenticação do OpenSSH, utilizar chaves públicas e autenticação por senha
+# Métodos de Autenticação do OpenSSH, utilizar chaves públicas ou autenticação por senha
 # Por padrão o Servidor de OpenSSH não trabalhar com Chaves Pública para autenticação, 
 # utilizando o arquivo /etc/passwd para se autenticar no servidor, por motivos de segurança, 
-# é recomendado utilizar chaves públicas e senhas para se autenticar no servidor
-# Descomentar essa opção depois de configurar a chave pública no client e no servidor
-#AuthenticationMethods publickey,password
-AuthenticationMethods password
+# é recomendado utilizar chaves públicas e senhas para se autenticar no servidor.
+AuthenticationMethods publickey password
 #
 # Autenticação utilizando chaves públicas geradas no cliente com o comando: ssh-keygen 
 # e exportada para o servidor com o comando: ssh-copy-id, chaves localizadas no diretório: 
-# /home/nome_usuário/.ssh/authorized_keys. Essa opção será utiliza em conjunto com a 
+# /home/nome_usuário/.ssh/authorized_keys. Essa opção pode ser utiliza em conjunto com a 
 # opção: AuthenticationMethods para verificar a chave pública.
 PubkeyAuthentication yes
 #
 # Especifica se a autenticação por senha é permitida. O padrão é yes. Não é recomendado 
-# alterar essa opção.
+# alterar essa opção, podendo trabalhar em conjunto com chaves publicas (mais seguro).
 PasswordAuthentication yes
 #
 # Configuração do diretório de chaves públicas para autenticar os usuários, as chaves 
@@ -198,3 +196,8 @@ Compression no
 #
 # Não procure o nome do host remoto utilizando o serviço do DNS
 UseDNS no
+#
+# Bloco Match: senha somente para a sub-rede interna (ALTERAR PARA O SEU CENÁRIO)
+# OBSERVAÇÃO IMPORTANTE: o Match deve ficar SEMPRE no final do arquivo
+#Match Address *,!172.16.1.0/24
+#    PasswordAuthentication no
