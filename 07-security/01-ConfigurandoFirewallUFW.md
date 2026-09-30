@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `28/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `29/09/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -35,7 +35,7 @@ Site Oficial Wiki do Ubuntu UFW: https://help.ubuntu.com/community/UFW<br>
 Site Oficial do Descomplicando o Ubuntu UFW: https://wiki.ubuntu.com/UncomplicatedFirewall<br>
 Site Oficial do Debian UFW: https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29<br>
 Site Oficial do IPTables: http://git.netfilter.org/iptables/<br>
-Site Oficial do NFTables: https://wiki.nftables.org/
+Site Oficial do NFTables: https://wiki.nftables.org/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
 #01_ Verificando qual o Sistema de Firewall padrão do Ubuntu Server
@@ -330,7 +330,7 @@ sudo ufw allow out on lo
   Rule added (v6)
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW
+#verificando as Regras Detalhadas (VERBOSE) padrão do UFW
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -370,14 +370,14 @@ sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 80 proto tcp c
 ```
 ```bash
 #regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTPS (443/tcp)
-#opção do comando ufw: 
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 from 172.16.1.20 to any port 443 proto tcp comment 'Liberando a saida para navegacao do HTTPS v4'
 sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 443 proto tcp comment 'Liberando a saida para navegacao do HTTPS v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTP (123/udp) - sincronismo do Chrony
-#opção do comando ufw: 
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 to 200.160.7.186 port 123 proto udp comment 'Liberando a saida para sincronismo do NTP.br v4'
 sudo ufw allow out on bond0 to 186.192.158.147 port 123 proto udp comment 'Liberando a saida para sincronismo do NTP.br v4'
@@ -388,7 +388,7 @@ sudo ufw allow out on bond0 to 2001:12ff:0:7::196 port 123 proto udp comment 'Li
 ```
 ```bash
 #regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTS-KE (4460/tcp) - negociação TLS do NTP.br
-#opção do comando ufw: 
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 to 200.160.7.186 port 4460 proto tcp comment 'Liberando a saida para sincronismo do NTS-KE do NTP.br v4'
 sudo ufw allow out on bond0 to 186.192.158.147 port 4460 proto tcp comment 'Liberando a saida para sincronismo do NTS-KE do NTP.br v4'
@@ -524,45 +524,45 @@ sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:869
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SpeedTest (8080/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo IPerf3 (5201/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo BBS (80/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Grafana (3000/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Prometheus (9090/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v6'
 ```
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Netronome (7575/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
-sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v4'
-sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v6'
+sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v4'
+sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v6'
 ```
 ```bash
 #verificando as Regras Detalhadas padrão do UFW
