@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `25/09/2026`<br>
-**Versão:** `0.09`<br>
+**Data de atualização:** `01/10/2026`<br>
+**Versão:** `0.10`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -129,9 +129,6 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
 ```bash
 #Configurando o Processador, Memória e Recursos de Virtualização
 02) Sistema
-      Placa-Mãe
-        Recurso Estendidos
-          (OFF) Relógio da máquina retorno hora UTC: (Desabilitar)
       Processador
           Recursos Estendidos: Habilitar PAE/NX
                                Habilitar VT-x/AMD-v Aninhado
