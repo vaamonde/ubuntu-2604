@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Instalando os principais software de Rede (Network) no Ubuntu Server](#01_-instalando-os-principais-software-de-rede-network-no-ubuntu-server)<br>
 [#02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server](#02_-verificando-as-informações-do-hardware-de-rede-placa-de-rede-no-ubuntu-server)<br>
 [#03_ Verificando as informações de Endereços IPv4 e IPv6 no Ubuntu Server](#03_-verificando-as-informações-de-endereços-ipv4-e-ipv6-no-ubuntu-server)<br>
@@ -55,6 +56,20 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [![Netplan IPv4/IPv6 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Netplan IPv4/IPv6 Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/run/systemd/netif/leases/` | 📁 Diretório utilizado pelo systemd-networkd para armazenar arquivos de concessão (*leases*) de endereços IP atribuídos dinamicamente via DHCP às interfaces de rede. |
+| `/run/systemd/netif/leases/*` | 📄 Arquivos que contêm informações sobre as concessões DHCP recebidas pelas interfaces de rede, como endereço IP atribuído, gateway, servidores DNS, tempo de validade da concessão e outras informações de configuração de rede. |
+| `/etc/netplan/` | 📁 Diretório que armazena arquivos de configuração de rede utilizados pelo Netplan, ferramenta responsável por definir e gerenciar a configuração das interfaces de rede no Ubuntu. |
+| `/etc/netplan/00-installer-config.yaml` | 📄 Arquivo de configuração YAML que define parâmetros de rede do sistema, como interfaces, endereçamento IP estático ou DHCP, gateway, servidores DNS e outras opções de conectividade. |
+| `/run/systemd/network/` | 📁 Diretório que armazena arquivos de configuração de rede gerados ou utilizados em tempo de execução pelo systemd-networkd, contendo informações aplicadas às interfaces de rede. |
+| `/run/systemd/network/*.network` | 📄 Arquivos de configuração de rede em tempo de execução utilizados pelo systemd-networkd para definir parâmetros de configuração e gerenciamento das interfaces de rede, como DHCP, endereçamento IP, rotas e outras opções de conectividade. |
+| `/etc/systemd/` | 📁 Diretório que armazena arquivos de configuração do systemd, sistema responsável pelo gerenciamento da inicialização, serviços, processos e outros recursos do sistema GNU/Linux. |
+| `/etc/systemd/resolved.conf` | 📄 Arquivo de configuração do serviço systemd-resolved, responsável pelo gerenciamento da resolução de nomes DNS, permitindo definir opções como servidores DNS, domínios de pesquisa, configurações de cache e outros parâmetros de resolução de nomes. |
+---
 
 ## 01_ Instalando os principais software de Rede (Network) no Ubuntu Server
 ```bash
@@ -507,9 +522,10 @@ sudo journalctl -u netplan-configure
 
 | **Servidor DNS** | **Endereços IPv4** | **Endereços IPv6** |
 |------------------| -------------------| -------------------|
+| **CloudFlare** | *1.1.1.1 e 1.0.0.1* | *2606:4700:4700::1111 e 2606:4700:4700::1001* |
 | **Google** | *8.8.8.8 e 8.8.4.4* | *2001:4860:4860::8888 e 2001:4860:4860::8844* |
 | **Quad9** | *9.9.9.9 e 149.112.112.112* | *2620:fe::fe e 2620:fe::9* |
-| **CloudFlare** | *1.1.1.1 e 1.0.0.1* | *2606:4700:4700::1111 e 2606:4700:4700::1001* |
+| **AdGuard** | *94.140.14.14 e 94.140.15.15* | *2a10:50c0::ad1:ff e 2a10:50c0::ad2:ff* |
 ---
 
 ```bash

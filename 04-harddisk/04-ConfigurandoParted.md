@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `29/09/2026`<br>
-**Versão:** `0.09`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.10`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX](#01_-adicionando-o-hard-disk-de-backup-na-máquina-virtual-ubuntuonpremises-no-oracle-virtualbox)<br>
 [#02_ Verificando os Discos Reconhecidos no Ubuntu Server](#02_-verificando-os-discos-reconhecidos-no-ubuntu-server)<br>
 [#03_ Criando a Tabela e Partição GPT do Disco de Backup no Ubuntu Server](#03_-criando-a-tabela-e-partição-gpt-do-disco-de-backup-no-ubuntu-server)<br>
@@ -58,6 +59,20 @@ Link da vídeo aula:
 ---
 
 > **DIFERENÇA IMPORTANTE:** ao contrário dos procedimentos anteriores (**RAID-1** e **LVM**), este disco de Backup **NÃO** utiliza `mdadm` (Software RAID) nem `lvm2` (Volume Manager). É um **Particionamento Tradicional**, simples e direto, pois o objetivo é apenas disponibilizar um espaço de armazenamento isolado, dedicado exclusivamente ao repositório do **BorgBackupServer**, sem misturar a camada de Backup com a camada de Dados (LVM) protegida por Redundância (RAID-1).
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/dev/` | 📁 Diretório que contém arquivos especiais de dispositivo utilizados pelo GNU/Linux para acessar dispositivos de hardware e dispositivos virtuais, como discos, partições, terminais e outros recursos. |
+| `/dev/sdd` | 💽 Arquivo especial de dispositivo que representa o quarto disco de armazenamento reconhecido pelo sistema, podendo ser um HD, SSD ou disco virtual. Neste cenário, pode ser utilizado como dispositivo dedicado para armazenar cópias de segurança (*backups*). |
+| `/dev/sdd1` | 💽 Arquivo especial de dispositivo que representa a primeira partição do disco `/dev/sdd`. Pode ser utilizada para armazenar arquivos de backup, após ser particionada, formatada com um sistema de arquivos e montada em um diretório. |
+| `/proc/` | 📁 Sistema de arquivos virtual (procfs) que disponibiliza informações dinâmicas sobre o kernel, processos em execução, hardware e recursos do sistema. Seu conteúdo é gerado pelo kernel e não corresponde a arquivos convencionais armazenados em disco. |
+| `/proc/partitions` | 📄 Arquivo virtual que apresenta informações sobre os dispositivos de armazenamento e suas partições reconhecidas pelo kernel, incluindo números major e minor dos dispositivos, quantidade de blocos e nomes dos dispositivos. |
+| `/backup` | 📁 Diretório utilizado como ponto de montagem (*mount point*) para disponibilizar um sistema de arquivos ou dispositivo de armazenamento destinado a guardar cópias de segurança (*backups*) de arquivos, diretórios ou dados do servidor. |
+| `/etc/` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo configurações de serviços, dispositivos, usuários, rede, armazenamento e diversos componentes do sistema operacional. |
+| `/etc/fstab` | 📄 Arquivo de configuração que define sistemas de arquivos e dispositivos que devem ser montados durante a inicialização do sistema ou por meio do comando `mount -a`. Pode especificar dispositivo, ponto de montagem, tipo de sistema de arquivos, opções de montagem e parâmetros de verificação. |
+---
 
 ## 01_ Adicionando o Hard Disk de Backup na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX
 

@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Alterando as Configurações do Teclado no Ubuntu Server (SOMENTE SE NECESSÁRIO)](#01_-alterando-as-configurações-do-teclado-no-ubuntu-server-somente-se-necessário)<br>
 [#02_ Alterando as Configurações do Console no Ubuntu Server (SOMENTE SE NECESSÁRIO)](#02_-alterando-as-configurações-do-console-no-ubuntu-server-somente-se-necessário)<br>
 
@@ -50,6 +51,15 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [![Keyboard Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Keyboard Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/default/` | 📁 Diretório que armazena arquivos de configuração com parâmetros padrão utilizados por serviços, scripts de inicialização e componentes do sistema GNU/Linux. Esses arquivos permitem definir opções que são utilizadas durante a inicialização ou execução de determinados programas e serviços. |
+| `/etc/default/keyboard` | 📄 Arquivo de configuração que define o layout e as características do teclado utilizado no sistema, como idioma, modelo, layout, variante e opções adicionais. Essas configurações são utilizadas para definir o comportamento do teclado, principalmente nos consoles locais. |
+| `/etc/default/console-setup` | 📄 Arquivo de configuração responsável por definir características dos consoles de texto do sistema, como fonte (tipo de letra), tamanho da fonte, codificação de caracteres e opções relacionadas à exibição de caracteres no terminal local. |
+---
 
 ## 01_ Alterando as Configurações do Teclado no Ubuntu Server (SOMENTE SE NECESSÁRIO)
 ```bash

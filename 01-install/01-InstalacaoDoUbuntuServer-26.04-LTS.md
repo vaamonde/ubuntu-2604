@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `01/10/2026`<br>
-**Versão:** `0.10`<br>
+**Data de atualização:** `16/11/2026`<br>
+**Versão:** `0.11`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -156,7 +156,7 @@ Link de download do Ubuntu Server: https://releases.ubuntu.com/26.04/
           Conectado a: Placa em modo Bridge
           Nome: Intel(R) Ethernet Connection (Placa de Rede On-Board)
           #OBSERVAÇÃO: VERIFIQUE QUAL PLACA DE REDE VOCÊ ESTÁ USANDO NO SEU COMPUTADOR QUE ESTÁ 
-          #CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA DE REDE SEM-FIO 
+          #CONECTADO NA SUA REDE LOCAL, PODE SER PLACA DE REDE CABEADA OU PLACA DE REDE SEM-FIO. 
           #RECOMENDADO SEMPRE UTILIZAR PLACA DE REDE CABEADA, MELHOR DESEMPENHO E MAIS CONFIÁVEL.
           Tipo de Placa: Intel PRO/1000 MT Desktop (82540EM)
           Modo Promiscuo: Permitir Tudo (Selecionar)
@@ -418,10 +418,27 @@ ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 ```
 ```bash
 #confirmando a troca das chaves públicas e do fingerprint (hash) do SSH (alterar sua senha para o seu cenário)
+#Esse procedimento faz parte do mecanismo de autenticação e proteção contra ataques do tipo Man-in-the-Middle (MITM).
 The authenticity of host 'SEU_ENDEREÇO_IPV4_UBUNTU_SERVER' can t be established.
 ECDSA key fingerprint is SHA256:5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes <Enter>
 ```
+
+Entendendo a saída do comando: __`ssh`__<br>
+| 🔹 **Opção / Mensagem** | 📖 **Significado** | 💡 **Explicação simples** |
+|---|---|---|
+| **The authenticity of host** | `Autenticidade do servidor` | O SSH está tentando verificar a identidade do servidor remoto. |
+| **SEU_ENDEREÇO_IPV4_UBUNTU_SERVER** | `Endereço do servidor` | Endereço IPv4 ou nome DNS do servidor Ubuntu ao qual você está tentando se conectar. |
+| **can't be established** | `Não foi possível estabelecer` | O cliente SSH ainda não possui uma chave pública cadastrada para esse servidor. |
+| **ECDSA key fingerprint** | `Impressão digital da chave ECDSA` | Identificador único (fingerprint) derivado da chave pública apresentada pelo servidor. |
+| **SHA256** | `Algoritmo de hash` | Algoritmo utilizado para gerar a impressão digital da chave pública. |
+| **5yoVsKHMrn3FP/LBW1fyPTtVlt3og9jmyXPPkki/BY0** | `Fingerprint` | Sequência que identifica a chave pública do servidor remoto. |
+| **Are you sure you want to continue connecting?** | `Deseja continuar?` | O SSH solicita sua autorização para confiar na identidade apresentada. |
+| **yes** | `Sim` | Aceita a chave pública e registra sua identificação localmente. |
+| **no** | `Não` | Cancela a conexão sem cadastrar a chave. |
+| **[fingerprint]** | `Impressão digital` | Permite confirmar a identidade utilizando o fingerprint esperado. |
+---
+
 ```bash
 #digitando a senha do seu usuário, por motivos de segurança a senha não aparece no terminal
 seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER password: sua_senha <Enter>

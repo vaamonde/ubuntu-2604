@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremise no Oracle VirtualBOX](#01_-adicionando-hard-disk-na-máquina-virtual-ubuntuonpremises-no-oracle-virtualbox)<br>
 [#02_ Instalando os principais software de Hard Disk no Ubuntu Server](#02_-instalando-os-principais-software-de-hard-disk-no-ubuntu-server)<br>
 [#03_ Verificando as informações da Controladora de Hard Disk do Ubuntu Server](#03_-verificando-as-informações-da-controladora-de-hard-disk-do-ubuntu-server)<br>
@@ -54,6 +55,19 @@ Link da vídeo aula:
 | 🆔 **UUID (Universally Unique Identifier)** | Identificador único de 128 bits atribuído a sistemas de arquivos e partições. | Garante montagem correta e persistente das partições, independente da ordem de detecção (/dev/sdX pode mudar, o UUID não). |
 | 📊 **S.M.A.R.T. (Self-Monitoring, Analysis and Reporting Technology)** | Sistema de monitoramento embutido em HDs/SSDs modernos. | Detecta falhas de hardware antes que causem perda de dados. |
 | 🧵 **I/O Scheduler** | Algoritmo do kernel que organiza as operações de leitura/escrita em disco. | Otimiza desempenho conforme o tipo de mídia (HDD ou SSD/NVMe). |
+---
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/proc/` | 📁 Sistema de arquivos virtual (procfs) que disponibiliza informações em tempo real sobre o kernel, processos em execução, hardware, memória, CPU e outros recursos do sistema. Seu conteúdo é gerado dinamicamente pelo kernel e não corresponde a arquivos armazenados convencionalmente em disco. |
+| `/proc/partitions` | 📄 Arquivo virtual que apresenta informações sobre os dispositivos de armazenamento e suas partições reconhecidas pelo kernel, incluindo números major (Driver/Classe) e minor (Instância/Partição) dos dispositivos, quantidade de blocos e nomes dos dispositivos. |
+| `/sys/block/` | 📁 Diretório do sistema de arquivos virtual sysfs que disponibiliza informações sobre os dispositivos de bloco reconhecidos pelo kernel, como discos rígidos, SSDs, dispositivos virtuais e outros dispositivos de armazenamento. |
+| `/dev/` | 📁 Diretório que contém arquivos especiais de dispositivo utilizados para representar e acessar dispositivos de hardware e dispositivos virtuais do sistema, como discos, terminais, interfaces e outros recursos. |
+| `/dev/sda` | 💽 Arquivo especial de dispositivo que representa o primeiro disco de armazenamento identificado pelo sistema com a nomenclatura SCSI/SATA/SAS ou equivalente. Pode corresponder a um HD, SSD ou disco virtual, dependendo do ambiente. |
+| `/dev/sdb` | 💽 Arquivo especial de dispositivo que representa o segundo disco de armazenamento identificado pelo sistema com a nomenclatura SCSI/SATA/SAS ou equivalente. Sua existência depende da quantidade de dispositivos de armazenamento reconhecidos pelo sistema. |
+| `/dev/sdc` | 💽 Arquivo especial de dispositivo que representa o terceiro disco de armazenamento identificado pelo sistema com a nomenclatura SCSI/SATA/SAS ou equivalente. Pode corresponder a um HD, SSD, disco virtual ou outro dispositivo de armazenamento. |
 ---
 
 ## 01_ Adicionando Hard Disk na Máquina Virtual UbuntuOnPremises no Oracle VirtualBOX

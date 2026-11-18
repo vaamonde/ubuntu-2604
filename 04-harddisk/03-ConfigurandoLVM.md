@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `28/09/2026`<br>
-**Versão:** `0.09`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.10`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server](#01_-preparando-o-array-raid-1-para-a-configuração-do-lvm-no-ubuntu-server)<br>
 [#02_ Instalando os principais software de LVM no Ubuntu Server](#02_-instalando-os-principais-software-de-lvm-no-ubuntu-server)<br>
 [#03_ Verificando a versão do Sistema de LVM do Ubuntu Server](#03_-verificando-a-versão-do-sistema-de-lvm-do-ubuntu-server)<br>
@@ -67,6 +68,23 @@ Link da vídeo aula:
 | **PV (Physical Volume)** | `pvcreate` | `pvdisplay` / `pvs` | Não se aplica (disco/partição/RAID inteiro) |
 | **VG (Volume Group)** | `vgcreate` | `vgdisplay` / `vgs` | **PE (Physical Extent)** |
 | **LV (Logical Volume)** | `lvcreate` | `lvdisplay` / `lvs` | **LE (Logical Extent)** |
+---
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/dev/` | 📁 Diretório que contém arquivos especiais de dispositivo utilizados pelo GNU/Linux para acessar dispositivos de hardware e dispositivos virtuais, como discos, partições, terminais e outros recursos. |
+| `/dev/md0` | 💾 Arquivo especial de dispositivo que representa uma matriz RAID de software gerenciada pelo `md` (Multiple Device) do kernel Linux. Pode combinar vários discos ou partições para oferecer redundância, desempenho ou ambos, dependendo do nível RAID configurado. |
+| `/dev/vg_dados/` | 📁 Caminho associado ao grupo de volumes (Volume Group — VG) `vg_dados`, gerenciado pelo LVM (Logical Volume Manager). É utilizado para organizar e disponibilizar volumes lógicos criados a partir de dispositivos de armazenamento físicos ou matrizes RAID. |
+| `/dev/vg_dados/lv_dados` | 💾 Arquivo especial de dispositivo que representa o volume lógico (Logical Volume — LV) `lv_dados`, pertencente ao grupo de volumes `vg_dados`. É utilizado para disponibilizar um espaço de armazenamento lógico que pode receber um sistema de arquivos e ser montado em um diretório. |
+| `/dev/mapper/` | 📁 Diretório que contém dispositivos mapeados pelo Device Mapper do kernel Linux, utilizado por tecnologias como LVM, criptografia de discos (dm-crypt) e outros dispositivos de armazenamento mapeados. |
+| `/dev/mapper/vg_dados-lv_dados` | 💾 Arquivo especial de dispositivo criado pelo Device Mapper que representa o volume lógico `lv_dados` pertencente ao grupo de volumes `vg_dados`. É uma representação do volume lógico utilizado pelo sistema para operações de armazenamento. |
+| `/proc/` | 📁 Sistema de arquivos virtual (procfs) que disponibiliza informações dinâmicas sobre o kernel, processos em execução, hardware e recursos do sistema. Seu conteúdo é gerado pelo kernel e não corresponde a arquivos convencionais armazenados em disco. |
+| `/proc/mdstat` | 📄 Arquivo virtual que apresenta o estado atual dos dispositivos RAID de software gerenciados pelo `md` do kernel Linux, permitindo verificar matrizes RAID existentes, discos integrantes, nível RAID, estado de sincronização, recuperação (*recovery*) ou reconstrução (*resync*). |
+| `/dados` | 📁 Diretório utilizado como ponto de montagem (*mount point*) para disponibilizar um sistema de arquivos ou volume de armazenamento no sistema. Neste cenário, pode ser utilizado para acessar o espaço de armazenamento disponibilizado pelo volume lógico `lv_dados`. |
+| `/etc/` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo configurações de serviços, dispositivos, usuários, rede, armazenamento e diversos componentes do sistema operacional. |
+| `/etc/fstab` | 📄 Arquivo de configuração que define sistemas de arquivos e dispositivos que devem ser montados durante a inicialização do sistema ou por meio do comando `mount -a`. Pode especificar dispositivo, ponto de montagem, tipo de sistema de arquivos, opções de montagem e parâmetros de verificação. |
 ---
 
 ## 01_ Preparando o Array RAID-1 para a Configuração do LVM no Ubuntu Server

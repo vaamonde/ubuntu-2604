@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Verificando as Informações do Sistema Operacional do Ubuntu Server](#01_-verificando-as-informações-do-sistema-operacional-do-ubuntu-server)<br>
 [#02_ Forçando uma Atualização Completa do Sistema Operacional do Ubuntu Server](#02_-forçando-uma-atualização-completa-do-sistema-operacional-do-ubuntu-server)<br>
 [#03_ Criando sua conta no Ubuntu One para registrar o Ubuntu Pro no Ubuntu Server](#03_-criando-sua-conta-no-ubuntu-one-para-registrar-o-ubuntu-pro-no-ubuntu-server)<br>
@@ -60,6 +61,17 @@ Site Oficial do Ubuntu Membership: https://wiki.ubuntu.com/Membership<br>
 [![Ubuntu Pro Free](http://img.youtube.com/vi//0.jpg)]( "Ubuntu Pro Free")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo configurações de serviços, usuários, rede, aplicações e diversos componentes do sistema operacional. |
+| `/etc/os-release` | 📄 Arquivo que contém informações sobre a distribuição GNU/Linux instalada, como nome, versão, identificação, codinome e URLs oficiais do projeto. É utilizado por programas e administradores para identificar o sistema operacional. |
+| `/etc/lsb-release` | 📄 Arquivo que contém informações de identificação da distribuição Linux, como nome, versão, codinome e descrição. Essas informações seguem o padrão LSB (Linux Standard Base) e auxiliam na identificação do sistema. |
+| `/etc/apt/apt.conf.d/` | 📁 Diretório que armazena arquivos de configuração adicionais do gerenciador de pacotes APT, permitindo personalizar seu comportamento, opções de atualização, instalação de pacotes e outras configurações. |
+| `/etc/apt/apt.conf.d/50unattended-upgrades` | 📄 Arquivo de configuração relacionado às atualizações automáticas do sistema, utilizado para definir opções de comportamento do mecanismo de atualizações não supervisionadas (`unattended-upgrades`), como configurações de execução e integração com o APT. |
+---
 
 ## 01_ Verificando as Informações do Sistema Operacional do Ubuntu Server
 ```bash

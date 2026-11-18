@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server](#01_-verificando-as-informações-do-locale-localidade-do-sistema-operacional-ubuntu-server)<br>
 [#02_ Configurando o Locale (Localidades) do Brasil no Sistema Operacional Ubuntu Server](#02_-configurando-o-locale-localidades-do-brasil-no-sistema-operacional-ubuntu-server)<br>
 [#03_ Verificando as informações do Timezone (Fuso Horário) do Sistema Operacional Ubuntu Server](#03_-verificando-as-informações-do-timezone-fuso-horário-do-sistema-operacional-ubuntu-server)<br>
@@ -49,6 +50,14 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [![Data e Hora Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Data e Hora Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/cloud/` | 📁 Diretório que armazena arquivos de configuração do Cloud-init, ferramenta utilizada para inicializar e configurar instâncias de máquinas virtuais e servidores em ambientes de nuvem, podendo automatizar tarefas como configuração de usuários, hostname, rede, chaves SSH e instalação de pacotes. |
+| `/etc/cloud/cloud.cfg` | 📄 Arquivo principal de configuração do Cloud-init, responsável por definir parâmetros e comportamentos durante a inicialização e provisionamento do sistema, como módulos de inicialização, gerenciamento de usuários, hostname, configurações de SSH e outras tarefas automatizadas. |
+---
 
 ## 01_ Verificando as informações do Locale (Localidade) do Sistema Operacional Ubuntu Server
 ```bash

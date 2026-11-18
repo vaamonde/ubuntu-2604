@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server](#01_-verificando-o-serviço-e-versão-do-chrony-server-e-client-no-ubuntu-server)<br>
 [#02_ Verificando a Porta de Conexão do Chrony Server no Ubuntu Server](#02_-verificando-a-porta-de-conexão-do-chrony-server-no-ubuntu-server)<br>
 [#03_ Localização dos Arquivos de Configuração do Chrony Server e Client no Ubuntu Server](#03_-localização-dos-arquivos-de-configuração-do-chrony-server-e-client-no-ubuntu-server)<br>
@@ -50,9 +51,19 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 | 🔐 **NTS (Network Time Security)** | Extensão de segurança do protocolo NTP, padronizada pela **RFC 8915**, que utiliza **TLS (TCP/4460)** para autenticar o servidor NTP e negociar chaves criptográficas antes da sincronização do horário. | Protege a sincronização de horário contra ataques de falsificação (*spoofing*), interceptação (*Man-in-the-Middle*) e adulteração das respostas NTP, garantindo autenticidade, integridade e confiabilidade das informações de tempo. |
 ---
 
-[![NTP Ubuntu Server](http://img.youtube.com/vi//0.jpg)](E "NTP Ubuntu Server")
+[![NTP Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "NTP Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/chrony/` | 📁 Diretório que armazena arquivos de configuração do serviço Chrony, responsável pela sincronização do relógio do sistema com servidores de horário (NTP), ajudando a manter a data e a hora do servidor precisas. |
+| `/etc/chrony/chrony.conf` | 📄 Arquivo principal de configuração do Chrony, utilizado para definir servidores de horário (NTP), parâmetros de sincronização, ajustes do relógio do sistema, restrições de acesso e outras opções relacionadas à sincronização de data e hora. |
+| `/etc/chrony/sources.d/` | 📁 Diretório destinado a armazenar arquivos adicionais que definem fontes de sincronização de horário (servidores NTP), permitindo organizar e incluir servidores de tempo na configuração do Chrony. |
+| `/etc/chrony/sources.d/ntp-br-pools.sources` | 📄 Arquivo que define fontes de sincronização de horário NTP, podendo conter servidores ou pools de horário brasileiros, utilizados pelo Chrony para sincronizar e manter o relógio do sistema ajustado corretamente. |
+---
 
 ## 01_ Verificando o Serviço e Versão do Chrony Server e Client no Ubuntu Server
 ```bash

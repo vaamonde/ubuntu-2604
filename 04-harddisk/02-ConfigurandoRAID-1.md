@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server](#01_-preparando-os-discos-para-a-configuração-do-raid-1-no-ubuntu-server)<br>
 [#02_ Verificando a versão do Sistema de RAID-1 do Ubuntu Server](#02_-verificando-a-versão-do-sistema-de-raid-1-do-ubuntu-server)<br>
 [#03_ Criando a Tabela e Partição GPT dos Discos para a Configuração do RAID-1 no Ubuntu Server](#03_-criando-a-tabela-e-partição-gpt-dos-discos-para-a-configuração-do-raid-1-no-ubuntu-server)<br>
@@ -45,7 +46,7 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [#10_ Simulação da Falha e Performance do RAID-1 no Ubuntu Server](#10_-simulação-da-falha-e-performance-do-raid-1-no-ubuntu-server)<br>
 [#11_ Analisando os Logs do Array do RAID-1 no Ubuntu Server](#11_-analisando-os-logs-do-array-do-raid-1-no-ubuntu-server)<br>
 
-[![RAID-1 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( RAID-1 Ubuntu Server")
+[![RAID-1 Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "RAID-1 Ubuntu Server")
 
 Link da vídeo aula: 
 
@@ -84,6 +85,22 @@ Link da vídeo aula:
 | **RAID 5** | Striping com Paridade Distribuída | ✅ | ⭐⭐⭐⭐ | 3 | 1 disco | Servidores de arquivos e armazenamento geral. |
 | **RAID 6** | Striping com Dupla Paridade | ✅ | ⭐⭐⭐ | 4 | 2 discos | Grandes volumes de armazenamento com alta disponibilidade. |
 | **RAID 10 (1+0)** | Espelhamento + Striping | ✅ | ⭐⭐⭐⭐⭐ | 4 | Até um disco por espelho (dependendo da distribuição das falhas) | Bancos de dados, virtualização e aplicações críticas de alto desempenho. |
+---
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/dev/` | 📁 Diretório que contém arquivos especiais de dispositivo utilizados pelo sistema GNU/Linux para acessar dispositivos de hardware e dispositivos virtuais, como discos, partições, terminais e outros recursos. |
+| `/dev/sdb` | 💽 Arquivo especial de dispositivo que representa o segundo disco de armazenamento reconhecido pelo sistema, podendo ser um HD, SSD ou disco virtual. Neste cenário, pode ser utilizado como um dos discos integrantes de uma configuração RAID. |
+| `/dev/sdb1` | 💽 Arquivo especial de dispositivo que representa a primeira partição do disco `/dev/sdb`. Pode ser utilizada como membro de uma configuração RAID, dependendo do particionamento e da configuração do sistema. |
+| `/dev/sdc` | 💽 Arquivo especial de dispositivo que representa o terceiro disco de armazenamento reconhecido pelo sistema, podendo ser um HD, SSD ou disco virtual. Neste cenário, pode ser utilizado como um dos discos integrantes de uma configuração RAID. |
+| `/dev/sdc1` | 💽 Arquivo especial de dispositivo que representa a primeira partição do disco `/dev/sdc`. Pode ser utilizada como membro de uma configuração RAID, dependendo do particionamento e da configuração do sistema. |
+| `/dev/md0` | 💾 Arquivo especial de dispositivo que representa um dispositivo RAID de software gerenciado pelo `md` (Multiple Device) do kernel Linux. O nome `md0` normalmente identifica a primeira matriz RAID criada, que pode combinar vários discos ou partições para oferecer redundância, desempenho ou ambos, dependendo do nível RAID utilizado. |
+| `/proc/` | 📁 Sistema de arquivos virtual (procfs) que disponibiliza informações dinâmicas sobre o kernel, processos em execução, hardware e recursos do sistema. Seu conteúdo é gerado pelo kernel e não corresponde a arquivos convencionais armazenados em disco. |
+| `/proc/mdstat` | 📄 Arquivo virtual que apresenta o estado atual dos dispositivos RAID de software gerenciados pelo `md` do kernel Linux, permitindo verificar matrizes RAID existentes, discos integrantes, nível RAID, estado de sincronização, recuperação (*recovery*) ou reconstrução (*resync*). |
+| `/etc/mdadm/` | 📁 Diretório utilizado para armazenar arquivos de configuração relacionados ao `mdadm`, ferramenta responsável pela criação, gerenciamento, monitoramento e manutenção de matrizes RAID de software no GNU/Linux. |
+| `/etc/mdadm/mdadm.conf` | 📄 Arquivo de configuração do `mdadm` que pode conter definições e instruções para identificação, montagem e gerenciamento das matrizes RAID de software durante a inicialização do sistema, incluindo informações sobre dispositivos RAID e configurações específicas. |
 ---
 
 ## 01_ Preparando os Discos para a Configuração do RAID-1 no Ubuntu Server

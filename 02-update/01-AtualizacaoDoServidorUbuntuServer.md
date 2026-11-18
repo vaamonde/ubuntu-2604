@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `25/09/2026`<br>
-**Versão:** `0.09`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.10`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa atualização:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Verificando as políticas dos repositórios locais no Ubuntu Server](#01_-verificando-as-políticas-dos-repositórios-locais-no-ubuntu-server)<br>
 [#02_ Removendo os repositórios Multiverse (Multiverso) e Universe (Universo) no Ubuntu Server](#02_-removendo-os-repositórios-multiverse-multiverso-e-universe-universo-no-ubuntu-server)<br>
 [#03_ Atualizando as Listas (sources.list) do Apt no Ubuntu Server](#03_-atualizando-as-listas-sourceslist-do-apt-no-ubuntu-server)<br>
@@ -50,6 +51,18 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [![Atualização Ubuntu Server](http://img.youtube.com/vi//0.jpg)]("Atualização Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/var/log/apt/` | 📁 Diretório que armazena arquivos de log relacionados ao gerenciador de pacotes APT, utilizado para instalar, atualizar e remover softwares no Ubuntu. |
+| `/var/log/apt/history.log` | 📄 Arquivo de log que registra o histórico das operações realizadas pelo APT, como instalação, atualização e remoção de pacotes, incluindo data, hora, usuário e pacotes envolvidos. |
+| `/var/log/apt/term.log` | 📄 Arquivo que registra as saídas dos processos executados durante operações do APT, incluindo mensagens exibidas no terminal, informações de instalação e possíveis erros. |
+| `/var/run/` | 📁 Diretório utilizado para armazenar arquivos de estado temporários relacionados aos processos e serviços em execução. No Ubuntu moderno, é um link simbólico para `/run/`, cujo conteúdo normalmente é armazenado em memória e recriado durante a inicialização do sistema. |
+| `/var/run/reboot-required` | ⚠️ Arquivo indicador que informa que o sistema precisa ser reiniciado para que determinadas atualizações ou alterações sejam aplicadas completamente. Sua existência indica a necessidade de reinicialização. |
+| `/var/run/reboot-required.pkgs` | 📄 Arquivo que lista os pacotes que motivaram a necessidade de reinicialização do sistema, ajudando o administrador a identificar quais atualizações requerem um reboot. |
+---
 
 ## 01_ Verificando as políticas dos repositórios locais no Ubuntu Server
 ```bash

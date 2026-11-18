@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `16/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -33,6 +33,7 @@ Ciclo de Lançamento do Ubuntu Server: https://ubuntu.com/about/release-cycle<br
 Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server](#01_-alterando-o-nome-fqdn-fully-qualified-domain-name-do-ubuntu-server)<br>
 [#02_ Alterando as entradas de resolução de nomes no arquivo Hosts do Ubuntu Server](#02_-alterando-as-entradas-de-resolução-de-nomes-no-arquivo-hosts-do-ubuntu-server)<br>
 [#03_ Verificando as informações da Placa de Rede depois de alterada no Ubuntu Server](#03_-verificando-as-informações-de-resolução-de-nomes-locais-depois-de-alterada-no-ubuntu-server)<br>
@@ -47,6 +48,15 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 [![Hostname Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Hostname Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo informações sobre usuários, grupos, hostname, rede, serviços e configurações de diversos componentes do sistema operacional. |
+| `/etc/hostname` | 📄 Arquivo que contém o nome (hostname) atribuído ao sistema, utilizado para identificar o servidor ou computador na rede e localmente no sistema operacional. |
+| `/etc/hosts` | 📄 Arquivo utilizado para associar endereços IP a nomes de hosts localmente, permitindo a resolução de nomes sem depender exclusivamente de um servidor DNS. Também pode conter entradas para nomes locais, como `localhost`. |
+---
 
 ## 01_ Alterando o nome FQDN (Fully Qualified Domain Name) do Ubuntu Server
 ```bash
