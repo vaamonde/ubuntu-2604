@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `17/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -34,19 +34,19 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Site Oficial do Prometheus: https://prometheus.io/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Criando o Grupo e o Usuário de Serviço do Prometheus no Ubuntu Server](#01_-criando-o-grupo-e-o-usuário-de-serviço-do-prometheus-no-ubuntu-server)<br>
 [#02_ Criando os Diretórios de Configuração do Prometheus no Ubuntu Server](#02_-criando-os-diretórios-de-configuração-do-prometheus-no-ubuntu-server)<br>
 [#03_ Baixando o Prometheus do Github no Ubuntu Server](#03_-baixando-o-prometheus-do-github-no-ubuntu-server)<br>
 [#04_ Descompactando o arquivo do Prometheus no Ubuntu Server](#04_-descompactando-o-arquivo-do-prometheus-no-ubuntu-server)<br>
 [#05_ Atualizando os arquivos executáveis do Prometheus no Ubuntu Server](#05_-atualizando-os-arquivos-executáveis-do-prometheus-no-ubuntu-server)<br>
-[#06_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server](#06_-localização-dos-diretórios-e-arquivos-principais-do-prometheus-no-ubuntu-server)<br>
-[#07_ Baixando e atualizando os arquivos de Configurações Customizados do Prometheus no Ubuntu Server](#07_-baixando-e-atualizando-os-arquivos-de-configurações-customizados-do-prometheus-no-ubuntu-server)<br>
-[#08_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server](#08_-alterando-as-permissões-dos-arquivos-e-diretórios-do-prometheus-no-ubuntu-server)<br>
-[#09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#09_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
-[#10_ Habilitando o Serviço do Prometheus no Ubuntu Server](#10_-habilitando-o-serviço-do-prometheus-no-ubuntu-server)<br>
-[#11_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server](#11_-verificando-o-serviço-e-versão-do-prometheus-no-ubuntu-server)<br>
-[#12_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server](#12_-verificando-a-porta-de-conexão-do-prometheus-no-ubuntu-server)<br>
-[#13_ Configurando o Prometheus via Navegador](#13_-configurando-o-prometheus-via-navegador)<br>
+[#06_ Baixando e atualizando os arquivos de Configurações Customizados do Prometheus no Ubuntu Server](#06_-baixando-e-atualizando-os-arquivos-de-configurações-customizados-do-prometheus-no-ubuntu-server)<br>
+[#07_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server](#07_-alterando-as-permissões-dos-arquivos-e-diretórios-do-prometheus-no-ubuntu-server)<br>
+[#08_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#08_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
+[#09_ Habilitando o Serviço do Prometheus no Ubuntu Server](#09_-habilitando-o-serviço-do-prometheus-no-ubuntu-server)<br>
+[#10_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server](#10_-verificando-o-serviço-e-versão-do-prometheus-no-ubuntu-server)<br>
+[#11_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server](#11_-verificando-a-porta-de-conexão-do-prometheus-no-ubuntu-server)<br>
+[#12_ Configurando o Prometheus via Navegador](#12_-configurando-o-prometheus-via-navegador)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -56,6 +56,22 @@ Site Oficial do Prometheus: https://prometheus.io/<br>
 [![Prometheus Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Prometheus Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo configurações de serviços, aplicações, usuários, rede, segurança e diversos componentes do sistema operacional. |
+| `/etc/prometheus/` | 📁 Diretório principal que armazena os arquivos de configuração do Prometheus, incluindo configurações de coleta de métricas, definição de alvos (*targets*), regras de alertas (*alerts*) e regras de agregação (*recording rules*). |
+| `/etc/prometheus/{targets,rules}` | 📁 Representa dois diretórios utilizados para organizar configurações do Prometheus: `targets`, destinado a arquivos relacionados à definição ou descoberta dos alvos de monitoramento; e `rules`, destinado a armazenar regras de alertas (*alerting rules*) e regras de agregação de métricas (*recording rules*). As chaves `{}` representam expansão de caminhos (brace expansion), indicando os dois diretórios `/etc/prometheus/targets/` e `/etc/prometheus/rules/`. |
+| `/etc/prometheus/prometheus.yml` | 📄 Arquivo principal de configuração do Prometheus, utilizado para definir parâmetros de funcionamento, intervalos de coleta de métricas (*scrape_interval*), configurações de avaliação de regras (*evaluation_interval*), alvos de monitoramento (*scrape_configs*), arquivos de regras (*rule_files*), entre outras opções. |
+| `/etc/prometheus/web-config.yml` | 📄 Arquivo de configuração da interface Web e do servidor HTTP do Prometheus, utilizado para definir opções de segurança e acesso, como autenticação de usuários, configurações TLS/HTTPS e outras opções suportadas pelo componente Web do Prometheus, quando habilitadas. |
+| `/var/lib/` | 📁 Diretório utilizado para armazenar dados persistentes de aplicações e serviços do sistema. Diferentemente de `/run/`, seu conteúdo normalmente permanece após reinicializações do servidor, sendo utilizado para guardar dados que precisam ser preservados. |
+| `/var/lib/prometheus` | 📁 Diretório utilizado pelo Prometheus para armazenar dados persistentes, principalmente a base de dados de séries temporais (TSDB), contendo métricas coletadas ao longo do tempo, índices, blocos de dados, informações de *WAL* (Write-Ahead Log) e outros arquivos necessários ao funcionamento e à recuperação dos dados de monitoramento. |
+| `/usr/local/bin/` | 📁 Diretório utilizado para armazenar executáveis instalados localmente pelo administrador ou manualmente, fora do gerenciamento direto dos pacotes da distribuição. Pode conter binários de ferramentas e aplicações, como o executável do Prometheus, quando instalado manualmente. |
+| `/etc/systemd/system/` | 📁 Diretório que armazena arquivos de unidade (*unit files*) personalizados do systemd, utilizados para configurar e gerenciar serviços, timers, sockets, mounts e outros recursos do sistema. Arquivos nesse diretório podem sobrescrever ou complementar unidades fornecidas pelos pacotes do sistema. |
+| `/etc/systemd/system/prometheus.service` | 📄 Arquivo de unidade do systemd que define como o serviço Prometheus deve ser iniciado, interrompido e gerenciado pelo sistema. Pode especificar o executável, argumentos de inicialização, usuário e grupo de execução, dependências, diretórios de configuração e dados, políticas de reinicialização e outras opções de gerenciamento do serviço. |
+---
 
 ## 01_ Criando o Grupo e o Usuário de Serviço do Prometheus no Ubuntu Server
 ```bash
@@ -129,19 +145,7 @@ tar -zxvf prometheus*.tar.gz
 sudo cp -Rv prometheus*/{prometheus,promtool} /usr/local/bin/
 ```
 
-## 06_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server 
-
-| **📂 Caminho** | **📌 Tipo** | **📖 Descrição** | **🎯 Finalidade** |
-| :------------- | :---------- | :--------------- | :---------------- |
-| `/etc/prometheus/` | Diretório | Diretório principal dos **arquivos de configuração** do Prometheus. | Centralizar as configurações utilizadas pelo serviço. |
-| `/etc/prometheus/prometheus.yml` | Arquivo | Principal arquivo de configuração do **Prometheus**. | Define parâmetros como **scrape jobs, targets, intervalos de coleta, regras e configurações de integração**. |
-| `/etc/prometheus/rules/` | Diretório | Diretório destinado aos **arquivos de regras** do Prometheus. | Organizar regras de **alertas e gravação (recording rules)**. |
-| `/etc/prometheus/rules/alertas-node-linux.yml` | Arquivo | Arquivo contendo as **regras de alertas relacionadas ao Node Exporter/Linux**. | Definir condições que, quando atendidas, podem gerar **alertas sobre CPU, memória, disco, rede e outros recursos do servidor**. |
-| `/var/lib/prometheus/` | Diretório | Diretório utilizado para armazenar os **dados persistentes do Prometheus**. | Manter os dados da **TSDB (Time Series Database)** coletados pelo Prometheus. |
-| `/var/lib/prometheus/*` | Dados | Arquivos e diretórios internos gerados pelo Prometheus durante sua operação. | Armazenar as **séries temporais, blocos, índices e demais dados necessários à consulta das métricas**. |
----
-
-## 07_ Baixando e atualizando os arquivos de Configurações Customizados do Prometheus no Ubuntu Server
+## 06_ Baixando e atualizando os arquivos de Configurações Customizados do Prometheus no Ubuntu Server
 ```bash
 #download do arquivo de serviço do Prometheus no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
@@ -161,7 +165,7 @@ sudo wget -v -O /etc/prometheus/prometheus.yml https://raw.githubusercontent.com
 sudo wget -v -O /etc/prometheus/web-config.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/web-config.yml
 ```
 
-## 08_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server
+## 07_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server
 ```bash
 #alterando o dono e grupo dos arquivos e diretórios do Prometheus no Ubuntu Server
 #opção do comando chown: -R (recursive) -v (verbose), prometheus (user), :prometheus (group)
@@ -175,7 +179,7 @@ sudo chown -Rv prometheus:prometheus /etc/prometheus/ /var/lib/prometheus/
 sudo chmod -Rv 775 /etc/prometheus/ /var/lib/prometheus/
 ```
 
-## 09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
+## 08_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do `Prometheus` e baseado no formato de Serialização de Dados Legíveis *YAML (Yet Another Markup Language)* utilizado pela linguagem de programação Python, muito cuidado com o uso de espaços e tabulação e principalmente sua indentação.
 
@@ -269,7 +273,7 @@ ExecStart=/usr/local/bin/prometheus \
     --web.listen-address=0.0.0.0:9090
 ```
 
-## 10_ Habilitando o Serviço do Prometheus no Ubuntu Server 
+## 09_ Habilitando o Serviço do Prometheus no Ubuntu Server 
 ```bash
 #habilitando o serviço do Prometheus no Ubuntu Server 
 #opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
@@ -289,7 +293,7 @@ sudo systemctl enable prometheus
 sudo systemctl start prometheus
 ```
 
-## 11_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server 
+## 10_ Verificando o Serviço e Versão do Prometheus no Ubuntu Server 
 ```bash
 #verificando o serviço do Prometheus no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then 
@@ -336,7 +340,7 @@ sudo prometheus --version
 sudo promtool --version
 ```
 
-## 12_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server 
+## 11_ Verificando a Porta de Conexão do Prometheus no Ubuntu Server 
 
 > **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
@@ -347,7 +351,7 @@ sudo promtool --version
 sudo lsof -nP -iTCP:'9090' -sTCP:LISTEN
 ```
 
-## 13_ Configurando o Prometheus via Navegador 
+## 12_ Configurando o Prometheus via Navegador 
 
 > **OBSERVAÇÃO IMPORTANTE:** Quando você acessa o Prometheus via Navegador e aparece a seguinte mensagem de aviso em vermelho: *Warning: Error fetching server time: Detected 65.21499991416931 seconds time difference between your browser and the server. Prometheus relies on accurate time and time drift might cause unexpected query results*. Esse erro está associado a falha de sincronismo da Data e Hora em relação o Servidor e Cliente, para resolver essa falha é necessário acertar a Data Hora entre os equipamentos ou utilizar o Protocolo **NTP (Network Time Protocol)** para sincronizar a data/hora de forma correta. 
 

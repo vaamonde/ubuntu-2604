@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `17/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -35,20 +35,20 @@ Site Oficial do Prometheus: https://prometheus.io/<br>
 Site Oficial do Node Exporter: https://github.com/prometheus/node_exporter<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Criando o Grupo e o Usuário de Serviço do Node Exporter no Ubuntu Server](#01_-criando-o-grupo-e-o-usuário-de-serviço-do-node-exporter-no-ubuntu-server)<br>
 [#02_ Baixando o Coletor de Métricas Node Exporter do Github no Ubuntu Server](#02_-baixando-o-coletor-de-métricas-node-exporter-do-github-no-ubuntu-server)<br>
 [#03_ Descompactando o arquivo do Node Exporter no Ubuntu Server](#03_-descompactando-o-arquivo-do-node-exporter-no-ubuntu-server)<br>
 [#04_ Atualizando os arquivos de executáveis do Node Exporter no Ubuntu Server](#04_-atualizando-os-arquivos-de-executáveis-do-node-exporter-no-ubuntu-server)<br>
-[#05_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server](#05_-localização-dos-diretórios-e-arquivos-principais-do-prometheus-no-ubuntu-server)<br>
-[#06_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server](#06_-baixando-e-atualizando-os-arquivos-customizados-do-node-exporter-no-ubuntu-server)<br>
-[#07_ Alterando as permissões do executável do Node Exporter no Ubuntu Server](#07_-alterando-as-permissões-do-executável-do-node-exporter-no-ubuntu-server)<br>
-[#08_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server](#08_-editando-o-arquivo-de-configuração-do-node-exporter-no-ubuntu-server)<br>
-[#09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#09_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
-[#10_ Habilitando o Serviço do Node Exporter no Ubuntu Server](#10_-habilitando-o-serviço-do-node-exporter-no-ubuntu-server)<br>
-[#11_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server](#11_-verificando-o-serviço-e-versão-do-node-exporter-no-ubuntu-server)<br>
-[#12_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server](#12_-verificando-a-porta-de-conexão-do-node-exporter-no-ubuntu-server)<br>
-[#13_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server](#13_-verificando-as-métrica-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
-[#14_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server](#14_-verificando-as-regras-e-alertas-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
+[#05_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server](#05_-baixando-e-atualizando-os-arquivos-customizados-do-node-exporter-no-ubuntu-server)<br>
+[#06_ Alterando as permissões do executável do Node Exporter no Ubuntu Server](#06_-alterando-as-permissões-do-executável-do-node-exporter-no-ubuntu-server)<br>
+[#07_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server](#07_-editando-o-arquivo-de-configuração-do-node-exporter-no-ubuntu-server)<br>
+[#08_ Editando o arquivo de configuração do Prometheus no Ubuntu Server](#08_-editando-o-arquivo-de-configuração-do-prometheus-no-ubuntu-server)<br>
+[#09_ Habilitando o Serviço do Node Exporter no Ubuntu Server](#09_-habilitando-o-serviço-do-node-exporter-no-ubuntu-server)<br>
+[#10_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server](#10_-verificando-o-serviço-e-versão-do-node-exporter-no-ubuntu-server)<br>
+[#11_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server](#11_-verificando-a-porta-de-conexão-do-node-exporter-no-ubuntu-server)<br>
+[#12_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server](#12_-verificando-as-métrica-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
+[#13_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server](#13_-verificando-as-regras-e-alertas-do-node-exporter-no-prometheus-via-navegador-no-ubuntu-server)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -58,6 +58,20 @@ Site Oficial do Node Exporter: https://github.com/prometheus/node_exporter<br>
 [![Node Exporter Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Node Exporter Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|---|---|
+| `/usr/local/bin/` | 📁 Diretório utilizado para armazenar executáveis instalados localmente pelo administrador ou manualmente, fora do gerenciamento direto dos pacotes da distribuição. Pode conter binários de ferramentas e aplicações, como o `node_exporter`, quando instalado manualmente. |
+| `/etc/prometheus/` | 📁 Diretório que armazena arquivos de configuração relacionados ao Prometheus e suas ferramentas de monitoramento, incluindo configurações de coleta de métricas, regras de alertas, parâmetros de execução e outros arquivos utilizados na integração com os serviços monitorados. |
+| `/etc/prometheus/node_exporter.conf` | 📄 Arquivo de configuração utilizado para definir parâmetros de execução do Node Exporter, podendo conter opções, argumentos, configurações de coleta de métricas e outros ajustes utilizados na inicialização do serviço, conforme a configuração adotada pelo administrador ou pelo pacote instalado. |
+| `/etc/prometheus/prometheus.yml` | 📄 Arquivo principal de configuração do Prometheus, utilizado para definir parâmetros de funcionamento, intervalos de coleta de métricas (`scrape_interval`), configurações de avaliação de regras (`evaluation_interval`), alvos de monitoramento (`scrape_configs`), arquivos de regras (`rule_files`) e outras opções. |
+| `/etc/prometheus/rules/` | 📁 Diretório destinado a armazenar arquivos de regras do Prometheus, incluindo regras de alertas (*alerting rules*) e regras de agregação de métricas (*recording rules*), permitindo organizar e separar as regras de monitoramento da configuração principal do serviço. |
+| `/etc/prometheus/rules/alertas-node-linux.yml` | 📄 Arquivo YAML que contém regras de alertas do Prometheus relacionadas ao monitoramento de servidores GNU/Linux, podendo definir condições para identificar situações como uso elevado de CPU, memória insuficiente, falta de espaço em disco, indisponibilidade de servidores ou outros eventos que necessitem de atenção do administrador. |
+| `/etc/systemd/system/` | 📁 Diretório que armazena arquivos de unidade (*unit files*) personalizados do systemd, utilizados para configurar e gerenciar serviços, timers, sockets, mounts e outros recursos do sistema. Arquivos nesse diretório podem sobrescrever ou complementar unidades fornecidas pelos pacotes do sistema. |
+| `/etc/systemd/system/node_exporter.service` | 📄 Arquivo de unidade do systemd que define como o serviço Node Exporter deve ser iniciado, interrompido e gerenciado pelo sistema. Pode especificar o executável, argumentos de inicialização, usuário e grupo de execução, dependências, políticas de reinicialização e outras opções de gerenciamento do serviço. |
+---
 
 ## 01_ Criando o Grupo e o Usuário de Serviço do Node Exporter no Ubuntu Server
 ```bash
@@ -121,16 +135,7 @@ tar -zxvf node_exporter*.tar.gz
 sudo cp -Rv node_exporter*/node_exporter /usr/local/bin/
 ```
 
-## 05_ Localização dos diretórios e arquivos principais do Prometheus no Ubuntu Server 
-
-| **📂 Caminho** | **📌 Tipo** | **📖 Descrição** | **🎯 Finalidade** |
-| :------------- | :---------- | :--------------- | :---------------- |
-| `/etc/prometheus/` | Diretório | Diretório principal dos **arquivos de configuração** do Prometheus. | Centralizar as configurações utilizadas pelo serviço. |
-| `/etc/prometheus/node_exporter.conf` | Arquivo | Principal arquivo de configuração do **Node Exporter**. | Define parâmetros de inicialização do serviço do Node Exporter e seus recursos de monitoramento. |
-| `/etc/prometheus/rules/alertas-node-linux.yml` | Arquivo | Arquivo contendo as **regras de alertas relacionadas ao Node Exporter/Linux**. | Definir condições que, quando atendidas, podem gerar **alertas sobre CPU, memória, disco, rede e outros recursos do servidor**. |
----
-
-## 06_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server
+## 05_ Baixando e atualizando os arquivos customizados do Node Exporter no Ubuntu Server
 ```bash
 #download do arquivo de serviço do Node Exporter no Ubuntu Server
 #opção do comando wget: -v (verbose), -O (output file)
@@ -150,7 +155,7 @@ sudo wget -v -O /etc/prometheus/node_exporter.conf https://raw.githubusercontent
 sudo wget -v -O /etc/prometheus/rules/alertas-node-linux.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/alertas-node-linux.yml
 ```
 
-## 07_ Alterando as permissões do executável do Node Exporter no Ubuntu Server
+## 06_ Alterando as permissões do executável do Node Exporter no Ubuntu Server
 ```bash
 #alterando o dono e grupo do arquivo do Node Exporter no Ubuntu Server
 #opção do comando chown: -R (recursive) -v (verbose), node_exporter (user), :node_exporter (group)
@@ -170,7 +175,7 @@ sudo chown -Rv node_exporter:node_exporter /etc/prometheus/node_exporter.conf
 sudo chmod -Rv 775 /usr/local/bin/node_exporter
 ```
 
-## 08_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server
+## 07_ Editando o arquivo de configuração do Node Exporter no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do `Node Exporter` e baseado no formato de Serialização de Dados Legíveis *YAML (Yet Another Markup Language)* utilizado pela linguagem de programação Python, muito cuidado com o uso de espaços e tabulação e principalmente sua indentação.
 
@@ -213,7 +218,7 @@ ESC SHIFT : x <Enter>
 sudo -u prometheus promtool check rules /etc/prometheus/rules/alertas-node-linux.yml
 ```
 
-## 09_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
+## 08_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** o arquivo de configuração do `Prometheus` e baseado no formato de Serialização de Dados Legíveis *YAML (Yet Another Markup Language)* utilizado pela linguagem de programação Python, muito cuidado com o uso de espaços e tabulação e principalmente sua indentação.
 
@@ -253,7 +258,7 @@ ESC SHIFT : x <Enter>
 sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
 ```
 
-## 10_ Habilitando o Serviço do Node Exporter no Ubuntu Server
+## 09_ Habilitando o Serviço do Node Exporter no Ubuntu Server
 ```bash
 #habilitando o serviço do Node Exporter no Ubuntu Server
 #opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
@@ -277,7 +282,7 @@ sudo systemctl start node_exporter
 sudo systemctl restart prometheus
 ```
 
-## 11_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server
+## 10_ Verificando o Serviço e Versão do Node Exporter no Ubuntu Server
 ```bash
 #verificando o serviço do Node Exporter no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then 
@@ -317,7 +322,7 @@ sudo journalctl -xeu node_exporter
 sudo node_exporter --version
 ```
 
-## 12_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server
+## 11_ Verificando a Porta de Conexão do Node Exporter no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
@@ -328,7 +333,7 @@ sudo node_exporter --version
 sudo lsof -nP -iTCP:'9100' -sTCP:LISTEN
 ```
 
-## 13_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server
+## 12_ Verificando as Métrica do Node Exporter no Prometheus via Navegador no Ubuntu Server
 
 ```bash
 #acessando o Prometheus via navegador
@@ -346,7 +351,7 @@ Status
       Endpoint: http://172.16.1.20:9100/metrics
 ```
 
-## 14_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server
+## 13_ Verificando as Regras e Alertas do Node Exporter no Prometheus via Navegador no Ubuntu Server
 
 ```bash
 #acessando o Prometheus via navegador

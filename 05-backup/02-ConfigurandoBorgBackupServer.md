@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `29/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -37,6 +37,7 @@ BorgBackup Server / BBS (Documentação Oficial - Wiki): https://github.com/marc
 BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server](#01_-verificando-os-pré-requisitos-do-ambiente-para-o-borgbackupserver-no-ubuntu-server)<br>
 [#02_ Verificando os Requisitos de Sistema (Software Base) do BBS no Ubuntu Server](#02_-verificando-os-requisitos-de-sistema-software-base-do-bbs-no-ubuntu-server)<br>
 [#03_ Instalando o BorgBackupServer (BBS) no Ubuntu Server](#03_-instalando-o-borgbackupserver-bbs-no-ubuntu-server)<br>
@@ -50,7 +51,6 @@ BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 [#11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server](#11_-criando-a-estrutura-de-informações-na-partição-dados-do-ubuntu-server)<br>
 [#12_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#12_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
 [#13_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#13_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
-[#14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server](#14_-localização-dos-arquivos-de-configuração-e-logs-do-bbs-no-ubuntu-server)<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
 
@@ -66,6 +66,22 @@ Link da vídeo aula:
 | 🔐 **Append-Only** | Modo de operação do Repositório Borg em que os Agentes possuem permissão apenas para **Adicionar** novos dados, nunca para **Apagar ou Sobrescrever** Backups já existentes. | Protege os Backups contra ataques de **Ransomware**: mesmo que o servidor de origem seja comprometido, o invasor não consegue apagar o histórico de Backups já armazenado no Repositório. |
 | 📦 **Repositório (Repository)** | Estrutura de diretórios do Borg onde os dados deduplicados, comprimidos e criptografados ficam efetivamente armazenados. | Neste cenário, aponta diretamente para a partição dedicada de Backup (`/backup`) criada no procedimento anterior de **Particionamento**. |
 | 🗓️ **Plano de Backup (Backup Plan)** | Configuração que define **Origem dos Dados**, **Repositório de Destino**, **Agendamento (Cron)** e **Política de Retenção** de um Backup. | Automatiza a rotina de Backup da partição de Dados (`/dados`, LVM), sem a necessidade de scripts manuais ou tarefas agendadas separadas. |
+---
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/dados` | 📁 Diretório utilizado como ponto de montagem (*mount point*) para disponibilizar um sistema de arquivos destinado ao armazenamento de dados, podendo conter arquivos, bancos de dados, aplicações ou informações utilizadas pelos serviços do servidor. |
+| `/backup` | 📁 Diretório utilizado como ponto de montagem (*mount point*) ou local de armazenamento para cópias de segurança (*backups*), permitindo guardar arquivos, dados, configurações e outros conteúdos importantes para recuperação em caso de falhas ou perda de informações. |
+| `/backup/repository/lv-dados` | 📁 Diretório utilizado para armazenar um repositório de backup relacionado aos dados do sistema. Pode ser utilizado por ferramentas de backup para organizar, manter e gerenciar cópias de segurança dos dados armazenados, incluindo versões históricas e informações necessárias para restauração. |
+| `/etc/` | 📁 Diretório que armazena arquivos de configuração do sistema GNU/Linux, incluindo configurações de serviços, aplicações, usuários, rede, segurança e diversos componentes do sistema operacional. |
+| `/etc/apache2/sites-available/` | 📁 Diretório que armazena arquivos de configuração dos Virtual Hosts do servidor Web Apache. Permite definir diferentes sites, domínios, portas, diretórios raiz (*DocumentRoot*), permissões e outras configurações. Os arquivos armazenados nesse diretório não estão necessariamente ativos; normalmente, são habilitados por meio de links simbólicos em `/etc/apache2/sites-enabled/`. |
+| `/etc/cron.d/` | 📁 Diretório que armazena arquivos de configuração de tarefas agendadas pelo serviço Cron, permitindo definir comandos ou scripts que serão executados automaticamente em horários, datas ou intervalos específicos. Os arquivos seguem o formato de configuração do Cron, incluindo o campo de usuário responsável pela execução da tarefa. |
+| `/var/log/apache2/` | 📁 Diretório que armazena arquivos de log do servidor Web Apache, incluindo registros de acesso (*access logs*), erros (*error logs*) e outras informações relacionadas ao funcionamento, requisições recebidas, respostas HTTP e problemas de execução dos sites hospedados. |
+| `/var/log/mysql/` | 📁 Diretório utilizado para armazenar arquivos de log relacionados ao servidor de banco de dados MySQL, podendo conter registros de erros, inicialização, funcionamento, consultas ou outras informações, dependendo da configuração do serviço e dos arquivos de log habilitados. |
+| `/var/www/bbs/` | 📁 Diretório utilizado para armazenar os arquivos da aplicação Borg Backup Server (BBS), uma plataforma Web de gerenciamento centralizado de backups baseada no BorgBackup. Contém arquivos da aplicação, código-fonte, scripts, componentes Web, ferramentas administrativas e outros recursos necessários para seu funcionamento. |
+| `/etc/bbs/` | 📁 Diretório destinado a armazenar arquivos de configuração da aplicação Borg Backup Server (BBS), podendo incluir parâmetros de funcionamento, configurações de serviços, tarefas agendadas, credenciais, chaves de criptografia e outras informações necessárias à administração e operação da plataforma. |
 ---
 
 ## 01_ Verificando os Pré-requisitos do Ambiente para o BorgBackupServer no Ubuntu Server
@@ -613,20 +629,6 @@ sudo tree /backup
         <Download .tar.gz>  (Melhor para testar o backup)
       <Restaurar>
 ```
-
-## 14_ Localização dos Arquivos de Configuração e Logs do BBS no Ubuntu Server
-
-| **📂 Caminho** | **📝 Descrição** |
-| :------------- | :--------------- |
-| **`/backup/repository/lv-dados`** | Repositório Borg propriamente dito, contendo os dados deduplicados, comprimidos e criptografados do Backup da partição `/dados`. |
-| **`/etc/apache2/sites-available/`** | Diretório de configuração do VirtualHost do Apache criado pelo instalador do BBS para o Painel Web. |
-| **`/etc/cron.d/`** ou **crontab do usuário do BBS** | Local onde o instalador registra a tarefa agendada responsável por processar a fila de Jobs (Backups, Restores, Prunes). |
-| **`/var/log/apache2/`** | Logs de acesso e erro do Painel Web (Apache), úteis para diagnosticar problemas de acesso via navegador. |
-| **`/var/log/mysql/`** | Logs do Banco de Dados MySQL utilizado pelo BBS para armazenar Clientes, Planos de Backup e Histórico de Jobs. |
-| **`/var/www/bbs`** | Localização dos arquivos de configuração, binários e site principal do Borg |
-| **`/etc/bbs`** | Localização do diretório e arquivos de configuração do Borg Agent |
-| **Painel Web → Fila e Jobs (Queue and Jobs)** | Histórico detalhado e Logs de cada execução de Backup/Restore, disponível diretamente na Interface Web do BBS. |
----
 
 ---
 

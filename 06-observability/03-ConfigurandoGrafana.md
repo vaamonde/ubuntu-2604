@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `10/09/2026`<br>
-**Versão:** `0.07`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.08`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -34,16 +34,16 @@ Ubuntu Advantage for Infrastructure: https://ubuntu.com/advantage<br>
 Site Oficial do Grafana: https://grafana.com/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Instalando as Dependências do Grafana Server no Ubuntu Server](#01_-instalando-as-dependências-do-grafana-server-no-ubuntu-server)<br>
 [#02_ Baixando a Chave GPG e Criando o Repositório do Grafana Server no Ubuntu Server](#02_-baixando-a-chave-gpg-e-criando-o-repositório-do-grafana-server-no-ubuntu-server)<br>
 [#03_ Instalando o Grafana Server no Ubuntu Server](#03_-instalando-o-grafana-server-no-ubuntu-server)<br>
 [#04_ Atualizado os arquivos de configuração do Grafana Server no Ubuntu Server](#04_-atualizado-os-arquivos-de-configuração-do-grafana-server-no-ubuntu-server)<br>
-[#05_ Localização dos diretórios e arquivos principais do Grafana Server no Ubuntu Server](#05_-localização-dos-diretórios-e-arquivos-principais-do-grafana-server-no-ubuntu-server)<br>
-[#06_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server](#06_-editando-os-arquivos-de-configuração-do-grafana-server-no-ubuntu-server)<br>
-[#07_ Habilitando o Serviço do Grafana Server no Ubuntu Server](#07_-habilitando-o-serviço-do-grafana-server-no-ubuntu-server)<br>
-[#08_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server](#08_-verificando-o-serviço-e-versão-do-grafana-server-no-ubuntu-server)<br>
-[#09_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server](#09_-verificando-a-porta-de-conexão-do-grafana-server-no-ubuntu-server)<br>
-[#10_ Configurando o Grafana Server via Navegador](#10_-configurando-o-grafana-server-via-navegador)<br>
+[#05_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server](#05_-editando-os-arquivos-de-configuração-do-grafana-server-no-ubuntu-server)<br>
+[#06_ Habilitando o Serviço do Grafana Server no Ubuntu Server](#06_-habilitando-o-serviço-do-grafana-server-no-ubuntu-server)<br>
+[#07_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server](#07_-verificando-o-serviço-e-versão-do-grafana-server-no-ubuntu-server)<br>
+[#08_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server](#08_-verificando-a-porta-de-conexão-do-grafana-server-no-ubuntu-server)<br>
+[#09_ Configurando o Grafana Server via Navegador](#09_-configurando-o-grafana-server-via-navegador)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -53,6 +53,25 @@ Site Oficial do Grafana: https://grafana.com/<br>
 [![Grafana Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Grafana Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/usr/share/keyrings/` | 📁 Diretório utilizado para armazenar chaves criptográficas públicas (keyrings) usadas pelo APT para verificar a autenticidade e integridade dos pacotes e repositórios de software, garantindo que os pacotes sejam assinados por fontes confiáveis. |
+| `/usr/share/keyrings/grafana.gpg` | 🔑 Arquivo que contém a chave pública GPG utilizada para verificar as assinaturas dos pacotes provenientes do repositório oficial do Grafana, permitindo que o APT valide a autenticidade dos pacotes antes de instalá-los ou atualizá-los. |
+| `/etc/apt/sources.list.d/` | 📁 Diretório que armazena arquivos adicionais de configuração dos repositórios de software utilizados pelo APT, permitindo adicionar, organizar e gerenciar fontes de pacotes de terceiros ou repositórios específicos sem modificar o arquivo principal de configuração. |
+| `/etc/apt/sources.list.d/grafana.list` | 📄 Arquivo de configuração que define o repositório de software do Grafana utilizado pelo APT, especificando informações como endereço do repositório, distribuição, componentes e, quando configurado, a chave de assinatura associada utilizada para verificar a autenticidade dos pacotes. |
+| `/etc/default/` | 📁 Diretório que armazena arquivos com parâmetros e configurações padrão utilizados por serviços, scripts de inicialização e componentes do sistema GNU/Linux, permitindo definir opções de execução e comportamentos específicos. |
+| `/etc/default/grafana-server` | 📄 Arquivo de configuração que pode conter parâmetros padrão de inicialização do serviço Grafana Server, como opções de execução, argumentos adicionais, caminhos ou variáveis de ambiente utilizadas pelo script ou unidade de inicialização, dependendo da instalação e versão do pacote. |
+| `/etc/grafana/` | 📁 Diretório principal que armazena arquivos de configuração do Grafana, incluindo configurações do servidor, segurança, autenticação, acesso à interface Web, banco de dados, plugins, alertas e outras opções de funcionamento. |
+| `/etc/grafana/grafana.ini` | 📄 Arquivo principal de configuração do Grafana, normalmente no formato INI, utilizado para definir parâmetros de funcionamento do servidor, como endereço e porta de escuta, URL externa, autenticação, segurança, banco de dados, logs, SMTP, alertas e configurações de plugins. |
+| `/var/log/` | 📁 Diretório utilizado para armazenar arquivos de log do sistema GNU/Linux e de seus serviços e aplicações, registrando eventos, mensagens de funcionamento, avisos, erros e informações úteis para monitoramento, auditoria e diagnóstico de problemas. |
+| `/var/log/grafana/` | 📁 Diretório destinado ao armazenamento de arquivos de log do Grafana, contendo registros de funcionamento do servidor, inicialização, requisições, alertas, plugins, avisos e erros que auxiliam na análise e resolução de problemas. |
+| `/var/lib/` | 📁 Diretório utilizado para armazenar dados persistentes de aplicações e serviços do sistema GNU/Linux, incluindo bancos de dados, arquivos de estado, informações de execução e outros dados que precisam ser preservados entre reinicializações. |
+| `/var/lib/grafana/` | 📁 Diretório utilizado para armazenar dados persistentes do Grafana, como banco de dados interno, dashboards, configurações armazenadas, sessões, informações de usuários, estado de alertas e outros dados necessários ao funcionamento da aplicação. |
+| `/var/lib/grafana/plugins/` | 📁 Diretório utilizado para armazenar plugins instalados no Grafana, incluindo plugins de painéis (*panel plugins*), fontes de dados (*data source plugins*) e aplicativos (*app plugins*), que ampliam as funcionalidades da plataforma de monitoramento e visualização de dados. |
+---
 
 ## 01_ Instalando as Dependências do Grafana Server no Ubuntu Server
 ```bash
@@ -129,20 +148,7 @@ sudo wget -v -O /etc/default/grafana-server https://raw.githubusercontent.com/va
 sudo wget -v -O /etc/grafana/grafana.ini https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/grafana.ini
 ```
 
-## 05_ Localização dos diretórios e arquivos principais do Grafana Server no Ubuntu Server
-
-| **📂 Caminho** | **📌 Tipo** | **📖 Descrição** | **🎯 Finalidade** |
-| :------------- | :---------- | :--------------- | :---------------- |
-| `/etc/grafana/` | Diretório | Diretório principal dos **arquivos de configuração** do Grafana Server. | Centralizar as configurações utilizadas pelo Grafana. |
-| `/etc/grafana/grafana.ini` | Arquivo | Principal arquivo de **configuração do Grafana Server**. | Definir parâmetros de inicialização, servidor Web, banco de dados, autenticação, segurança, logs e outros recursos. |
-| `/etc/default/grafana-server` | Arquivo | Arquivo com **variáveis e parâmetros utilizados pelo serviço** `grafana-server`. | Complementar a configuração de inicialização e execução do serviço pelo sistema operacional. |
-| `/usr/share/grafana/` | Diretório | Diretório que contém os **arquivos da aplicação Grafana**, incluindo recursos Web e arquivos necessários à execução. | Disponibilizar os componentes da **interface Web e da aplicação** do Grafana Server. |
-| `/var/log/grafana/` | Diretório | Diretório destinado aos **arquivos de log** do Grafana Server. | Registrar eventos, erros, avisos e informações úteis para **monitoramento e troubleshooting**. |
-| `/var/lib/grafana/` | Diretório | Diretório destinado aos **dados persistentes** utilizados pelo Grafana Server. | Armazenar dados locais da aplicação, incluindo o **banco de dados SQLite**, quando utilizado, e outros dados persistentes. |
-| `/var/lib/grafana/plugins/` | Diretório | Diretório destinado aos **plugins instalados** no Grafana. | Armazenar e organizar plugins adicionais que ampliam as funcionalidades do Grafana Server. |
----
-
-## 06_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server
+## 05_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server
 ```bash
 #editando o arquivo de configuração do Grafana Server no Ubuntu Server
 sudo vim /etc/default/grafana-server
@@ -194,7 +200,7 @@ domain = pti.intra
 ESC SHIFT : x <Enter>
 ```
 
-## 07_ Habilitando o Serviço do Grafana Server no Ubuntu Server
+## 06_ Habilitando o Serviço do Grafana Server no Ubuntu Server
 ```bash
 #habilitando o serviço do Grafana Server no Ubuntu Server
 #opções do comando systemctl: daemon-reload (Reload the systemd manager configuration), 
@@ -214,7 +220,7 @@ sudo systemctl enable grafana-server
 sudo systemctl restart grafana-server
 ```
 
-## 08_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server
+## 07_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server
 ```bash
 #verificando o serviço do Grafana Server no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then 
@@ -261,7 +267,7 @@ sudo grafana server -v
 sudo grafana cli -v
 ```
 
-## 09_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server
+## 08_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** no Ubuntu Server as Regras de Firewall utilizando o comando: __` iptables `__ ou: __` ufw `__ está desabilitado por padrão **(INACTIVE)**, caso você tenha habilitado algum recurso de Firewall é necessário fazer a liberação do *Fluxo de Entrada (INPUT), Porta (PORT) e Protocolo (PROTOCOL) TCP* do Serviço corresponde nas tabelas do firewall e testar a conexão.
 
@@ -271,7 +277,7 @@ sudo grafana cli -v
 sudo lsof -nP -iTCP:'3000' -sTCP:LISTEN
 ```
 
-## 10_ Configurando o Grafana Server via Navegador
+## 09_ Configurando o Grafana Server via Navegador
 ```bash
 #acessando via navegador o Grafana Server na Porta 3000
 Navegadores firefox ou google chrome: http://endereço_ipv4_ubuntuserver:3000

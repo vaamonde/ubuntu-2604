@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `15/09/2026`<br>
-**Versão:** `0.08`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.09`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -36,6 +36,7 @@ Linux Bonding Driver (Kernel.org): https://www.kernel.org/doc/Documentation/netw
 Oracle VirtualBOX Networking (Documentação Oficial): https://www.virtualbox.org/manual/ch06.html
 
 **Conteúdo estudado nessa configuração:**<br>
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
 [#01_ Entendendo as limitações do Oracle VirtualBOX para o Bonding](#01_-entendendo-as-limitações-do-oracle-virtualbox-para-o-bonding)<br>
 [#02_ Adicionando a Segunda Placa de Rede na Máquina Virtual UbuntuOnPremise](#02_-adicionando-a-segunda-placa-de-rede-na-máquina-virtual-ubuntuonpremises)<br>
 [#03_ Habilitando o Modo Promíscuo nos Adaptadores de Rede via VBoxManage](#03_-habilitando-o-modo-promíscuo-nos-adaptadores-de-rede-via-vboxmanage)<br>
@@ -57,6 +58,18 @@ Oracle VirtualBOX Networking (Documentação Oficial): https://www.virtualbox.or
 [![Bonding Ubuntu Server VirtualBOX](http://img.youtube.com/vi//0.jpg)]( "Bonding Ubuntu Server VirtualBOX")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/etc/modules-load.d/` | 📁 Diretório que armazena arquivos de configuração utilizados pelo systemd para especificar módulos do kernel Linux que devem ser carregados automaticamente durante a inicialização do sistema ou em momentos específicos do processo de inicialização. |
+| `/etc/modules-load.d/bonding.conf` | 📄 Arquivo de configuração utilizado para indicar que o módulo `bonding` do kernel Linux deve ser carregado automaticamente. Esse módulo permite combinar múltiplas interfaces de rede físicas em uma interface lógica, utilizando técnicas de agregação de links (*Network Bonding*), para proporcionar redundância, tolerância a falhas ou balanceamento de tráfego, dependendo do modo configurado. |
+| `/etc/netplan/` | 📁 Diretório que armazena arquivos de configuração de rede utilizados pelo Netplan, ferramenta responsável por definir e gerenciar a configuração das interfaces de rede no Ubuntu. |
+| `/etc/netplan/00-installer-config.yaml` | 📄 Arquivo de configuração YAML utilizado pelo Netplan para definir parâmetros de rede, como interfaces, endereçamento IP estático ou DHCP, gateway, servidores DNS e configurações de agregação de interfaces de rede (*bonding*). Neste cenário, pode definir uma interface lógica `bond0`, formada pela combinação de duas ou mais interfaces físicas. |
+| `/proc/net/bonding/` | 📁 Diretório virtual que disponibiliza informações de status e funcionamento das interfaces de rede configuradas com *Network Bonding* no kernel Linux. Seu conteúdo é gerado dinamicamente pelo kernel e permite acompanhar o estado das interfaces agregadas, os modos de operação, os links ativos e outras informações relacionadas ao bonding. |
+| `/proc/net/bonding/bond0` | 📄 Arquivo virtual que apresenta informações detalhadas sobre a interface de agregação de rede `bond0`, incluindo modo de bonding, política de distribuição de tráfego, interfaces escravas (*slaves*), estado dos links, velocidade, duplex e interface atualmente ativa, dependendo do modo de operação configurado. |
+---
 
 ## 01_ Entendendo as limitações do Oracle VirtualBOX para o Bonding
 
