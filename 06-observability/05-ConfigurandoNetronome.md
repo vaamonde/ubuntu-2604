@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `14/09/2026`<br>
-**Versão:** `0.01`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.02`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -36,7 +36,20 @@ Site Oficial do Librespeed: https://librespeed.org/<br>
 Github Oficial do Projeto Librespeed: https://github.com/librespeed/speedtest<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ 
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)
+[#01_ Instalando as dependências do Netronome Server no Ubuntu Server](#01_-instalando-as-dependências-do-netronome-server-no-ubuntu-server)
+[#02_ Instalando o Netronome Server do Projeto do Github no Ubuntu Server](#02_-instalando-o-netronome-server-do-projeto-do-github-no-ubuntu-server)
+[#03_ Instalando o SpeedTest do Projeto do Github no Ubuntu Server](#03_-instalando-o-speedtest-do-projeto-do-github-no-ubuntu-server)
+[#04_ Configurando o Netronome Server no Ubuntu Server](#04_-configurando-o-netronome-server-no-ubuntu-server)
+[#05_ Atualizando os arquivos de configuração do Netronome Server no Ubuntu Server](#05_-atualizando-os-arquivos-de-configuração-do-netronome-server-no-ubuntu-server)
+[#06_ Habilitando os Serviços do Netronome e Iperf3 Server no Ubuntu Server](#06_-habilitando-os-serviços-do-netronome-e-iperf3-server-no-ubuntu-server)
+[#07_ Verificando os Serviços e Versão do Netronome e Iperf3 Server no Ubuntu Server](#07_-verificando-os-serviços-e-versão-do-netronome-e-iperf3-server-no-ubuntu-server)
+[#08_ Editando o arquivo de configuração de Portas do Apache2 Server no Ubuntu Server](#08_-editando-o-arquivo-de-configuração-de-portas-do-apache2-server-no-ubuntu-server)
+[#09_ Instalando o Netronome Agent do Projeto do Github no Ubuntu Server](#09_-instalando-o-netronome-agent-do-projeto-do-github-no-ubuntu-server)
+[#10_ Verificando as Portas de Conexões do Apache2, SpeedTest, Netronome e Iperf3 Server no Ubuntu Server](#10_-verificando-as-portas-de-conexões-do-apache2-speedtest-netronome-e-iperf3-server-no-ubuntu-server)
+[#11_ Editando os arquivos de configuração do Netronome Server no Ubuntu Server](#11_-editando-os-arquivos-de-configuração-do-netronome-server-no-ubuntu-server)
+[#12_ Configurado o Netronome Server via Navegador](#12_-configurado-o-netronome-server-via-navegador)
+[#13_ Configurando os principais Monitoramento do Netronome Server via Navegador](#13_-configurando-os-principais-monitoramento-do-netronome-server-via-navegador)
 
 [![Netronome Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Netronome Ubuntu Server")
 
@@ -44,7 +57,35 @@ Link da vídeo aula:
 
 | **💾 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
+| 🌐 **Netronome** | Aplicação de código aberto para testes de velocidade e monitoramento de redes e servidores. | Centralizar testes de conexão, monitoramento de equipamentos, acompanhamento de métricas e notificações. |
+| 🚀 **Speedtest.net (Ookla)** | Serviço de medição de velocidade de conexão com a Internet. | Medir as velocidades de Download e Upload, além de indicadores como Ping e Jitter, utilizando servidores de teste da rede Speedtest.net. |
+| ⚡ **LibreSpeed** | Ferramenta de teste de velocidade de Internet de código aberto, que pode ser hospedada em um servidor próprio. | Realizar testes de Download, Upload, Ping e Jitter utilizando uma infraestrutura própria ou servidores LibreSpeed configurados. |
+| 📊 **iPerf3** | Ferramenta de código aberto para medir o desempenho e a largura de banda de conexões de rede. | Avaliar a capacidade de transmissão entre dois equipamentos, medindo a velocidade de transferência de dados em TCP ou UDP. |
+| 🌍 **Geolocalização IP** | Técnica que estima a localização geográfica associada a um endereço IP. | Identificar informações geográficas aproximadas de endereços IP e auxiliar na identificação ou seleção de servidores de teste próximos. |
+| 🏢 **GeoIP / GeoLite2 Country** | Base de dados da MaxMind que associa endereços IP a informações geográficas, como países. | Consultar o país associado a um endereço IP sem depender necessariamente de uma consulta on-line a cada verificação. |
+| 🧩 **GeoLite2 ASN** | Base de dados da MaxMind que relaciona endereços IP a números de sistemas autônomos (ASN) e organizações responsáveis pelas redes. | Identificar a organização ou provedor associado a um endereço IP e obter informações sobre sua rede. |
+| 🖥️ **Agent (Agente Netronome)** | Processo do Netronome executado em outro servidor ou equipamento monitorado. | Coletar e enviar informações de utilização de rede, recursos do sistema, discos e dados SMART para a instância principal do Netronome. |
+---
 
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **Diretório/Arquivo** | **Descrição** |
+|-----------------------|---------------|
+| `/var/www/html/` | 📁 Diretório padrão utilizado pelo servidor Web Apache para armazenar arquivos que serão disponibilizados por meio de páginas e aplicações Web. Pode conter arquivos HTML, CSS, JavaScript, imagens e outros recursos utilizados por aplicações de teste de velocidade. |
+| `/var/www/html/speedtest/` | 📁 Diretório utilizado para armazenar os arquivos da interface Web do LibreSpeed, integrada ao Netronome. Contém os recursos necessários para disponibilizar a página de testes de velocidade de conexão, permitindo que usuários realizem testes diretamente pelo navegador. |
+| `/root/.config/netronome/` | 📁 Diretório de configuração do Netronome para o usuário `root`. Armazena arquivos de configuração da aplicação, listas de servidores LibreSpeed e bases de dados geográficas utilizadas para identificar informações relacionadas a endereços IP. |
+| `/root/.config/netronome/config.toml` | 📄 Arquivo principal de configuração do Netronome, no formato TOML, utilizado para definir parâmetros de funcionamento da aplicação, como configurações do servidor, banco de dados, testes de velocidade, integração com iperf3, LibreSpeed, monitoramento, notificações, autenticação e outras opções disponíveis. |
+| `/root/.config/netronome/librespeed-servers.json` | 📄 Arquivo JSON que armazena informações sobre servidores compatíveis com LibreSpeed, utilizados para realizar testes de velocidade de conexão. Pode conter dados como identificadores, nomes, endereços, portas e localizações dos servidores disponíveis para os testes. |
+| `/root/.config/netronome/GeoLite2-ASN.mmdb` | 🌎 Arquivo de banco de dados geográfico GeoLite2 ASN, da MaxMind, utilizado para identificar o Sistema Autônomo (ASN — Autonomous System Number) associado a um endereço IP, permitindo obter informações sobre a organização ou provedor responsável pela rede. |
+| `/root/.config/netronome/GeoLite2-Country.mmdb` | 🌎 Arquivo de banco de dados geográfico GeoLite2 Country, da MaxMind, utilizado para identificar o país associado a um endereço IP. Pode ser utilizado pelo Netronome para apresentar informações geográficas relacionadas aos endereços IP monitorados. |
+| `/etc/apache2/` | 📁 Diretório principal que armazena arquivos de configuração do servidor Web Apache, incluindo configurações globais, módulos, portas de comunicação, Virtual Hosts e outras opções de funcionamento do serviço HTTP/HTTPS. |
+| `/etc/apache2/ports.conf` | 📄 Arquivo de configuração do Apache utilizado para definir as portas TCP nas quais o servidor Web deve aguardar conexões HTTP e HTTPS, normalmente as portas `80` e `443`. Também pode definir endereços IP específicos para escuta. |
+| `/etc/apache2/sites-available/` | 📁 Diretório que armazena arquivos de configuração dos Virtual Hosts do Apache, permitindo configurar diferentes sites e aplicações Web, incluindo domínios, portas, diretórios raiz (*DocumentRoot*) e regras de acesso. Os arquivos armazenados nesse diretório não estão necessariamente ativos; normalmente, são habilitados por meio de links simbólicos em `/etc/apache2/sites-enabled/`. |
+| `/etc/apache2/sites-available/speedtest.conf` | 📄 Arquivo de configuração de um Virtual Host do Apache destinado à aplicação de teste de velocidade Speedtest/LibreSpeed integrada ao Netronome. Pode definir o domínio ou endereço de acesso, a porta de comunicação, o diretório raiz dos arquivos da aplicação e outras regras necessárias para disponibilizar a interface Web. |
+| `/etc/systemd/system/` | 📁 Diretório que armazena arquivos de unidade (*unit files*) personalizados do systemd, utilizados para configurar e gerenciar serviços, timers, sockets, mounts e outros recursos do sistema GNU/Linux. |
+| `/etc/systemd/system/netronome.service` | 📄 Arquivo de unidade do systemd que define como o serviço Netronome deve ser iniciado, interrompido e gerenciado pelo sistema. Pode especificar o executável, argumentos de inicialização, caminho do arquivo de configuração, usuário e grupo de execução, dependências e políticas de reinicialização do serviço. O Netronome utiliza esse serviço para executar sua aplicação principal, disponibilizar a interface Web e realizar atividades de monitoramento e testes de rede. |
+| `/etc/systemd/system/iperf3.service` | 📄 Arquivo de unidade do systemd que define como o serviço iperf3 deve ser iniciado, interrompido e gerenciado pelo sistema. Normalmente, configura o iperf3 para executar em modo servidor, aguardando conexões de clientes para realizar testes de desempenho de rede, medindo largura de banda, vazão (*throughput*) e outros parâmetros de comunicação. |
+---
 
 ## 01_ Instalando as dependências do Netronome Server no Ubuntu Server
 ```bash

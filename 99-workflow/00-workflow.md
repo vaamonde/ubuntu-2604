@@ -21,7 +21,8 @@
 15. Hardening OpenSSH + Certificado + 2FAS
 ------------------------------------------------------------
 
-16. Hardening TCP Wrappers
+16. Hardening TCP Wrappers                                OK
+------------------------------------------------------------
 17. Hardening Fail2Ban
 18. Hardening AppAmor
 19. Hardening Syslog

@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `29/09/2026`<br>
-**Data de atualização:** `28/09/2026`<br>
-**Versão:** `0.01`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.02`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -36,14 +36,46 @@ Site Oficial do OpenSSL: https://www.openssl.org/<br>
 Site Oficial do PuTTY: https://www.putty.org/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
+[#01_ Verificando o Serviço e Versão do OpenSSH Server e Client no Ubuntu Server](#01_-verificando-o-serviço-e-versão-do-openssh-server-e-client-no-ubuntu-server)<br>
+[#02_ Verificando a Porta de Conexão do OpenSSH Server no Ubuntu Server](#02_-verificando-a-porta-de-conexão-do-openssh-server-no-ubuntu-server)<br>
+[#03_ Atualizando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server](#03_-atualizando-os-arquivos-de-configuração-do-openssh-server-e-do-banner-no-ubuntu-server)<br>
+[#04_ Editando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server](#04_-editando-os-arquivos-de-configuração-do-openssh-server-e-do-banner-no-ubuntu-server)<br>
+[#05_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash](#05_-acessando-remotamente-o-openssh-server-via-powershell-putty-e-git-bash)<br>
+[#06_ Criando um usuário Administrador no Ubuntu Server](#06_-criando-um-usuário-administrador-no-ubuntu-server)<br>
+[#07_ Adicionando o usuário Admin no grupo SUDO (Super User Do) do Ubuntu Server](#07_-adicionando-o-usuário-admin-no-grupo-sudo-super-user-do-do-ubuntu-server)<br>
+[#08_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server](#08_-se-logando-no-terminal-tty-teletype-bashshell-do-ubuntu-server)<br>
 
+| **🔐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
+| :---------------- | :-------------- | :--------------------- |
+| 🔐 **OpenSSH** | Conjunto de ferramentas de código aberto que implementa o protocolo SSH (Secure Shell). | Permitir conexões remotas seguras, administração de servidores e transferência protegida de arquivos pela rede. |
+| 🖥️ **OpenSSH Server (sshd)** | Serviço responsável por receber e administrar conexões SSH no servidor. | Permitir que usuários autorizados acessem remotamente o Ubuntu Server e executem comandos administrativos. |
+| 💻 **OpenSSH Client (ssh)** | Aplicativo utilizado para iniciar conexões SSH com outros equipamentos. | Conectar-se remotamente a servidores Linux e outros dispositivos que disponibilizam o serviço SSH. |
+| 🛡️ **Segurança de Acesso SSH** | Conjunto de práticas e configurações utilizadas para proteger o serviço SSH. | Reduzir acessos não autorizados por meio de autenticação por chave, restrição de usuários, desativação de métodos inseguros e controle de tentativas de acesso. |
+| 📄 **/etc/issue.net** | Arquivo que pode armazenar o texto apresentado pelo banner do SSH. | Fornecer a mensagem exibida antes da autenticação quando configurado por meio da diretiva `Banner` no `sshd_config`. |
+| 📄 **/etc/issue** | Arquivo que contém a mensagem apresentada nos terminais locais antes do login. | Exibir avisos e informações de identificação para usuários que acessam o servidor diretamente pelo terminal. |
+---
 
-[![OpenSSH Server](http://img.youtube.com/vi//0.jpg)]("OpenSSH Server")
+[![OpenSSH Server](http://img.youtube.com/vi//0.jpg)]( "OpenSSH Server")
 
 Link da vídeo aula: 
 
-## 02_ Verificando o Serviço e Versão do OpenSSH Server e Client no Ubuntu Server
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **📁 Diretório/Arquivo** | **📖 Descrição** |
+| :----------------------- | :--------------- |
+| 🔐 `/etc/ssh/` | Diretório que armazena os arquivos de configuração do OpenSSH, incluindo configurações do servidor SSH, do cliente SSH e chaves de identificação do servidor. |
+| 🖥️ `/etc/ssh/sshd_config` | Arquivo principal de configuração do serviço servidor SSH (*OpenSSH Daemon*). Define opções como porta de conexão, autenticação por senha ou chave pública, acesso do usuário root e limites de tentativas de autenticação. |
+| 💻 `/etc/ssh/ssh_config` | Arquivo global de configuração do cliente SSH. Define opções utilizadas quando o servidor inicia conexões SSH para outros equipamentos, como usuário padrão, porta, autenticação e parâmetros de conexão. |
+| 📢 `/etc/issue.net` | Arquivo que pode apresentar uma mensagem de identificação ou aviso antes da autenticação em conexões remotas, quando configurado no SSH por meio da diretiva `Banner`. |
+| 📢 `/etc/issue` | Arquivo que contém a mensagem exibida nos terminais locais antes do processo de login. Pode apresentar informações institucionais, avisos de segurança e identificação do sistema operacional. |
+| 📂 `/var/log/` | Diretório utilizado pelo GNU/Linux para armazenar arquivos de registro (*logs*) de serviços, aplicações e componentes do sistema. |
+| 📝 `/var/log/syslog` | Arquivo de log geral do sistema, quando utilizado pelo serviço de registro correspondente. Pode conter mensagens do SSH, inicialização de serviços e outros eventos do Ubuntu. |
+| 🔑 `/var/log/auth.log` | Arquivo de log relacionado à autenticação e autorização de usuários. Pode registrar tentativas de conexão SSH, logins bem-sucedidos, falhas de autenticação, uso de `sudo` e outras atividades de segurança. |
+| ⚙️ `/var/run/sshd/` | Diretório de execução utilizado pelo serviço SSH para armazenar arquivos temporários necessários ao funcionamento do daemon. Em sistemas atuais, `/var/run` normalmente é um link simbólico para `/run`, cujo conteúdo é temporário e geralmente recriado durante a inicialização do sistema. |
+---
+
+## 01_ Verificando o Serviço e Versão do OpenSSH Server e Client no Ubuntu Server
 ```bash
 #verificando o serviço do OpenSSH Server no Ubuntu Server
 #opções do comando systemctl: status (runtime status information), restart (Stop and then start
@@ -77,7 +109,7 @@ sudo sshd -V
 sudo ssh -V
 ```
 
-## 03_ Verificando a Porta de Conexão do OpenSSH Server no Ubuntu Server
+## 02_ Verificando a Porta de Conexão do OpenSSH Server no Ubuntu Server
 ```bash
 #verificando a porta padrão TCP-22 do OpenSSH Server no Ubuntu Server
 #opção do comando lsof: -n (network number), -P (port number), -i (list IP Address), -s (alone directs)
@@ -85,20 +117,7 @@ sudo ssh -V
 sudo lsof -nP -iTCP:'22' -sTCP:LISTEN
 ```
 
-## 04_ Localização dos Arquivos de Configuração do OpenSSH Server no Ubuntu Server
-```bash
-/etc/ssh/                <-- Diretório de configuração do OpenSSH Server e Client
-/etc/ssh/sshd_config     <-- Arquivo de configuração do OpenSSH Server
-/etc/ssh/ssh_config      <-- Arquivo de configuração do OpenSSH Client
-/etc/issue.net           <-- Arquivo de configuração do Banner do Ubuntu Server para acesso remoto
-/etc/issue               <-- Arquivo de configuração do Prompt de Login do Ubuntu Server para acesso local
-/var/log/                <-- Diretório de Logs do Sistema Operacional Ubuntu Server
-/var/log/syslog          <-- Log principal do Sistema Operacional Ubuntu Server
-/var/log/auth.log        <-- Log principal das autenticações do Sistema Operacional Ubuntu Server
-/var/run/sshd/           <-- Diretório do Pid de Processo e Socket do OpenSSH Server
-```
-
-## 05_ Atualizando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
+## 03_ Atualizando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
 ```bash
 #fazendo o backup do arquivo de configuração do OpenSSH Server no Ubuntu Server
 #opção do comando cp: -v (verbose)
@@ -124,7 +143,7 @@ sudo wget -v -O /etc/issue.net https://raw.githubusercontent.com/vaamonde/ubuntu
 sudo wget -v -O /etc/issue https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/issue
 ```
 
-## 07_ Editando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
+## 04_ Editando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
@@ -218,7 +237,7 @@ sudo journalctl -t sshd
 sudo journalctl -xeu ssh
 ```
 
-## 08_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
+## 05_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
 ```bash
 #acessando o OpenSSH via Powershell
 Windows
@@ -304,7 +323,7 @@ NAME   LINE   TIME   IDLE   PID COMMENT   EXIT<br>
 users
 ```
 
-## 09_ Criando um usuário Administrador no Ubuntu Server
+## 06_ Criando um usuário Administrador no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** NESSE EXEMPLO ESTÁ SENDO CRIADO UM USUÁRIO ADMIN PARA A ADMINISTRAÇÃO DO SERVIDOR, *NÃO RECOMENDO CRIAR UM USUÁRIO CHAMADO:* __`admin`__ POIS É UM USUÁRIO CONHECIDO E EXISTE VÁRIOS SOFTWARE DE **FORÇA BRUTA (BRUTE FORCE)** QUE USA ESSE USUÁRIO PARA *INVADIR SERVIDORES*. NESSE EXEMPLO SERÁ CRIADO APENAS PARA EFEITO DE APRENDIZAGEM.
 >
@@ -346,7 +365,7 @@ sudo cat -n /etc/group | grep admin
 sudo getent group admin
 ```
 
-## 10_ Adicionando o usuário Admin no grupo SUDO (Super User Do) do Ubuntu Server
+## 07_ Adicionando o usuário Admin no grupo SUDO (Super User Do) do Ubuntu Server
 ```bash
 #adicionando o usuário Admin ao grupo do SUDO
 #opção do comando usermod: -a (append), -G (groups)
@@ -366,7 +385,7 @@ sudo id admin
 sudo getent group sudo
 ```
 
-## 11_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server
+## 08_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server
 
 ```bash
 #abrindo um segundo Terminal TTY (Teletype) no Ubuntu Server

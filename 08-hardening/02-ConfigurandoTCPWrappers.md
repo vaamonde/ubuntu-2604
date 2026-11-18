@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `29/09/2026`<br>
-**Data de atualização:** `29/09/2026`<br>
-**Versão:** `0.01`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.02`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -39,22 +39,11 @@ Site Oficial do PuTTY: https://www.putty.org/<br>
 #01_
 
 
-[![TCP Wrappers](http://img.youtube.com/vi//0.jpg)]("TCP Wrappers")
+[![TCP Wrappers](http://img.youtube.com/vi//0.jpg)]( "TCP Wrappers")
 
 Link da vídeo aula: 
 
-## 04_ Localização dos Arquivos de Configuração do OpenSSH Server no Ubuntu Server
-```bash
-/etc/hosts.deny          <-- Arquivo de configuração do Firewall de Aplicação TCP Wrappers Deny
-/etc/hosts.allow         <-- Arquivo de configuração do Firewall de Aplicação TCP Wrappers Allow
-/var/log/                <-- Diretório de Logs do Sistema Operacional Ubuntu Server
-/var/log/syslog          <-- Log principal do Sistema Operacional Ubuntu Server
-/var/log/auth.log        <-- Log principal das autenticações do Sistema Operacional Ubuntu Server
-/var/log/allow-ssh.log   <-- Log principal dos acessos remoto do TCP Wrappers Allow do OpenSSH Server
-/var/log/deny.log        <-- Log principal dos acesso negados do TCP Wrappers Deny do OpenSSH Server
-```
-
-## 05_ Atualizando os arquivos de configuração do TCP Wrappers no Ubuntu Server
+## 01_ Atualizando os arquivos de configuração do TCP Wrappers no Ubuntu Server
 ```bash
 #atualizando o arquivo de configuração do TCP Wrapper hosts allow do Ubuntu Server do Github
 #opção do comando wget: -v (verbose), -O (output file)
@@ -68,7 +57,7 @@ sudo wget -v -O /etc/hosts.allow https://raw.githubusercontent.com/vaamonde/ubun
 sudo wget -v -O /etc/hosts.deny https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/hosts.deny
 ```
 
-## 07_ Editando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
+## 02_ Editando os arquivos de configuração do OpenSSH Server e do Banner no Ubuntu Server
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
@@ -90,8 +79,7 @@ INSERT
 ESC SHIFT :x <Enter>
 ```
 
-
-## 08_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
+## 03_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
 ```bash
 #acessando o OpenSSH via Powershell
 Windows
@@ -128,9 +116,6 @@ Linux
 #verificando informações detalhadas dos usuários logados no Ubuntu Server
 sudo w
 ```
-
-
-
 
 ---
 

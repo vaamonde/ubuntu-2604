@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `06/07/2026`<br>
-**Data de atualização:** `29/09/2026`<br>
-**Versão:** `0.09`<br>
+**Data de atualização:** `18/11/2026`<br>
+**Versão:** `0.10`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -38,26 +38,25 @@ Site Oficial do IPTables: http://git.netfilter.org/iptables/<br>
 Site Oficial do NFTables: https://wiki.nftables.org/<br>
 
 **Conteúdo estudado nessa configuração:**<br>
-#01_ Verificando qual o Sistema de Firewall padrão do Ubuntu Server
-#02_ Verificando a Versão e Status do Firewall UFW no Ubuntu Server
-#03_ Habilitando (ENABLE) o Firewall UFW no Ubuntu Server
-#04_ Verificando o Serviço do Firewall UFW no Ubuntu Server
-#05_ Localização dos Arquivos e Diretório de Configuração do Firewall UFW no Ubuntu Server
-#06_ Verificando as Regras (RULES) de Entrada (INCOMING) e Saída (OUTGOING) padrão do UFW no Ubuntu Server
-#07_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Entrada (INCOMING) do UFW no Ubuntu Server
-#08_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Saída (OUTGOING) do UFW no Ubuntu Server
-#09_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Roteamento (ROUTED) do UFW no Ubuntu Server
-#10_ Configurando o Nível de Log (LOGGING) do UFW no Ubuntu Server
-#11_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server
-#12_ Liberando (ALLOW) a Entrada (INCOMING) e Saída (OUTGOING) da Interface de Loopback do UFW no Ubuntu Server
-#13_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server
-#14_ Liberando (ALLOW) a Saída (OUTGOING) do Protocolo ICMP (IPv4/IPv6) do UFW no Ubuntu Server
-#15_ Liberando (ALLOW) as Entradas (INCOMING) Básicas (PORTS) do UFW no Ubuntu Server
-#16_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
-#17_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
-#18_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
-#19_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server
-
+[#00_ Principais arquivos de configuração desse procedimento no Ubuntu Server](#00_-principais-arquivos-de-configuração-desse-procedimento-no-ubuntu-server)<br>
+[#01_ Verificando qual o Sistema de Firewall padrão do Ubuntu Server](#01_-verificando-qual-o-sistema-de-firewall-padrão-do-ubuntu-server)<br>
+[#02_ Verificando a Versão e Status do Firewall UFW no Ubuntu Server](#02_-verificando-a-versão-e-status-do-firewall-ufw-no-ubuntu-server)<br>
+[#03_ Habilitando (ENABLE) o Firewall UFW no Ubuntu Server](#03_-habilitando-enable-o-firewall-ufw-no-ubuntu-server)<br>
+[#04_ Verificando o Serviço do Firewall UFW no Ubuntu Server](#04_-verificando-o-serviço-do-firewall-ufw-no-ubuntu-server)<br>
+[#05_ Verificando as Regras (RULES) de Entrada (INCOMING) e Saída (OUTGOING) padrão do UFW no Ubuntu Server](#05_-verificando-as-regras-rules-de-entrada-incoming-e-saída-outgoing-padrão-do-ufw-no-ubuntu-server)<br>
+[#06_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Entrada (INCOMING) do UFW no Ubuntu Server](#06_-configurando-a-regra-rules-de-bloqueio-deny-padrão-default-de-entrada-incoming-do-ufw-no-ubuntu-server)<br>
+[#07_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Saída (OUTGOING) do UFW no Ubuntu Server](#07_-configurando-a-regra-rules-de-bloqueio-deny-padrão-default-de-saída-outgoing-do-ufw-no-ubuntu-server)<br>
+[#08_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Roteamento (ROUTED) do UFW no Ubuntu Server](#08_-configurando-a-regra-rules-de-bloqueio-deny-padrão-default-de-roteamento-routed-do-ufw-no-ubuntu-server)<br>
+[#09_ Configurando o Nível de Log (LOGGING) do UFW no Ubuntu Server](#09_-configurando-o-nível-de-log-logging-do-ufw-no-ubuntu-server)<br>
+[#10_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server](#10_-testando-as-conexões-de-entrada-incoming-e-saída-outgoing-antes-da-blindagem-no-ubuntu-server)<br>
+[#11_ Liberando (ALLOW) a Entrada (INCOMING) e Saída (OUTGOING) da Interface de Loopback do UFW no Ubuntu Server](#11_-liberando-allow-a-entrada-incoming-e-saída-outgoing-da-interface-de-loopback-do-ufw-no-ubuntu-server)<br>
+[#12_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server](#12_-liberando-allow-as-saídas-outgoing-básicas-dns-http-https-ntp-do-ufw-no-ubuntu-server)<br>
+[#13_ Liberando (ALLOW) a Saída (OUTGOING) do Protocolo ICMP (IPv4/IPv6) do UFW no Ubuntu Server](#13_-liberando-allow-a-saída-outgoing-do-protocolo-icmp-ipv4ipv6-do-ufw-no-ubuntu-server)<br>
+[#14_ Liberando (ALLOW) as Entradas (INCOMING) Básicas (PORTS) do UFW no Ubuntu Server](#14_-liberando-allow-a-entrada-incoming-básicas-ports-do-ufw-no-ubuntu-server)<br>
+[#15_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server](#15_-reiniciando-reload-as-regras-de-firewall-do-ufw-no-ubuntu-server)<br>
+[#16_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server](#16_-entendendo-o-log-logging-do-firewall-ufw-no-ubuntu-server)<br>
+[#17_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server](#17_-visualizando-show-informações-detalhadas-report-do-ufw-no-ubuntu-server)<br>
+[#18_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server](#18_-desativando-disable-e-ativando-enable-o-ufw-no-ubuntu-server)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -69,9 +68,27 @@ Site Oficial do NFTables: https://wiki.nftables.org/<br>
 | 🧱 **Blindagem Full (IN/OUT)** | Estratégia de Hardening onde tanto a política padrão de Entrada quanto a de Saída são configuradas como `deny` (bloqueado), liberando apenas o tráfego estritamente necessário através de regras específicas. | Reduz drasticamente a superfície de ataque do servidor, dificultando tanto o acesso não autorizado (Entrada) quanto a exfiltração de dados ou comunicação com C2/Malware (Saída). |
 ---
 
-[![Firewall UFW Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Firewall UFW Ubuntu Server")
+[![Netronome Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "Netronome Ubuntu Server")
 
 Link da vídeo aula: 
+
+## 00_ Principais arquivos de configuração desse procedimento no Ubuntu Server
+
+| **📁 Diretório/Arquivo** | **📖 Descrição** |
+| :----------------------- | :--------------- |
+| 🛡️ `/etc/ufw/` | Diretório principal de configuração do UFW (Uncomplicated Firewall), ferramenta utilizada no Ubuntu para administrar regras de firewall. |
+| ⚙️ `/etc/ufw/ufw.conf` | Arquivo de configuração geral do UFW. Define, entre outras opções, se o firewall deve ser habilitado durante a inicialização do sistema. |
+| 🔍 `/etc/ufw/before.rules` e `before6.rules` | Arquivos que armazenam regras personalizadas do firewall executadas antes das regras comuns do UFW. O primeiro é utilizado para IPv4 e o segundo para IPv6. |
+| 🔍 `/etc/ufw/after.rules` e `after6.rules` | Arquivos que armazenam regras personalizadas executadas depois das regras comuns do UFW. O primeiro trata de IPv4 e o segundo de IPv6. |
+| 📋 `/etc/ufw/user.rules` e `user6.rules` | Arquivos que armazenam as regras de firewall administradas pelo usuário por meio dos comandos do UFW. O primeiro corresponde ao IPv4 e o segundo ao IPv6. |
+| 📦 `/etc/ufw/applications.d/` | Diretório que contém definições de perfis de aplicações. Esses perfis permitem identificar serviços e suas portas para facilitar a criação de regras no firewall. |
+| ⚙️ `/etc/default/` | Diretório que armazena arquivos com configurações padrão de diversos serviços e componentes do sistema operacional. |
+| 🛡️ `/etc/default/ufw` | Arquivo com configurações padrão de funcionamento do UFW, incluindo políticas de tráfego de entrada, saída e encaminhamento, além de opções relacionadas ao IPv6. |
+| 📂 `/var/log/` | Diretório utilizado pelo GNU/Linux para armazenar arquivos de registro (*logs*) de serviços, aplicações e componentes do sistema. |
+| 🧱 `/var/log/ufw.log` | Arquivo de log do UFW, quando o registro de eventos está habilitado. Pode apresentar pacotes bloqueados ou permitidos, endereços IP de origem e destino, protocolos e portas envolvidos. |
+| 📝 `/var/log/syslog` | Arquivo de log geral do sistema, utilizado em sistemas que mantêm registros pelo syslog. Pode conter mensagens de serviços, aplicações e eventos relacionados ao funcionamento do Ubuntu. |
+| 🖥️ `/var/log/kern.log` | Arquivo destinado aos registros do kernel Linux. Pode apresentar mensagens sobre dispositivos, interfaces de rede, drivers, hardware e eventos relacionados ao núcleo do sistema. |
+---
 
 ## 01_ Verificando qual o Sistema de Firewall padrão do Ubuntu Server
 
@@ -147,23 +164,7 @@ sudo systemctl start ufw
 sudo journalctl -xeu ufw
 ```
 
-## 05_ Localização dos Arquivos e Diretório de Configuração do Firewall UFW no Ubuntu Server
-
-| **📂 Caminho** | **📝 Descrição** |
-| :------------- | :--------------- |
-| **`/etc/default/ufw`** | Arquivo de inicialização/parâmetros padrão do UFW (política de IPv6, encadeamento de módulos do Kernel, etc.). |
-| **`/etc/ufw/`** | Diretório principal das configurações e regras do UFW. |
-| **`/etc/ufw/ufw.conf`** | Arquivo que controla se o serviço do UFW inicia junto com o sistema operacional (`ENABLED=yes`). |
-| **`/etc/ufw/before.rules`** / **`before6.rules`** | Regras aplicadas **ANTES** das regras de usuário (IPv4 e IPv6), geralmente usadas para liberar ICMP, Loopback e regras de baixo nível. |
-| **`/etc/ufw/after.rules`** / **`after6.rules`** | Regras aplicadas **DEPOIS** das regras de usuário (IPv4 e IPv6). |
-| **`/etc/ufw/user.rules`** / **`user6.rules`** | Regras criadas pelo próprio usuário através dos comandos `ufw allow/deny/reject/limit` (IPv4 e IPv6). |
-| **`/etc/ufw/applications.d/`** | Diretório com os perfis de aplicações (App Profiles) reconhecidos pelo comando `ufw app`. |
-| **`/var/log/ufw.log`** | Arquivo de Log padrão e dedicado do Firewall UFW. |
-| **`/var/log/syslog`** | Também recebe os eventos do UFW (filtrar com: `grep -i ufw`). |
-| **`/var/log/kern.log`** | Log do Kernel, também recebe os eventos do UFW (filtrar com: `grep -i ufw`). |
----
-
-## 06_ Verificando as Regras (RULES) de Entrada (INCOMING) e Saída (OUTGOING) padrão do UFW no Ubuntu Server
+## 05_ Verificando as Regras (RULES) de Entrada (INCOMING) e Saída (OUTGOING) padrão do UFW no Ubuntu Server
 ```bash
 #verificando o status das Regras (RULES) Detalhadas (VERBOSE) do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules), 
@@ -181,7 +182,7 @@ Entendendo a saída do comando: __`ufw status verbose`__<br>
 | 🆕 **New profiles** | `skip` | Perfil padrão para novas aplicações (App Profiles) não é adicionado automaticamente. |
 ---
 
-## 07_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Entrada (INCOMING) do UFW no Ubuntu Server
+## 06_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Entrada (INCOMING) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** no Firewall UFW temos basicamente **05 (cinco)** regras/políticas padrões: `allow` (liberação), `deny` (negação), `limit` (limitação), `reject` (rejeição) e `disable` (desabilitado).
 
@@ -201,7 +202,7 @@ sudo ufw default deny incoming
 sudo ufw status verbose
 ```
 
-## 08_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Saída (OUTGOING) do UFW no Ubuntu Server
+## 07_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Saída (OUTGOING) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão as regras de Firewall geralmente Bloqueiam (DENY) toda a Entrada (INCOMING) para o servidor e Permitem (ALLOW) toda a Saída (OUTGOING). Bloquear a Entrada **e** a Saída deixa a Segurança bem mais Restritiva (Rigorosa), sendo necessário criar uma regra (RULE) para **cada** serviço de rede que o próprio servidor precisa acessar (DNS, NTP, Repositórios do APT, etc.). É exatamente essa a estratégia de **Blindagem Full** adotada nesse capítulo.
 
@@ -221,7 +222,7 @@ sudo ufw default deny outgoing
 sudo ufw status verbose
 ```
 
-## 09_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Roteamento (ROUTED) do UFW no Ubuntu Server
+## 08_ Configurando a Regra (RULES) de Bloqueio (DENY) padrão (DEFAULT) de Roteamento (ROUTED) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão as regras de roteamento não será utilizada nesse servidor, essas regras são utilizadas em servidores de Firewall para compartilhar a Internet ou utilização de Servidores Proxy.
 
@@ -241,7 +242,7 @@ sudo ufw default deny routed
 sudo ufw status verbose
 ```
 
-## 10_ Configurando o Nível de Log (LOGGING) do UFW no Ubuntu Server
+## 09_ Configurando o Nível de Log (LOGGING) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** no UFW temos basicamente **05 (cinco)** níveis de Log: `off` (desligado), `low` (baixo), `medium` (médio), `high` (alto) e `full` (completo/debug).
 
@@ -267,7 +268,7 @@ sudo ufw logging medium
 sudo ufw status verbose
 ```
 
-## 11_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server
+## 10_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** neste ponto o servidor está **totalmente bloqueado** (Entrada e Saída), inclusive o próprio Loopback (127.0.0.1/::1) e a conexão SSH remota já podem estar comprometidas. Utilize o **Console/Terminal físico** da Máquina Virtual (VirtualBOX) para os testes a seguir.
 
@@ -309,7 +310,7 @@ ssh vaamonde@172.16.1.20
 sudo nmap -p- 172.16.1.20
 ```
 
-## 12_ Liberando (ALLOW) a Entrada (INCOMING) e Saída (OUTGOING) da Interface de Loopback do UFW no Ubuntu Server
+## 11_ Liberando (ALLOW) a Entrada (INCOMING) e Saída (OUTGOING) da Interface de Loopback do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente as regras de `IPv6` para as regras da Interface de Loopback.
 
@@ -344,7 +345,7 @@ sudo ufw status verbose
 sudo ufw status numbered
 ```
 
-## 13_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server
+## 12_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
 >
@@ -423,7 +424,7 @@ nslookup google.com
 sudo apt update
 ```
 
-## 14_ Liberando (ALLOW) a Saída (OUTGOING) do Protocolo ICMP (IPv4/IPv6) do UFW no Ubuntu Server
+## 13_ Liberando (ALLOW) a Saída (OUTGOING) do Protocolo ICMP (IPv4/IPv6) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, a regra de ICMP de Entrada (INCOMING) já vem Liberada (ACCEPT) nos arquivos `before.rules`/`before6.rules`, caso queira Bloquear (DROP) o Ping de Entrada, basta trocar `ACCEPT` por `DROP` nas linhas correspondentes desses arquivos. Aqui vamos liberar apenas a **Saída** do ICMP, que fica bloqueada pela política `deny outgoing` configurada no item #08.
 
@@ -507,7 +508,7 @@ ping6 2001:4860:4860::8888
 ping google.com
 ```
 
-## 15_ Liberando (ALLOW) a Entrada (INCOMING) Básicas (PORTS) do UFW no Ubuntu Server
+## 14_ Liberando (ALLOW) a Entrada (INCOMING) Básicas (PORTS) do UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
 >
@@ -589,7 +590,7 @@ telnet 172.16.1.20 22
 ssh vaamonde@172.16.1.20
 ```
 
-## 16_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
+## 15_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
 ```bash
 #reiniciando as regras de firewall do UFW
 #opção do comando ufw: reload (reloads firewall rules)
@@ -605,7 +606,7 @@ sudo ufw reload
 sudo ufw status verbose
 ```
 
-## 17_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
+## 16_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
 ```bash
 #listando o conteúdo do arquivo de Log do UFW
 #opção do comando cat: -n (number line)
@@ -645,7 +646,7 @@ Entendendo os campos do Log do arquivo do UFW:__`/var/log/ufw.log`__<br>
 sudo tail -f /var/log/ufw.log
 ```
 
-## 18_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
+## 17_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
 ```bash
 #relatório detalhado em RAW (Raw Data)
 #opção do comando ufw: show (display information about the running firewall)
@@ -695,7 +696,7 @@ sudo ufw show listening
 sudo ufw show added
 ```
 
-## 19_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server
+## 18_ Desativando (DISABLE) e Ativando (ENABLE) o UFW no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** se você desabilitar o firewall UFW, as regras já criadas **NÃO** são perdidas, apenas deixam de ser aplicadas.
 
