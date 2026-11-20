@@ -41,6 +41,7 @@ Site Oficial do PuTTY: https://www.putty.org/<br>
 [#02_ Editando os arquivos de configuração do TCP Wrappers Deny Ubuntu Server](#02_-editando-os-arquivos-de-configuração-do-tcp-wrappers-deny-ubuntu-server)<br>
 [#03_ Editando os arquivos de configuração do TCP Wrappers Allow Ubuntu Server](#03_-editando-os-arquivos-de-configuração-do-tcp-wrappers-allow-ubuntu-server)<br>
 [#04_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash](#04_-acessando-remotamente-o-openssh-server-via-powershell-putty-e-git-bash)<br>
+[#05_ Monitorando em tempo real dos arquivos de Log do TCP Wrappers Deny e Allow Ubuntu Server](#05_-monitorando-em-tempo-real-dos-arquivos-de-log-do-tcp-wrappers-deny-e-allow-ubuntu-server)<br>
 
 | **🔐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -97,12 +98,35 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
-
+# Manter a configurar da linha 34 do arquivo de configuração.
+# Negando todas as Redes de acessar remotamente os serviços no Servidor Ubuntu
+# DAEMON:     CLIENT:     SHELL COMMAND
+ALL: ALL: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/deny.log
 ```
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 ```
+Entendendo a configuração do arquivo: __`/etc/hosts.deny`__<br>
+| **Configuração** | **Descrição** | **Explicação** |
+|------------------|---------------|----------------|
+| `ALL` (primeiro) | *Serviço local* | Aplica a regra a todos os serviços controlados pelo TCP Wrappers. |
+| `:` | *Separador* | Separa a identificação do serviço da identificação do host remoto. |
+| `ALL` (segundo) | *Host remoto* | Corresponde a qualquer host remoto que tente acessar o serviço. |
+| `:` | *Separador* | Separa os critérios de acesso da ação que será executada. |
+| `spawn` | *Executar comando* | Solicita a execução de um comando externo quando a regra corresponde. |
+| `/bin/echo` | *Comando* | Imprime as informações que serão registradas no log. |
+| `$(date -u)` | *Data e hora UTC* | Obtém a data e a hora atuais utilizando o fuso horário UTC. |
+| `%d` | *Serviço local* | Identifica o nome do serviço que recebeu a conexão. |
+| `%R` | *Porta local* | Informa o endereço e a porta do serviço local. |
+| `%A` | *Host local* | Informa o endereço IP da máquina que recebeu a conexão. |
+| `%N` | *Hostname* | Informa o nome do host local. |
+| `%c` | *Host remoto* | Informa a identificação do cliente remoto. |
+| `%r` | *Porta remota* | Informa o endereço e a porta do cliente remoto. |
+| `%p` | *Processo local* | Informa o PID do processo servidor. |
+| `>>` | *Redirecionamento* | Acrescenta as informações ao final do arquivo, preservando os registros anteriores. |
+| `/var/log/deny.log` | *Arquivo de log* | Define o arquivo utilizado para armazenar os registros. |
+---
 
 ## 03_ Editando os arquivos de configuração do TCP Wrappers Allow Ubuntu Server
 ```bash
@@ -119,12 +143,42 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
-
+# Alterar o valor da rede ou endereço IPv4 na linha: 34
+# Permitindo a Sub-Rede IPv4 se autenticar remotamente no Servidor de OpenSSH
+# DAEMON:     CLIENT:     SHELL COMMAND
+sshd: ENDEREÇO_DA_SUA_SUB-REDE/SEU_CIDR: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/allow-ssh.log
+#
+# Alterar o valor da rede ou endereço IPv4 na linha: 38
+# Permitindo o Prefixo IPv6 se autenticar remotamente no Servidor de OpenSSH
+# DAEMON:     CLIENT:     SHELL COMMAND
+sshd: [SEU_PREFIXO_IPV6]/SEU_CIDR: spawn /bin/echo "$(date -u) | Serviço Local %d | Porta Local %R | Host Local %A | Hostname %N | Host Remoto %c | Porta Remota %r | Processo Local %p" >> /var/log/allow-ssh.log
 ```
 ```bash
 #salvar e sair do arquivo
 ESC SHIFT :x <Enter>
 ```
+
+Entendendo a configuração do arquivo: __`/etc/hosts.allow`__<br>
+| **Configuração** | **Descrição** | **Explicação** |
+|------------------|---------------|----------------|
+| `sshd` | *Serviço local* | Aplica a regra exclusivamente ao serviço SSH (OpenSSH Server). |
+| `:` | *Separador* | Separa a identificação do serviço da identificação da rede autorizada. |
+| `ENDEREÇO_DA_SUA_SUB-REDE/SEU_CIDR` | *Rede IPv4 autorizada* | Define a sub-rede IPv4 que terá permissão para acessar o serviço SSH. |
+| `[SEU_PREFIXO_IPV6]/SEU_CIDR` | *Rede IPv6 autorizada* | Define o prefixo da sub-rede IPv6 que terá permissão para acessar o serviço SSH. |
+| `:` | *Separador* | Separa a identificação da rede autorizada da ação que será executada. |
+| `spawn` | *Executar comando* | Solicita a execução de um comando externo quando a regra de autorização corresponde. |
+| `/bin/echo` | *Comando* | Imprime as informações da conexão que serão registradas no arquivo de log. |
+| `$(date -u)` | *Data e hora UTC* | Obtém a data e a hora atuais utilizando o fuso horário UTC. |
+| `%d` | *Serviço local* | Identifica o nome do serviço que recebeu a conexão. |
+| `%R` | *Porta local* | Informa o endereço e a porta do serviço local. |
+| `%A` | *Host local* | Informa o endereço IP da máquina que recebeu a conexão. |
+| `%N` | *Hostname* | Informa o nome do host local. |
+| `%c` | *Host remoto* | Informa a identificação do cliente remoto. |
+| `%r` | *Porta remota* | Informa o endereço e a porta do cliente remoto. |
+| `%p` | *Processo local* | Informa o PID do processo servidor. |
+| `>>` | *Redirecionamento* | Acrescenta as informações ao final do arquivo, preservando os registros anteriores. |
+| `/var/log/allow-ssh.log` | *Arquivo de log* | Define o arquivo utilizado para armazenar os registros das conexões autorizadas. |
+---
 
 ## 04_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
 ```bash
@@ -161,9 +215,48 @@ Linux
 ```
 ```bash
 #verificando informações detalhadas dos usuários logados no Ubuntu Server
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/w.1.html
 sudo w
 ```
 
+## 05_ Monitorando em tempo real dos arquivos de Log do TCP Wrappers Deny e Allow Ubuntu Server
+```bash
+#monitoramento do arquivo de Negação (/var/log/deny.log) no Ubuntu Server
+#opção do comando tail: -f (output appended data as the file grows)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/tail.1.html
+sudo tail -f /var/log/deny.log
+```
+Entendendo a saída do Log do arquivo: __`/var/log/deny.log`__<br>
+| **Informação** | **Valor ilustrativo** | **Significado** |
+|----------------|-----------------------|-----------------|
+| *Data e hora* | `2026-11-20 19:30:15 UTC` | Momento em que o registro foi gerado. |
+| *Serviço local* | `sshd` | Serviço que recebeu a conexão. |
+| *Porta local* | `172.16.1.20.22` | Endereço IP e porta do servidor. |
+| *Host local* | `172.16.1.20` | Endereço IP do servidor. |
+| *Hostname* | `srvvaamonde` | Nome do servidor. |
+| *Host remoto* | `172.16.1.100` | Identificação do cliente remoto. |
+| *Porta remota* | `54321` | Porta de origem do cliente remoto. |
+| *Processo local* | `1250` | Identificador PID do processo servidor. |
+---
+
+```bash
+#monitoramento do arquivo de Liberação (/var/log/allow-ssh.log) no Ubuntu Server
+#opção do comando tail: -f (output appended data as the file grows)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/tail.1.html
+sudo tail -f /var/log/allow-ssh.log
+```
+
+Entendendo a saída do Log do arquivo: __`/var/log/allow-ssh.log`__<br>
+| **Informação** | **Valor ilustrativo** | **Significado** |
+|----------------|-----------------------|-----------------|
+| Data e hora | `2026-11-20 19:30:15 UTC` | Momento em que o registro foi gerado. |
+| Serviço local | `sshd` | Serviço SSH que recebeu a conexão. |
+| Porta local | `172.16.1.20.22` | Endereço IP e porta do servidor SSH. |
+| Host local | `172.16.1.20` | Endereço IP do servidor. |
+| Hostname | `srvvaamonde` | Nome do servidor. |
+| Host remoto | `172.16.1.101` | Identificação do cliente remoto. |
+| Porta remota | `54321` | Porta de origem do cliente remoto. |
+| Processo local | `1250` | Identificador PID do processo servidor SSH. |
 ---
 
 > **OBSERVAÇÃO IMPORTANTE:** COMENTAR NO VÍDEO DE CONFIGURAÇÃO DO TCP WRAPPERS A SEGUINTE FRASE: *Configuração do TCP Wrappers On-Premises realizado com sucesso!!! Então #BoraParaPrática que #VavaAprova*

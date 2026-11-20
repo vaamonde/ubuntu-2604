@@ -272,6 +272,7 @@ Linux
 ```
 ```bash
 #verificando informações detalhadas dos usuários logados no Ubuntu Server
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/w.1.html
 sudo w
 ```
 
@@ -302,6 +303,7 @@ USER   TTY   FROM   LOGIN@   IDLE   JCPU   PCPU   WHAT<br>
 ```bash
 #verificando os usuários logados remotamente no Ubuntu Server
 #opção do comando who: -H (heading), -a (all)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/who.1.html
 sudo who -Ha
 ```
 
@@ -320,6 +322,7 @@ NAME   LINE   TIME   IDLE   PID COMMENT   EXIT<br>
 
 ```bash
 #verificando os usuários logados no Ubuntu Server
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/users.1.html
 users
 ```
 
@@ -332,6 +335,7 @@ users
 ```bash
 #criando o usuário Admin local no Ubuntu Server
 #OBSERVAÇÃO: ALTERAR A SENHA DO USUÁRIO ADMIN CONFORME SUA NECESSIDADE
+#mais informações veja a documentação oficial em: https://linux.die.net/man/8/adduser
 sudo adduser admin
   New password: sua_senha
   Retype new password: sua_senha
@@ -346,22 +350,28 @@ sudo adduser admin
 #listando o usuário criado no arquivo passwd
 #opção do comando cat: -n (number line)
 #opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /etc/passwd | grep admin
 ```
 ```bash
 #listando o usuário criado com o comando getent (MAIS SIMPLES)
 #opção do comando getent: passwd (the database system user)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent passwd admin
 ```
 ```bash
 #listando o grupo criado no arquivo group
 #opção do comando cat: -n (number line)
 #opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /etc/group | grep admin
 ```
 ```bash
 #listando o grupo criado com o comando getent (MAIS SIMPLES)
 #opção do comando getent: group (the database system group)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent group admin
 ```
 
@@ -369,24 +379,27 @@ sudo getent group admin
 ```bash
 #adicionando o usuário Admin ao grupo do SUDO
 #opção do comando usermod: -a (append), -G (groups)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man8/usermod.8.html
 sudo usermod -a -G sudo admin
 ```
 ```bash
 #verificando os grupos do usuário Admin
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/groups.1.html
 sudo groups admin
 ```
 ```bash
 #verificando as identificações de grupos do usuário Admin
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/id.1.html
 sudo id admin
 ```
 ```bash
 #verificando as informações do grupo SUDO
 #opção do comando getent: group (the database system group)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent group sudo
 ```
 
 ## 08_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server
-
 ```bash
 #abrindo um segundo Terminal TTY (Teletype) no Ubuntu Server
 Atalho: Alt + F2
