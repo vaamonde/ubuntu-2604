@@ -410,10 +410,12 @@ Link Oficial da Documentação de Instalação do Ubuntu Server: https://ubuntu.
 
 ```bash
 #testando a conexão com o Ubuntu Server (alterar o Endereço IPv4 para o seu cenário)
+#mais informações veja a documentação oficial em: https://linux.die.net/man/8/ping
 ping SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 ```
 ```bash
 #acessando remotamente o Ubuntu Server (alterar o Usuário e Endereço IPv4 para o seu cenário)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/ssh.1.html
 ssh seu_usuário@SEU_ENDEREÇO_IPV4_UBUNTU_SERVER
 ```
 ```bash
@@ -449,7 +451,8 @@ seu_usuário@srvseunome:~$ (Acesso ao Terminal Remoto (Bash/Shell) via SSH)
 ```
 ```bash
 #verificando os usuários logados no TTY (Físico) e PTS (Remoto) do Ubuntu Server
-w
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/w.1.html
+sudo w
 ```
 
 Entendendo a saída do comando: __`w`__<br>

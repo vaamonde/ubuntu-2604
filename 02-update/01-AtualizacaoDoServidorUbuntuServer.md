@@ -128,7 +128,6 @@ sudo apt list --upgradable | cat -n
 Entendendo a saída do comando: __`apt list --upgradable`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🔢 **Linha 1** | `Listando...` | Mensagem informativa indicando que o `apt` está iniciando a listagem dos pacotes que possuem versões disponíveis para atualização. |
 | 📦 **Pacote** | `libpcap0.8t64` | Biblioteca utilizada para **captura e análise de tráfego de rede**. Possui atualização disponível nos repositórios `resolute-updates` e `resolute-security`. |
 | 🔄 **Versão atual** | `1.10.6-1ubuntu1` | Versão atualmente instalada do pacote `libpcap0.8t64`. |
 | ⬆️ **Nova versão** | `1.10.6-1ubuntu1.1` | Versão disponível para atualização. |
@@ -219,7 +218,6 @@ sudo apt list --installed | cat -n
 Entendendo a saída do comando: __`apt list --installed`__<br>
 | **Campo** | **Valor** | **Descrição** |
 | :-------- | :-------- | :------------ |
-| 🔢 **Linha 1** | `Listando...` | Mensagem informativa indicando que o `apt` iniciou a listagem dos pacotes instalados no sistema. |
 | 📦 **Pacote** | `3cpio` | Pacote instalado no sistema, identificado como `3cpio`.  |
 | 🏷️ **Repositório** | `resolute` | Repositório/distribuição Ubuntu **26.04 (Resolute)** associado ao pacote. |
 | 📌 **Estado** | `now` | Indica que o pacote está atualmente instalado no sistema. |

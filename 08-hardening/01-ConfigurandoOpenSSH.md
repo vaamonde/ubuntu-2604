@@ -45,6 +45,9 @@ Site Oficial do PuTTY: https://www.putty.org/<br>
 [#06_ Criando um usuário Administrador no Ubuntu Server](#06_-criando-um-usuário-administrador-no-ubuntu-server)<br>
 [#07_ Adicionando o usuário Admin no grupo SUDO (Super User Do) do Ubuntu Server](#07_-adicionando-o-usuário-admin-no-grupo-sudo-super-user-do-do-ubuntu-server)<br>
 [#08_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server](#08_-se-logando-no-terminal-tty-teletype-bashshell-do-ubuntu-server)<br>
+[#09_ Permitindo o Usuário e Grupo Admin no Acessar via OpenSSH Server o Ubuntu Server](#09_-permitindo-o-usuário-e-grupo-admin-no-acessar-via-openssh-server-o-ubuntu-server)<br>
+[#10_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash](#10_-acessando-remotamente-o-openssh-server-via-powershell-putty-e-git-bash)<br>
+[#11_ Analisando os arquivos de Logs do OpenSSH Server no Ubuntu Server](#11_-analisando-os-arquivos-de-logs-do-openssh-server-no-ubuntu-server)<br>
 
 | **🔐 Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -158,7 +161,7 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
-#alterar a variável ListenAddress na linha: 27 
+#alterar a variável ListenAddress na linha: 27
 #ListenAddress 172.16.1.xxx para: SEU_ENDEREÇO_IPV4_DO_UBUNTU
 #OBSERVAÇÃO: ALTERAR O ENDEREÇO IPv4 CONFORME A SUA NECESSIDADE
 ListenAddress SEU_ENDEREÇO_IPV4_DO_UBUNTU
@@ -276,29 +279,31 @@ Linux
 sudo w
 ```
 
-**OBSERVAÇÃO IMPORTANTE 01:** no comando: __`w`__ ele mostra na primeira linha as informações de:<br>
-14:28:13   up 16 min,   1 user,   load average: 0,00, 0,00, 0,00<br>
-
-| Valores | Descrição |
-|---------|-----------|
-| **14:28:13** | Data e Hora Atual do Sistema; |
-| **up 16 min** | Período de Tempo Ativo; |
-| **1 user** | Número de Usuários Logados; |
-| **load average: 0,00, 0,00, 0,00** | Médias de Cargas do Sistema (1, 5 e 15 minutos). |
-
-**OBSERVAÇÃO IMPORTANTE 02:** no comando: __`w`__ ele mostra as informações separadas por colunas:<br>
-USER   TTY   FROM   LOGIN@   IDLE   JCPU   PCPU   WHAT<br>
-
-| Colunas | Descrição | 
-|---------|-----------|
-| **USER** | usuário logado; |
-| **TTY** | terminal do usuário |
-| **FROM** | origem da conexão; |
-| **LOGIN@** | hora do login do usuário; |
-| **IDLE** | tempo ocioso do usuário; |
-| **JCPUv** | tempo de CPU dos processos do TTY; |
-| **PCPU** | tempo de CPU do processo do último comando o usuário; |
-| **WHAT** | processo atual do usuário. |
+Entendendo a saída do comando: __`w`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 🕒 **Current Time** | `12:22:16` | Hora em que o comando `w` foi executado. |
+| ⏱️ **System Uptime** | `14 min` | Tempo decorrido desde a inicialização do servidor. |
+| 👥 **Logged-in Users** | `2 users` | Quantidade de usuários atualmente conectados ao sistema. |
+| 📊 **Load Average (1 min)** | `1,23` | Carga média absoluta do sistema nos últimos 1 minuto em relação ao vCPU. |
+| 📊 **Load Average (5 min)** | `1,62` | Carga média absoluta do sistema nos últimos 5 minutos em relação ao vCPU. |
+| 📊 **Load Average (15 min)** | `1,10` | Carga média absoluta do sistema nos últimos 15 minutos em relação ao vCPU. |
+| 👤 **USER** | `vaamonde` | Usuário atualmente conectado à sessão. |
+| 🖥️ **TTY** | `pts/0` | Terminal virtual utilizado pela sessão SSH ou terminal remoto. |
+| 🌐 **FROM** | `172.16.1.113` | Endereço IP de origem da conexão do usuário. |
+| 🕐 **LOGIN@** | `12:21` | Horário em que o usuário iniciou a sessão. |
+| ⏸️ **IDLE** | `0.00s` | Tempo desde a última atividade no terminal. |
+| ⚙️ **JCPU** | `0.09s` | Tempo de CPU utilizado por todos os processos associados à sessão. |
+| ⚙️ **PCPU** | `0.04s` | Tempo de CPU utilizado pelo processo atualmente em execução. |
+| 💻 **WHAT** | `w` | Comando/processo atualmente executado pelo usuário. |
+| 🖥️ **TTY** | `tty1` | Terminal físico/virtual local utilizado pela segunda sessão. |
+| 🏠 **FROM** | `-` | Indica que a sessão é local e não possui endereço IP remoto. |
+| 🕐 **LOGIN@** | `12:21` | Horário em que a segunda sessão foi iniciada. |
+| ⏸️ **IDLE** | `1:18` | Tempo decorrido desde a última atividade nessa sessão. |
+| ⚙️ **JCPU** | `0.15s` | Tempo de CPU utilizado pelos processos associados à sessão. |
+| ⚙️ **PCPU** | `0.15s` | Tempo de CPU utilizado pelo processo atualmente associado à sessão. |
+| 💻 **WHAT** | `-bash` | Shell Bash em execução na sessão local. |
+---
 
 ```bash
 #verificando os usuários logados remotamente no Ubuntu Server
@@ -307,18 +312,17 @@ USER   TTY   FROM   LOGIN@   IDLE   JCPU   PCPU   WHAT<br>
 sudo who -Ha
 ```
 
-**OBSERVAÇÃO IMPORTANTE:** no comando: __`who`__ ele mostra as informações separadas por colunas:<br>
-NAME   LINE   TIME   IDLE   PID COMMENT   EXIT<br>
-
-| Colunas | Descrição | 
-|---------|-----------|
-| **NAME** | usuário logado; |
-| **LINE** | terminal do usuário; |
-| **TIME** | data e hora do login do usuário; |
-| **IDLE** | tempo ocioso do usuário; |
-| **PID** | identificação do processo; |
-| **COMMENT** | origem da conexão do usuário; |
-| **EXIT** | saída do processo. |
+Entendendo a saída do comando: __`who`__<br>
+| **Campo** | **Valor** | **Descrição** |
+| :-------- | :-------- | :------------ |
+| 👤 **NAME** | `vaamonde` | Nome da conta do usuário que está atualmente conectado ao sistema. |
+| 🖥️ **LINE** | `pts/0` | Identificação do terminal utilizado pelo usuário. `pts` indica um terminal virtual, geralmente associado a uma conexão SSH ou terminal remoto. |
+| 🕒 **TIME** | `12:21` | Horário em que o usuário iniciou sua sessão no sistema. |
+| ⏸️ **IDLE** | `00:00` | Tempo decorrido desde a última atividade do usuário no terminal. |
+| ⚙️ **PID** | `1250` | Identificador do processo associado à sessão de login do usuário (Process ID). |
+| 🌐 **COMMENT** | `(172.16.1.113)` | Origem da conexão do usuário. Quando apresenta um endereço IP entre parênteses, identifica o host remoto de onde a sessão foi iniciada. |
+| 🚪 **EXIT** | `00:00` | Informação relacionada ao status de saída do processo, quando disponibilizada pelo sistema. |
+---
 
 ```bash
 #verificando os usuários logados no Ubuntu Server
@@ -415,6 +419,146 @@ Ctrl+D   #(atalho para sair do login)
 
 #voltar para o primeiro Terminal TTY (Teletype) do Ubuntu Server
 Atalho: Alt + F1
+```
+
+## 09_ Permitindo o Usuário e Grupo Admin no Acessar via OpenSSH Server o Ubuntu Server
+```bash
+#editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
+#mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
+sudo vim /etc/ssh/sshd_config
+```
+```bash
+#habilitando o número de linhas do arquivo sshd_config
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#adicionando o usuário Admin na variável AllowUsers na linha: 77
+#OBSERVAÇÃO: ALTERAR O USUÁRIO DE ACESSO CONFORME A SUA NECESSIDADE
+AllowUsers SEU_USUÁRIO admin
+
+#adicionando o grupo Admin na variável AllowGroups na linha: 83
+#OBSERVAÇÃO: ALTERAR O GRUPO DE ACESSO CONFORME A SUA NECESSIDADE
+AllowGroups SEU_GRUPO_DO_USUÁRIO admin
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT :x <Enter>
+```
+```bash
+#testando o arquivo de configuração do OpenSSH Server no Ubuntu Server
+#opção do comando sshd: -T (text mode check configuration)
+sudo sshd -T
+```
+```bash
+#reiniciar e verificar o status do serviço do OpenSSH Server no Ubuntu Server
+#opções do comando systemctl: status (runtime status information), restart (Stop and then 
+#start one or more units)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/systemctl.1.html
+sudo systemctl restart ssh
+sudo systemctl status ssh
+```
+```bash
+#analisando os Log's e mensagens de erro do Servidor do OpenSSH no Ubuntu Server
+#opção do comando journalctl: -t (identifier), x (catalog), e (pager-end), u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -t sshd
+sudo journalctl -xeu ssh
+```
+
+## 10_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash
+```bash
+#acessando o OpenSSH via Powershell
+Windows
+  Pesquisa do Windows
+    Powershell
+      ssh admin@ENDEREÇO_IPV4_SERVIDOR (alterar para o endereço IPv4 do seu servidor)
+```
+```bash
+#acessando o OpenSSH via PuTTY
+Windows
+  Pesquisa do Windows
+    PuTTY
+
+Category
+  Session
+    Host Name (or IP address): admin@ENDEREÇO_IPV4_SERVIDOR (alterar para o endereço IPv4 do seu servidor)
+    Port: 22
+    SSH: On
+<Open>
+```
+```bash
+#acessando o OpenSSH via Git Bash no Windows
+Windows
+  Git Bash
+    ssh admin@ENDEREÇO_IPV4_SERVIDOR (alterar o usuário e endereço IPv4 do seu servidor)
+```
+```bash
+#acessando o OpenSSH via Terminal no Linux Mint
+Linux
+  Terminal: Ctrl + Alt + T
+    ssh admin@ENDEREÇO_IPV4_SERVIDOR (alterar o usuário e endereço IPv4 do seu servidor)
+```
+```bash
+#verificando informações detalhadas dos usuários logados no Ubuntu Server
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/w.1.html
+sudo w
+```
+
+## 11_ Analisando os arquivos de Logs do OpenSSH Server no Ubuntu Server
+```bash
+#analisando os logs de serviço do OpenSSH Server no Ubuntu Server
+#opção do comando journalctl: u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -u ssh.service
+```
+```bash
+#analisando e monitorando em tempo real os logs de serviço do OpenSSH Server no Ubuntu Server
+#opção do comando journalctl: -f (force), u (unit)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+sudo journalctl -fu ssh.service
+```
+```bash
+#analisando e filtrando os logs de autenticação do OpenSSH Server no Ubuntu Server
+#opção do comando journalctl: u (unit)
+#opção do redirecionador |: Conecta a saída padrão com a entrada padrão de outro comando
+#opção do comando grep: -E (extended-regexp)
+#mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo journalctl -u ssh.service | grep -E "Accepted|Failed|Invalid user"
+```
+```bash
+#analisando o conteúdo do arquivo de Log de Autenticação do Ubuntu Server
+#opção do comando cat: -n (number line)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
+sudo cat -n /var/log/auth.log
+```
+```bash
+#analisando e filtrando o conteúdo do arquivo de Log de Autenticação do Ubuntu Server
+#opção do comando grep: -i (ignore-case)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo grep -i "sshd" /var/log/auth.log
+```
+```bash
+#analisando e filtrando os logs de autenticação do OpenSSH Server no Ubuntu Server
+#opção do comando grep: -E (extended-regexp)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo grep -E "Accepted|Failed|Invalid user" /var/log/auth.log
+```
+```bash
+#analisando e filtrando o conteúdo do arquivo de Log de Sistema do Ubuntu Server
+#opção do comando grep: -i (ignore-case)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo grep -i "ssh" /var/log/syslog
+```
+```bash
+#analisando e filtrando os logs de serviço do OpenSSH Server do UFW no Ubuntu Server
+#opção do comando grep: -E (extended-regexp)
+#mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
+sudo grep -E 'DPT=22([^0-9]|$)' /var/log/ufw.log
 ```
 
 ---
