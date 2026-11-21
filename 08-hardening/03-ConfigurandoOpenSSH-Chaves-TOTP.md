@@ -59,7 +59,21 @@ Link da vídeo aula:
 
 ---
 
-## 01_ Gerando o Par de Chaves de Autenticação do OpenSSH Server e Client no Linux Mint
+## 01_ Instalando as Dependências do OpenSSH Server 2FA TOTP no Ubuntu Server
+```bash
+#atualizando as lista do Apt do sources.list no Ubuntu Server
+#opção do comando apt: update (Resynchronize the package index files from their sources)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+sudo apt update
+```
+```bash
+#instalando as dependências do Grafana Server no Ubuntu Server
+#opção do comando apt: install (install is followed by one or more package names)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
+sudo apt install libpam-google-authenticator
+```
+
+## 02_ Gerando o Par de Chaves de Autenticação do OpenSSH Server e Client no Linux Mint
 ```bash
 #gerando o par de chaves Pública/Privada no perfil do usuário local no Linux Mint
 #mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/ssh-keygen.1.html
@@ -89,7 +103,7 @@ ssh-copy-id -i .ssh/lm_openssh.pub vaamonde@172.16.1.20
 ssh vaamonde@172.16.1.20 "ls -lh ~/.ssh/*"
 ```
 
-## 02_ Editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
+## 03_ Editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
@@ -108,6 +122,14 @@ INSERT
 #descomentar a variável AuthenticationMethods na linha: 38
 #SOLICITAR PRIMEIRO A CHAVE PÚBLICA E DEPOIS SOLICITAR A SENHA DO USUÁRIO
 AuthenticationMethods publickey password
+
+#alterar o valor davariável ChallengeResponseAuthentication na linha: 158
+#laterar de: ChallengeResponseAuthentication no para: ChallengeResponseAuthentication yes
+ChallengeResponseAuthentication yes
+
+#descomentar a variável auth required na linha: 165
+#HABILITAR O MODÚLO DO LIBPAM DO GOOGLE PARA GERAR O QRCODE
+auth required pam_google_authenticator.so
 ```
 ```bash
 #salvar e sair do arquivo
