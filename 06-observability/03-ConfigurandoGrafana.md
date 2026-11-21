@@ -151,6 +151,7 @@ sudo wget -v -O /etc/grafana/grafana.ini https://raw.githubusercontent.com/vaamo
 ## 05_ Editando os arquivos de configuração do Grafana Server no Ubuntu Server
 ```bash
 #editando o arquivo de configuração do Grafana Server no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/default/grafana-server
 ```
 ```bash
@@ -174,6 +175,7 @@ ESC SHIFT : x <Enter>
 ```
 ```bash
 #editando o arquivo de inicialização do Grafana Server no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/grafana/grafana.ini
 ```
 ```bash

@@ -114,9 +114,9 @@ sudo mkdir -pv /etc/prometheus/{targets,rules} /var/lib/prometheus
 > **OBSERVAÇÃO IMPORTANTE:** o executável e os arquivos de configuração do *Prometheus* sofre alteração o tempo todo, sempre acessar o projeto do `Github` para verificar a *última versão do software* no Link: https://github.com/prometheus/prometheus/releases/
 
 ```bash
-#download do Prometheus do Github no Ubuntu Server (Link atualizado no dia 17/09/2026)
+#download do Prometheus do Github no Ubuntu Server (Link atualizado no dia 21/11/2026)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
-wget https://github.com/prometheus/prometheus/releases/download/v3.14.0/prometheus-3.14.0.linux-amd64.tar.gz
+wget https://github.com/prometheus/prometheus/releases/download/v3.16.0/prometheus-3.16.0.linux-amd64.tar.gz
 ```
 ```bash
 #listando o download do arquivo do Prometheus no Ubuntu Server
@@ -185,6 +185,7 @@ sudo chmod -Rv 775 /etc/prometheus/ /var/lib/prometheus/
 
 ```bash
 #editando arquivo de configuração do Prometheus no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/prometheus/prometheus.yml
 ```
 ```bash
@@ -223,6 +224,7 @@ sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
 ```
 ```bash
 #editando arquivo de configuração do Web Server do Prometheus no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/prometheus/web-config.yml
 ```
 ```bash
@@ -250,6 +252,7 @@ sudo -u prometheus promtool check web-config /etc/prometheus/web-config.yml
 ```
 ```bash
 #editando arquivo de serviço do Prometheus no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/systemd/system/prometheus.service
 ```
 ```bash

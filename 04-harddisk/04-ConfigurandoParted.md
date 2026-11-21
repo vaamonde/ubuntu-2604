@@ -208,6 +208,7 @@ sudo gdisk /dev/sdd
 #listando a partição criada no Disco /dev/sdd do Ubuntu Server
 #opção do comando cat: -n (number line)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/cat.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo cat -n /proc/partitions | grep -i sdd
@@ -285,6 +286,7 @@ sudo cp -v /etc/fstab /etc/fstab.bkp01
 ```
 ```bash
 #editando o arquivo de configuração do Fstab para montagem automática no boot
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/fstab
 ```
 ```bash

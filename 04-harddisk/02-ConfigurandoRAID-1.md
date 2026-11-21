@@ -485,8 +485,10 @@ sudo cp -v /etc/mdadm/mdadm.conf /etc/mdadm/mdadm.conf.old
 #adicionando as informações do Array de RAID 1 no arquivo de configuração do mdadm no Ubuntu Server
 #opção do comando mdadm: --detail (Print detail of a device), --scan (scan config file or
 #/proc/mdstat for missing information)
-#opção do redirecionador >> (append): adiciona a saída no final do arquivo, sem sobrescrever
+#opção do comando tee: -a (append to the given FILEs)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/mdadm.8.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tee.1.html
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 ```
 ```bash
@@ -692,6 +694,7 @@ Entendendo a saída do comando: __`hdparm -Tt /dev/md0`__<br>
 #analisando os Log's do Kernel referente ao Array do RAID-1 no Ubuntu Server
 #opção do comando journalctl: k (kernel messages, equivalente ao comando dmesg)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl -k | grep -i md0
@@ -712,6 +715,7 @@ Entendendo a saída do comando: __`journalctl -k | grep -i md0`__<br>
 ```bash
 #analisando os Log's do Sistema referente ao Array do RAID-1 no Ubuntu Server
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl | grep -i raid

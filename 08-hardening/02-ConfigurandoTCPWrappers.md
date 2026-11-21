@@ -87,6 +87,7 @@ sudo wget -v -O /etc/hosts.deny https://raw.githubusercontent.com/vaamonde/ubunt
 ```bash
 #editando o arquivo de configuração do TCP Wrappers Deny no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts.deny
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/hosts.deny
 ```
 ```bash
@@ -132,6 +133,7 @@ Entendendo a configuração do arquivo: __`/etc/hosts.deny`__<br>
 ```bash
 #editando o arquivo de configuração do TCP Wrappers Allow no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts.allow
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/hosts.allow
 ```
 ```bash

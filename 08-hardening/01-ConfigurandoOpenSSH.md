@@ -150,6 +150,7 @@ sudo wget -v -O /etc/issue https://raw.githubusercontent.com/vaamonde/ubuntu-260
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/ssh/sshd_config
 ```
 ```bash
@@ -187,6 +188,7 @@ sudo sshd -T
 ```bash
 #editando o arquivo de configuração do Banner do Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/issue.net
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/issue.net
 ```
 ```bash
@@ -205,6 +207,7 @@ ESC SHIFT :x <Enter>
 ```bash
 #editando o arquivo de configuração do Prompt de Login do Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/issue
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/issue
 ```
 ```bash
@@ -425,6 +428,7 @@ Atalho: Alt + F1
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/ssh/sshd_config
 ```
 ```bash

@@ -165,6 +165,7 @@ VBoxManage showvminfo "UbuntuOnPremises" | grep -i "NIC\|Promisc"
 #verificando os dispositivos PCI de Placa de Rede instalados no Ubuntu Server
 #opções do comando lspci: -v (verbose)
 #opção do comando grep: -i (ignore-case)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lspci.8.html
 sudo lspci -v | grep -i ethernet
 ```
@@ -185,6 +186,7 @@ sudo ip address show
 ```bash
 #verificando se o módulo de Bonding do Kernel já está carregado no Ubuntu Server
 #opção do comando lsmod: (Show the status of modules in the Linux Kernel)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man8/lsmod.8.html
 sudo lsmod | grep bonding
 ```
@@ -197,6 +199,7 @@ sudo modprobe bonding
 ```bash
 #garantindo que o módulo de Bonding seja carregado automaticamente no Boot do Ubuntu Server
 #opção do comando tee: -a (append)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tee.1.html
 echo "bonding" | sudo tee -a /etc/modules-load.d/bonding.conf
 ```
@@ -222,6 +225,7 @@ sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercont
 ```
 ```bash
 #editando o arquivo de configuração do Netplan
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/netplan/00-installer-config.yaml
 ```
 ```bash

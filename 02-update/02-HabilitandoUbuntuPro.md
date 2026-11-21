@@ -369,6 +369,7 @@ sudo systemctl status unattended-upgrades
 ```
 ```bash
 #editando o arquivo de configuração de atualizações automáticas do Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
 ```
 ```bash

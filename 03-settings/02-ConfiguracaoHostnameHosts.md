@@ -62,6 +62,7 @@ Link da vídeo aula:
 ```bash
 #editando o arquivo de configuração do Hostname no Ubuntu Server
 #mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man5/hostname.5.html
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/hostname
 ```
 ```bash
@@ -98,6 +99,7 @@ sudo wget -v -O /etc/hosts https://raw.githubusercontent.com/vaamonde/ubuntu-260
 ```bash
 #editando o arquivo de configuração do Hosts no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/hosts
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/hosts
 ```
 ```bash

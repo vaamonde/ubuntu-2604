@@ -115,10 +115,10 @@ sudo apt install iperf3 traceroute mtr-tiny vnstat apache2 php librespeed-cli
 > **OBSERVAÇÃO IMPORTANTE:** o tempo todo o `Netronome` sofre alteração, antes de fazer o download do arquivo verifique a versão no link oficial de releases em: https://github.com/autobrr/netronome/releases/
 
 ```bash
-#baixando o Netronome Server do Github (link atualizando em: 14/09/2026)
+#baixando o Netronome Server do Github (link atualizando em: 21/11/2026)
 #opções do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
-wget -v -O netronome.deb https://github.com/autobrr/netronome/releases/download/v0.14.0/netronome_0.14.0_linux_amd64.deb
+wget -v -O netronome.deb https://github.com/autobrr/netronome/releases/download/v0.16.0/netronome_0.16.0_linux_amd64.deb
 ```
 ```bash
 #instalando o Netronome Server no Ubuntu Server
@@ -132,10 +132,10 @@ sudo dpkg -i netronome.deb
 > **OBSERVAÇÃO IMPORTANTE:** o tempo todo o `SpeedTest` sofre alteração, antes de fazer o download do arquivo verifique a versão no link oficial de releases em: https://github.com/librespeed/speedtest/releases
 
 ```bash
-#baixando o SpeedTest do Github (link atualizando em: 14/09/2026)
+#baixando o SpeedTest do Github (link atualizando em: 21/11/2026)
 #opções do comando wget: -v (Turn on verbose output), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
-wget -v -O speedtest.tar.gz https://github.com/librespeed/speedtest/archive/refs/tags/v6.3.0.tar.gz
+wget -v -O speedtest.tar.gz https://github.com/librespeed/speedtest/archive/refs/tags/v6.3.1.tar.gz
 ```
 ```bash
 #descompactando o arquivo do SpeedTest no Ubuntu Server

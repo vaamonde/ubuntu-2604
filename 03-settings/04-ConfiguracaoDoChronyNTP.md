@@ -175,6 +175,7 @@ sudo wget -v -O /etc/chrony/sources.d/ntp-br-pools.sources https://raw.githubuse
 
 ```bash
 #editando o arquivo de configuração do Chrony Server e Client no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/chrony/chrony.conf
 ```
 ```bash
@@ -205,6 +206,7 @@ ESC SHIFT : x <Enter>
 ```
 ```bash
 #editando o arquivo de origens dos NTP do Chrony Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/chrony/sources.d/ntp-br-pools.sources
 ```
 ```bash

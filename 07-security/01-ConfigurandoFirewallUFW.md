@@ -270,7 +270,7 @@ sudo ufw status verbose
 
 ## 10_ Testando as conexões de Entrada (INCOMING) e Saída (OUTGOING) antes da Blindagem no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** neste ponto o servidor está **totalmente bloqueado** (Entrada e Saída), inclusive o próprio Loopback (127.0.0.1/::1) e a conexão SSH remota já podem estar comprometidas. Utilize o **Console/Terminal físico** da Máquina Virtual (VirtualBOX) para os testes a seguir.
+> **OBSERVAÇÃO IMPORTANTE:** neste ponto o servidor está **totalmente bloqueado** (Entrada e Saída), inclusive o próprio `Loopback (127.0.0.1/::1)` e a conexão SSH remota já podem estar comprometidas. Utilize o **Console/Terminal físico** da Máquina Virtual (VirtualBOX) para os testes a seguir.
 
 ```bash
 #pingando o endereço IPv4 da Loopback/Localhost (por padrão está liberado no terminal)
@@ -347,11 +347,11 @@ sudo ufw status numbered
 
 ## 12_ Liberando (ALLOW) as Saídas (OUTGOING) Básicas (DNS, HTTP, HTTPS, NTP) do UFW no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
+> **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de `IPv6` para regras criadas de forma simples ou básica.
 >
 > **OBSERVAÇÃO IMPORTANTE:** ao utilizar a opção: `comment` (comentário) do UFW é recomendado não utilizar acentuação e sempre dentro de Aspas Simples (não crase).
 >
-> **OBSERVAÇÃO IMPORTANTE:** o UFW segue a ordem: Primeira Regra Correspondente (de cima para baixo) → Ação da Regra (allow, deny, reject) → Regras Subsequentes (continua se não encontrar) → Regra Padrão (default). A prioridade de processamento é: Regras de Porta Específica (maior) → Regras de Protocolo e Porta → Regras de Aplicação de Serviço → Regras de Sub-rede → Regras de Interface → Regras de App Profile (menor).
+> **OBSERVAÇÃO IMPORTANTE:** o UFW segue a ordem: `Primeira Regra Correspondente` (de cima para baixo) → `Ação da Regra` (allow, deny, reject) → `Regras Subsequentes` (continua se não encontrar) → `Regra Padrão` (default). A prioridade de processamento é: `Regras de Porta Específica` (maior) → `Regras de Protocolo e Porta` → `Regras de Aplicação de Serviço` → `Regras de Sub-rede` → `Regras de Interface` → `Regras de App Profile` (menor).
 
 ```bash
 #regra de liberação (ALLOW) de Saída (OUT) das Consultas do Protocolo DNS (853/tcp)
@@ -438,6 +438,7 @@ ping google.com
 ```
 ```bash
 #editando o arquivo de configuração before.rules (regras de IPv4, ANTES das regras de usuário)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/ufw/before.rules
 ```
 ```bash
@@ -467,6 +468,7 @@ ESC SHIFT :x <Enter>
 ```
 ```bash
 #editando o arquivo de configuração before6.rules (regras de IPv6, ANTES das regras de usuário)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/ufw/before6.rules
 ```
 ```bash
@@ -510,15 +512,15 @@ ping google.com
 
 ## 14_ Liberando (ALLOW) a Entrada (INCOMING) Básicas (PORTS) do UFW no Ubuntu Server
 
-> **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de IPv6 para regras criadas de forma simples ou básica.
+> **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de `IPv6` para regras criadas de forma simples ou básica.
 >
-> **OBSERVAÇÃO IMPORTANTE:** mesmo com o Log do UFW habilitado (item #09), nem todos os eventos são registrados em `/var/log/ufw.log` por padrão, adicione a opção: `log` (LOGAR) ou `log-all` (LOGAR TUDO) nas regras críticas, como o SSH, para ter rastreabilidade completa das tentativas de acesso.
+> **OBSERVAÇÃO IMPORTANTE:** mesmo com o `Log do UFW habilitado` (item #09), nem todos os eventos são registrados em `/var/log/ufw.log` por padrão, adicione a opção: `log` (LOGAR) ou `log-all` (LOGAR TUDO) nas regras críticas, como o SSH, para ter rastreabilidade completa das tentativas de acesso.
 >
 > **OBSERVAÇÃO IMPORTANTE:** essa é a regra **mais crítica** da Blindagem Full: sem ela, você perde o acesso remoto ao servidor. Nunca aplique o `deny incoming` (item #07) sem antes garantir essa liberação, de preferência via `ufw insert` (item #23) na primeira posição.
 
 ```bash
 #regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SSH (22/tcp)
-#opção do comando ufw: limit (add limit rule)
+#opção do comando ufw: limit (add limit rule - 6 ou mais conexões simultâneas em 30 segundos - mas origem)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 22 proto tcp comment 'Liberando a entrada do acesso remoto via SSH v4'
 sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 22 proto tcp comment 'Liberando a entrada do acesso remoto via SSH v4'

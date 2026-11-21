@@ -399,6 +399,7 @@ sudo cp -v /etc/fstab /etc/fstab.old
 ```
 ```bash
 #editando o arquivo de configuração do Fstab para montagem automática no boot
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/fstab
 ```
 ```bash
@@ -664,6 +665,7 @@ sudo lvremove /dev/vg_dados/lv_dados_snap
 #analisando os Log's do Kernel referente ao Device Mapper e ao LVM no Ubuntu Server
 #opção do comando journalctl: k (kernel messages, equivalente ao comando dmesg)
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl -k | grep -i 'device-mapper\|lvm'
@@ -680,6 +682,7 @@ Entendendo a saída do comando: __`journalctl -k | grep -i 'device-mapper\|lvm'`
 ```bash
 #analisando os Log's do Sistema referente ao LVM no Ubuntu Server
 #opção do comando grep: -i (Ignore case distinctions in patterns and input data)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://www.man7.org/linux/man-pages/man1/journalctl.1.html
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/grep.1.html
 sudo journalctl | grep -i lvm

@@ -105,9 +105,9 @@ sudo getent passwd node_exporter
 > **OBSERVAÇÃO IMPORTANTE:** o executável do *Node Exporter do Prometheus* sofre alteração o tempo todo, sempre acessar o projeto do Github para verificar a última versão do software no Link: https://github.com/prometheus/node_exporter/releases/
 
 ```bash
-#download do Node Exporter do Github no Ubuntu Server (Link atualizado no dia 12/09/2026)
+#download do Node Exporter do Github no Ubuntu Server (Link atualizado no dia 21/11/2026)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
-wget https://github.com/prometheus/node_exporter/releases/download/v1.12.1/node_exporter-1.12.1.linux-amd64.tar.gz
+wget https://github.com/prometheus/node_exporter/releases/download/v1.13.1/node_exporter-1.13.1.linux-amd64.tar.gz
 ```
 ```bash
 #listando o download do arquivo do Node Exporter no Ubuntu Server
@@ -181,6 +181,7 @@ sudo chmod -Rv 775 /usr/local/bin/node_exporter
 
 ```bash
 #editando arquivo de configuração dos Alertas do Node Exporter no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/prometheus/rules/alertas-node-linux.yml
 ```
 ```bash
@@ -224,6 +225,7 @@ sudo -u prometheus promtool check rules /etc/prometheus/rules/alertas-node-linux
 
 ```bash
 #editando arquivo de configuração do Prometheus no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/prometheus/prometheus.yml
 ```
 ```bash

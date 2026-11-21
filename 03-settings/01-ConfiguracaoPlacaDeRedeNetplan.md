@@ -82,7 +82,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install bridge-utils net-tools
+sudo apt install bridge-utils net-tools nmap
 ```
 
 ## 02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server
@@ -370,6 +370,7 @@ sudo wget -v -O /etc/netplan/00-installer-config.yaml https://raw.githubusercont
 ```
 ```bash
 #editando o arquivo de configuração personalizado do Netplan no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/netplan/00-installer-config.yaml
 ```
 ```bash
@@ -536,6 +537,7 @@ sudo cp -v /etc/systemd/resolved.conf /etc/systemd/resolved.conf.old
 ```
 ```bash
 #editando o arquivo de configuração do Systemd Resolved no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/systemd/resolved.conf
 ```
 ```bash

@@ -202,6 +202,7 @@ sudo timedatectl status
 
 ```bash
 #editando o arquivo de configuração do Cloud Init do Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/cloud/cloud.cfg
 ```
 ```bash
