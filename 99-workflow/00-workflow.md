@@ -13,28 +13,23 @@
 11. Configuração do Bonding                               OK
 12. Configuração do Backup                                OK
 13. Configuração da Observabilidade                       OK
-------------------------------------------------------------
-
 14. Configuração do Firewall UFW                          OK
-------------------------------------------------------------
-
-15. Hardening OpenSSH + Certificado + 2FAS
-------------------------------------------------------------
-
+15. Hardening OpenSSH                                     OK
 16. Hardening TCP Wrappers                                OK
+17. Hardening OpenSSH + Certificado + 2FAS-TOTP
 ------------------------------------------------------------
-17. Hardening Fail2Ban
-18. Hardening AppAmor
-19. Hardening Syslog
-20. Hardening Auditoria
-21. Hardening Systemctl
-22. Hardening PAM - Libpam
-23. Hardening Kernel - Módulos
-24. Hardening Aide
-25. Hardening SUDO
-26. Hardening Grub2
-27. Hardening Cloud-Init
-28. Hardening Snap
+18. Hardening Fail2Ban
+19. Hardening AppAmor
+20. Hardening Syslog
+21. Hardening Auditoria
+22. Hardening Systemctl
+23. Hardening PAM - Libpam
+24. Hardening Kernel - Módulos
+25. Hardening Aide
+26. Hardening SUDO
+27. Hardening Grub2
+28. Hardening Cloud-Init
+29. Hardening Snap
 ------------------------------------------------------------
 
 https://github.com/huashengdun/webssh

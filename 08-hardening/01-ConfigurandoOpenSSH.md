@@ -45,7 +45,7 @@ Site Oficial do PuTTY: https://www.putty.org/<br>
 [#06_ Criando um usuário Administrador no Ubuntu Server](#06_-criando-um-usuário-administrador-no-ubuntu-server)<br>
 [#07_ Adicionando o usuário Admin no grupo SUDO (Super User Do) do Ubuntu Server](#07_-adicionando-o-usuário-admin-no-grupo-sudo-super-user-do-do-ubuntu-server)<br>
 [#08_ Se logando no Terminal TTY (Teletype Bash/Shell) do Ubuntu Server](#08_-se-logando-no-terminal-tty-teletype-bashshell-do-ubuntu-server)<br>
-[#09_ Permitindo o Usuário e Grupo Admin no Acessar via OpenSSH Server o Ubuntu Server](#09_-permitindo-o-usuário-e-grupo-admin-no-acessar-via-openssh-server-o-ubuntu-server)<br>
+[#09_ Permitindo o Usuário e Grupo Admin Acessar via OpenSSH Server o Ubuntu Server](#09_-permitindo-o-usuário-e-grupo-admin-acessar-via-openssh-server-o-ubuntu-server)<br>
 [#10_ Acessando remotamente o OpenSSH Server via Powershell, PuTTY e Git Bash](#10_-acessando-remotamente-o-openssh-server-via-powershell-putty-e-git-bash)<br>
 [#11_ Analisando os arquivos de Logs do OpenSSH Server no Ubuntu Server](#11_-analisando-os-arquivos-de-logs-do-openssh-server-no-ubuntu-server)<br>
 
@@ -421,7 +421,7 @@ Ctrl+D   #(atalho para sair do login)
 Atalho: Alt + F1
 ```
 
-## 09_ Permitindo o Usuário e Grupo Admin no Acessar via OpenSSH Server o Ubuntu Server
+## 09_ Permitindo o Usuário e Grupo Admin Acessar via OpenSSH Server o Ubuntu Server
 ```bash
 #editando o arquivo de configuração do OpenSSH Server no Ubuntu Server
 #mais informações veja a documentação oficial em: https://linux.die.net/man/5/sshd_config
