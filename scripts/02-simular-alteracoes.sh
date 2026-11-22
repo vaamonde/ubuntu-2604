@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script: 02-simular-alteracoes.sh
+# Script: 02-simular-alteracoes-deletar-corrigido.sh
 # Autor: Robson Vaamonde
 # Projeto: Curso GRÁTIS de GNU/Linux Ubuntu Server 26.04.x LTS - Segurança e Hardening
 # Procedimentos em TI: http://procedimentosemti.com.br
@@ -148,19 +148,25 @@ deletar_arquivos_diretorios() {
     return 1
   fi
 
+  echo "  🗑️  Iniciando remoção dos dados de: $(basename "${dept_path}")"
+
   if [ -f "${arquivo}" ]; then
-    rm -f -- "${arquivo}"
-    echo "  ➖ Arquivo removido: ${arquivo}"
+    echo "  ➖ Removendo arquivo: ${arquivo}"
+    rm -v -- "${arquivo}"
+    echo "  ✅ Arquivo removido com sucesso."
   else
-    echo "  ℹ️  Arquivo não encontrado: ${arquivo}"
+    echo "  ℹ️  Arquivo não encontrado (nada a remover): ${arquivo}"
   fi
 
   if [ -d "${diretorio}" ]; then
-    rm -rf -- "${diretorio}"
-    echo "  ➖ Diretório removido: ${diretorio}"
+    echo "  ➖ Removendo diretório e todo o seu conteúdo: ${diretorio}"
+    rm -rv -- "${diretorio}"
+    echo "  ✅ Diretório removido com sucesso."
   else
-    echo "  ℹ️  Diretório não encontrado: ${diretorio}"
+    echo "  ℹ️  Diretório não encontrado (nada a remover): ${diretorio}"
   fi
+
+  echo "  ✔️  Remoção finalizada para: $(basename "${dept_path}")"
 }
 
 # ==============================================================================
@@ -174,14 +180,6 @@ simular_mudancas() {
 
   local qtd_afetados
   case "${MODO}" in
-    deletar)
-      echo "➡️  Exclusões simuladas. Gere um backup para registrar o estado pós-exclusão."
-      echo "    Para recuperar os dados removidos, restaure o arquivo/diretório"
-      echo "    a partir do backup Borg criado ANTES desta execução."
-      echo "    borg list /caminho/repo"
-      echo "    borg extract /caminho/repo::NOME_DO_BACKUP --dry-run --list"
-      echo "    borg extract /caminho/repo::NOME_DO_BACKUP"
-      ;;
     incremental)
       qtd_afetados=2
       ;;
@@ -237,12 +235,11 @@ exibir_orientacao_backup() {
   echo "--------------------------------------------------------------"
   case "${MODO}" in
     deletar)
-      echo "➡️  Exclusões simuladas. Gere um backup para registrar o estado pós-exclusão."
-      echo "    Para recuperar os dados removidos, restaure o arquivo/diretório"
-      echo "    a partir do backup Borg criado ANTES desta execução."
-      echo "    borg list /caminho/repo"
-      echo "    borg extract /caminho/repo::NOME_DO_BACKUP --dry-run --list"
-      echo "    borg extract /caminho/repo::NOME_DO_BACKUP"
+      echo "➡️  Os arquivos e diretórios selecionados foram removidos."
+      echo "    Para testar a recuperação, restaure-os a partir de um backup"
+      echo "    Borg criado ANTES desta execução."
+      echo "    Consulte os arquivos disponíveis com: borg list /caminho/repo"
+      echo "    Faça a restauração em um diretório de teste para evitar sobrescritas."
       ;;
     incremental)
       echo "➡️  Agora rode o Backup INCREMENTAL no Borg (referência: último backup):"
