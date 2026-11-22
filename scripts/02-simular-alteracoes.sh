@@ -7,7 +7,7 @@
 # Bora para Prática: http://boraparapratica.com.br
 #
 # Objetivo: Simular alterações (edição de arquivos existentes, criação de
-# novos arquivos e remoção de arquivos antigos) na estrutura corporativa
+# novos arquivos, remoção de arquivos antigos e exclusão de diretórios) na estrutura corporativa
 # criada pelo script: 01-criar-estrutura-empresa.sh, para gerar cenários
 # reais de teste de BACKUP INCREMENTAL e BACKUP DIFERENCIAL com o Borg.
 #
@@ -32,6 +32,7 @@
 #   sudo ./02-simular-alteracoes.sh incremental   -> gera uma mudança pequena
 #   sudo ./02-simular-alteracoes.sh diferencial   -> gera uma mudança maior/acumulada
 #   sudo ./02-simular-alteracoes.sh completo      -> gera uma mudança ampla (opcional)
+#   sudo ./02-simular-alteracoes.sh deletar       -> remove arquivos e diretórios para testar a restauração
 #
 set -euo pipefail
 
@@ -131,6 +132,38 @@ remover_arquivo_temporario() {
 }
 
 # ==============================================================================
+# Função: deletar_arquivos_diretorios
+# Remove arquivos e diretórios conhecidos da estrutura /dados para simular
+# exclusão acidental e permitir validar a restauração pelo Borg.
+# A remoção é restrita a caminhos previamente definidos dentro de /dados.
+# ==============================================================================
+deletar_arquivos_diretorios() {
+  local dept_path="$1"
+  local arquivo="${dept_path}/documentos/ata_reuniao.txt"
+  local diretorio="${dept_path}/contratos"
+
+  # Confirma que o departamento está diretamente dentro de BASE_DIR.
+  if [[ "$(dirname "${dept_path}")" != "${BASE_DIR}" ]]; then
+    echo "  ⚠️  Caminho fora da estrutura permitida; exclusão ignorada: ${dept_path}"
+    return 1
+  fi
+
+  if [ -f "${arquivo}" ]; then
+    rm -f -- "${arquivo}"
+    echo "  ➖ Arquivo removido: ${arquivo}"
+  else
+    echo "  ℹ️  Arquivo não encontrado: ${arquivo}"
+  fi
+
+  if [ -d "${diretorio}" ]; then
+    rm -rf -- "${diretorio}"
+    echo "  ➖ Diretório removido: ${diretorio}"
+  else
+    echo "  ℹ️  Diretório não encontrado: ${diretorio}"
+  fi
+}
+
+# ==============================================================================
 # Função: simular_mudancas
 # Aplica as alterações em uma quantidade de departamentos proporcional ao
 # modo escolhido (incremental = poucas mudanças / diferencial = mais mudanças)
@@ -141,6 +174,14 @@ simular_mudancas() {
 
   local qtd_afetados
   case "${MODO}" in
+    deletar)
+      echo "➡️  Exclusões simuladas. Gere um backup para registrar o estado pós-exclusão."
+      echo "    Para recuperar os dados removidos, restaure o arquivo/diretório"
+      echo "    a partir do backup Borg criado ANTES desta execução."
+      echo "    borg list /caminho/repo"
+      echo "    borg extract /caminho/repo::NOME_DO_BACKUP --dry-run --list"
+      echo "    borg extract /caminho/repo::NOME_DO_BACKUP"
+      ;;
     incremental)
       qtd_afetados=2
       ;;
@@ -150,9 +191,12 @@ simular_mudancas() {
     completo)
       qtd_afetados=${#departamentos[@]}
       ;;
+    deletar)
+      qtd_afetados=2
+      ;;
     *)
       echo "❌ Modo inválido: ${MODO}"
-      echo "   Utilize: incremental | diferencial | completo"
+      echo "   Utilize: incremental | diferencial | completo | deletar"
       exit 1
       ;;
   esac
@@ -167,10 +211,14 @@ simular_mudancas() {
     fi
 
     echo "📂 Departamento: $(basename "${dept_path}")"
-    editar_arquivo_existente "${dept_path}/relatorios/relatorio_mensal.txt"
-    editar_arquivo_existente "${dept_path}/planilhas/controle_orcamento.csv"
-    criar_arquivo_novo "${dept_path}"
-    remover_arquivo_temporario "${dept_path}"
+    if [ "${MODO}" = "deletar" ]; then
+      deletar_arquivos_diretorios "${dept_path}"
+    else
+      editar_arquivo_existente "${dept_path}/relatorios/relatorio_mensal.txt"
+      editar_arquivo_existente "${dept_path}/planilhas/controle_orcamento.csv"
+      criar_arquivo_novo "${dept_path}"
+      remover_arquivo_temporario "${dept_path}"
+    fi
     echo ""
 
     contador=$((contador + 1))
@@ -188,6 +236,14 @@ exibir_orientacao_backup() {
   echo "✅ Alterações simuladas com sucesso (modo: ${MODO})."
   echo "--------------------------------------------------------------"
   case "${MODO}" in
+    deletar)
+      echo "➡️  Exclusões simuladas. Gere um backup para registrar o estado pós-exclusão."
+      echo "    Para recuperar os dados removidos, restaure o arquivo/diretório"
+      echo "    a partir do backup Borg criado ANTES desta execução."
+      echo "    borg list /caminho/repo"
+      echo "    borg extract /caminho/repo::NOME_DO_BACKUP --dry-run --list"
+      echo "    borg extract /caminho/repo::NOME_DO_BACKUP"
+      ;;
     incremental)
       echo "➡️  Agora rode o Backup INCREMENTAL no Borg (referência: último backup):"
       echo "    borg create --stats --progress /caminho/repo::incr-${TIMESTAMP} ${BASE_DIR}"

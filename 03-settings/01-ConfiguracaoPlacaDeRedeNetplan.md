@@ -82,7 +82,7 @@ sudo apt update
 #instalando os pacotes e ferramentas de rede no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
-sudo apt install bridge-utils net-tools nmap
+sudo apt install bridge-utils net-tools nmap tree
 ```
 
 ## 02_ Verificando as informações do Hardware de Rede (Placa de Rede) no Ubuntu Server

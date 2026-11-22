@@ -48,9 +48,10 @@ BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 [#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server](#08_-criando-o-modelo-template-de-backup-do-bbs-no-ubuntu-server)<br>
 [#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server](#09_-configurando-o-repositório-do-bbs-para-a-partição-de-backup-no-ubuntu-server)<br>
 [#10_ Criando o Plano de Backup dp BBS no Ubuntu Server](#10_-criando-o-plano-de-backup-dp-bbs-no-ubuntu-server)<br>
-[#11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server](#11_-criando-a-estrutura-de-informações-na-partição-dados-do-ubuntu-server)<br>
-[#12_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#12_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
-[#13_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#13_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
+[#11_ Configurando o Perfil (Profile) do Usuário Admin do BBS do Ubuntu Server]()<br>
+[#12_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server]()<br>
+[#13_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server]()<br>
+[#14_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server]()<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
 
@@ -291,7 +292,7 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
         Mbstring extensions         Installed
         OpenSSL extensions          Installed
         Config directory writable   Writable
-      <Begin Setup>
+      <Begin Setup -->
 ```
 ```bash
 #Configuração do Banco de Dados do BBS
@@ -300,8 +301,8 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
         Database Host: localhost
         Database Name: bbs
         Database User: bbs
-        Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFADA DO SCRIPT DE INSTALAÇÃO>
-      <Test Connections & Continue>
+        Database Password: <COPIAR E COLOCAR A SENHA CRIPTOGRAFADA GERADA PLEO SCRIPT DE INSTALAÇÃO>
+      <Test Connections & Continue -->
 ```
 ```bash
 #Configuração do Usuários Administrador do BBS
@@ -311,19 +312,20 @@ sudo lsof -nP -iTCP:'80,443,3306' -sTCP:LISTEN
         Username: seu_usuário
         Password: sua_senha
         Confirm Password: repetir_sua_senha
-      <Continue>
+      <Continue -->
 ```
 ```bash
 #Configuração do Armazenamento do BBS
 05) Step 4 of 5 - Storage & Server
-      Storage & Server
+      Storage
         Storage: Default storage: /var/bbs/home
+      Server Connection
         Server Hostname / IP: seu_endereço_ipv4 ou nome_servidor
         (OFF) Enable SSL (HTTPS) - (Disable)
-      <Continue>
+      <Continue -->
 ```
 ```bash
-#Tela resumo da Instalação do BBS
+#Tela de resumo da Instalação do BBS
 06) Step 5 of 5 - Install
       Review & Install
         Database Host: localhost
@@ -359,6 +361,7 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
       Clients (Clientes) <Add Client>
         Add New Client
           Client Name: seu_hostname
+          Location: On-Premises
           Client Profile: Default - Every client starts here until it is given a profile of its own
           Assign to User : admin
         <Create Client>
@@ -370,6 +373,49 @@ Entendendo a Arquitetura de Comunicação do Agente:<br>
       Install (Instalar)
         Install Agent (Linux / macOS) <Copy>
           curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
+```
+
+> **OBSERVAÇÃO IMPORTANTE:** a partir das versões mais novas do `BBS` a instalação do Agente On-Premises (Localhost) foi bloqueada no script de instalação, para liberar e necessário comentas algumas linhas no script de verificação.
+
+```bash
+#Comentando as linhas de verificação do Sistema Operacional em Localhost (On-Premises)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
+sudo vim /var/www/bbs/agent/install.sh
+```
+```bash
+#habilitando o número de linhas do arquivo install.sh
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#comentar as linhas de verificar a partir da linha: 219 até 227
+#if [ -f /var/www/bbs/config/.env ] || [ -d /var/www/bbs/src ]; then
+    #print_error "This machine is running the BBS server itself — the agent can't be"
+    #print_error "installed here. Agents run on the machines being backed up; the BBS"
+    #print_error "server only coordinates. If the data you want to back up is on this"
+    #print_error "host (or mounted into the BBS container), install the agent on the"
+    #print_error "machine that owns the data, or run the agent as its own container:"
+    #print_error "https://github.com/marcpope/borgbackupserver/wiki/Docker-Agent-Setup"
+    #exit 1
+#fi
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT :x <Enter>
+```
+```bash
+#Instalando o Agente Linux do BBS no Ubuntu Server
+#opção do comando curl: -s (Silent or quiet mode)
+#opção do comando bash: -s (Shell reads commands from the standard input)
+#opções do comando get-agent: --server (IP Address or Hostname Server BBS), --key (API Key Generate Installer)
+#opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/curl.1.html
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/bash.1.html
+#mais informações acesse a documentação oficial em: https://www.borgbackupserver.com/agent-support/
+curl -s http://seu_endereço_ipv4/get-agent | sudo bash -s --server http://seu_endereço_ipv4 --key SEU_TOKEN_DE_REGISTRO
 ```
 ```bash
 #verificando o status do serviço do Agente do BBS no Ubuntu Server
@@ -400,19 +446,20 @@ sudo usermod -a -G backupadm bbs-seu_nome_de_servidor
 #opção do comando getent: group (show to enumerate the group database)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/getent.1.html
 sudo getent group backupadm
-sudp getent group www-data
+sudo getent group www-data
 ```
 
 ## 07_ Criando o Armazenamento Local (Storage) do BBS no Ubuntu Server
 ```bash
 #Configurando o Armazenamento Local do Diretório de Backup do BBS
 01) No Painel Web do BBS, acessar o menu:
-      Storage (Armazenamento) <Add Location>
-        Label (Rótulo): repo-dados-on-premises
-        Path (Caminho): /backup/repository/lv-dados
-        Capacity (Capacidade): auto (Default)
-        Default (Padrão): on (Enable)
-      <Create>
+      Storage (Armazenamento) 
+        Local Storage: <Add Location>
+          Label (Rótulo): repo-dados-on-premises
+          Path (Caminho): /backup/repository/lv-dados
+          Capacity (Capacidade): auto (Default)
+          Default (Padrão): on (Enable)
+        <Create>
 ```
 
 ## 08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server
@@ -510,7 +557,23 @@ sudp getent group www-data
       <Create Backup Plan>
 ```
 
-## 11_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server
+## 11_ Configurando o Perfil (Profile) do Usuário Admin do BBS do Ubuntu Server
+```bash
+#Acessando o Profile do Usuário Admin
+01) No ícone do usuário: admin
+      Clique em: Profile
+```
+```bash
+#Configurando o Time Zone UTF do Profile
+02) My Profile
+      Account
+        Account Information
+          Timezone: America/Sao_Paulo
+          Time Format: 24-hour (13:30)
+    <Save Changes>
+```
+
+## 12_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server
 ```bash
 #baixando o script para a criação dos diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do comando curl: -s (silent mode), -O (Write output to a local file named like the remote file)
@@ -533,8 +596,14 @@ sudo bash 01-criar-estrutura-empresa.sh
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/tree
 sudo tree /dados
 ```
+```bash
+#verificando se a partição de Dados (LVM) com ocupação no Ubuntu Server
+#opção do comando df: -h (human-readable)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/df.1.html
+sudo df -h /dados
+```
 
-## 12_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server
+## 13_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server
 ```bash
 #Acessando o Painel de Clientes do BBS
 01) No Painel Web do BBS, acessar o menu:
@@ -542,11 +611,11 @@ sudo tree /dados
         Name: srvvaamonde (Servidor Ubuntu)
 ```
 ```bash
-#Acessando os Planos de Agendamento de Backup do BBS
+#Executando o Plano de Agendamento de Backup do BBS
 02) Plans (Planos)
       Backup Schedules (Agendamento de Backup)
         backup-diario-ados
-          Clicar nos 3 (três) pontinhos no canto superior
+          Clicar nos 3 (três) pontinhos no canto superior direito
             Selecionar a opção: Run Now (Rodar Agora)
 ```
 ```bash
@@ -601,7 +670,7 @@ sudo tree /dados
 sudo tree /backup
 ```
 
-## 13_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server
+## 14_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server
 
 > **OBSERVAÇÃO IMPORTANTE:** um Backup só tem valor real depois de **testado**. Nunca considere uma rotina de Backup `confiável` sem antes validar o processo completo de Restauração (Restore).
 
