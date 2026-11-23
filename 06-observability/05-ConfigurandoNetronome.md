@@ -107,7 +107,8 @@ sudo apt upgrade
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt install iperf3 traceroute mtr-tiny vnstat apache2 php librespeed-cli
-  Iniciar o Iperf3 automaticamente como um daemon?  <Yes><Enter>
+  Continue? [Y/n] y <Enter>
+    Iniciar o Iperf3 automaticamente como um daemon? <Yes> <Enter>
 ```
 
 ## 02_ Instalando o Netronome Server do Projeto do Github no Ubuntu Server
@@ -115,10 +116,17 @@ sudo apt install iperf3 traceroute mtr-tiny vnstat apache2 php librespeed-cli
 > **OBSERVAÇÃO IMPORTANTE:** o tempo todo o `Netronome` sofre alteração, antes de fazer o download do arquivo verifique a versão no link oficial de releases em: https://github.com/autobrr/netronome/releases/
 
 ```bash
-#baixando o Netronome Server do Github (link atualizando em: 21/11/2026)
+#baixando o Netronome Server do Github (link atualizando em: 23/11/2026)
 #opções do comando wget: -v (verbose), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
-wget -v -O netronome.deb https://github.com/autobrr/netronome/releases/download/v0.16.0/netronome_0.16.0_linux_amd64.deb
+wget -v -O netronome.deb https://github.com/autobrr/netronome/releases/download/v0.17.0/netronome_0.17.0_linux_amd64.deb
+```
+```bash
+#listando o download do arquivo do Netronome Server no Ubuntu Server
+#opção do comando ls: -l (long listing), -h (human-readable)
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
+ls -lh netronome*
 ```
 ```bash
 #instalando o Netronome Server no Ubuntu Server
@@ -136,6 +144,13 @@ sudo dpkg -i netronome.deb
 #opções do comando wget: -v (Turn on verbose output), -O (output file)
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 wget -v -O speedtest.tar.gz https://github.com/librespeed/speedtest/archive/refs/tags/v6.3.1.tar.gz
+```
+```bash
+#listando o download do arquivo do SpeedTest no Ubuntu Server
+#opção do comando ls: -l (long listing), -h (human-readable)
+#opção do caractere curinga * (asterisco): Qualquer coisa e autocomplemento
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/ls.1.html
+ls -lh speedtest*
 ```
 ```bash
 #descompactando o arquivo do SpeedTest no Ubuntu Server
@@ -169,6 +184,7 @@ sudo -i
 #opção do comando netronome: generate-config (Generate a default configuration file)
 #mais informações acesse a documentação oficial em: https://github.com/autobrr/netronome#basic-configuration
 netronome generate-config
+  Generated default config file path=/root/.config/netronome/config.toml
 ```
 
 ## 05_ Atualizando os arquivos de configuração do Netronome Server no Ubuntu Server
@@ -310,7 +326,34 @@ INSERT
 ```
 ```yaml
 #adicionar o valor da variável Listen a partir da linha: 06
+#OBSERVAÇÃO: PORTA UTILIZADA PELO SERVIÇO DO SPEEDTEST LOCAL
 Listen 8080
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+```
+```bash
+#editando arquivo de configuração do SpeedTtest do Apache2 Server no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
+sudo vim /etc/apache2/sites-available/speedtest.conf
+```
+```bash
+#habilitando o número de linhas do arquivo ports.conf
+ESC SHIFT :set number <Enter>
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```yaml
+#alterar o valor da variável <VirtualHost *:8080> a partir da linha: 17
+#OBSERVAÇÃO: PORTA UTILIZADA PELO SERVIÇO DO SPEEDTEST LOCAL CONFIGURADA NO ARQUIVO PORTS
+<VirtualHost *:8080>
+
+#alterar o valor da variável DocumentRoot a partir da linha: 23
+DocumentRoot /var/www/html/speedtest
+<Directory /var/www/html/speedtest>
 ```
 ```bash
 #salvar e sair do arquivo
@@ -321,6 +364,11 @@ ESC SHIFT : x <Enter>
 #opção do comando apache2ctl: -t (Run a configuration file syntax test)
 #mais informações acesse a documentação oficial em: https://linuxcommandlibrary.com/man/apache2ctl
 sudo apache2ctl -t
+```
+```bash
+#habilitando o site do SpeedTest do Apache2 Server no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/a2ensite.8.html
+sudo a2ensite speedtest.conf
 ```
 ```bash
 #reiniciando o serviço do Apache2 Server no Ubuntu Server
@@ -365,6 +413,7 @@ curl -sL https://netrono.me/install-agent | sudo bash
 ```
 ```bash
 #Configuração da Chave de API de conexão do Netronome Agent
+#OBSERVAÇÃO: COPIAR E COLOCAR A API KEY GERADA PARA CONFIGURAR NO NETRONOME SERVER
 03) API Key Configuration: 
     Select an option [1-3]: 1 <Enter>
 ```
@@ -510,9 +559,107 @@ sudo systemctl status netronome
     Password: admin
     <Sign in>
 ```
+```bash
+#Configuração da Data e Hora do Netronome Server
+03) Netronome - Network performance testing
+    Ícone Engrenagem (Canto Superior Direito)
+      Time & Timezone
+        Time & Date Settings
+          Timezone
+            Select Timezone: Basilia Time (BRT/BRST)
+      <Save Changes>
+```
 
 ## 13_ Configurando os principais Monitoramento do Netronome Server via Navegador
 ```bash
+#criando o monitoramento do Speed Test no Netronome Server
+01) Netronome (Network Performance Testing)
+    Speedt Test
+      Server Selection
+        (ON) Speedtest (Enable)
+        Claro Móvel SPO1 São Paulo (Selecionar)
+        Testar a conexão: <Run>
+      Schedule Manager
+        Interval: Every Hour (1 hour)
+      <Create Every Hour>
+```
+```bash
+#criando o monitoramento do IPerf3 no Netronome Server
+02) Netronome (Network Performance Testing)
+    Speedt Test
+      Server Selection
+        (ON) iperf3
+          <+Add>
+            Add iperf3 Server
+              Server Name: srvvaamonde
+              Server Host: seu_endereço_IPv4_servidor
+              Server Port: 5201
+          <Add Server>
+      SRVSEU_NOME Custom Server (Selecionar)
+      Testar a conexão: <Run>
+      Schedule Manager
+        Interval: Every Hour (1 hour)
+      <Create Every Hour>
+```
+```bash
+#criando o monitoramento do Librespeed no Netronome Server
+03) Netronome (Network Performance Testing)
+    Speedt Test
+      Server Selection
+        (ON) Librespeed
+        SRVSEU_NOME Custom Server (Selecionar)
+        Testar a conexão: <Run>
+      Schedule Manager
+        Interval: Every Hour (1 hour)
+      <Create Every Hour>
+```
+```bash
+#criando o monitoramento do traceroute no Netronome Server
+04) Netronome (Network Performance Testing)
+    Traceroute
+      Monitors
+        Network Monitors
+          <Add>
+            New Monitor
+              Host: 8.8.8.8
+              Name: IPv4-Google
+              Schedule Type: Interval
+              Check Interval: Every 1 hour
+              Packets per Test: 10
+              Alert Threshold (% packet loss): 5
+              (ON)  Start monitoring immediately
+          <Create Monitor>
+```
+```bash
+#criando o monitoramento do DNS no Netronome Server
+05) Netronome (Network Performance Testing)
+    DNS
+      DNS Monitors
+        <Add>
+          New DNS Monitor
+            Presets: Clodflare DoT (Selecionar)
+            Resolver: one.one.one.one
+            Name: Cloudflare DoT
+            Protocol: DNS over TLS
+            Query: google.com
+            Record Type: A
+            Check Interval: Every 1 minute
+            (ON)  Start monitoring immediately
+        <Create Monitor>
+```
+```bash
+#criando o monitoramento do Agent no Netronome Server
+05) Netronome (Network Performance Testing)
+    Agents
+      Monitoring
+        Netronome Agents
+          <Add Agent>
+            Add Agent
+              Agent Name: srvseu_servidor
+              Agent URL: http://ENDEREÇO_IPV4_SEU_SERVIDOR:8200
+              API Key (Optional): COLAR_O_API_KEY_GERADO_INSTALAÇÃO
+              (ON) Enable monitoring
+          <Create>
 ```
 
 ---

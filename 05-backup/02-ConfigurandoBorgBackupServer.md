@@ -48,10 +48,10 @@ BorgBackup Server / BBS (Site Oficial): https://www.borgbackupserver.com/<br>
 [#08_ Criando o Modelo (Template) de Backup do BBS no Ubuntu Server](#08_-criando-o-modelo-template-de-backup-do-bbs-no-ubuntu-server)<br>
 [#09_ Criando o Repositório do BBS apontando para a Partição de Backup no Ubuntu Server](#09_-configurando-o-repositório-do-bbs-para-a-partição-de-backup-no-ubuntu-server)<br>
 [#10_ Criando o Plano de Backup dp BBS no Ubuntu Server](#10_-criando-o-plano-de-backup-dp-bbs-no-ubuntu-server)<br>
-[#11_ Configurando o Perfil (Profile) do Usuário Admin do BBS do Ubuntu Server]()<br>
-[#12_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server]()<br>
-[#13_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server]()<br>
-[#14_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server]()<br>
+[#11_ Configurando o Perfil (Profile) do Usuário Admin do BBS do Ubuntu Server](#11_-configurando-o-perfil-profile-do-usuário-admin-do-bbs-do-ubuntu-server)<br>
+[#12_ Criando a Estrutura de Informações na Partição Dados do Ubuntu Server](#12_-criando-a-estrutura-de-informações-na-partição-dados-do-ubuntu-server)<br>
+[#13_ Executando e Monitorando o Primeiro Backup do BBS no Ubuntu Server](#13_-executando-e-monitorando-o-primeiro-backup-do-bbs-no-ubuntu-server)<br>
+[#14_ Testando a Restauração (Restore) de Arquivos do BBS no Ubuntu Server](#14_-testando-a-restauração-restore-de-arquivos-do-bbs-no-ubuntu-server)<br>
 
 [![BorgBackupServer Ubuntu Server](http://img.youtube.com/vi//0.jpg)]( "BorgBackupServer Ubuntu Server")
 
@@ -658,6 +658,11 @@ sudo bash 02-simular-alteracoes.sh diferencial
 #executando o script para modificar os diretórios e arquivos na partição Dados do Ubuntu Server
 #opção do script 02-simular-alteracoes.sh: completo (simula uma alteração no diretório completa)
 sudo bash 02-simular-alteracoes.sh completo
+```
+```bash
+#executando o script para deletar os diretórios e arquivos na partição Dados do Ubuntu Server
+#opção do script 02-simular-alteracoes.sh: deletar (simula uma alteração no diretório de deletar)
+sudo bash 02-simular-alteracoes.sh deletar
 ```
 ```bash
 #verificando a árvore de diretórios da partição Dados do Ubuntu Server

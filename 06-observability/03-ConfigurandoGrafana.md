@@ -44,6 +44,8 @@ Site Oficial do Grafana: https://grafana.com/<br>
 [#07_ Verificando o Serviço e Versão do Grafana Server no Ubuntu Server](#07_-verificando-o-serviço-e-versão-do-grafana-server-no-ubuntu-server)<br>
 [#08_ Verificando a Porta de Conexão do Grafana Server no Ubuntu Server](#08_-verificando-a-porta-de-conexão-do-grafana-server-no-ubuntu-server)<br>
 [#09_ Configurando o Grafana Server via Navegador](#09_-configurando-o-grafana-server-via-navegador)<br>
+[#10_ Adicionando um Data Source do Prometheus no Grafana Server](#10_-adicionando-um-data-source-do-prometheus-no-grafana-server)<br>
+[#11_ Importando um Dashboard Personalizado do Prometheus no Grafana Server](#11_-importando-um-dashboard-personalizado-do-prometheus-no-grafana-server)<br>
 
 | **🛡️ Tecnologia** | **📖 O que é?** | **🎯 Para que serve?** |
 | :---------------- | :-------------- | :--------------------- |
@@ -163,7 +165,7 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
-#principais variáveis do Grafana Server (PADRÃO NÃO ALTERAR OS VALORES)
+#principais variáveis do Grafana Server (PADRÃO NÃO ALTERAR OS VALORES) a partir da linha: 19
 GRAFANA_USER=grafana          (usuário do serviço do Grafana Server)
 GRAFANA_GROUP=grafana         (grupo do serviço do Grafana Server)
 LOG_DIR=/var/log/grafana      (localização dos arquivos de Log do Grafana Server)
@@ -187,15 +189,9 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
-#descomentar a variável protocol = na linha: 32
-protocol = http
-#
-#descomentar a variável ;http_port = na linha 41
-http_port = 3000
-#
-#descomentar a variável ;domain = na linha 44
+#alterar o valor da variável ;domain = na linha 29
 #altere o nome de domínio conforme o seu cenário
-domain = pti.intra
+domain = seu_domínio.intra
 ```
 ```bash
 #salvar e sair do arquivo
@@ -295,6 +291,49 @@ Update your password
   New password: SUA_SENHA_SEGURA
   Confirm new password: SUA_SENHA_SEGURA 
 <Submit>
+```
+
+## 10_ Adicionando um Data Source do Prometheus no Grafana Server
+```bash
+#adicionando o data source do Prometheus no Grafana Server
+Main menu
+  Connections
+    Data sourcers
+
+#adicionar o data source do Prometheus
+<Add data source>
+  Prometheus
+    Connection
+      Prometheus server URL: http://172.16.1.20:9090
+    Authentication
+      Basic authentication
+        User: admin
+        Password: sua_senha_segura
+  <Save & test>
+
+#verificando a conexão com o Prometheus
+Main menu
+  Connections
+    Data sourcers
+      Prometheus: http://172.16.1.20:9090 (Default)
+```
+
+## 11_ Importando um Dashboard Personalizado do Prometheus no Grafana Server
+```bash
+#importando um dashboard personalizado do Prometheus
+Main menu
+  Dashboards
+    <New>
+      Import dashboard
+
+#localização do arquivo personalizado de dashboard do Prometheus
+Import dashboard
+  Upload dashboard JSON File (Clique)
+    Selecionar: DashboardUbuntuServer.json <Abrir>
+      Name: Dashboard Ubuntu Server - Monitoramento Completo
+      Folder: Dashboards
+      Unique identifier (UID) ubuntu-server-monitoramento-completo (Default)
+    <Import>
 ```
 
 ---

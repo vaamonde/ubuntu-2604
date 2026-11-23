@@ -120,7 +120,7 @@ Entendendo a saída do comando: __`update-alternatives --config iptables`__<br>
 sudo ufw version
 ```
 ```bash
-#verificando o status do UFW (Status padrão de fábrica: inactive - inativo/desativado)
+#verificando o status do UFW (Status padrão de fábrica: inactive - inativo/desativado) no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw status
@@ -247,21 +247,21 @@ sudo ufw status verbose
 > **OBSERVAÇÃO IMPORTANTE:** no UFW temos basicamente **05 (cinco)** níveis de Log: `off` (desligado), `low` (baixo), `medium` (médio), `high` (alto) e `full` (completo/debug).
 
 ```bash
-#habilitando os registros dos Logs das Regras do UFW
+#habilitando os registros dos Logs das Regras do UFW no Ubuntu Server
 #opção do comando ufw: logging (Logged packets use the LOG_KERN syslog facility), on (enabled logging)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw logging on
   Logging enabled
 ```
 ```bash
-#configurando o Nível de Log de Baixo (LOW) para Médio (MEDIUM), recomendado para servidores em Hardening
+#configurando o Nível de Log de Baixo (LOW) para Médio (MEDIUM), recomendado para servidores em Hardening no Ubuntu Server
 #opção do comando ufw: logging (Logged packets use the LOG_KERN syslog facility), medium (enabled medium logging)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw logging medium
   Logging enabled
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW
+#verificando as Regras Detalhadas padrão do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules), 
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -273,32 +273,32 @@ sudo ufw status verbose
 > **OBSERVAÇÃO IMPORTANTE:** neste ponto o servidor está **totalmente bloqueado** (Entrada e Saída), inclusive o próprio `Loopback (127.0.0.1/::1)` e a conexão SSH remota já podem estar comprometidas. Utilize o **Console/Terminal físico** da Máquina Virtual (VirtualBOX) para os testes a seguir.
 
 ```bash
-#pingando o endereço IPv4 da Loopback/Localhost (por padrão está liberado no terminal)
+#pingando o endereço IPv4 da Loopback/Localhost (por padrão está liberado no terminal) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ping 127.0.0.1
 ```
 ```bash
-#pingando o endereço IPv6 da Loopback/Localhost (por padrão está liberado no terminal)
+#pingando o endereço IPv6 da Loopback/Localhost (por padrão está liberado no terminal) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping6
 ping6 ::1
 ```
 ```bash
-#pingando o endereço IPv4 de DNS do Google (tende a falhar - saída ainda não liberada)
+#pingando o endereço IPv4 de DNS do Google (tende a falhar - saída ainda não liberada) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ping 8.8.8.8
 ```
 ```bash
-#resolvendo o nome de DNS do Google (tende a falhar - saída ainda não liberada)
+#resolvendo o nome de DNS do Google (tende a falhar - saída ainda não liberada) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
 nslookup google.com
 ```
 ```bash
-#pingando o endereço IPv4 remoto do Ubuntu Server (por padrão está liberado o ICMP)
+#pingando o endereço IPv4 remoto do Ubuntu Server (por padrão está liberado o ICMP) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 ping 172.16.1.20
 ```
 ```bash
-#testando o acesso remoto via SSH no Ubuntu Server (tende a falhar - entrada ainda não liberada)
+#testando o acesso remoto via SSH no Ubuntu Server (tende a falhar - entrada ainda não liberada) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/ssh
 ssh vaamonde@172.16.1.20
 ```
@@ -315,7 +315,7 @@ sudo nmap -p- 172.16.1.20
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente as regras de `IPv6` para as regras da Interface de Loopback.
 
 ```bash
-#liberando (ALLOW) a Entrada (IN) da Interface (ON) Loopback (LO)
+#liberando (ALLOW) a Entrada (IN) da Interface (ON) Loopback (LO) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on lo
@@ -323,7 +323,7 @@ sudo ufw allow in on lo
   Rule added (v6)
 ```
 ```bash
-#liberando (ALLOW) a Saída (OUT) da Interface (ON) Loopback (LO)
+#liberando (ALLOW) a Saída (OUT) da Interface (ON) Loopback (LO) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on lo
@@ -331,14 +331,14 @@ sudo ufw allow out on lo
   Rule added (v6)
 ```
 ```bash
-#verificando as Regras Detalhadas (VERBOSE) padrão do UFW
+#verificando as Regras Detalhadas (VERBOSE) padrão do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw status verbose
 ```
 ```bash
-#verificando o Status das Regras (RULES) Numeradas (NUMBERED) do UFW
+#verificando o Status das Regras (RULES) Numeradas (NUMBERED) do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #numbered (To see a list of numbered rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -349,12 +349,12 @@ sudo ufw status numbered
 
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, o UFW no Ubuntu Server adiciona automaticamente regras de `IPv6` para regras criadas de forma simples ou básica.
 >
-> **OBSERVAÇÃO IMPORTANTE:** ao utilizar a opção: `comment` (comentário) do UFW é recomendado não utilizar acentuação e sempre dentro de Aspas Simples (não crase).
+> **OBSERVAÇÃO IMPORTANTE:** ao utilizar a opção: `comment` (comentário) do UFW é recomendado não utilizar acentuação e sempre dentro de `Aspas Simples` (não crase).
 >
 > **OBSERVAÇÃO IMPORTANTE:** o UFW segue a ordem: `Primeira Regra Correspondente` (de cima para baixo) → `Ação da Regra` (allow, deny, reject) → `Regras Subsequentes` (continua se não encontrar) → `Regra Padrão` (default). A prioridade de processamento é: `Regras de Porta Específica` (maior) → `Regras de Protocolo e Porta` → `Regras de Aplicação de Serviço` → `Regras de Sub-rede` → `Regras de Interface` → `Regras de App Profile` (menor).
 
 ```bash
-#regra de liberação (ALLOW) de Saída (OUT) das Consultas do Protocolo DNS (853/tcp)
+#regra de liberação (ALLOW) de Saída (OUT) das Consultas do Protocolo DNS (853/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 from 172.16.1.20 to 1.1.1.1 port 853 proto tcp comment 'Liberando a saida para consulta do DNS over TLS CloudFlare v4'
@@ -363,21 +363,21 @@ sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to 2606:4700:4700::1111 po
 sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to 2606:4700:4700::1001 port 853 proto tcp comment 'Liberando a saida para consulta do DNS over TLS CloudFlare v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTP (80/tcp)
+#regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTP (80/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 from 172.16.1.20 to any port 80 proto tcp comment 'Liberando a saida para navegacao do HTTP v4'
 sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 80 proto tcp comment 'Liberando a saida para navegacao do HTTP v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTPS (443/tcp)
+#regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTPS (443/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 from 172.16.1.20 to any port 443 proto tcp comment 'Liberando a saida para navegacao do HTTPS v4'
 sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 443 proto tcp comment 'Liberando a saida para navegacao do HTTPS v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTP (123/udp) - sincronismo do Chrony
+#regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTP (123/udp) - sincronismo do Chrony no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 to 200.160.7.186 port 123 proto udp comment 'Liberando a saida para sincronismo do NTP.br v4'
@@ -388,7 +388,7 @@ sudo ufw allow out on bond0 to 2001:129c:7002:2::147 port 123 proto udp comment 
 sudo ufw allow out on bond0 to 2001:12ff:0:7::196 port 123 proto udp comment 'Liberando a saida para sincronismo do NTP.br v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTS-KE (4460/tcp) - negociação TLS do NTP.br
+#regra de liberação (ALLOW) de Saída (OUT) do Protocolo NTS-KE (4460/tcp) - negociação TLS do NTP.br no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow out on bond0 to 200.160.7.186 port 4460 proto tcp comment 'Liberando a saida para sincronismo do NTS-KE do NTP.br v4'
@@ -399,26 +399,26 @@ sudo ufw allow out on bond0 to 2001:129c:7002:2::147 port 4460 proto tcp comment
 sudo ufw allow out on bond0 to 2001:12ff:0:7::196 port 4460 proto tcp comment 'Liberando a saida para sincronismo do NTS-KE do NTP.br v6'
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW
+#verificando as Regras Detalhadas padrão do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw status verbose
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW em modo Numerado
+#verificando as Regras Detalhadas padrão do UFW em modo Numerado no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #numbered (To see a list of numbered rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw status numbered
 ```
 ```bash
-#resolvendo o nome DNS do Google (agora deve funcionar)
+#resolvendo o nome DNS do Google (agora deve funcionar) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/nslookup
 nslookup google.com
 ```
 ```bash
-#atualizando as listas do sources.list do APT (agora deve funcionar)
+#atualizando as listas do sources.list do APT (agora deve funcionar) no Ubuntu Server
 #opção do comando apt: update (Resynchronize the package index files from their sources)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
@@ -429,7 +429,7 @@ sudo apt update
 > **OBSERVAÇÃO IMPORTANTE:** por padrão, a regra de ICMP de Entrada (INCOMING) já vem Liberada (ACCEPT) nos arquivos `before.rules`/`before6.rules`, caso queira Bloquear (DROP) o Ping de Entrada, basta trocar `ACCEPT` por `DROP` nas linhas correspondentes desses arquivos. Aqui vamos liberar apenas a **Saída** do ICMP, que fica bloqueada pela política `deny outgoing` configurada no item #08.
 
 ```bash
-#pingando os endereços IPv4, IPv6 e o nome do Google (tende a falhar - ICMP de saída ainda bloqueado)
+#pingando os endereços IPv4, IPv6 e o nome do Google (tende a falhar - ICMP de saída ainda bloqueado) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping6
 ping 8.8.8.8
@@ -437,7 +437,7 @@ ping6 2001:4860:4860::8888
 ping google.com
 ```
 ```bash
-#editando o arquivo de configuração before.rules (regras de IPv4, ANTES das regras de usuário)
+#editando o arquivo de configuração before.rules (regras de IPv4, ANTES das regras de usuário) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/ufw/before.rules
 ```
@@ -495,14 +495,14 @@ INSERT
 ESC SHIFT :x <Enter>
 ```
 ```bash
-#reiniciar as regras de firewall do UFW
+#reiniciar as regras de firewall do UFW no Ubuntu Server
 #opção do comando ufw: reload (reloads firewall rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw reload
   Firewall reloaded
 ```
 ```bash
-#pingando o endereço IPv4 e IPv6 do Google (agora deve funcionar)
+#pingando o endereço IPv4 e IPv6 do Google (agora deve funcionar) no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/8/ping6
 ping 8.8.8.8
@@ -519,63 +519,63 @@ ping google.com
 > **OBSERVAÇÃO IMPORTANTE:** essa é a regra **mais crítica** da Blindagem Full: sem ela, você perde o acesso remoto ao servidor. Nunca aplique o `deny incoming` (item #07) sem antes garantir essa liberação, de preferência via `ufw insert` (item #23) na primeira posição.
 
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SSH (22/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SSH (22/tcp) no Ubuntu Server
 #opção do comando ufw: limit (add limit rule - 6 ou mais conexões simultâneas em 30 segundos - mas origem)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw limit in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 22 proto tcp comment 'Liberando a entrada do acesso remoto via SSH v4'
 sudo ufw limit in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 22 proto tcp comment 'Liberando a entrada do acesso remoto via SSH v4'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SpeedTest (8080/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo SpeedTest (8080/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 8080 proto tcp comment 'Liberando a entrada do acesso remoto via SpeedTest v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo IPerf3 (5201/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo IPerf3 (5201/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 5201 proto tcp comment 'Liberando a entrada do acesso remoto via IPerf3 v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo BBS (80/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo BBS (80/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 80 proto tcp comment 'Liberando a entrada do acesso remoto via BBS v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Grafana (3000/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Grafana (3000/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 3000 proto tcp comment 'Liberando a entrada do acesso remoto via Grafana v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Prometheus (9090/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Prometheus (9090/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 9090 proto tcp comment 'Liberando a entrada do acesso remoto via Prometheus v6'
 ```
 ```bash
-#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Netronome (7575/tcp)
+#regra de liberação (ALLOW) de Entrada (IN) Logando Tudo (LOG-ALL) do Protocolo Netronome (7575/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw allow in on bond0 log-all from 172.16.1.0/24 to 172.16.1.20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v4'
 sudo ufw allow in on bond0 log-all from 2804:14c:90:8697::/64 to 2804:14c:90:8697::20 port 7575 proto tcp comment 'Liberando a entrada do acesso remoto via Netronome v6'
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW
+#verificando as Regras Detalhadas padrão do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw status verbose
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW em modo Numerado
+#verificando as Regras Detalhadas padrão do UFW em modo Numerado no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #numbered (To see a list of numbered rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -594,14 +594,14 @@ ssh vaamonde@172.16.1.20
 
 ## 15_ Reiniciando (RELOAD) as Regras de Firewall do UFW no Ubuntu Server
 ```bash
-#reiniciando as regras de firewall do UFW
+#reiniciando as regras de firewall do UFW no Ubuntu Server
 #opção do comando ufw: reload (reloads firewall rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw reload
   Firewall reloaded
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW
+#verificando as Regras Detalhadas padrão do UFW no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -610,7 +610,7 @@ sudo ufw status verbose
 
 ## 16_ Entendendo o Log (LOGGING) do Firewall UFW no Ubuntu Server
 ```bash
-#listando o conteúdo do arquivo de Log do UFW
+#listando o conteúdo do arquivo de Log do UFW no Ubuntu Server
 #opção do comando cat: -n (number line)
 #opção do redirecionador | (pipe): Conecta a saída padrão com a entrada padrão de outro comando
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/cat.1.html
@@ -618,7 +618,7 @@ sudo ufw status verbose
 sudo cat -n /var/log/ufw.log | less
 ```
 ```bash
-#saída padrão dos Logs do UFW no arquivo ufw.log
+#saída padrão dos Logs do UFW no arquivo ufw.log no Ubuntu Server
 1343 Jul 30 12:54:15 srvvaamonde kernel: [ 7898.809280] [UFW BLOCK] IN= OUT=enp0s3 SRC=172.16.1.20
 DST=172.16.1.135 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=24251 DF PROTO=TCP SPT=54900 DPT=9100
 WINDOW=64240 RES=0x00 SYN URGP=0
@@ -642,7 +642,7 @@ Entendendo os campos do Log do arquivo do UFW:__`/var/log/ufw.log`__<br>
 ---
 
 ```bash
-#visualizando os Logs em Tempo Real do Firewall UFW
+#visualizando os Logs em Tempo Real do Firewall UFW no Ubuntu Server
 #opção do comando tail: -f (follow)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/tail.1.html
 sudo tail -f /var/log/ufw.log
@@ -650,49 +650,49 @@ sudo tail -f /var/log/ufw.log
 
 ## 17_ Visualizando (SHOW) informações detalhadas (REPORT) do UFW no Ubuntu Server
 ```bash
-#relatório detalhado em RAW (Raw Data)
+#relatório detalhado em RAW (Raw Data) no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show raw
 ```
 ```bash
-#relatório detalhado com tráfego de rede das CHAINS (Regras)
+#relatório detalhado com tráfego de rede das CHAINS (Regras) no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show builtins
 ```
 ```bash
-#relatório detalhado das regras antes (BEFORE-RULES) de serem aplicadas pelo UFW
+#relatório detalhado das regras antes (BEFORE-RULES) de serem aplicadas pelo UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show before-rules
 ```
 ```bash
-#relatório detalhado das regras do usuário (USER-RULES) a serem aplicadas pelo UFW
+#relatório detalhado das regras do usuário (USER-RULES) a serem aplicadas pelo UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show user-rules
 ```
 ```bash
-#relatório detalhado das regras depois (AFTER-RULES) de serem aplicadas pelo UFW
+#relatório detalhado das regras depois (AFTER-RULES) de serem aplicadas pelo UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show after-rules
 ```
 ```bash
-#relatório detalhado das regras de Logs (LOGGING-RULES) a serem aplicadas pelo UFW
+#relatório detalhado das regras de Logs (LOGGING-RULES) a serem aplicadas pelo UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show logging-rules
 ```
 ```bash
-#relatório detalhado das portas liberadas (LISTENING) do servidor pelo UFW
+#relatório detalhado das portas liberadas (LISTENING) do servidor pelo UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show listening
 ```
 ```bash
-#relatório detalhado das regras adicionadas (ADDED) no UFW
+#relatório detalhado das regras adicionadas (ADDED) no UFW no Ubuntu Server
 #opção do comando ufw: show (display information about the running firewall)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw show added
@@ -703,14 +703,14 @@ sudo ufw show added
 > **OBSERVAÇÃO IMPORTANTE:** se você desabilitar o firewall UFW, as regras já criadas **NÃO** são perdidas, apenas deixam de ser aplicadas.
 
 ```bash
-#desabilitando (DISABLE) o Firewall UFW
+#desabilitando (DISABLE) o Firewall UFW no Ubuntu Server
 #opção do comando ufw: disable (unloads firewall and disables firewall on boot)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw disable
   Firewall stopped and disabled on system startup
 ```
 ```bash
-#verificando as Regras Detalhadas do UFW (regras permanecem salvas, mesmo desabilitado)
+#verificando as Regras Detalhadas do UFW (regras permanecem salvas, mesmo desabilitado) no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #verbose (Use status verbose for extra information)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
@@ -718,7 +718,7 @@ sudo ufw status verbose
   Status: inactive
 ```
 ```bash
-#habilitando (ENABLE) novamente o Firewall UFW
+#habilitando (ENABLE) novamente o Firewall UFW no Ubuntu Server
 #opção do comando ufw: enable (reloads firewall and enables firewall on boot)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
 sudo ufw enable
@@ -726,7 +726,7 @@ sudo ufw enable
   Firewall is active and enabled on system startup
 ```
 ```bash
-#verificando as Regras Detalhadas padrão do UFW em modo Numerado
+#verificando as Regras Detalhadas padrão do UFW em modo Numerado no Ubuntu Server
 #opção do comando ufw: status (show status of firewall and ufw managed rules),
 #numbered (To see a list of numbered rules)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html

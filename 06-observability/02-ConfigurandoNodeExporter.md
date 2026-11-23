@@ -237,7 +237,7 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```yaml
-#Descomentar as linhas de configuração do Node Exporter a partir da linha 66
+#Descomentar as linhas de configuração do Node Exporter a partir da linha 70
 # Configurações dos Serviços de Monitoramento de Métricas do Prometheus utilizando
 # o recurso de Exportação do Node Remoto para sistemas operacionais Linux ou Windows
   - job_name: "node-exporter"
@@ -366,8 +366,8 @@ Status
 ```
 ```bash
 #verificando os alertas do Node Exporter do Prometheus no Ubuntu Server
-Status
-  Rule health
+Alerts
+  alertas-node-linux
 ```
 
 ---

@@ -53,6 +53,10 @@ scrape_configs:
 #
 # Nome do serviço que o Prometheus vai monitorar
   - job_name: "prometheus-srv"
+    # Configuração da autenticação HTTP Basic Auth
+    basic_auth:
+      username: "admin"
+      password_file: "/etc/prometheus/prometheus-password"
     # Inicio da definição das configurações estáticas
     static_configs:
       # Endereço, Porta e Rótulos do alvo monitorado

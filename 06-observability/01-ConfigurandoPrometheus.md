@@ -164,6 +164,12 @@ sudo wget -v -O /etc/prometheus/prometheus.yml https://raw.githubusercontent.com
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
 sudo wget -v -O /etc/prometheus/web-config.yml https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/web-config.yml
 ```
+```bash
+#download do arquivo de senhas do Web Server do Prometheus no Ubuntu Server
+#opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/wget.1.html
+sudo wget -v -O /etc/prometheus/prometheus-password https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/prometheus-password
+```
 
 ## 07_ Alterando as permissões dos arquivos e diretórios do Prometheus no Ubuntu Server
 ```bash
@@ -177,6 +183,12 @@ sudo chown -Rv prometheus:prometheus /etc/prometheus/ /var/lib/prometheus/
 #opção do comando chmod: -R (recursive) -v (verbose), 775 (User: RWX, Group: RWX, Other: R-X)
 #mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
 sudo chmod -Rv 775 /etc/prometheus/ /var/lib/prometheus/
+```
+```bash
+#alterando as permissões do arquivo de senhas do Prometheus no Ubuntu Server
+#opção do comando chmod: -R (recursive) -v (verbose), 600 (User: RW-, Group: ---, Other: ---)
+#mais informações acesse a documentação oficial em: https://man7.org/linux/man-pages/man1/chmod.1.html
+sudo chmod -Rv 600 /etc/prometheus/prometheus-password
 ```
 
 ## 08_ Editando o arquivo de configuração do Prometheus no Ubuntu Server
@@ -205,6 +217,9 @@ external_labels:
 #alterar os valores das viráveis a partir da linha: 55
 scrape_configs:
   - job_name: "prometheus-srv"
+    basic_auth:
+      username: "admin"
+      password_file: "/etc/prometheus/prometheus-password"
     static_configs:
       - targets: ["172.16.1.20:9090"]
         labels:
@@ -223,6 +238,17 @@ ESC SHIFT : x <Enter>
 sudo -u prometheus promtool check config /etc/prometheus/prometheus.yml
 ```
 ```bash
+#gerando a senha criptografada de acesso Web do Usuário Admin do Prometheus no Ubuntu Server
+#opções do comando htpasswd: -n (Display the results on standard output rather than updating a file), 
+#-B (Use batch mode - hash bcrypt), -C (Create the passwdfile), 12 (Sets the bcrypt cost factor)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/htpasswd
+#OBSERVAÇÃO: COPIAR A SENHA GERADA NO COMANDO HTPASSWD PARA ADICIONAR NO ARQUIVO WEB-CONFIG
+htpasswd -nBC 12 admin
+  New password: sua_senha_segura
+  Re-type new password: repetir_sua_senha_segura
+  admin:COPIAR_SEU_HASH_DE_SENHA_A_PARTIR_DO_CIFRÃO$
+```
+```bash
 #editando arquivo de configuração do Web Server do Prometheus no Ubuntu Server
 #mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
 sudo vim /etc/prometheus/web-config.yml
@@ -236,12 +262,20 @@ ESC SHIFT :set number <Enter>
 INSERT
 ```
 ```bash
+#descomentar as configurações do HTTP na linha: 24
+http_server_config:
+  http2: true
+#
 #descomentar e configurar a senha do usuário Admin do Prometheus na linha: 31
 # Para gerar a senha do usuário Admin via Hash Bcrypt usar o htpasswd
 # Instalando o htpasswd no Ubuntu Server: sudo apt install apache2-utils
 # Gerar a senha com o comando: htpasswd -nBC 12 admin
 basic_auth_users:
-  admin: COLAR_SENHA_GERADA_
+  admin: COLAR_SENHA_GERADA_NO_COMANDO_HTPASSWD
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
 ```
 ```bash
 #testando o arquivo de configuração do Prometheus no Ubuntu Server
@@ -249,6 +283,34 @@ basic_auth_users:
 #opções do comando promtool: check web-config (Check if the config files are valid or not) 
 #mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
 sudo -u prometheus promtool check web-config /etc/prometheus/web-config.yml
+```
+```bash
+#editando arquivo de configuração da senha do Web Server do Prometheus no Ubuntu Server
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/vi
+sudo vim /etc/prometheus/prometheus-password
+```
+```bash
+#entrando no modo de edição do editor de texto VIM
+INSERT
+```
+```bash
+#alterar a senha na linha: 01
+#OBSERVAÇÃO: DIGITAR A MESMA SENHA UTILIZADA NO COMANDO HTPASSWD
+sua_senha_segura
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
+```
+```bash
+#testando a leitura do arquivo de senha do Web Server do Prometheus no Ubuntu Server
+#opção do comando sudo: -u (Run the command as a user other than the default target user)
+#opções do comando prometheus: test (validation test config or file), -r (read file and execute)
+#opção do operador lógico &&: E lógico (Função AND)
+#opção do operador lógico ||: OU Lógico (Função OR)
+#mais informações acesse a documentação oficial em: https://prometheus.io/docs/prometheus/latest/getting_started/
+#OBSERVAÇÃO: ESSE COMANDO TESTA SOMENTE SE O USUÁRIO PROMETHEUS PODE LER O CONTEÚDO DO ARQUIVO
+sudo -u prometheus test -r /etc/prometheus/prometheus-password && echo "OK" || echo "ERRO"
 ```
 ```bash
 #editando arquivo de serviço do Prometheus no Ubuntu Server
@@ -274,6 +336,10 @@ ExecStart=/usr/local/bin/prometheus \
     --web.console.libraries=/etc/prometheus/console_libraries \
     --web.config.file=/etc/prometheus/web-config.yml \
     --web.listen-address=0.0.0.0:9090
+```
+```bash
+#salvar e sair do arquivo
+ESC SHIFT : x <Enter>
 ```
 
 ## 09_ Habilitando o Serviço do Prometheus no Ubuntu Server 
