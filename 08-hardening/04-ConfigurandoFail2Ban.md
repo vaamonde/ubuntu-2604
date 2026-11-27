@@ -50,14 +50,29 @@ Link da vídeo aula:
 
 | **📁 Diretório/Arquivo** | **📖 Descrição** |
 
+```bash
+/etc/fail2ban/                <-- Diretório de configuração do Fail2Ban
+/etc/fail2ban/action.d/       <-- Diretório de configuração das Ações do Fail2Ban
+/etc/fail2ban/filter.d/       <-- Diretório de configuração dos Filtros do Fail2Ban
+/etc/fail2ban/jail.d/         <-- Diretório de configuração das Regras do Fail2Ban
+/etc/fail2ban/fail2ban.conf   <-- Arquivo de configuração do Serviços do Fail2Ban
+/var/log/fail2ban.log         <-- Arquivo de Log do Serviço do Fail2Ban
+/var/run/fail2ban/            <-- Diretório do PID de Processo e Socket do Fail2Ban
+/var/lib/fail2ban/            <-- Diretório do Banco de Dados SQLite3 do Fail2Ban
+```
 ---
 
 ## 01_ Instalando o Fail2Ban no Ubuntu Server
 ```bash
-#atualizando as listas do Apt
+#atualizando as lista do Apt do sources.list no Ubuntu Server
+#opção do comando apt: update (Resynchronize the package index files from their sources)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt update
-
+```
+```bash
 #instalando o Fail2Ban no Ubuntu Server
+#opção do comando apt: install (install is followed by one or more package names)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt install fail2ban
 ```
 
@@ -100,30 +115,23 @@ sudo fail2ban-client -t
 sudo fail2ban-client -V
 ```
 
-## 04_ Localização dos Arquivos de Configuração do Fail2Ban no Ubuntu Server
-```bash
-/etc/fail2ban/                <-- Diretório de configuração do Fail2Ban
-/etc/fail2ban/action.d/       <-- Diretório de configuração das Ações do Fail2Ban
-/etc/fail2ban/filter.d/       <-- Diretório de configuração dos Filtros do Fail2Ban
-/etc/fail2ban/jail.d/         <-- Diretório de configuração das Regras do Fail2Ban
-/etc/fail2ban/fail2ban.conf   <-- Arquivo de configuração do Serviços do Fail2Ban
-/var/log/fail2ban.log         <-- Arquivo de Log do Serviço do Fail2Ban
-/var/run/fail2ban/            <-- Diretório do PID de Processo e Socket do Fail2Ban
-/var/lib/fail2ban/            <-- Diretório do Banco de Dados SQLite3 do Fail2Ban
-```
-
 ## 05_ Atualizando os arquivos de configuração do Fail2Ban no Ubuntu Server
 ```bash
 #atualizando o arquivo de configuração do Fail2Ban Local do Github
 #opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/fail2ban/fail2ban.local https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/fail2ban.local
-
+```
+```bash
 #atualizando o arquivo de configuração do Jail (Cadeia/Jaula) Local do Fail2Ban do Github
 #opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/fail2ban/jail.local https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/jail.local
-
+```
+```bash
 #atualizando o arquivo de configuração de Reincidência do Fail2Ban do Github
 #opção do comando wget: -v (verbose), -O (output file)
+#mais informações acesse a documentação oficial em: https://linux.die.net/man/1/wget
 sudo wget -v -O /etc/fail2ban/jail.d/recidive.conf https://raw.githubusercontent.com/vaamonde/ubuntu-2604/main/conf/recidive.conf
 ```
 
@@ -240,83 +248,7 @@ sudo fail2ban-client status
 sudo fail2ban-client status sshd
 ```
 
-## 09_ Configuração básica do serviço de Firewall UFW no Ubuntu Server
-```bash
-#Habilitando e iniciando o Firewall UFW no Ubuntu Server integrado com o Fail2Ban
-#opção do comando ufw: enable (reloads firewall and enables firewall on boot)
-sudo ufw enable
-  Command may disrupt existing ssh connections. Proceed with operation (y|n)? y <Enter>
-  Firewall is active and enabled on system startup
 
-#Verificando o serviço do Firewall UFW no Ubuntu Server
-#opção do comando systemctl: status (runtime status information)
-sudo systemctl status ufw
-
-#Verificando o Status das Regras (RULES) Detalhadas (VERBOSE) do UFW
-#opção do comando ufw: status (show status of firewall and ufw managed rules), verbose (for extra information)
-sudo ufw status verbose
-
-#configuração das regras mais restritivas de Entrada (Incoming) e Saída (Outgoing) do Firewall UFW no Ubuntu Server
-#opção do comando ufw:
-sudo ufw default deny incoming
-sudo ufw default deny outgoing
-
-#configuração do nível de Log do Firewall UFW no Ubuntu Server
-#opção do comando ufw:
-sudo ufw logging on
-sudo ufw logging medium
-
-#configuração das regras de Loopback de Entrada (Incoming) e Saída (Outgoing) do Firewall UFW no Ubuntu Server
-#opção do comando ufw:
-sudo ufw allow in on lo
-sudo ufw allow out on lo
-
-#configuração das regras de Saída (Outgoing) dos Protocolos Básicos do Firewall UFW no Ubuntu Server
-#opção do comando ufw:
-sudo ufw allow out 53/udp comment 'Liberando a saida para consulta do DNS'
-sudo ufw allow out 853/tcp comment 'Liberando a saida para consulta do DNSTLS'
-sudo ufw allow out 80/tcp comment 'Liberando a saida para navegação do HTTP'
-sudo ufw allow out 443/tcp comment 'Liberando a saida para navegação do HTTPS'
-sudo ufw allow out 123/udp comment 'Liberando a saida para sincronismo do NTP'
-
-#configuração da regra de Entrada (Incoming) do Protocolo SSH do Firewall UFW no Ubuntu Server
-#opção do comando ufw:
-sudo ufw allow in log-all 22/tcp comment 'Liberando a entrada do acesso remoto via SSH'
-
-#configuração das regras de Saída (Outgoing) do Protocolo ICMP do Firewall UFW no Ubuntu Server
-#Editando o arquivo de configuração before.rules (ANTES DAS REGRAS) do UFW
-sudo vim /etc/ufw/before.rules
-
-#habilitando o recurso de número de linhas do Editor VIM
-ESC SHIFT :set number <Enter>
-
-#entrando no modo de edição do editor de texto VIM
-INSERT
-```
-```bash
-#inserir as informações a partir da linha: 39 (COPIAR E COLAR)
-#liberando a saída do protocolo ICMP (Permitindo o Ping - Echo Request)
-#opções do comando iptables usados pelo UFW: -A (append), -p (protocol), -j (jump target)
-# ok icmp codes for OUTPUT
--A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT
--A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT
--A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT
--A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT
-```
-```bash
-#Salvar e sair do arquivo
-ESC SHIFT :x <Enter>
-
-#Reiniciar as regras de firewall do UFW
-sudo ufw reload
-  Firewall reloaded
-
-#Pingando o endereço IPv4 do Google
-ping 8.8.8.8
-
-#Pingando o nome do Google
-ping google.com
-```
 
 
 ========================================DESAFIOS=========================================

@@ -6,8 +6,8 @@
 # Linkedin: https://www.linkedin.com/in/robson-vaamonde-0b029028/
 # Instagram: https://www.instagram.com/procedimentoem/?hl=pt-br
 # Data de criação: 11/10/2021
-# Data de atualização: 29/09/2026
-# Versão: 0.15
+# Data de atualização: 26/11/2026
+# Versão: 0.16
 # Testado e homologado para a versão do Ubuntu Server 26.04.x LTS x64
 # Testado e homologado para a versão do OpenSSH Server v10.x
 #
@@ -47,9 +47,28 @@ PubkeyAuthentication yes
 # alterar essa opção, podendo trabalhar em conjunto com chaves publicas (mais seguro).
 PasswordAuthentication yes
 #
+# Controla o suporte para o esquema de autenticação "keyboard-interactive" definido 
+# no RFC-4256. Utilizar um desafio para se autenticar, muito utilizado com QRCode
+# Mudar de: no para: yes se você estiver utilizando o 2FA ou Google Authenticator
+# Recomendo utilizar o aplicativo no Android: 2FAS Auth v5.4.x
+ChallengeResponseAuthentication no
+#
+# Para fornecer o mecanismo 2FA você deve instalar o Google Pluggable Authentication 
+# Module (PAM). A validação da autenticação é baseada em Time-Based One-Time Password 
+# (TOTP), um padrão aberto que alterna tokens seguros em blocos de tempo discretos – 
+# a cada 30 segundos.
+# Instalação do LibPAM: sudo apt install libpam-google-authenticator
+#auth required pam_google_authenticator.so
+#
 # Configuração do diretório de chaves públicas para autenticar os usuários, as chaves 
 # devem ser exportada para o Servidor de OpenSSH utilizando o comando: ssh-copy-id
 AuthorizedKeysFile .ssh/authorized_keys
+#
+# Não permitir que usuários sem senhas se autentique remotamente no Servidor de OpenSSH
+PermitEmptyPasswords no
+#
+# Não permitir que os usuários definam opções de ambiente, utilizar os pré-definidos
+PermitUserEnvironment no
 #
 # Evitar o uso de diretórios residenciais inseguros e permissões de arquivos de chaves 
 # não confiáveis
@@ -129,12 +148,6 @@ IgnoreRhosts yes
 # confie em outro servidor para autenticar os usuários.
 HostbasedAuthentication no
 #
-# Não permitir que usuários sem senhas se autentique remotamente no Servidor de OpenSSH
-PermitEmptyPasswords no
-#
-# Não permitir que os usuários definam opções de ambiente, utilizar os pré-definidos
-PermitUserEnvironment no
-#
 # Especifica se o encaminhamento de TCP é permitido. O padrão é yes. Se você utilizar a 
 # extensão do Visual Studio Code VSCode com Remote SSH, será necessário alterar para: yes
 AllowTcpForwarding no
@@ -150,19 +163,6 @@ X11Forwarding no
 # Especifica o primeiro número de exibição disponível para encaminhamento X11 do 
 # sshd. Isso evita que o sshd interfira nos servidores X11 reais. O padrão é 10.
 X11DisplayOffset 10
-#
-# Controla o suporte para o esquema de autenticação "keyboard-interactive" definido 
-# no RFC-4256. Utilizar um desafio para se autenticar, muito utilizado com QRCode
-# Mudar de: no para: yes se você estiver utilizando o 2FA ou Google Authenticator
-# Recomendo utilizar o aplicativo no Android: 2FAS Auth v5.4.x
-ChallengeResponseAuthentication no
-#
-# Para fornecer o mecanismo 2FA você deve instalar o Google Pluggable Authentication 
-# Module (PAM). A validação da autenticação é baseada em Time-Based One-Time Password 
-# (TOTP), um padrão aberto que alterna tokens seguros em blocos de tempo discretos – 
-# a cada 30 segundos.
-# Instalação do LibPAM: sudo apt install libpam-google-authenticator
-#auth required pam_google_authenticator.so
 #
 # Utilizar autenticação de usuário via PAM (Linux Pluggable Authentication), essa 
 # opção só vai funcionar se o Serviço do PAM esteja configurado no Servidor

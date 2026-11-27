@@ -370,6 +370,13 @@ sudo ufw allow out on bond0 from 172.16.1.20 to any port 80 proto tcp comment 'L
 sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 80 proto tcp comment 'Liberando a saida para navegacao do HTTP v6'
 ```
 ```bash
+#regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTP (8080/tcp) no Ubuntu Server
+#opção do comando ufw: allow (add allow rule)
+#mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html
+sudo ufw allow out on bond0 from 172.16.1.20 to any port 8080 proto tcp comment 'Liberando a saida para navegacao do HTTP v4'
+sudo ufw allow out on bond0 from 2804:14c:90:8697::20 to any port 8080 proto tcp comment 'Liberando a saida para navegacao do HTTP v6'
+```
+```bash
 #regra de liberação (ALLOW) de Saída (OUT) da Navegação do Protocolo HTTPS (443/tcp) no Ubuntu Server
 #opção do comando ufw: allow (add allow rule)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/ufw.8.html

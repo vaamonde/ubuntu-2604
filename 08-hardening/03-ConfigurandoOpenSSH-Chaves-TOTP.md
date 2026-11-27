@@ -10,8 +10,8 @@
 **Github Robson Vaamonde:** https://github.com/vaamonde<br>
 
 **Data de criação:** `21/11/2026`<br>
-**Data de atualização:** `21/11/2026`<br>
-**Versão:** `0.01`<br>
+**Data de atualização:** `26/11/2026`<br>
+**Versão:** `0.02`<br>
 
 > __`Testado e homologado no GNU/Linux Ubuntu Server 26.04.x LTS`__
 
@@ -67,7 +67,7 @@ Link da vídeo aula:
 sudo apt update
 ```
 ```bash
-#instalando as dependências do Grafana Server no Ubuntu Server
+#instalando a biblioteca do LibPAM Google Authentication no Ubuntu Server
 #opção do comando apt: install (install is followed by one or more package names)
 #mais informações acesse a documentação oficial em: https://manpages.ubuntu.com/manpages/resolute/man8/apt.8.html
 sudo apt install libpam-google-authenticator

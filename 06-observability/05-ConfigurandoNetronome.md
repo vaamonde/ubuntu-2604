@@ -649,7 +649,7 @@ sudo systemctl status netronome
 ```
 ```bash
 #criando o monitoramento do Agent no Netronome Server
-05) Netronome (Network Performance Testing)
+06) Netronome (Network Performance Testing)
     Agents
       Monitoring
         Netronome Agents

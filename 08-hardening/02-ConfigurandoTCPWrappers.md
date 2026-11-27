@@ -228,6 +228,7 @@ sudo w
 #mais informações veja a documentação oficial em: https://man7.org/linux/man-pages/man1/tail.1.html
 sudo tail -f /var/log/deny.log
 ```
+
 Entendendo a saída do Log do arquivo: __`/var/log/deny.log`__<br>
 | **Informação** | **Valor ilustrativo** | **Significado** |
 |----------------|-----------------------|-----------------|
